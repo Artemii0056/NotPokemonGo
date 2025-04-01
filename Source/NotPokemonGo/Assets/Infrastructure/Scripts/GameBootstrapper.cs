@@ -12,11 +12,6 @@ namespace Infrastructure.Scripts
             _game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);
-
-            string abc = "sdf";
-            abc += 'c';
-            
-            Debug.Log(abc);
         }
     }
 }
