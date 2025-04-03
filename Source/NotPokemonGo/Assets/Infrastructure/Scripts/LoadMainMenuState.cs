@@ -12,7 +12,12 @@
         }
 
         public void Enter(string payload) => 
-            _sceneLoader.Load(payload);
+            _sceneLoader.Load(payload, OnLoadMainMenuState);
+
+        private void OnLoadMainMenuState()
+        {//Загрузили и передали управление в MainMenuLoopState
+            throw new System.NotImplementedException();
+        }
 
         public void Exit()
         {

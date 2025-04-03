@@ -19,7 +19,7 @@ namespace Infrastructure.Scripts
         }
 
         private void EnterMainMenuState() => 
-            _gameStateMachine.Enter<LoadMainMenuState, string>("MainMenu");
+            _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.MainMenuSceneName);
 
         public void Exit()
         {
