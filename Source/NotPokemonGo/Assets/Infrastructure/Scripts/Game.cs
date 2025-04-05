@@ -1,11 +1,16 @@
-﻿using Infrastructure.Scripts;
+﻿using Infrastructure.Scripts.Services;
+using Infrastructure.Scripts.StateMachine;
+using Source.StaticData;
 
-public class Game
+namespace Infrastructure.Scripts
 {
-    public GameStateMachine StateMachine;
-    
-    public Game(ICoroutineRunner coroutineRunner)
+    public class Game
     {
-        StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner));
+        public GameStateMachine StateMachine;
+    
+        public Game(ICoroutineRunner coroutineRunner, StaticDataLoadService staticDataLoadService)
+        {
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), staticDataLoadService);
+        }
     }
 }
