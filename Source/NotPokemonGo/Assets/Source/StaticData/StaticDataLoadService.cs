@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Infrastructure;
 using Infrastructure.Scripts.AssetManagement;
 using Source.Characters.Configs;
 using Source.StaticData.CharactersCatalog;
+using Source.StaticData.CharactersCatalog.Scripts;
 
 namespace Source.StaticData
 {
@@ -15,6 +17,6 @@ namespace Source.StaticData
             _resourceLoader = resourceLoader;
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() => 
-            _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>("Catalog/Catalog");
+            _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
     }
 }

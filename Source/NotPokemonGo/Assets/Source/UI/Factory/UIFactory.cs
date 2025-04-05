@@ -1,40 +1,52 @@
-﻿using Infrastructure.Scripts.AssetManagement;
+﻿using Infrastructure;
+using Infrastructure.Scripts.AssetManagement;
 using Source.StaticData;
 using Source.StaticData.CharactersCatalog;
+using Source.StaticData.CharactersCatalog.Scripts;
+using Source.UI.Scripts;
 using UnityEngine;
 
 namespace Source.UI.Factory
 {
     public class UIFactory
     {
-        private ResourceLoader _resourceLoader;
+        private IResourceLoader _resourceLoader;
         private StaticDataLoadService _staticDataLoadService;
 
-        public UIFactory(ResourceLoader resourceLoader, StaticDataLoadService staticDataLoadService)
+        public UIFactory(IResourceLoader resourceLoader, StaticDataLoadService staticDataLoadService)
         {
             _resourceLoader = resourceLoader;
             _staticDataLoadService = staticDataLoadService;
         }
 
-        public void CreateShop()
+        public CharacterSelectionPanel CreateShop()
         {
-            _resourceLoader.Instantiate("Canvases/CharacterSelection_Canvas");
+            CharacterSelectionPanel shop = _resourceLoader.Load<CharacterSelectionPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
+            return Object.Instantiate(shop);
         }
 
-        public void CreateMainMenu()
+        public MainMenuUI CreateMainMenu()
+        {
+            MainMenuUI menu = _resourceLoader.Load<MainMenuUI>(Constants.AssetPath.MainMenuCanvasPath);
+            return Object.Instantiate(menu);
+        }
+
+        public CharacterSelectionPanel CreateCharacterSelectionPanel()
         {
             CharactersCatalogStaticData config = _staticDataLoadService.LoadCharacterCatalogStaticDatas();
             
-            CharacterSkinItem iconPrefab = Resources.Load<CharacterSkinItem>("CharacterSkinItem");
+            CharacterSkinItem iconPrefab = Resources.Load<CharacterSkinItem>(Constants.AssetPath.CharacterSkinItemName);
 
-            ShopUI shop = _resourceLoader.Instantiate("Canvases/CharacterSelection_Canvas").GetComponent<ShopUI>();
+            CharacterSelectionPanel shop = CreateShop();
 
             foreach (var conf in config.Characters)
             {
                 CharacterSkinItem icon = Object.Instantiate(iconPrefab);
-                icon.InitImage(conf.Image);
+                icon.InitImage(conf.Sprite);
                 shop.AddItem(icon);
             }
+
+            return shop;
         }
     }
 }

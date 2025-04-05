@@ -8,7 +8,7 @@ namespace Source.StaticData.CharactersCatalog
     {
         [field: SerializeField] public CharacterStaticData.Scripts.CharacterStaticData CharacterStaticData { get; private set; }
         [field: SerializeField] public GameObject CharacterModel { get; private set; }
-        [field: SerializeField] public Image Image { get; private set; }
+        [field: SerializeField] public Sprite Sprite { get; private set; }
         [field: SerializeField] public int Price { get; private set; }
     }
 }

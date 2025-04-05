@@ -1,5 +1,5 @@
-﻿using Source.StaticData;
-using Source.UI.Factory;
+﻿using Source.UI.Factory;
+using Source.UI.Scripts;
 
 namespace Infrastructure.Scripts.StateMachine.States
 {
@@ -7,14 +7,12 @@ namespace Infrastructure.Scripts.StateMachine.States
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
-        private StaticDataLoadService _staticDataLoadService;
         private UIFactory _uiFactory;
 
-        public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, StaticDataLoadService staticDataLoadService, UIFactory uiFactory)
+        public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, UIFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
-            _staticDataLoadService = staticDataLoadService;
             _uiFactory = uiFactory;
         }
 
@@ -27,9 +25,12 @@ namespace Infrastructure.Scripts.StateMachine.States
         
         private void OnLoadMainMenuState()
         {
-            _uiFactory.CreateShop();
-            _uiFactory.CreateMainMenu();
-           //Подгрузка конфигов готова, надо тестить
+            MainMenuUI mainMenu = _uiFactory.CreateMainMenu();
+            mainMenu.gameObject.SetActive(false);
+            CharacterSelectionPanel selectionPanel = _uiFactory.CreateCharacterSelectionPanel();
+            //selectionPanel.gameObject.SetActive(false);
+            
+            
         }
     }
 }

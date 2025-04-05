@@ -8,23 +8,22 @@ namespace Infrastructure.Scripts.AssetManagement
         {
             var prefab = Resources.Load<GameObject>(path);
 
-            if (prefab == null)
-            {
-                Debug.Log(path);
-            }
-
             return Object.Instantiate(prefab);
+        }
+        
+        public T Instantiate<T>(string path) where T : Component
+        {
+            GameObject prefab = Load<GameObject>(path);
+            GameObject instance = Object.Instantiate(prefab);
+            return instance.GetComponent<T>();
+        }
+        
+        public T Load<T>(string path) where T : Object
+        {
+            return Resources.Load<T>(path);
         }
 
         public T LoadScriptableObject<T>(string path) where T : ScriptableObject => 
             Resources.Load<T>(path);
-
-        // public T Instantiate<T>(string path)
-        // {
-        //    // T obj = Resources.Load<T>(path);
-        //    // T obj = Instantiate<T>(path);
-        //     
-        //     return obj;
-        // }
     }
 }

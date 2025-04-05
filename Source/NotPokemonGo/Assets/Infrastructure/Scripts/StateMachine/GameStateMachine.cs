@@ -11,7 +11,7 @@ namespace Infrastructure.Scripts.StateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _currentState;
-        private ResourceLoader _resourceLoader;
+        private IResourceLoader _resourceLoader;
 
         public GameStateMachine(SceneLoader sceneLoader, StaticDataLoadService staticDataLoadService)
         {
@@ -23,7 +23,7 @@ namespace Infrastructure.Scripts.StateMachine
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
                 [typeof(LoadMainMenuState)] =
-                    new LoadMainMenuState(this, sceneLoader, staticDataLoadService, uiFactory),
+                    new LoadMainMenuState(this, sceneLoader, uiFactory),
             };
         }
 

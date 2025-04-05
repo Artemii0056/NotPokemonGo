@@ -5,8 +5,8 @@ public class CharacterSkinItem : MonoBehaviour
 {
     [SerializeField] private Image _image;
 
-    public void InitImage(Image image)
+    public void InitImage(Sprite sprite)
     {
-        _image = image;
+        _image.sprite = sprite;
     }
 }
