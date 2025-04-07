@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using System.Data.Common;
+using Infrastructure;
 using Infrastructure.Scripts.AssetManagement;
 using Source.StaticData;
 using Source.StaticData.CharactersCatalog;
@@ -19,9 +20,9 @@ namespace Source.UI.Factory
             _staticDataLoadService = staticDataLoadService;
         }
 
-        public CharacterSelectionPanel CreateShop()
+        public CharacterSelectionScreenPanel CreateShop()
         {
-            CharacterSelectionPanel shop = _resourceLoader.Load<CharacterSelectionPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
+            CharacterSelectionScreenPanel shop = _resourceLoader.Load<CharacterSelectionScreenPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
             return Object.Instantiate(shop);
         }
 
@@ -31,19 +32,19 @@ namespace Source.UI.Factory
             return Object.Instantiate(menu);
         }
 
-        public CharacterSelectionPanel CreateCharacterSelectionPanel()
+        public CharacterSelectionScreenPanel CreateCharacterSelectionPanel()
         {
             CharactersCatalogStaticData config = _staticDataLoadService.LoadCharacterCatalogStaticDatas();
             
-            CharacterSkinItem iconPrefab = Resources.Load<CharacterSkinItem>(Constants.AssetPath.CharacterSkinItemName);
+            CharacterSkinItemView iconPrefab = Resources.Load<CharacterSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
 
-            CharacterSelectionPanel shop = CreateShop();
+            CharacterSelectionScreenPanel shop = CreateShop();
 
-            foreach (var conf in config.Characters)
+            foreach (var conf in config.CharacterItemConfigs)
             {
-                CharacterSkinItem icon = Object.Instantiate(iconPrefab);
+                CharacterSkinItemView icon = Object.Instantiate(iconPrefab);
                 icon.InitImage(conf.Sprite);
-                shop.AddItem(icon);
+                shop.CharacterSelectionPanel.AddItem(icon);
             }
 
             return shop;

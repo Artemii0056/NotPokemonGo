@@ -176,9 +176,9 @@ GameObject:
   - component: {fileID: 2852351182538685642}
   - component: {fileID: 3555999922383094330}
   - component: {fileID: 5285787748065510014}
-  - component: {fileID: 3848938911169034098}
+  - component: {fileID: 7529245500925770894}
   m_Layer: 5
-  m_Name: CharacterPlace
+  m_Name: CharacterPreviewPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3848938911169034098
+--- !u!114 &7529245500925770894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1706016521769536300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 361e3470fec169a48a97a1877e9ad5ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f80973b5d244043953420dd1b4c2e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2235768876824758319
@@ -446,9 +446,9 @@ GameObject:
   - component: {fileID: 4250553123253510073}
   - component: {fileID: 8425092406834395751}
   - component: {fileID: 3488531513684479822}
-  - component: {fileID: 4014018435960691940}
+  - component: {fileID: 5735695909625095474}
   m_Layer: 5
-  m_Name: CharacteristicsPanel
+  m_Name: CharacterInfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4014018435960691940
+--- !u!114 &5735695909625095474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4658089064548809439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff53213deb5647442ad8065714e61498, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b0e6fa33a6146b7949a1ff6c2ded303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5504958903048615024
@@ -534,8 +534,9 @@ GameObject:
   - component: {fileID: 5066008647505895697}
   - component: {fileID: 5185751189791978497}
   - component: {fileID: 8017802620798610448}
+  - component: {fileID: 3279718132341403974}
   m_Layer: 5
-  m_Name: CharactersPanel
+  m_Name: CharacterSelectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -599,6 +600,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3279718132341403974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504958903048615024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a5abeea3234802a8bb83a24a7ecd5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridLayoutGroup: {fileID: 5018647483501280653}
 --- !u!1 &6432502065962493920
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +627,7 @@ GameObject:
   - component: {fileID: 5014294479607306275}
   - component: {fileID: 2818207152320184814}
   m_Layer: 5
-  m_Name: CharacterSelection_Canvas
+  m_Name: CharacterSelectionScreen_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,4 +731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08128ef12fcfd204eb9352f576a3a9b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridLayoutGroup: {fileID: 5018647483501280653}
+  <CharacterPreviewPanel>k__BackingField: {fileID: 7529245500925770894}
+  <CharacterSelectionPanel>k__BackingField: {fileID: 3279718132341403974}
+  <CharacterInfoPanel>k__BackingField: {fileID: 5735695909625095474}

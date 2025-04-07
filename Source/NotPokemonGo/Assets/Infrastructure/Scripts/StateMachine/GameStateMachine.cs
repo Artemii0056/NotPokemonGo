@@ -22,8 +22,7 @@ namespace Infrastructure.Scripts.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadMainMenuState)] =
-                    new LoadMainMenuState(this, sceneLoader, uiFactory),
+                [typeof(LoadMainMenuState)] = new LoadMainMenuState(this, sceneLoader, uiFactory),
             };
         }
 

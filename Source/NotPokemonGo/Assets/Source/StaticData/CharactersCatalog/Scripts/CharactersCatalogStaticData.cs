@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Source.StaticData.CharactersCatalog.Scripts
@@ -6,6 +8,17 @@ namespace Source.StaticData.CharactersCatalog.Scripts
     [CreateAssetMenu(fileName = "Catalog", menuName = "StaticData/Catalog")]
     public class CharactersCatalogStaticData : ScriptableObject
     {
-        public List<CharacterItemConfig> Characters;
+        [SerializeField] private List<CharacterItemConfig> _characterItemConfigs;
+
+        public IEnumerable<CharacterItemConfig> CharacterItemConfigs => _characterItemConfigs;
+
+        public void OnValidate()
+        {
+            var duplicate = _characterItemConfigs.GroupBy(item => item.Sprite)
+                .Where(group => group.Count() > 1);
+
+            if (duplicate.Any())
+                throw new Exception($"Duplicate sprite found: {duplicate}");
+        }
     }
 }

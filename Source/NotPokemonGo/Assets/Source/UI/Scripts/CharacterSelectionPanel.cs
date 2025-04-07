@@ -1,10 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterSelectionPanel : MonoBehaviour
+namespace Source.UI.Scripts
 {
-    [SerializeField] private GridLayoutGroup _gridLayoutGroup;
+    public class CharacterSelectionPanel : MonoBehaviour
+    {
+        [SerializeField] private GridLayoutGroup _gridLayoutGroup;
 
-    public void AddItem(CharacterSkinItem skinItem) => 
-        skinItem.transform.SetParent(_gridLayoutGroup.transform, false);
+        public void AddItem(CharacterSkinItemView skinItemView) => 
+            skinItemView.transform.SetParent(_gridLayoutGroup.transform, false);
+    }
 }
