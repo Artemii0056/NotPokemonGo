@@ -14,9 +14,9 @@ namespace Source.StaticData.CharactersCatalog.Scripts
 
         public void OnValidate()
         {
-            var duplicate = _characterItemConfigs.GroupBy(item => item.Sprite)
+            var duplicate = _characterItemConfigs.GroupBy(item => item.ContentImage)
                 .Where(group => group.Count() > 1);
-
+        
             if (duplicate.Any())
                 throw new Exception($"Duplicate sprite found: {duplicate}");
         }

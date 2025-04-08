@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CharacterStaticData>k__BackingField: {fileID: 11400000, guid: 0393ed76e9239524da50c2febf12fdb9, type: 2}
   <CharacterModel>k__BackingField: {fileID: 4646260521948054988, guid: 5dfd550acabedd143bf45d711b4b0667, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 5a41844cf7a9bf14dbc4119fcd5fa5ad, type: 3}
   <Price>k__BackingField: 0
+  <ContentImage>k__BackingField: {fileID: 21300000, guid: e3d6e2cabfe01ff45afe68c98f1e8555, type: 3}

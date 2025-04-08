@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b626a1dd94f4817b1149ea7ed698451, type: 3}
   m_Name: Catalog
   m_EditorClassIdentifier: 
-  Characters:
+  _characterItemConfigs:
   - {fileID: 11400000, guid: 93c37929f34e35046984561c1325b151, type: 2}
   - {fileID: 11400000, guid: a7ac6cd1ccadfde4682caf674d9fb3d5, type: 2}

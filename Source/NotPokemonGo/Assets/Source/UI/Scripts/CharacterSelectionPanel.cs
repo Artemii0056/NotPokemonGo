@@ -1,13 +1,34 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Source.UI.Scripts
 {
     public class CharacterSelectionPanel : MonoBehaviour
     {
-        [SerializeField] private GridLayoutGroup _gridLayoutGroup;
+        [SerializeField] private Transform _gridLayoutGroupTransform;
 
-        public void AddItem(CharacterSkinItemView skinItemView) => 
-            skinItemView.transform.SetParent(_gridLayoutGroup.transform, false);
+        private List<CharacterSkinItemView> _characterSkinItemViews = new List<CharacterSkinItemView>();
+        
+        public event Action<CharacterSkinItemView> Clicked;
+
+        public void AddItem(CharacterSkinItemView skinItemView)
+        {
+            _characterSkinItemViews.Add(skinItemView);
+            skinItemView.transform.SetParent(_gridLayoutGroupTransform, false);
+            skinItemView.gameObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            foreach (var characterSkin in _characterSkinItemViews)
+            {
+                characterSkin.gameObject.SetActive(true);
+                characterSkin.OnClicked += OnSkinClicked;
+            }
+        }
+
+        private void OnSkinClicked(CharacterSkinItemView itemView) => 
+            Clicked?.Invoke(itemView);
     }
 }

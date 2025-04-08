@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: ItemConfig 1
   m_EditorClassIdentifier: 
   <CharacterStaticData>k__BackingField: {fileID: 11400000, guid: 46c3932ca20a464488a8d02041ba7eeb, type: 2}
+  UIInfos:
+  - text: {fileID: 0}
+    image: {fileID: 0}
   <CharacterModel>k__BackingField: {fileID: 8838255886287992452, guid: 2af658c6ac2964c47916f4e3fc109db0, type: 3}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 14e97d44cf1586f4ba766c661b158eaf, type: 3}
   <Price>k__BackingField: 0
+  <ContentImage>k__BackingField: {fileID: 21300000, guid: 14e97d44cf1586f4ba766c661b158eaf, type: 3}

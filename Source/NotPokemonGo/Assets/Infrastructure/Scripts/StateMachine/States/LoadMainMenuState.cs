@@ -28,9 +28,10 @@ namespace Infrastructure.Scripts.StateMachine.States
             MainMenuUI mainMenu = _uiFactory.CreateMainMenu();
             mainMenu.gameObject.SetActive(false);
             CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
+            //selectionScreenPanel.Show();
             //selectionPanel.gameObject.SetActive(false);
-            
-            
+
+
         }
     }
 }
