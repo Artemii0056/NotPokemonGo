@@ -1,3 +1,5 @@
+using Infrastructure.Scripts.StateMachine.States;
+using Source.Characters.Configs;
 using Source.UI.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,18 +11,27 @@ public class CharacterSelectionScreenPanel : MonoBehaviour
     [field: SerializeField] public CharacterInfoPanel CharacterInfoPanel { get; private set; }
 
     [SerializeField] private Button _showButton;
+    [SerializeField] private Button _startGameButton;
+    
+    private CharacterType _characterType;
+    private LoadMainMenuState _loadMainMenuState;
 
     private void OnEnable()
     {
         _showButton.onClick.AddListener(OnShowButtonClicked);
         CharacterSelectionPanel.Clicked += OnCharacterSelectionPanelClicked;
+        _startGameButton.onClick.AddListener(OnStartGameButtonClicked);
     }
     
     private void OnDisable()
     {
         _showButton.onClick.RemoveListener(OnShowButtonClicked);
         CharacterSelectionPanel.Clicked -= OnCharacterSelectionPanelClicked;
+        _startGameButton.onClick.RemoveListener(OnStartGameButtonClicked);
     }
+
+    public void Initialize(LoadMainMenuState loadMainMenuState) => 
+        _loadMainMenuState = loadMainMenuState;
 
     private void OnCharacterSelectionPanelClicked(CharacterSkinItemView itemView)
     {
@@ -29,15 +40,19 @@ public class CharacterSelectionScreenPanel : MonoBehaviour
         CharacterPreviewPanel.Setup(characterPreviewPanel);
         
         CharacterInfoPanel.CreateItemViews(itemView.CharacterItemConfig);
+        
+        _startGameButton.gameObject.SetActive(true);
+        _characterType = itemView.CharacterItemConfig.CharacterStaticData.Type;
+    }
+    
+    private void OnStartGameButtonClicked()
+    {
+        
     }
 
-    private void OnShowButtonClicked()
-    {
+    private void OnShowButtonClicked() => 
         Show();
-    }
 
-    private void Show()
-    {
+    private void Show() => 
         CharacterSelectionPanel.Show();
-    }
 }

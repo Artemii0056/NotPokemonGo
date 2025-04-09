@@ -30,8 +30,6 @@ namespace Infrastructure.Scripts.StateMachine.States
             CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
             //selectionScreenPanel.Show();
             //selectionPanel.gameObject.SetActive(false);
-
-
         }
     }
 }

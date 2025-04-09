@@ -7,9 +7,9 @@ public class CharacteristicItemView : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private TextMeshProUGUI _text;
 
-    public void Initialize(Sprite icon, TextMeshProUGUI text)
+    public void Initialize(Sprite icon, string text)
     {
         _icon.sprite = icon;
-        _text = text;
+        _text.text = text;
     }
 }

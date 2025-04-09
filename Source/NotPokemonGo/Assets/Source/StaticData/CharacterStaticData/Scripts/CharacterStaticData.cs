@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Source.Characters.Configs;
 using UnityEngine;
@@ -14,13 +15,23 @@ namespace Source.StaticData.CharacterStaticData.Scripts
         public Stat DodgeChance;
         public Stat Accuracy;
         public Stat ArmorChance;
-        
-       // public List<Stat> Stats = new List<Stat>(Health, Mana, DodgeChance, Accuracy, ArmorChance);
-       
-       public List<Stat> Stats;
+
+        private List<Stat> _stats;
+
+        public List<Stat> Stats => new List<Stat>(_stats);
 
         [SerializeField] private List<ISpell> _spells = new List<ISpell>();
 
         public List<ISpell> Spells => new List<ISpell>(_spells);
+
+        private void OnEnable()
+        {
+            _stats = new List<Stat>();
+            _stats.Add(Health);
+            _stats.Add(Mana);
+            _stats.Add(DodgeChance);
+            _stats.Add(Accuracy);
+            _stats.Add(ArmorChance);
+        }
     }
 }
