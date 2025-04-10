@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: CharacterConfig 1
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
-  HealthPoints: 10
-  ManaPoints: 0
-  DodgeChance: 0
-  Accuracy: 0
-  ArmorChance: 0
+  Health:
+    <StatsType>k__BackingField: 0
+    Value: 38
+  Mana:
+    <StatsType>k__BackingField: 1
+    Value: 121
+  DodgeChance:
+    <StatsType>k__BackingField: 2
+    Value: 146
+  Accuracy:
+    <StatsType>k__BackingField: 3
+    Value: 65
+  ArmorChance:
+    <StatsType>k__BackingField: 4
+    Value: 157

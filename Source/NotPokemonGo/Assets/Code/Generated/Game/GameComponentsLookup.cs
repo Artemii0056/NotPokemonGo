@@ -12,20 +12,26 @@ public static class GameComponentsLookup {
     public const int Health = 1;
     public const int Speed = 2;
     public const int Transform = 3;
+    public const int Id = 4;
+    public const int Speed = 5;
 
-    public const int TotalComponents = 4;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
         "Damage",
         "Health",
         "Speed",
-        "Transform"
+        "Transform",
+        "Id",
+        "Speed"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(Code.Gameplay.FirstComponent.Damage),
         typeof(Code.Gameplay.FirstComponent.Health),
         typeof(Code.Gameplay.FirstComponent.Speed),
-        typeof(Code.Gameplay.FirstComponent.TransformComponent)
+        typeof(Code.Gameplay.FirstComponent.TransformComponent),
+        typeof(TestECS.Gameplay.Code.Common.Id),
+        typeof(TestECS.Gameplay.Code.Features.FeaturesComponents.Speed)
     };
 }
