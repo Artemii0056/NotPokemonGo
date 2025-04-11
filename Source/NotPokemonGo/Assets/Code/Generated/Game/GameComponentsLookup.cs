@@ -8,30 +8,33 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Damage = 0;
-    public const int Health = 1;
-    public const int Speed = 2;
-    public const int Transform = 3;
-    public const int Id = 4;
-    public const int Speed = 5;
+    public const int Id = 0;
+    public const int Direction = 1;
+    public const int Moving = 2;
+    public const int Speed = 3;
+    public const int WorldPosition = 4;
+    public const int AxisInput = 5;
+    public const int Input = 6;
 
-    public const int TotalComponents = 6;
+    public const int TotalComponents = 7;
 
     public static readonly string[] componentNames = {
-        "Damage",
-        "Health",
-        "Speed",
-        "Transform",
         "Id",
-        "Speed"
+        "Direction",
+        "Moving",
+        "Speed",
+        "WorldPosition",
+        "AxisInput",
+        "Input"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(Code.Gameplay.FirstComponent.Damage),
-        typeof(Code.Gameplay.FirstComponent.Health),
-        typeof(Code.Gameplay.FirstComponent.Speed),
-        typeof(Code.Gameplay.FirstComponent.TransformComponent),
         typeof(TestECS.Gameplay.Code.Common.Id),
-        typeof(TestECS.Gameplay.Code.Features.FeaturesComponents.Speed)
+        typeof(TestECS.Gameplay.Code.Features.Direction),
+        typeof(TestECS.Gameplay.Code.Features.Moving),
+        typeof(TestECS.Gameplay.Code.Features.Speed),
+        typeof(TestECS.Gameplay.Code.Features.WorldPosition),
+        typeof(TestECS.Gameplay.Input.InputComponents.AxisInput),
+        typeof(TestECS.Gameplay.Input.InputComponents.Input)
     };
 }
