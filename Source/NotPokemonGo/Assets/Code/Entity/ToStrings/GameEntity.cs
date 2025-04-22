@@ -4,6 +4,8 @@ using System.Text;
 using Code.Entity.ToStrings;
 using Code.Extensions;
 using Entitas;
+using TestECS.Gameplay.Enemies;
+using TestECS.Gameplay.Hero;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
@@ -30,20 +32,18 @@ public sealed partial class GameEntity : INamedEntity
 
             foreach (IComponent component in components)
             {
-                // switch (component.GetType().Name)
-                // {
-                //     case nameof(Hero):
-                //         return PrintHero();
-                //
-                //     case nameof(Enemy):
-                //         return PrintEnemy();
-                // }
+                switch (component.GetType().Name)
+                {
+                    case nameof(Hero):
+                        return PrintHero();
+                
+                    case nameof(Enemy):
+                        return PrintEnemy();
+                }
             }
         }
         catch (Exception exception)
         {
-            Debug
-                .LogWarning("Сука блиять");
             Debug.LogError(exception.Message);
         }
 

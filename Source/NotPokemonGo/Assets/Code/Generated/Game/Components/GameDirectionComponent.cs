@@ -33,21 +33,21 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public TestECS.Gameplay.Code.Features.Direction direction { get { return (TestECS.Gameplay.Code.Features.Direction)GetComponent(GameComponentsLookup.Direction); } }
-    public UnityEngine.Vector2 Direction { get { return direction.Value; } }
+    public TestECS.Gameplay.Features.Movement.Direction direction { get { return (TestECS.Gameplay.Features.Movement.Direction)GetComponent(GameComponentsLookup.Direction); } }
+    public UnityEngine.Vector3 Direction { get { return direction.Value; } }
     public bool hasDirection { get { return HasComponent(GameComponentsLookup.Direction); } }
 
-    public GameEntity AddDirection(UnityEngine.Vector2 newValue) {
+    public GameEntity AddDirection(UnityEngine.Vector3 newValue) {
         var index = GameComponentsLookup.Direction;
-        var component = (TestECS.Gameplay.Code.Features.Direction)CreateComponent(index, typeof(TestECS.Gameplay.Code.Features.Direction));
+        var component = (TestECS.Gameplay.Features.Movement.Direction)CreateComponent(index, typeof(TestECS.Gameplay.Features.Movement.Direction));
         component.Value = newValue;
         AddComponent(index, component);
         return this;
     }
 
-    public GameEntity ReplaceDirection(UnityEngine.Vector2 newValue) {
+    public GameEntity ReplaceDirection(UnityEngine.Vector3 newValue) {
         var index = GameComponentsLookup.Direction;
-        var component = (TestECS.Gameplay.Code.Features.Direction)CreateComponent(index, typeof(TestECS.Gameplay.Code.Features.Direction));
+        var component = (TestECS.Gameplay.Features.Movement.Direction)CreateComponent(index, typeof(TestECS.Gameplay.Features.Movement.Direction));
         component.Value = newValue;
         ReplaceComponent(index, component);
         return this;

@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Infrastructure.Scripts;
+using TestECS.Gameplay.Input.Service;
 using UnityEngine;
 
 namespace TestECS.Gameplay.Input.Systems

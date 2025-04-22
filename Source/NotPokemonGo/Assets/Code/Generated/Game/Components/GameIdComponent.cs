@@ -33,13 +33,13 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public TestECS.Gameplay.Code.Common.Id id { get { return (TestECS.Gameplay.Code.Common.Id)GetComponent(GameComponentsLookup.Id); } }
+    public Code.Common.CommonComponents.Id id { get { return (Code.Common.CommonComponents.Id)GetComponent(GameComponentsLookup.Id); } }
     public int Id { get { return id.Value; } }
     public bool hasId { get { return HasComponent(GameComponentsLookup.Id); } }
 
     public GameEntity AddId(int newValue) {
         var index = GameComponentsLookup.Id;
-        var component = (TestECS.Gameplay.Code.Common.Id)CreateComponent(index, typeof(TestECS.Gameplay.Code.Common.Id));
+        var component = (Code.Common.CommonComponents.Id)CreateComponent(index, typeof(Code.Common.CommonComponents.Id));
         component.Value = newValue;
         AddComponent(index, component);
         return this;
@@ -47,7 +47,7 @@ public partial class GameEntity {
 
     public GameEntity ReplaceId(int newValue) {
         var index = GameComponentsLookup.Id;
-        var component = (TestECS.Gameplay.Code.Common.Id)CreateComponent(index, typeof(TestECS.Gameplay.Code.Common.Id));
+        var component = (Code.Common.CommonComponents.Id)CreateComponent(index, typeof(Code.Common.CommonComponents.Id));
         component.Value = newValue;
         ReplaceComponent(index, component);
         return this;

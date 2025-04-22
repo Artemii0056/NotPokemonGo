@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace TestECS.Gameplay.Input
+namespace TestECS.Gameplay.Input.Service
 {
     public class StandaloneInputService : IInputService
     {

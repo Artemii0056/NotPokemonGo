@@ -1,42 +1,14 @@
-﻿using System;
-using Code.Entity;
-using Entitas;
-using UnityEngine;
+﻿using Infrastructure.Systems;
+using TestECS.Gameplay.Input.Systems;
 
-namespace TestECS.Gameplay.Input.Systems
+namespace TestECS.Gameplay.Input
 {
     public class InputFeature : Feature
     {
-        public InputFeature(GameContext context, IInputService inputService)
+        public InputFeature(ISystemFactory factory)
         {
-            Add(new InitializeInputSystem());
-            Add(new EmitInputSystem(context, inputService));
-            Add(new TestSystem(inputService));
-        }
-    }
-
-    public class TestSystem : IExecuteSystem
-    {
-        private readonly IInputService _inputService;
-
-        public TestSystem(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
-
-        public void Execute()
-        {
-            if (_inputService.GetLeftMouseButtonDown())
-            {
-                 CreateEntity.
-                    Empty()
-                    .AddId(1)
-                    .AddSpeed(2)
-                    .AddWorldPosition(default)
-                    .AddDirection(default);
-
-                 Debug.Log("Created");
-            }
+            Add(factory.Create<InitializeInputSystem>());
+            Add(factory.Create<EmitInputSystem>());
         }
     }
 }

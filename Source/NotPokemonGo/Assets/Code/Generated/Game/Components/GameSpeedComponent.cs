@@ -33,21 +33,21 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public TestECS.Gameplay.Code.Features.Speed speed { get { return (TestECS.Gameplay.Code.Features.Speed)GetComponent(GameComponentsLookup.Speed); } }
-    public int Speed { get { return speed.Value; } }
+    public TestECS.Gameplay.Features.Movement.Speed speed { get { return (TestECS.Gameplay.Features.Movement.Speed)GetComponent(GameComponentsLookup.Speed); } }
+    public float Speed { get { return speed.Value; } }
     public bool hasSpeed { get { return HasComponent(GameComponentsLookup.Speed); } }
 
-    public GameEntity AddSpeed(int newValue) {
+    public GameEntity AddSpeed(float newValue) {
         var index = GameComponentsLookup.Speed;
-        var component = (TestECS.Gameplay.Code.Features.Speed)CreateComponent(index, typeof(TestECS.Gameplay.Code.Features.Speed));
+        var component = (TestECS.Gameplay.Features.Movement.Speed)CreateComponent(index, typeof(TestECS.Gameplay.Features.Movement.Speed));
         component.Value = newValue;
         AddComponent(index, component);
         return this;
     }
 
-    public GameEntity ReplaceSpeed(int newValue) {
+    public GameEntity ReplaceSpeed(float newValue) {
         var index = GameComponentsLookup.Speed;
-        var component = (TestECS.Gameplay.Code.Features.Speed)CreateComponent(index, typeof(TestECS.Gameplay.Code.Features.Speed));
+        var component = (TestECS.Gameplay.Features.Movement.Speed)CreateComponent(index, typeof(TestECS.Gameplay.Features.Movement.Speed));
         component.Value = newValue;
         ReplaceComponent(index, component);
         return this;

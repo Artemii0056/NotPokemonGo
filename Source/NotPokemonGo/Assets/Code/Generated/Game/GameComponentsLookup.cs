@@ -8,33 +8,141 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Id = 0;
-    public const int Direction = 1;
-    public const int Moving = 2;
-    public const int Speed = 3;
-    public const int WorldPosition = 4;
-    public const int AxisInput = 5;
-    public const int Input = 6;
+    public const int Damage = 0;
+    public const int DamageTakenAnimator = 1;
+    public const int Destructed = 2;
+    public const int Id = 3;
+    public const int SelfDestructTimer = 4;
+    public const int Transform = 5;
+    public const int View = 6;
+    public const int ViewPath = 7;
+    public const int ViewPrefab = 8;
+    public const int WorldPosition = 9;
+    public const int Enemy = 10;
+    public const int EnemyAnimator = 11;
+    public const int EnemyTypeId = 12;
+    public const int SpawnTimer = 13;
+    public const int AbilityId = 14;
+    public const int RadialBoltAbility = 15;
+    public const int VegetableBoltAbility = 16;
+    public const int Armament = 17;
+    public const int Processed = 18;
+    public const int TargetLimit = 19;
+    public const int Cooldown = 20;
+    public const int CooldownLeft = 21;
+    public const int CooldownUp = 22;
+    public const int CurrentHealthPoint = 23;
+    public const int Dead = 24;
+    public const int MaxHealthPoint = 25;
+    public const int ProcessingDeath = 26;
+    public const int Direction = 27;
+    public const int MovementAvailable = 28;
+    public const int Moving = 29;
+    public const int Speed = 30;
+    public const int Hero = 31;
+    public const int HeroAnimator = 32;
+    public const int AxisInput = 33;
+    public const int Input = 34;
+    public const int CollectingTargetsContinuously = 35;
+    public const int CollectTargetsInterval = 36;
+    public const int CollectTargetsTimer = 37;
+    public const int LayerMask = 38;
+    public const int ProcessedTargets = 39;
+    public const int Radius = 40;
+    public const int ReadyToCollectTargets = 41;
+    public const int TargetsBuffer = 42;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 43;
 
     public static readonly string[] componentNames = {
+        "Damage",
+        "DamageTakenAnimator",
+        "Destructed",
         "Id",
+        "SelfDestructTimer",
+        "Transform",
+        "View",
+        "ViewPath",
+        "ViewPrefab",
+        "WorldPosition",
+        "Enemy",
+        "EnemyAnimator",
+        "EnemyTypeId",
+        "SpawnTimer",
+        "AbilityId",
+        "RadialBoltAbility",
+        "VegetableBoltAbility",
+        "Armament",
+        "Processed",
+        "TargetLimit",
+        "Cooldown",
+        "CooldownLeft",
+        "CooldownUp",
+        "CurrentHealthPoint",
+        "Dead",
+        "MaxHealthPoint",
+        "ProcessingDeath",
         "Direction",
+        "MovementAvailable",
         "Moving",
         "Speed",
-        "WorldPosition",
+        "Hero",
+        "HeroAnimator",
         "AxisInput",
-        "Input"
+        "Input",
+        "CollectingTargetsContinuously",
+        "CollectTargetsInterval",
+        "CollectTargetsTimer",
+        "LayerMask",
+        "ProcessedTargets",
+        "Radius",
+        "ReadyToCollectTargets",
+        "TargetsBuffer"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(TestECS.Gameplay.Code.Common.Id),
-        typeof(TestECS.Gameplay.Code.Features.Direction),
-        typeof(TestECS.Gameplay.Code.Features.Moving),
-        typeof(TestECS.Gameplay.Code.Features.Speed),
-        typeof(TestECS.Gameplay.Code.Features.WorldPosition),
+        typeof(Code.Common.CommonComponents.Damage),
+        typeof(Code.Common.CommonComponents.DamageTakenAnimatorComponent),
+        typeof(Code.Common.CommonComponents.Destructed),
+        typeof(Code.Common.CommonComponents.Id),
+        typeof(Code.Common.CommonComponents.SelfDestructTimer),
+        typeof(Code.Common.CommonComponents.TransformComponent),
+        typeof(Code.Common.CommonComponents.View),
+        typeof(Code.Common.CommonComponents.ViewPath),
+        typeof(Code.Common.CommonComponents.ViewPrefab),
+        typeof(Code.Common.CommonComponents.WorldPosition),
+        typeof(TestECS.Gameplay.Enemies.Enemy),
+        typeof(TestECS.Gameplay.Enemies.EnemyAnimatorComponent),
+        typeof(TestECS.Gameplay.Enemies.EnemyTypeIdComponent),
+        typeof(TestECS.Gameplay.Enemies.SpawnTimer),
+        typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.AbilityIdComponent),
+        typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.RadialBoltAbility),
+        typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.VegetableBoltAbility),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.Armament),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.Processed),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.TargetLimit),
+        typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.Cooldown),
+        typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.CooldownLeft),
+        typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.CooldownUp),
+        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint),
+        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.Dead),
+        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint),
+        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.ProcessingDeath),
+        typeof(TestECS.Gameplay.Features.Movement.Direction),
+        typeof(TestECS.Gameplay.Features.Movement.MovementAvailable),
+        typeof(TestECS.Gameplay.Features.Movement.Moving),
+        typeof(TestECS.Gameplay.Features.Movement.Speed),
+        typeof(TestECS.Gameplay.Hero.Hero),
+        typeof(TestECS.Gameplay.Hero.HeroAnimatorComponent),
         typeof(TestECS.Gameplay.Input.InputComponents.AxisInput),
-        typeof(TestECS.Gameplay.Input.InputComponents.Input)
+        typeof(TestECS.Gameplay.Input.InputComponents.Input),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.CollectingTargetsContinuously),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.CollectTargetsInterval),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.CollectTargetsTimer),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.LayerMask),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.ProcessedTargets),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.Radius),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.ReadyToCollectTargets),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.TargetsBuffer)
     };
 }

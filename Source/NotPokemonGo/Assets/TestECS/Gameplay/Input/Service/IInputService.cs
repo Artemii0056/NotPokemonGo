@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace TestECS.Gameplay.Input
+namespace TestECS.Gameplay.Input.Service
 {
     public interface IInputService
     {
