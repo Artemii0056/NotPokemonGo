@@ -41,5 +41,17 @@ namespace TestECS.Gameplay.Features.Abilities.Factory
                 .With(x => x.isRadialBoltAbility = true)
                 .PutOnCooldown();
         }
+        
+        public GameEntity CreateBouncingBoltAbility(int level)
+        {
+            AbilityLevel abilityLevel = _staticDataService.GetAbilityLevel(AbilityId.BouncingBolt, level);
+
+            return CreateEntity.Empty()
+                .AddId(_idService.Next())
+                .AddAbilityId(AbilityId.BouncingBolt)
+                .AddCooldown(abilityLevel.Cooldown)
+                .With(x => x.isBouncingBoltAbility = true)
+                .PutOnCooldown();
+        }
     }
 }

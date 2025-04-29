@@ -2,14 +2,9 @@
 using System.Linq;
 using Code.Extensions;
 using Entitas;
-using NUnit.Framework.Constraints;
 using TestECS.Gameplay.Features.Armaments.Factory;
 using TestECS.Gameplay.Features.Cooldowns;
 using TestECS.Services.StaticData;
-using Unity.Android.Gradle.Manifest;
-using UnityEditorInternal;
-using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace TestECS.Gameplay.Features.Abilities.System
 {
@@ -58,6 +53,7 @@ namespace TestECS.Gameplay.Features.Abilities.System
                 
                 _armamentsFactory
                     .CreateVegetableBolt(1, hero.WorldPosition)
+                    .AddProducerId(hero.Id)
                     .ReplaceDirection((FirstAvailableTarget().WorldPosition - hero.WorldPosition).normalized)
                     .With(x => x.isMoving = true);
                 

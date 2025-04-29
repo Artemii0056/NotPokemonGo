@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68191a1d1f841f898da50a66381d35c, type: 3}
   m_Name: RadialAbilityConfig
   m_EditorClassIdentifier: 
-  AbilityId: 1
+  AbilityId: 2
   AbilityLevels:
-  - Cooldown: 1
-    ViewPrefab: {fileID: 1504771424193709542, guid: 08ce9f5922001044d87f0b92a159a8c4, type: 3}
+  - Cooldown: 2
+    ViewPrefab: {fileID: 1699592053054940555, guid: 07f8e7a129bbb3547ad627070b89b429, type: 3}
     ProjectileSetup:
-      Speed: 2
+      Speed: 3
       Pierce: 3
       ContactRadius: 0.1
-      Lifetime: 3
+      Lifetime: 2.5
+      FragmentsCount: 4

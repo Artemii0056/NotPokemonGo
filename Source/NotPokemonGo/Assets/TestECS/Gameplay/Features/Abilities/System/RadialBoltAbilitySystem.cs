@@ -42,11 +42,8 @@ namespace TestECS.Gameplay.Features.Abilities.System
             foreach (GameEntity hero in _heroes)
             foreach (GameEntity ability in _abilities.GetEntities(_buffer))
             {
-                _armamentsFactory
-                    .CreateRadialBolt(1, hero.WorldPosition)
-                    .ReplaceDirection((ability.WorldPosition + hero.WorldPosition).normalized)
-                    .With(x => x.isMoving = true);
-
+                CreateFragmentArmaments(hero.WorldPosition);
+                
                 ability
                     .PutOnCooldown(_staticDataService.GetAbilityLevel(AbilityId.RadialBolt, 1).Cooldown);
             }
@@ -58,13 +55,16 @@ namespace TestECS.Gameplay.Features.Abilities.System
             
             int countFragments = abilityLevel.ProjectileSetup.FragmentsCount;
             
-            float angle = 360f / countFragments;
-
             for (int i = 0; i < countFragments; i++)
             {
+                float angle = (360f / countFragments) * i;
+                float radians = angle * Mathf.Deg2Rad;
+
+                Vector3 direction = new Vector3(Mathf.Cos(radians),0 ,Mathf.Sin(radians)).normalized;
+                
                 _armamentsFactory
                     .CreateRadialBolt(1, heroPosition)
-                    .ReplaceDirection((ability.WorldPosition + heroPosition).normalized)
+                    .ReplaceDirection(direction)
                     .With(x => x.isMoving = true);
             }
         }

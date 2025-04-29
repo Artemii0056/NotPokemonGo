@@ -11,7 +11,8 @@ namespace TestECS.Gameplay.Features.Abilities
             Add(systemFactory.Create<CooldownSystem>());
             
             Add(systemFactory.Create<VegetableAbilitySystem>());
-            Add(systemFactory.Create<RadialBoltAbilitySystem>());
+            //Add(systemFactory.Create<RadialBoltAbilitySystem>());
+            // Add(systemFactory.Create<BouncingProjectileAbilitySystem>());
         }
     }
 }

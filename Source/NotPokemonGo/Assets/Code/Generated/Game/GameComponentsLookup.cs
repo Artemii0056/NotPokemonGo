@@ -13,46 +13,71 @@ public static class GameComponentsLookup {
     public const int Destructed = 2;
     public const int Id = 3;
     public const int SelfDestructTimer = 4;
-    public const int Transform = 5;
-    public const int View = 6;
-    public const int ViewPath = 7;
-    public const int ViewPrefab = 8;
-    public const int WorldPosition = 9;
-    public const int Enemy = 10;
-    public const int EnemyAnimator = 11;
-    public const int EnemyTypeId = 12;
-    public const int SpawnTimer = 13;
-    public const int AbilityId = 14;
-    public const int RadialBoltAbility = 15;
-    public const int VegetableBoltAbility = 16;
-    public const int Armament = 17;
-    public const int Processed = 18;
-    public const int TargetLimit = 19;
-    public const int Cooldown = 20;
-    public const int CooldownLeft = 21;
-    public const int CooldownUp = 22;
-    public const int CurrentHealthPoint = 23;
-    public const int Dead = 24;
-    public const int MaxHealthPoint = 25;
-    public const int ProcessingDeath = 26;
-    public const int Direction = 27;
-    public const int MovementAvailable = 28;
-    public const int Moving = 29;
-    public const int Speed = 30;
-    public const int Hero = 31;
-    public const int HeroAnimator = 32;
-    public const int AxisInput = 33;
-    public const int Input = 34;
-    public const int CollectingTargetsContinuously = 35;
-    public const int CollectTargetsInterval = 36;
-    public const int CollectTargetsTimer = 37;
-    public const int LayerMask = 38;
-    public const int ProcessedTargets = 39;
-    public const int Radius = 40;
-    public const int ReadyToCollectTargets = 41;
-    public const int TargetsBuffer = 42;
+    public const int StatusVisuals = 5;
+    public const int Transform = 6;
+    public const int View = 7;
+    public const int ViewPath = 8;
+    public const int ViewPrefab = 9;
+    public const int WorldPosition = 10;
+    public const int Enemy = 11;
+    public const int EnemyAnimator = 12;
+    public const int EnemyTypeId = 13;
+    public const int SpawnTimer = 14;
+    public const int AbilityId = 15;
+    public const int BouncingBoltAbility = 16;
+    public const int NeedTarget = 17;
+    public const int RadialBoltAbility = 18;
+    public const int VegetableBoltAbility = 19;
+    public const int Armament = 20;
+    public const int BouncingArmament = 21;
+    public const int EffectSetups = 22;
+    public const int Processed = 23;
+    public const int ReachedToTarget = 24;
+    public const int StatusSetups = 25;
+    public const int TargetLimit = 26;
+    public const int BaseStats = 27;
+    public const int StatChange = 28;
+    public const int StatModifiers = 29;
+    public const int Cooldown = 30;
+    public const int CooldownLeft = 31;
+    public const int CooldownUp = 32;
+    public const int CurrentHealthPoint = 33;
+    public const int Dead = 34;
+    public const int MaxHealthPoint = 35;
+    public const int ProcessingDeath = 36;
+    public const int DamageEffect = 37;
+    public const int Effect = 38;
+    public const int EffectTargetId = 39;
+    public const int EffectValue = 40;
+    public const int ProducerId = 41;
+    public const int Direction = 42;
+    public const int MovementAvailable = 43;
+    public const int Moving = 44;
+    public const int Speed = 45;
+    public const int Applied = 46;
+    public const int Duration = 47;
+    public const int Period = 48;
+    public const int Poison = 49;
+    public const int Status = 50;
+    public const int StatusTypeId = 51;
+    public const int TimeLeft = 52;
+    public const int TimeSinceLastTick = 53;
+    public const int Unapplied = 54;
+    public const int Hero = 55;
+    public const int HeroAnimator = 56;
+    public const int AxisInput = 57;
+    public const int Input = 58;
+    public const int CollectingTargetsContinuously = 59;
+    public const int CollectTargetsInterval = 60;
+    public const int CollectTargetsTimer = 61;
+    public const int LayerMask = 62;
+    public const int ProcessedTargets = 63;
+    public const int Radius = 64;
+    public const int ReadyToCollectTargets = 65;
+    public const int TargetId = 66;
+    public const int TargetsBuffer = 67;
 
-    public const int TotalComponents = 43;
+    public const int TotalComponents = 68;
 
     public static readonly string[] componentNames = {
         "Damage",
@@ -60,6 +85,7 @@ public static class GameComponentsLookup {
         "Destructed",
         "Id",
         "SelfDestructTimer",
+        "StatusVisuals",
         "Transform",
         "View",
         "ViewPath",
@@ -70,11 +96,20 @@ public static class GameComponentsLookup {
         "EnemyTypeId",
         "SpawnTimer",
         "AbilityId",
+        "BouncingBoltAbility",
+        "NeedTarget",
         "RadialBoltAbility",
         "VegetableBoltAbility",
         "Armament",
+        "BouncingArmament",
+        "EffectSetups",
         "Processed",
+        "ReachedToTarget",
+        "StatusSetups",
         "TargetLimit",
+        "BaseStats",
+        "StatChange",
+        "StatModifiers",
         "Cooldown",
         "CooldownLeft",
         "CooldownUp",
@@ -82,10 +117,24 @@ public static class GameComponentsLookup {
         "Dead",
         "MaxHealthPoint",
         "ProcessingDeath",
+        "DamageEffect",
+        "Effect",
+        "EffectTargetId",
+        "EffectValue",
+        "ProducerId",
         "Direction",
         "MovementAvailable",
         "Moving",
         "Speed",
+        "Applied",
+        "Duration",
+        "Period",
+        "Poison",
+        "Status",
+        "StatusTypeId",
+        "TimeLeft",
+        "TimeSinceLastTick",
+        "Unapplied",
         "Hero",
         "HeroAnimator",
         "AxisInput",
@@ -97,6 +146,7 @@ public static class GameComponentsLookup {
         "ProcessedTargets",
         "Radius",
         "ReadyToCollectTargets",
+        "TargetId",
         "TargetsBuffer"
     };
 
@@ -106,6 +156,7 @@ public static class GameComponentsLookup {
         typeof(Code.Common.CommonComponents.Destructed),
         typeof(Code.Common.CommonComponents.Id),
         typeof(Code.Common.CommonComponents.SelfDestructTimer),
+        typeof(Code.Common.CommonComponents.StatusVisualsComponent),
         typeof(Code.Common.CommonComponents.TransformComponent),
         typeof(Code.Common.CommonComponents.View),
         typeof(Code.Common.CommonComponents.ViewPath),
@@ -116,22 +167,45 @@ public static class GameComponentsLookup {
         typeof(TestECS.Gameplay.Enemies.EnemyTypeIdComponent),
         typeof(TestECS.Gameplay.Enemies.SpawnTimer),
         typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.AbilityIdComponent),
+        typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.BouncingBoltAbility),
+        typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.NeedTarget),
         typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.RadialBoltAbility),
         typeof(TestECS.Gameplay.Features.Abilities.AbilityComponents.VegetableBoltAbility),
         typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.Armament),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.BouncingArmament),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.EffectSetups),
         typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.Processed),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.ReachedToTarget),
+        typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.StatusSetups),
         typeof(TestECS.Gameplay.Features.Armaments.ArmamentsComponents.TargetLimit),
+        typeof(TestECS.Gameplay.Features.CharacterStats.StatsComponents.BaseStats),
+        typeof(TestECS.Gameplay.Features.CharacterStats.StatsComponents.StatChange),
+        typeof(TestECS.Gameplay.Features.CharacterStats.StatsComponents.StatModifiers),
         typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.Cooldown),
         typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.CooldownLeft),
         typeof(TestECS.Gameplay.Features.Cooldowns.CooldownsComponents.CooldownUp),
-        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint),
-        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.Dead),
-        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint),
-        typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.ProcessingDeath),
+        typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint),
+        typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.Dead),
+        typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint),
+        typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.ProcessingDeath),
+        typeof(TestECS.Gameplay.Features.Effects.DamageEffect),
+        typeof(TestECS.Gameplay.Features.Effects.Effect),
+        typeof(TestECS.Gameplay.Features.Effects.EffectTargetId),
+        typeof(TestECS.Gameplay.Features.Effects.EffectValue),
+        typeof(TestECS.Gameplay.Features.Effects.ProducerId),
         typeof(TestECS.Gameplay.Features.Movement.Direction),
         typeof(TestECS.Gameplay.Features.Movement.MovementAvailable),
         typeof(TestECS.Gameplay.Features.Movement.Moving),
         typeof(TestECS.Gameplay.Features.Movement.Speed),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Applied),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Duration),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Period),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Poison),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Status),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.StatusTypeIdComponent),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.TimeLeft),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.TimeSinceLastTick),
+        typeof(TestECS.Gameplay.Features.Statuses.StatusComponents.Unapplied),
         typeof(TestECS.Gameplay.Hero.Hero),
         typeof(TestECS.Gameplay.Hero.HeroAnimatorComponent),
         typeof(TestECS.Gameplay.Input.InputComponents.AxisInput),
@@ -143,6 +217,7 @@ public static class GameComponentsLookup {
         typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.ProcessedTargets),
         typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.Radius),
         typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.ReadyToCollectTargets),
+        typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.TargetId),
         typeof(TestECS.Gameplay.TargetCollection.TargetCollectionComponents.TargetsBuffer)
     };
 }

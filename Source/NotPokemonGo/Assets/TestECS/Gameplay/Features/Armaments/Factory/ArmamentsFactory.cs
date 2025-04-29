@@ -32,7 +32,8 @@ namespace TestECS.Gameplay.Features.Armaments.Factory
                 .AddViewPrefab(abilityLevel.ViewPrefab)
                 .AddWorldPosition(at)
                 .AddSpeed(setup.Speed)
-                .AddDamage(1)
+                .AddEffectSetups(abilityLevel.EffectSetups)
+                .AddStatusSetups(abilityLevel.StatusSetups)
                 .AddRadius(setup.ContactRadius)
                 .AddTargetsBuffer(new List<int>(16))
                 .AddProcessedTargets(new List<int>(16))
@@ -56,7 +57,7 @@ namespace TestECS.Gameplay.Features.Armaments.Factory
                     .AddViewPrefab(abilityLevel.ViewPrefab)
                     .AddWorldPosition(at)
                     .AddSpeed(setup.Speed)
-                    .AddDamage(1)
+                    .AddEffectSetups(abilityLevel.EffectSetups)
                     .AddRadius(setup.ContactRadius)
                     .AddTargetsBuffer(new List<int>(16))
                     .AddProcessedTargets(new List<int>(16))
@@ -65,6 +66,32 @@ namespace TestECS.Gameplay.Features.Armaments.Factory
                     .With(x => x.isMovementAvailable = true)
                     .With(x => x.isReadyToCollectTargets = true)
                     .With(x => x.isCollectingTargetsContinuously = true)
+                    .AddSelfDestructTimer(setup.Lifetime)
+                ;
+        }
+        
+        public GameEntity CreateBouncingBolt(int level, Vector3 at)
+        {
+            AbilityLevel abilityLevel = _staticDataService.GetAbilityLevel(AbilityId.BouncingBolt, level);
+            ProjectileSetup setup = abilityLevel.ProjectileSetup;
+
+            return CreateEntity.Empty()
+                    .AddId(_idService.Next())
+                    .With(x => x.isArmament = true)
+                    .AddViewPrefab(abilityLevel.ViewPrefab)
+                    .AddWorldPosition(at)
+                    .AddSpeed(setup.Speed)
+                    .AddEffectSetups(abilityLevel.EffectSetups)
+                    .AddRadius(setup.ContactRadius)
+                    .AddTargetsBuffer(new List<int>(16))
+                    .AddProcessedTargets(new List<int>(16))
+                    .AddTargetLimit(setup.Pierce)
+                    .AddLayerMask(CollisionLayer.Enemy.AsMask())
+                    .With(x => x.isMovementAvailable = true)
+                    .With(x => x.isReadyToCollectTargets = true)
+                    .With(x => x.isCollectingTargetsContinuously = true)
+                    .With(x => x.isBouncingArmament = true)
+                    .With(x => x.isNeedTarget = true)
                     .AddSelfDestructTimer(setup.Lifetime)
                 ;
         }

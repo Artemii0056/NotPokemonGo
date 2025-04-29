@@ -1,0 +1,38 @@
+﻿using Code.Extensions;
+using Entitas;
+using TestECS.Gameplay.Features.Applier;
+using TestECS.Gameplay.Features.Statuses;
+
+namespace TestECS.Gameplay.Features.EffectApplication.Systems
+{
+    public class ApplyEffectsOnTargetsSystem : IExecuteSystem
+    {
+        private readonly IStatusApplier _statusApplier;
+        private readonly IGroup<GameEntity> _entities;
+
+        public ApplyEffectsOnTargetsSystem(GameContext gameContext, IStatusApplier statusApplier)
+        {
+            _statusApplier = statusApplier;
+
+            _entities = gameContext.GetGroup(GameMatcher
+                .AllOf(
+                GameMatcher.TargetsBuffer,
+                GameMatcher.StatusSetups));
+        }
+
+        public void Execute()
+        {
+            foreach (GameEntity entity in _entities)
+            foreach (int targetId in entity.TargetsBuffer)
+            foreach (StatusSetup setup in entity.StatusSetups)
+            {
+                _statusApplier.ApplyStatus(setup, ProducerId(entity), targetId);
+            }
+        }
+
+        private static int ProducerId(GameEntity entity)
+        {
+            return entity.hasProducerId ? entity.ProducerId : entity.Id;
+        }
+    }
+}

@@ -4,9 +4,12 @@ using Infrastructure.View.Features;
 using TestECS.Gameplay.Enemies;
 using TestECS.Gameplay.Features.Abilities;
 using TestECS.Gameplay.Features.Armaments;
-using TestECS.Gameplay.Features.DamageApplication;
-using TestECS.Gameplay.Features.DamageApplication.Lifetime.Systems;
+using TestECS.Gameplay.Features.CharacterStats;
+using TestECS.Gameplay.Features.EffectApplication;
+using TestECS.Gameplay.Features.EffectApplication.Lifetime.Systems;
+using TestECS.Gameplay.Features.Effects;
 using TestECS.Gameplay.Features.Movement.Features;
+using TestECS.Gameplay.Features.Statuses;
 using TestECS.Gameplay.Hero;
 using TestECS.Gameplay.Input;
 using TestECS.Gameplay.TargetCollection.Features;
@@ -30,7 +33,12 @@ namespace Code.Gameplay
             Add(factory.Create<ArmamentFeature>());
             
             Add(factory.Create<CollectTargetFeature>());
-            Add(factory.Create<DamageApplicationFeature>());
+            Add(factory.Create<EffectApplicationFeature>());
+            
+            Add(factory.Create<EffectFeature>());
+            Add(factory.Create<StatusFeature>());
+            
+            Add(factory.Create<StatsFeature>());
             
             Add(factory.Create<ProcessDestructedFeature>());
         }

@@ -33,13 +33,13 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint currentHealthPoint { get { return (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)GetComponent(GameComponentsLookup.CurrentHealthPoint); } }
+    public TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint currentHealthPoint { get { return (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)GetComponent(GameComponentsLookup.CurrentHealthPoint); } }
     public float CurrentHealthPoint { get { return currentHealthPoint.Value; } }
     public bool hasCurrentHealthPoint { get { return HasComponent(GameComponentsLookup.CurrentHealthPoint); } }
 
     public GameEntity AddCurrentHealthPoint(float newValue) {
         var index = GameComponentsLookup.CurrentHealthPoint;
-        var component = (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint));
+        var component = (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint));
         component.Value = newValue;
         AddComponent(index, component);
         return this;
@@ -47,7 +47,7 @@ public partial class GameEntity {
 
     public GameEntity ReplaceCurrentHealthPoint(float newValue) {
         var index = GameComponentsLookup.CurrentHealthPoint;
-        var component = (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.CurrentHealthPoint));
+        var component = (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.CurrentHealthPoint));
         component.Value = newValue;
         ReplaceComponent(index, component);
         return this;

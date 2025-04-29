@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using Code.Gameplay.Common.Visuals.StatusVisuals;
+using Entitas;
 using Entitas.CodeGeneration.Attributes;
 using Infrastructure.View;
 using TestECS.Gameplay.Code.Common.DamageTakenAnimator;
@@ -15,6 +16,7 @@ namespace Code.Common
         [Game] public class SelfDestructTimer : IComponent {public float Value; }
         [Game] public class Damage : IComponent {public float Value; }
         [Game] public class DamageTakenAnimatorComponent : IComponent {public IDamageTakenAnimator Value; }
+        [Game] public class StatusVisualsComponent : IComponent {public IStatusVisuals Value; }
         [Game] public class Id : IComponent { [PrimaryEntityIndex]public int Value; }
         [Game] public class WorldPosition : IComponent { public Vector3 Value; }
         [Game] public class TransformComponent : IComponent { public Transform Value; }

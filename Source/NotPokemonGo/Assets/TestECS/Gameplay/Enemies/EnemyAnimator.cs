@@ -7,12 +7,12 @@ namespace TestECS.Gameplay.Enemies
     {
         public void PlayDamageTaken()
         {
-            Debug.Log("Play Damage Taken " + gameObject.name);
+            //Debug.Log("Play Damage Taken " + gameObject.name);
         }
 
         public void PlayDead()
         {
-            Debug.Log("Play Dead " + gameObject.name);
+           // Debug.Log("Play Dead " + gameObject.name);
         }
     }
 }

@@ -5,5 +5,6 @@
         Unknown = 0,
         VegetableBolt = 1,
         RadialBolt = 2,
+        BouncingBolt = 3,
     }
 }

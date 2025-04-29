@@ -23,6 +23,7 @@ namespace TestECS.Gameplay.Hero.Systems
             _heroFactory.Create(_levelDataProvider.StartPoint);
             _abilityFactory.CreateVegetableBoltAbility(1);
             _abilityFactory.CreateRadialBoltAbility(1);
+            _abilityFactory.CreateBouncingBoltAbility(1);
         }
     }
 }

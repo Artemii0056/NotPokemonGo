@@ -33,13 +33,13 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint maxHealthPoint { get { return (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint)GetComponent(GameComponentsLookup.MaxHealthPoint); } }
+    public TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint maxHealthPoint { get { return (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint)GetComponent(GameComponentsLookup.MaxHealthPoint); } }
     public float MaxHealthPoint { get { return maxHealthPoint.Value; } }
     public bool hasMaxHealthPoint { get { return HasComponent(GameComponentsLookup.MaxHealthPoint); } }
 
     public GameEntity AddMaxHealthPoint(float newValue) {
         var index = GameComponentsLookup.MaxHealthPoint;
-        var component = (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint));
+        var component = (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint));
         component.Value = newValue;
         AddComponent(index, component);
         return this;
@@ -47,7 +47,7 @@ public partial class GameEntity {
 
     public GameEntity ReplaceMaxHealthPoint(float newValue) {
         var index = GameComponentsLookup.MaxHealthPoint;
-        var component = (TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.DamageApplication.Lifetime.LifetimeComponents.MaxHealthPoint));
+        var component = (TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint)CreateComponent(index, typeof(TestECS.Gameplay.Features.EffectApplication.Lifetime.LifetimeComponents.MaxHealthPoint));
         component.Value = newValue;
         ReplaceComponent(index, component);
         return this;

@@ -6,5 +6,6 @@ namespace TestECS.Gameplay.Features.Armaments.Factory
     {
         GameEntity CreateVegetableBolt(int level, Vector3 at);
         GameEntity CreateRadialBolt(int level, Vector3 at);
+        GameEntity CreateBouncingBolt(int level, Vector3 at);
     }
 }

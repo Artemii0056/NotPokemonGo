@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Infrastructure.View;
+using TestECS.Gameplay.Features.Effects;
+using TestECS.Gameplay.Features.Statuses;
 
 namespace TestECS.Gameplay.Features.Abilities.Configs
 {
@@ -9,6 +12,9 @@ namespace TestECS.Gameplay.Features.Abilities.Configs
         public float Cooldown;
         
         public EntityBehavior ViewPrefab;
+        
+        public List<EffectSetup> EffectSetups;
+        public List<StatusSetup> StatusSetups;
         
         public ProjectileSetup ProjectileSetup;
     }
