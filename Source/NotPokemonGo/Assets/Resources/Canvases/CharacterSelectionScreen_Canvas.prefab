@@ -1533,7 +1533,7 @@ MonoBehaviour:
   <CharacterSelectionPanel>k__BackingField: {fileID: 3279718132341403974}
   <CharacterInfoPanel>k__BackingField: {fileID: 5735695909625095474}
   _showButton: {fileID: 310947207813842208}
-  _startGameButton: {fileID: 0}
+  _startGameButton: {fileID: 2510847448935311823}
 --- !u!1 &7995576643093781041
 GameObject:
   m_ObjectHideFlags: 0
