@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Source.StaticData.CharactersCatalog.Scripts;
+using StaticData.CharactersCatalog;
 using UnityEngine;
 
-namespace Source.UI.Scripts
+namespace UI
 {
     public class CharacterInfoPanel : MonoBehaviour
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.Scripts.AssetManagement;
-using Infrastructure.Scripts.StateMachine.States;
-using Source.StaticData;
-using Source.UI.Factory;
+using AssetManagement;
+using Infrastructure.StateMachine.States;
+using StaticData;
+using UI.Factory;
 
-namespace Infrastructure.Scripts.StateMachine
+namespace Infrastructure.StateMachine
 {
     public class GameStateMachine
     {

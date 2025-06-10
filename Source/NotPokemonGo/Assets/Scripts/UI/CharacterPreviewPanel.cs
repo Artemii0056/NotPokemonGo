@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Source.UI.Scripts
+namespace UI
 {
     public class CharacterPreviewPanel : MonoBehaviour
     {

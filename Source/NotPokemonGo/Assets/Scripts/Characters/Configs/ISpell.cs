@@ -1,4 +1,4 @@
-﻿namespace Source.Characters.Configs
+﻿namespace Characters.Configs
 {
     public interface ISpell
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using Source.StaticData.CharacterStaticData.Scripts;
+using Characters;
 using UnityEngine;
 
-namespace Source.StaticData.CharactersCatalog.Scripts
+namespace StaticData.CharactersCatalog
 {
     [Serializable]
     public class StatUIInfo

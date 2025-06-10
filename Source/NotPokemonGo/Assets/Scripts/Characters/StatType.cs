@@ -1,4 +1,4 @@
-namespace Source.StaticData.CharacterStaticData.Scripts
+namespace Characters
 {
     public enum StatType
     {

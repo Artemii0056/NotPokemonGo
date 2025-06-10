@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Source.StaticData.CharacterStaticData.Scripts
+namespace Characters
 {
     [Serializable]
     public class Stat

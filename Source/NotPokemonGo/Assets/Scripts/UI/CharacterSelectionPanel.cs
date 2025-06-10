@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Characters;
 using UnityEngine;
 
-namespace Source.UI.Scripts
+namespace UI
 {
     public class CharacterSelectionPanel : MonoBehaviour
     {

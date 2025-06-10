@@ -1,6 +1,6 @@
-﻿using Infrastructure.Scripts.AssetManagement;
+﻿using AssetManagement;
 
-namespace Infrastructure.Scripts.Factorise
+namespace Infrastructure.Factorise
 {
     public class GameFactory
     {

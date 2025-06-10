@@ -1,13 +1,11 @@
-﻿using System.Data.Common;
+﻿using AssetManagement;
+using Characters;
 using Infrastructure;
-using Infrastructure.Scripts.AssetManagement;
-using Source.StaticData;
-using Source.StaticData.CharactersCatalog;
-using Source.StaticData.CharactersCatalog.Scripts;
-using Source.UI.Scripts;
+using StaticData;
+using StaticData.CharactersCatalog;
 using UnityEngine;
 
-namespace Source.UI.Factory
+namespace UI.Factory
 {
     public class UIFactory
     {

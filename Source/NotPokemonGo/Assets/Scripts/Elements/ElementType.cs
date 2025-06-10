@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Scripts.Elements
+﻿namespace Elements
 {
 	public enum ElementType
 	{

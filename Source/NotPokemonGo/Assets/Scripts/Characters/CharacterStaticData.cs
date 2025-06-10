@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
-using Source.Characters.Configs;
+using Characters.Configs;
 using UnityEngine;
 
-namespace Source.StaticData.CharacterStaticData.Scripts
+namespace Characters
 {
     [CreateAssetMenu(fileName = "CharacterData", menuName = "StaticData/Character")]
     public class CharacterStaticData : ScriptableObject, ICharacterConfig

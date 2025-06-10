@@ -1,10 +1,10 @@
-using Infrastructure.Scripts.AssetManagement;
-using Infrastructure.Scripts.Services;
-using Infrastructure.Scripts.StateMachine.States;
-using Source.StaticData;
+using AssetManagement;
+using Infrastructure.StateMachine.States;
+using Services;
+using StaticData;
 using UnityEngine;
 
-namespace Infrastructure.Scripts
+namespace Infrastructure
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {

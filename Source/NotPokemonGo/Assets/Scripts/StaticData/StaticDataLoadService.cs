@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using AssetManagement;
+using Characters.Configs;
 using Infrastructure;
-using Infrastructure.Scripts.AssetManagement;
-using Source.Characters.Configs;
-using Source.StaticData.CharactersCatalog;
-using Source.StaticData.CharactersCatalog.Scripts;
+using StaticData.CharactersCatalog;
 
-namespace Source.StaticData
+namespace StaticData
 {
     public class StaticDataLoadService
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Source.StaticData.CharactersCatalog.Scripts
+namespace StaticData.CharactersCatalog
 {
     [CreateAssetMenu(fileName = "Catalog", menuName = "StaticData/Catalog")]
     public class CharactersCatalogStaticData : ScriptableObject

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Source.Characters.Configs
+namespace Characters.Configs
 {
     public class SpellConfig : ScriptableObject
     {

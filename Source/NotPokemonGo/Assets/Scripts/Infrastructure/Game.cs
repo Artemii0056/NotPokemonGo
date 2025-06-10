@@ -1,8 +1,8 @@
-﻿using Infrastructure.Scripts.Services;
-using Infrastructure.Scripts.StateMachine;
-using Source.StaticData;
+﻿using Infrastructure.StateMachine;
+using Services;
+using StaticData;
 
-namespace Infrastructure.Scripts
+namespace Infrastructure
 {
     public class Game
     {
