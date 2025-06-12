@@ -1,7 +1,7 @@
 ﻿using Source.UI.Factory;
 using Source.UI.Scripts;
 
-namespace Infrastructure.Scripts.StateMachine.States
+namespace Infrastructure.StateMachine.States
 {
     public class LoadMainMenuState : IPayloadedState<string>
     {

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Scripts.StateMachine.States
+﻿namespace Infrastructure.StateMachine.States
 {
     public class BootstrapState : IState
     {

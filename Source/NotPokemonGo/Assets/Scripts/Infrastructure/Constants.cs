@@ -7,10 +7,10 @@
             public const string InitialSceneName = "Initial";
             public const string MainMenuSceneName = "MainMenu";
             
-            public const string CharacterSkinItemName = "CharacterSkinItem";
+            public const string CharacterSkinItemName = "Canvases/CharacterSkinItem";
             public const string CharacterSelectionCanvasName = "Canvases/CharacterSelectionScreen_Canvas";
             public const string MainMenuCanvasPath = "Canvases/MainMenu_Canvas";
-            public const string CharacteristicItemViewPath = "CharacteristicItem";
+            public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
             
             public const string CatalogPath = "Catalog/Catalog";
             

@@ -6,9 +6,9 @@ namespace Source.UI.Scripts
     {
         [SerializeField] private Transform _characterTransform;
         
-        private GameObject _characterPreviewPanel;
+        private Object _characterPreviewPanel;
 
-        public void Setup(GameObject character)
+        public void Setup(Object character)
         {
             if (_characterPreviewPanel != null) 
                 Destroy(_characterPreviewPanel);

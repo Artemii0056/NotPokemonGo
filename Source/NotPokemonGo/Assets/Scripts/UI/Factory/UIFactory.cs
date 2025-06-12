@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using Infrastructure;
 using Infrastructure.Scripts.AssetManagement;
+using Services.AssetManagement;
 using Source.StaticData;
 using Source.StaticData.CharactersCatalog;
 using Source.StaticData.CharactersCatalog.Scripts;

@@ -1,4 +1,4 @@
-using Infrastructure.Scripts.StateMachine.States;
+using Infrastructure.StateMachine.States;
 using Source.Characters.Configs;
 using Source.UI.Scripts;
 using UnityEngine;
