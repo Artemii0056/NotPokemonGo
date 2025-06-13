@@ -7,6 +7,6 @@ namespace Characters.Configs.Stats
         DodgeChance,
         Accuracy,
         ArmorChance,
-        Damage
+       // Damage
     }
 }
