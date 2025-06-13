@@ -1,4 +1,4 @@
-namespace Characters
+namespace Characters.Configs.Stats
 {
     public enum StatType
     {
@@ -7,5 +7,6 @@ namespace Characters
         DodgeChance,
         Accuracy,
         ArmorChance,
+        Damage
     }
 }
