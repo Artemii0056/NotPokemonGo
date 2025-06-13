@@ -1,45 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using AssetManagement;
+using Infrastructure.Scripts.AssetManagement;
 using Infrastructure.StateMachine.States;
-using StaticData;
-using UI.Factory;
+using Services.AssetManagement;
+using Source.StaticData;
+using Source.UI.Factory;
 
 namespace Infrastructure.StateMachine
 {
-    public class GameStateMachine
+    public class GameStateMachine : IGameStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _states;
+        private readonly IStateProvider _stateProvider;
         private IExitableState _currentState;
-        private IResourceLoader _resourceLoader;
 
-        public GameStateMachine(SceneLoader sceneLoader, StaticDataLoadService staticDataLoadService)
-        {
-            _resourceLoader = new ResourceLoader();
-
-            var uiFactory = new UIFactory(_resourceLoader, staticDataLoadService);
-
-            _states = new Dictionary<Type, IExitableState>()
-            {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadMainMenuState)] = new LoadMainMenuState(this, sceneLoader, uiFactory),
-            };
-        }
+        public GameStateMachine(IStateProvider stateProvider) => 
+            _stateProvider = stateProvider;
 
         public void Enter<TState>() where TState : class, IState
         {
             var state = ChangeState<TState>();
             state?.Enter();
-        }
-
-        private TState ChangeState<TState>() where TState : class, IExitableState
-        {
-            _currentState?.Exit();
-
-            TState state = GetState<TState>();
-            _currentState = state;
-
-            return state;
         }
 
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
@@ -48,7 +28,14 @@ namespace Infrastructure.StateMachine
             state?.Enter(payload);
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState =>
-            _states[typeof(TState)] as TState;
+        private TState ChangeState<TState>() where TState : class, IExitableState
+        {
+            _currentState?.Exit();
+
+            TState state = _stateProvider.GetState<TState>();
+            _currentState = state;
+
+            return state;
+        }
     }
 }
