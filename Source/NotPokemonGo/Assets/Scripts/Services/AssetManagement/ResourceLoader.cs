@@ -1,7 +1,6 @@
-﻿using Services.AssetManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace AssetManagement
+namespace Services.AssetManagement
 {
     public class ResourceLoader : IResourceLoader 
     {

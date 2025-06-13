@@ -1,4 +1,4 @@
-namespace Source.StaticData
+namespace Services.StaticDataServices
 {
     public interface IStaticDataLoadService
     {

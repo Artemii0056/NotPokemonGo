@@ -5,14 +5,13 @@ using VContainer.Unity;
 
 namespace Infrastructure.DI.Scopes
 {
-	public class CustomScope : LifetimeScope
+	public abstract class CustomScope : LifetimeScope
 	{
 		[SerializeField] private List<MonoInstaller> _injectableServicesInstallers;
 		[SerializeField] private List<MonoInstaller> _defaultServicesInstallers;
 		protected override void Awake()
 		{
 			base.Awake();
-			Debug.Log("CustomScope.Awake");
 			DontDestroyOnLoad(this);
 		}
 
@@ -25,7 +24,6 @@ namespace Infrastructure.DI.Scopes
 		
 		protected override void Configure(IContainerBuilder builder)
 		{
-			Debug.Log("CustomScope.Configure");
 			_injectableServicesInstallers.ForEach(service => service.Install(builder));
 			_defaultServicesInstallers.ForEach(service => service.Install(builder));
 		}

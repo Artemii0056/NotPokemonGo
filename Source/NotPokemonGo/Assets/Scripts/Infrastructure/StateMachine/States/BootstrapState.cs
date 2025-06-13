@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.StateMachine.States
+﻿using Infrastructure.StateMachine.States.Interfaces;
+using Services.SceneServices;
+
+namespace Infrastructure.StateMachine.States
 {
     public class BootstrapState : IState
     {

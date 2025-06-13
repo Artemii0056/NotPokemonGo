@@ -1,10 +1,12 @@
 ﻿using Infrastructure.DI.Initializers;
 using Infrastructure.DI.Scopes;
-using Infrastructure.Scripts.AssetManagement;
 using Infrastructure.StateMachine;
 using Infrastructure.StateMachine.States;
 using Services.AssetManagement;
-using Source.StaticData;
+using Services.SceneServices;
+using Services.StatesServices;
+using Services.StaticDataServices;
+using Services.SystemFactoryServices;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,14 +15,15 @@ namespace Infrastructure.DI.Installers
 {
     public class GlobalServiceInstaller : MonoInstaller
     {
-        [SerializeField] private GameScopeInitializer _gameScopeInitializer;
+         [SerializeField] private GameScopeInitializer _gameScopeInitializer;
         public override void Install(IContainerBuilder builder)
         {
-            Debug.Log("GlobalServiceInstaller called");
-            builder.RegisterInstance(_gameScopeInitializer).AsImplementedInterfaces();
-            RegisterServices(builder);
             RegisterGameStateMachine(builder);
+            builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
+            
+
             RegisterStates(builder);
+            RegisterServices(builder);
         }
 
         private void RegisterServices(IContainerBuilder builder)
@@ -38,6 +41,8 @@ namespace Infrastructure.DI.Installers
 
         private void RegisterStates(IContainerBuilder builder)
         {
+            builder.Register<IStateProvider, StateProvider>(Lifetime.Singleton);
+            
             builder.Register<BootstrapState>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();

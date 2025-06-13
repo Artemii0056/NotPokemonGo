@@ -1,3 +1,5 @@
+using Infrastructure.StateMachine.States.Interfaces;
+
 namespace Infrastructure.StateMachine
 {
     public interface IGameStateMachine

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.Scripts.AssetManagement;
 using Infrastructure.StateMachine.States;
+using Infrastructure.StateMachine.States.Interfaces;
 using Services.AssetManagement;
-using Source.StaticData;
-using Source.UI.Factory;
+using Services.StatesServices;
 
 namespace Infrastructure.StateMachine
 {

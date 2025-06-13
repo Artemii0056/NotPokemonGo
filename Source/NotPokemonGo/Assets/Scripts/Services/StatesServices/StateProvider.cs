@@ -1,6 +1,7 @@
+using Infrastructure.StateMachine.States.Interfaces;
 using VContainer;
 
-namespace Infrastructure.StateMachine
+namespace Services.StatesServices
 {
     public class StateProvider : IStateProvider
     {

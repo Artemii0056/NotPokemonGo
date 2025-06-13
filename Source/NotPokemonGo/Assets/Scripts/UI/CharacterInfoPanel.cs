@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using StaticData.CharactersCatalog;
+using Characters;
+using Characters.Configs;
 using UnityEngine;
 
 namespace UI

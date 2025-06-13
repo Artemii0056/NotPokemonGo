@@ -2,7 +2,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.Scripts.AssetManagement
+namespace Services.SystemFactoryServices
 {
     public class SystemFactory : ISystemFactory
     {

@@ -2,14 +2,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacteristicItemView : MonoBehaviour
+namespace Characters
 {
-    [SerializeField] private Image _icon;
-    [SerializeField] private TextMeshProUGUI _text;
-
-    public void Initialize(Sprite icon, string text)
+    public class CharacteristicItemView : MonoBehaviour
     {
-        _icon.sprite = icon;
-        _text.text = text;
+        [SerializeField] private Image _icon;
+        [SerializeField] private TextMeshProUGUI _text;
+
+        public void Initialize(Sprite icon, string text)
+        {
+            _icon.sprite = icon;
+            _text.text = text;
+        }
     }
 }

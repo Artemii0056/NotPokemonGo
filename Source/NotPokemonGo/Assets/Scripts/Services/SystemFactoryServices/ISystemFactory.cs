@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Infrastructure.Scripts.AssetManagement
+namespace Services.SystemFactoryServices
 {
     public interface ISystemFactory
     {

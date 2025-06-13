@@ -1,5 +1,5 @@
 using System;
-using StaticData.CharactersCatalog;
+using Characters.Configs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

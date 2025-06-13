@@ -1,7 +1,6 @@
-﻿using Characters;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace StaticData.CharactersCatalog
+namespace Characters.Configs
 {
     [CreateAssetMenu(fileName = "ItemConfig", menuName = "Characters/CharacterItemConfig")]
     public class CharacterItemConfig : ScriptableObject

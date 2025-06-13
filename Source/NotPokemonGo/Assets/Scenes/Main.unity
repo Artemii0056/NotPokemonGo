@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: Infrastructure.DI.Scopes.GameScope
+    TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
   _injectableServicesInstallers: []

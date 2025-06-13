@@ -7,7 +7,6 @@ namespace Infrastructure.DI.Scopes
 		protected override void Awake()
 		{
 			base.Awake();
-			Debug.Log("GameScope.Awake");
 			DontDestroyOnLoad(this);
 		}
 	}

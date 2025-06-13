@@ -1,4 +1,6 @@
-namespace Infrastructure.StateMachine
+using Infrastructure.StateMachine.States.Interfaces;
+
+namespace Services.StatesServices
 {
     public interface IStateProvider
     {
