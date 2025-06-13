@@ -1,4 +1,4 @@
-namespace Characters
+namespace Characters.Configs.Stats
 {
     public enum StatType
     {

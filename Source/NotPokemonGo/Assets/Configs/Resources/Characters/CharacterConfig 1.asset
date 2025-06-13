@@ -15,16 +15,16 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   Health:
     <StatsType>k__BackingField: 0
-    Value: 38
+    Value: 0
   Mana:
     <StatsType>k__BackingField: 1
-    Value: 121
+    Value: 0
   DodgeChance:
     <StatsType>k__BackingField: 2
-    Value: 146
+    Value: 0
   Accuracy:
     <StatsType>k__BackingField: 3
-    Value: 65
+    Value: 0
   ArmorChance:
     <StatsType>k__BackingField: 4
-    Value: 157
+    Value: 0

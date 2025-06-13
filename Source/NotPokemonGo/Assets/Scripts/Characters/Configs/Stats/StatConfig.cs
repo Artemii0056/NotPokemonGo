@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace Characters
+namespace Characters.Configs.Stats
 {
     [Serializable]
-    public class Stat
+    public class StatConfig
     {
         [field: SerializeField] public StatType StatsType { get; private set; }
 
-        [Range(0, 200)] [field: SerializeField] public float Value;
+        [field: SerializeField] public float Value;
     }
 }
