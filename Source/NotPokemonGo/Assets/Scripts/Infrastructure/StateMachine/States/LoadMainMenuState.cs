@@ -7,11 +7,11 @@ namespace Infrastructure.StateMachine.States
 {
     public class LoadMainMenuState : IPayloadedState<string>
     {
-        private readonly GameStateMachine _gameStateMachine;
-        private readonly SceneLoader _sceneLoader;
-        private UIFactory _uiFactory;
+        private readonly IGameStateMachine _gameStateMachine;
+        private readonly ISceneLoader _sceneLoader;
+        private readonly IUIFactory _uiFactory;
 
-        public LoadMainMenuState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, UIFactory uiFactory)
+        public LoadMainMenuState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IUIFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -28,8 +28,8 @@ namespace Infrastructure.StateMachine.States
         private void OnLoadMainMenuState()
         {
             MainMenuUI mainMenu = _uiFactory.CreateMainMenu();
-            mainMenu.gameObject.SetActive(false);
-            CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
+            //mainMenu.gameObject.SetActive(false);
+            //CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
             // selectionScreenPanel.Show();
             // selectionPanel.gameObject.SetActive(false);
         }

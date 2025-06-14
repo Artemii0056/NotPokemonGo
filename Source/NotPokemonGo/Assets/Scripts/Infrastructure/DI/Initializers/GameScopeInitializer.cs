@@ -1,12 +1,13 @@
 ﻿using Infrastructure.StateMachine;
 using Infrastructure.StateMachine.States;
+using Services;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
 namespace Infrastructure.DI.Initializers
 {
-    public class GameScopeInitializer : MonoBehaviour, IInitializable
+    public class GameScopeInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
     {
         private IGameStateMachine _gameStateMachine;
 

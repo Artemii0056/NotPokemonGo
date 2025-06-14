@@ -5,10 +5,10 @@ namespace Infrastructure.StateMachine.States
 {
     public class BootstrapState : IState
     {
-        private readonly GameStateMachine _gameStateMachine;
-        private readonly SceneLoader _sceneLoader;
+        private readonly IGameStateMachine _gameStateMachine;
+        private readonly ISceneLoader _sceneLoader;
 
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader)
+        public BootstrapState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -23,8 +23,6 @@ namespace Infrastructure.StateMachine.States
             _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.AssetPath.MainMenuSceneName);
 
         public void Exit()
-        {
-            
-        }
+        { }
     }
 }

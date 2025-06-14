@@ -7,6 +7,7 @@ using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
+using UI.Factory;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -21,9 +22,14 @@ namespace Infrastructure.DI.Installers
             RegisterGameStateMachine(builder);
             builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
             
-
             RegisterStates(builder);
             RegisterServices(builder);
+            RegisterFactories(builder);
+        }
+
+        private void RegisterFactories(IContainerBuilder builder)
+        {
+            builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
         }
 
         private void RegisterServices(IContainerBuilder builder)
