@@ -19,7 +19,7 @@ namespace Infrastructure.StateMachine.States
         }
 
         public void Enter(string payload) => 
-            _sceneLoader.Load(payload, OnLoadMainMenuState);
+            _sceneLoader.Load("BattleScene", OnLoadMainMenuState);
 
         public void Exit()
         {
@@ -27,9 +27,10 @@ namespace Infrastructure.StateMachine.States
         
         private void OnLoadMainMenuState()
         {
-            MainMenuUI mainMenu = _uiFactory.CreateMainMenu();
-            mainMenu.gameObject.SetActive(false);
-            CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
+            // MainMenuUI mainMenu = _uiFactory.CreateMainMenu();
+            // mainMenu.gameObject.SetActive(false);
+            // CharacterSelectionScreenPanel selectionScreenPanel = _uiFactory.CreateCharacterSelectionPanel();
+            
              //selectionScreenPanel.Show();
             // selectionPanel.gameObject.SetActive(false);
         }
