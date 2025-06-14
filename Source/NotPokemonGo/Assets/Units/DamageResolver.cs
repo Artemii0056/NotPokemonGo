@@ -15,6 +15,10 @@ namespace Units
                     float armor = target.GetStat(StatType.ArmorChance);
                     value = -Math.Max(0, damageInfo.Value - armor);
                     break;
+              
+              case DamageType.Heal:
+                  value = damageInfo.Value;
+                  break;
             }
             
             return value;

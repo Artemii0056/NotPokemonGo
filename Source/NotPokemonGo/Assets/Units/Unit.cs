@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Characters.Configs.Stats;
+using Characters.Configs.Statuses;
 using UnityEngine;
 
 namespace Units
@@ -7,6 +8,7 @@ namespace Units
     public class Unit : MonoBehaviour
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
+        private List<Status> _statuses = new List<Status>();
         private DamageResolver _damageResolver;
         
         public void Initialize(List<StatConfig> statConfig, DamageResolver damageResolver)
@@ -33,6 +35,27 @@ namespace Units
         public void ChangeValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
+        }
+
+        public void AddStatusEffect(Status status)
+        {
+            _statuses.Add(status);
+        }
+
+        public void RemoveStatus(Status status)
+        {
+            _statuses.Remove(status);
+        }
+
+        public void UpdateStatuses()
+        {
+            if (_statuses.Count <= 0)
+                return;
+            
+            foreach (var status in _statuses)
+            {
+                status.Tick();
+            }
         }
     }
 }

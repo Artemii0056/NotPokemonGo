@@ -10,5 +10,7 @@ namespace Characters.Configs.Statuses
         [field: SerializeField] public EffectSetup EffectSetup { get; private set; }
 
         [field: SerializeField] [Range(1, 10)]  public float Duration;
+        [field: SerializeField] [Range(1, 10)]  public float TargetTime;
+        [field: SerializeField] [Range(1, 10)]  public float TickCount;
     }
 }
