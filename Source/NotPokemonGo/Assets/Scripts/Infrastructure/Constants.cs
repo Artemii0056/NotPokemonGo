@@ -13,8 +13,6 @@
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
             
             public const string CatalogPath = "Catalog/Catalog";
-            
         }
-
     }
 }
