@@ -1,10 +1,15 @@
+using System;
 using Characters;
+using Characters.Configs.Statuses;
 using Units;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BattleSceneInitializer : MonoBehaviour
 {
+    public StatusSetup StatusSetup;
+    
     public DamageResolver DamageResolver;
     
     public UnitStatsPanel UnitStatsPanel;
@@ -20,21 +25,27 @@ public class BattleSceneInitializer : MonoBehaviour
     public Unit targetUnit;
     public Unit sourceUnit;
     
-    public Button Button;
+    public Button physicButton;
+    public Button effectButton;
+    
+    private EffectManager _effectManager;
 
     private void OnEnable()
     {
-        Button.onClick.AddListener(Physical);
+        physicButton.onClick.AddListener(Physical);
+        effectButton.onClick.AddListener(Effect);
     }
 
     private void OnDisable()
     {
-        Button.onClick.RemoveListener(Physical);
+        physicButton.onClick.RemoveListener(Physical);
+        effectButton.onClick.RemoveListener(Effect);
     }
 
     private void Start()
     {
         DamageResolver = new DamageResolver();
+        _effectManager = new EffectManager();
         
         targetUnit = Instantiate(UnitPrefab);
         targetUnit.Initialize(TargetConfig.Stats, DamageResolver);
@@ -52,5 +63,17 @@ public class BattleSceneInitializer : MonoBehaviour
         DamageInfo damageInfo = new DamageInfo(DamageType.Physical, 30,sourceUnit);
         
         targetUnit.ReceiveDamage(damageInfo);
+    }
+
+    private void Effect()
+    {
+        HealStatus status = new HealStatus(StatusSetup, targetUnit, sourceUnit, DamageResolver);
+        _effectManager.RegisterStatusEffect(status);
+    }
+
+    private void Update()
+    {
+        _effectManager.Update(Time.deltaTime);
+        _effectManager.RemoveInactive();
     }
 }
