@@ -1,21 +1,22 @@
-﻿using Characters.Configs.Stats;
+﻿using Effects;
+using Stats;
 using Units;
 using UnityEngine;
 
-namespace Characters.Configs.Statuses
+namespace Statuses
 {
     public class HealStatus : Status
     {
         private readonly Unit _source;
-        private readonly DamageResolver _damageResolver;
+        private readonly EffectResolver _effectResolver;
 
-        public HealStatus(StatusSetup setup, Unit target, Unit source, DamageResolver damageResolver)
+        public HealStatus(StatusSetup setup, Unit target, Unit source, EffectResolver effectResolver)
         {
             TickCount = setup.TickCount;
             Setup = setup;
             Target = target;
             _source = source;
-            _damageResolver = damageResolver;
+            _effectResolver = effectResolver;
 
             TargetTime = setup.TargetTime;
         }
@@ -27,9 +28,9 @@ namespace Characters.Configs.Statuses
 
         public override void OnTick()
         {
-            var damageInfo = new DamageInfo(DamageType.Heal, Setup.EffectSetup.Value, _source );
+            var damageInfo = new EffectInfo(EffectType.Heal, Setup.EffectSetup.Value, _source );
             
-            float value =  _damageResolver.CalculateFinalDamage(Target, damageInfo);
+            float value =  _effectResolver.CalculateFinalValue(Target, damageInfo);
             
             Target.ChangeValue(StatType.Health, value);
         }

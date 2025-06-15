@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Characters.Configs.Stats
+namespace Stats
 {
     [Serializable]
     public class StatConfig

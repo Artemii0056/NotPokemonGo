@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Characters.Configs.Statuses;
+using Statuses;
 
 namespace Units
 {
     public class EffectManager
     {
-        List<Status> _statusEffects = new List<Status>();
+       private List<Status> _statusEffects = new List<Status>();
 
         public void RegisterStatusEffect(Status status)
         {

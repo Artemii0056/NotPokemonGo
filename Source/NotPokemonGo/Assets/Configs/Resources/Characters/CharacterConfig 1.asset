@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
   _stats:
-  - <StatsType>k__BackingField: 0
-    Value: 20
   - <StatsType>k__BackingField: 1
-    Value: 50
-  - <StatsType>k__BackingField: 2
-    Value: 100
-  - <StatsType>k__BackingField: 3
     Value: 20
+  - <StatsType>k__BackingField: 2
+    Value: 50
+  - <StatsType>k__BackingField: 3
+    Value: 100
   - <StatsType>k__BackingField: 4
+    Value: 20
+  - <StatsType>k__BackingField: 5
+    Value: 15
+  - <StatsType>k__BackingField: 6
     Value: 15

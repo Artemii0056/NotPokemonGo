@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Characters.Configs.Stats;
-using Characters.Configs.Statuses;
+using Stats;
+using Statuses;
 using UnityEngine;
 
 namespace Units
@@ -9,11 +9,13 @@ namespace Units
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _statuses = new List<Status>();
-        private DamageResolver _damageResolver;
+        private EffectResolver _effectResolver;
+
+        public Transform abilityPos;
         
-        public void Initialize(List<StatConfig> statConfig, DamageResolver damageResolver)
+        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver)
         {
-            _damageResolver = damageResolver;
+            _effectResolver = effectResolver;
             
             foreach (var statSetup in statConfig)
             {
@@ -26,9 +28,9 @@ namespace Units
             return _stats[statType].CurrentValue;
         }
 
-        public void ReceiveDamage(DamageInfo damageInfo)
+        public void ReceiveDamage(EffectInfo effectInfo)
         {
-            float damage = _damageResolver.CalculateFinalDamage(this, damageInfo);
+            float damage = _effectResolver.CalculateFinalValue(this, effectInfo);
             ChangeValue(StatType.Health, damage);
         }
 

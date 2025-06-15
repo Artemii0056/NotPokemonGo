@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using Characters;
 using Characters.Configs;
-using StaticData.CharactersCatalog;
 using UnityEngine;
 
 namespace UI

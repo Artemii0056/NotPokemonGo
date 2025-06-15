@@ -1,4 +1,4 @@
-﻿namespace Characters.Configs.Stats
+﻿namespace Stats
 {
     public class StatSetup
     {

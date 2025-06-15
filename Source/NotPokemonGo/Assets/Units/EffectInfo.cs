@@ -1,12 +1,14 @@
+using Effects;
+
 namespace Units
 {
-    public struct DamageInfo
+    public struct EffectInfo
     {
-        public DamageType Type;
+        public EffectType Type;
         public float Value;
         public Unit Source;
 
-        public DamageInfo(DamageType type, float value, Unit source)
+        public EffectInfo(EffectType type, float value, Unit source)
         {
             Type = type;
             Value = value;

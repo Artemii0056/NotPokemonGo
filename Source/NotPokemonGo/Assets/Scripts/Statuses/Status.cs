@@ -1,7 +1,6 @@
 ﻿using Units;
-using UnityEngine;
 
-namespace Characters.Configs.Statuses
+namespace Statuses
 {
     public abstract class Status
     {
@@ -36,7 +35,6 @@ namespace Characters.Configs.Statuses
         public void UpdateTimer(float time)
         {
             СurrentTimer += time;
-            Debug.Log(IsReady);
         }
     }
 }
