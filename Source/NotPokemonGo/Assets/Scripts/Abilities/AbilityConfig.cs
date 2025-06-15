@@ -12,6 +12,7 @@ namespace Abilities
         
         [field: SerializeField] public TargetMode TargetMode { get; private set; }
         [field: SerializeField] public float Cost { get; private set; }
+        [field: SerializeField] public bool IsArmament { get; private set; }
 
         [field: SerializeField] public List<StatusSetup> Statuses { get; private set; }
         [field: SerializeField] public List<EffectSetup> EffectInfo { get; private set; }

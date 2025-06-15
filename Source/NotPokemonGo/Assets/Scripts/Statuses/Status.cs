@@ -4,10 +4,11 @@ namespace Statuses
 {
     public abstract class Status
     {
+        public string Name { get; protected set; }
+        
         public float СurrentTimer { get; protected set; }
         public float TargetTime { get; protected set; }
         
-        public string Name { get; protected set; }
         public float TickCount { get; protected set; }
         public StatusSetup Setup { get; protected set; }
         public Unit Target { get; protected set; }

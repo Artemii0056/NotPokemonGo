@@ -23,12 +23,12 @@ namespace Units
             if (_statusEffects.Count <= 0)
                 return;
             
-            foreach (var effect in _statusEffects)
+            foreach (var status in _statusEffects)
             {
-                effect.UpdateTimer(deltaTime);
+                status.UpdateTimer(deltaTime);
 
-                if (effect.IsReady)
-                    effect.Tick();
+                if (status.IsReady)
+                    status.Tick();
             }
         }
 

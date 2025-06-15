@@ -1,40 +1,42 @@
-using System;
 using Abilities;
 using Characters;
 using Effects;
+using Factories;
 using Statuses;
 using Units;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BattleSceneInitializer : MonoBehaviour
 {
-    public AbilityView _abilityView;
     public AbilityConfig _abilityConfig;
-    
+
     public StatusSetup StatusSetup;
-    
+
     public EffectResolver EffectResolver;
-    
+
     public UnitStatsPanel UnitStatsPanel;
-    
-    public Unit UnitPrefab; 
-    
+
+    public Unit UnitPrefab;
+
     public Transform TargetSpawnPoint;
     public Transform SourceSpawnPoint;
-    
+
     public CharacterStaticData TargetConfig;
     public CharacterStaticData SourceConfig;
 
     public Unit targetUnit;
     public Unit sourceUnit;
-    
+
     public Button physicButton;
     public Button effectButton;
     public Button abilityButton;
-    
+
     private EffectManager _effectManager;
+
+    private StatusFactory _statusFactory;
+    private AbilityFactory _abilityFactory;
+    private AbilityViewFactory _abilityViewFactory;
 
     private void OnEnable()
     {
@@ -52,42 +54,41 @@ public class BattleSceneInitializer : MonoBehaviour
 
     private void Start()
     {
+        _statusFactory = new StatusFactory();
+        _abilityFactory = new AbilityFactory(_statusFactory);
         EffectResolver = new EffectResolver();
         _effectManager = new EffectManager();
-        
+        _abilityViewFactory = new AbilityViewFactory(_effectManager);
+
         targetUnit = Instantiate(UnitPrefab);
         targetUnit.Initialize(TargetConfig.Stats, EffectResolver);
         targetUnit.transform.position = TargetSpawnPoint.position;
-        
+
         sourceUnit = Instantiate(UnitPrefab);
         sourceUnit.Initialize(SourceConfig.Stats, EffectResolver);
         sourceUnit.transform.position = SourceSpawnPoint.position;
 
         UnitStatsPanel.unit = targetUnit;
     }
-    
+
     private void Physical()
     {
-        EffectInfo effectInfo = new EffectInfo(EffectType.Damage, 30,sourceUnit);
-        
+        EffectInfo effectInfo = new EffectInfo(EffectType.Damage, 30);
+
         targetUnit.ReceiveDamage(effectInfo);
     }
 
     private void Effect()
     {
-        HealStatus status = new HealStatus(StatusSetup, targetUnit, sourceUnit, EffectResolver);
+        HealStatus status = new HealStatus(StatusSetup, targetUnit, EffectResolver);
         _effectManager.RegisterStatusEffect(status);
     }
 
     private void AbilitySpell()
     {
-        Ability ability = new Ability(_abilityConfig, targetUnit, sourceUnit, EffectResolver);
-        
-        AbilityView abilityView = Instantiate(_abilityView);
-        abilityView._ability = ability;
-        abilityView.effectManager = _effectManager;
-        abilityView.transform.position = sourceUnit.abilityPos.position;
-        abilityView.target = targetUnit;
+        Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit, EffectResolver);
+
+        _abilityViewFactory.Create(sourceUnit.abilityPos.position, ability, _abilityConfig.Prefab, targetUnit);
     }
 
     private void Update()

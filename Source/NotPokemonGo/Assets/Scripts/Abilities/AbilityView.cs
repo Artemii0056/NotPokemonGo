@@ -5,10 +5,11 @@ namespace Abilities
 {
     public class AbilityView : MonoBehaviour
     {
-        public Unit target;
         public float delta = 10f;
-        public Ability _ability;
-        public EffectManager effectManager;
+        
+        private Unit _target;
+        private Ability _ability;
+        private EffectManager _effectManager;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -17,26 +18,31 @@ namespace Abilities
                 if (_ability.HasStatus)
                 {
                     foreach (var status in _ability.Statuses) 
-                        effectManager.RegisterStatusEffect(status);
+                        _effectManager.RegisterStatusEffect(status);
                 }
 
                 if (_ability.HasEffect)
                 {
-                    foreach (var effect in _ability.EffectInfo)
-                    {
+                    foreach (var effect in _ability.EffectInfo) 
                         unit.ReceiveDamage(effect);
-                    }
                 }
             }
         }
 
         private void Update()
         {
-            if (target == null)
+            if (_target == null)
                 return;
 
             transform.position =
-                Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * delta);
+                Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * delta);
+        }
+
+        public void Initialize(Ability ability, Unit targetUnit, EffectManager effectManager)
+        {
+            _ability = ability;
+            _target = targetUnit;
+            _effectManager = effectManager;
         }
     }
 }

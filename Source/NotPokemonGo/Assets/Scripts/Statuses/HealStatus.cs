@@ -7,15 +7,13 @@ namespace Statuses
 {
     public class HealStatus : Status
     {
-        private readonly Unit _source;
         private readonly EffectResolver _effectResolver;
 
-        public HealStatus(StatusSetup setup, Unit target, Unit source, EffectResolver effectResolver)
+        public HealStatus(StatusSetup setup, Unit target, EffectResolver effectResolver)
         {
             TickCount = setup.TickCount;
             Setup = setup;
             Target = target;
-            _source = source;
             _effectResolver = effectResolver;
 
             TargetTime = setup.TargetTime;
@@ -23,12 +21,12 @@ namespace Statuses
 
         public override void OnApply()
         {
-            Debug.Log("Activate HealEffect");
+            Debug.Log("Activate HealStatus");
         }
 
         public override void OnTick()
         {
-            var damageInfo = new EffectInfo(EffectType.Heal, Setup.EffectSetup.Value, _source );
+            var damageInfo = new EffectInfo(EffectType.Heal, Setup.EffectSetup.Value );
             
             float value =  _effectResolver.CalculateFinalValue(Target, damageInfo);
             
@@ -37,7 +35,7 @@ namespace Statuses
 
         public override void OnExpire()
         {
-            Debug.Log("Deativate HealEffect");
+            Debug.Log("Deativate HealStatus");
         }
     }
 }

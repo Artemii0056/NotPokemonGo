@@ -6,13 +6,11 @@ namespace Units
     {
         public EffectType Type;
         public float Value;
-        public Unit Source;
 
-        public EffectInfo(EffectType type, float value, Unit source)
+        public EffectInfo(EffectType type, float value)
         {
             Type = type;
             Value = value;
-            Source = source;
         }
     }
 }
