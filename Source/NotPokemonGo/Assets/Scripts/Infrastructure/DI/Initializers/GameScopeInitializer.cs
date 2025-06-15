@@ -7,7 +7,7 @@ using VContainer.Unity;
 
 namespace Infrastructure.DI.Initializers
 {
-    public class GameScopeInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
+    public class GameScopeInitializer : MonoBehaviour, IInitializable
     {
         private IGameStateMachine _gameStateMachine;
 

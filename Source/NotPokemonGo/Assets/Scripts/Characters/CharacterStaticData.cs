@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Characters
 {
     [CreateAssetMenu(fileName = "CharacterData", menuName = "StaticData/Character")]
-    public class CharacterStaticData : ScriptableObject, ICharacterConfig
+    public class CharacterStaticData : ScriptableObject
     {
         [field: SerializeField] public CharacterType Type { get; private set; }
         

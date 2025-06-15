@@ -24,3 +24,5 @@ MonoBehaviour:
     Value: 20
   - <StatsType>k__BackingField: 4
     Value: 15
+  - <StatsType>k__BackingField: 5
+    Value: 15
