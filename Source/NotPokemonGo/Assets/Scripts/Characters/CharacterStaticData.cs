@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Characters.Configs;
-using Characters.Configs.Stats;
+using Stats;
 using UnityEngine;
 
 namespace Characters

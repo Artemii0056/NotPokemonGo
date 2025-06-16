@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using Stats;
 using TMPro;
 using Units;
 using UnityEngine;
-using Characters.Configs.Stats;
 
 public class UnitStatsPanel : MonoBehaviour
 {

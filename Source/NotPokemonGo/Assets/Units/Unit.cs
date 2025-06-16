@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Characters.Configs.Stats;
+using Stats;
+using Statuses;
 using UnityEngine;
 
 namespace Units
@@ -7,11 +8,14 @@ namespace Units
     public class Unit : MonoBehaviour
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
-        private DamageResolver _damageResolver;
+        private List<Status> _statuses = new List<Status>();
+        private EffectResolver _effectResolver;
+
+        public Transform abilityPos;
         
-        public void Initialize(List<StatConfig> statConfig, DamageResolver damageResolver)
+        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver)
         {
-            _damageResolver = damageResolver;
+            _effectResolver = effectResolver;
             
             foreach (var statSetup in statConfig)
             {
@@ -24,15 +28,36 @@ namespace Units
             return _stats[statType].CurrentValue;
         }
 
-        public void ReceiveDamage(DamageInfo damageInfo)
+        public void ReceiveDamage(EffectInfo effectInfo)
         {
-            float damage = _damageResolver.CalculateFinalDamage(this, damageInfo);
+            float damage = _effectResolver.CalculateFinalValue(this, effectInfo);
             ChangeValue(StatType.Health, damage);
         }
 
         public void ChangeValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
+        }
+
+        public void AddStatusEffect(Status status)
+        {
+            _statuses.Add(status);
+        }
+
+        public void RemoveStatus(Status status)
+        {
+            _statuses.Remove(status);
+        }
+
+        public void UpdateStatuses()
+        {
+            if (_statuses.Count <= 0)
+                return;
+            
+            foreach (var status in _statuses)
+            {
+                status.Tick();
+            }
         }
     }
 }
