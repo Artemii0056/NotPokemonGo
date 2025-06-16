@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities;
 using Characters;
-using Effects;
 using Factories;
 using Statuses;
 using Units;
@@ -13,8 +12,6 @@ public class BattleSceneInitializer : MonoBehaviour
 {
     public AbilityConfig _castamentAbilityConfig;
     public AbilityConfig _armamntAbilityConfig;
-
-    public StatusSetup StatusSetup;
 
     public EffectResolver EffectResolver;
 
@@ -31,9 +28,6 @@ public class BattleSceneInitializer : MonoBehaviour
     public Unit targetUnit;
     public Unit sourceUnit;
 
-    public Button physicButton;
-    public Button effectButton;
-    public Button abilityButton;
     public Button armamentAbilityButton;
     public Button castamentAbilityButton;
 
@@ -45,18 +39,12 @@ public class BattleSceneInitializer : MonoBehaviour
 
     private void OnEnable()
     {
-        physicButton.onClick.AddListener(Physical);
-        effectButton.onClick.AddListener(Effect);
-        abilityButton.onClick.AddListener(AbilitySpell);
         armamentAbilityButton.onClick.AddListener(ArmamentAbilitySpell);
         castamentAbilityButton.onClick.AddListener(CastamentAbilitySpell);
     }
 
     private void OnDisable()
     {
-        physicButton.onClick.RemoveListener(Physical);
-        effectButton.onClick.RemoveListener(Effect);
-        abilityButton.onClick.RemoveListener(AbilitySpell);
         armamentAbilityButton.onClick.RemoveListener(ArmamentAbilitySpell);
         castamentAbilityButton.onClick.RemoveListener(CastamentAbilitySpell);
     }
@@ -80,28 +68,6 @@ public class BattleSceneInitializer : MonoBehaviour
         UnitStatsPanel.unit = targetUnit;
     }
 
-    #region TestsSpells //Пусть останется в этой ветке для тестов. Или перенесем класс в другую
-    private void Physical()
-    {
-        EffectInfo effectInfo = new EffectInfo(EffectType.Damage, 30);
-
-        targetUnit.ReceiveDamage(effectInfo);
-    }
-
-    private void Effect()
-    {
-        HealStatus status = new HealStatus(StatusSetup, targetUnit, EffectResolver);
-        _effectManager.RegisterStatusEffect(status);
-    }
-
-    private void AbilitySpell()
-    {
-        Ability ability = _abilityFactory.Create(_castamentAbilityConfig, targetUnit);
-
-        _abilityViewFactory.Create(sourceUnit.abilityPos.position, _castamentAbilityConfig.Prefab, targetUnit);
-    }
-    #endregion
-
     private void CastamentAbilitySpell()
     {
         List<Status> statuses = new List<Status>();
@@ -109,8 +75,6 @@ public class BattleSceneInitializer : MonoBehaviour
 
         Ability ability = _abilityFactory.Create(_castamentAbilityConfig, targetUnit);
 
-        Debug.Log(ability.ArmamentSetup.EffectsSetup.Count + " " + ability.ArmamentSetup.Statuses.Count);
-        
         if (ability.HasCastament)
         {
             foreach (var effectSetup in ability.CastamentSetup.EffectsSetup)
