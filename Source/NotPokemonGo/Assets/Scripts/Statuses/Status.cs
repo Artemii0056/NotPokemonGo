@@ -6,10 +6,10 @@ namespace Statuses
     public abstract class Status
     {
         public string Name { get; protected set; }
-        
+
         public float СurrentTimer { get; protected set; }
         public float TargetTime { get; protected set; }
-        
+
         public float TickCount { get; protected set; }
         public StatusSetup Setup { get; protected set; }
         public Unit Target { get; protected set; }
@@ -18,20 +18,20 @@ namespace Statuses
 
         public virtual void OnApply()
         {
-            Debug.Log("Activate Status");
+            Debug.Log($"{GetType().Name} Activate Status");
         }
 
         public virtual void OnTick() { }
 
         public virtual void OnExpire()
         {
-            Debug.Log("Deativate Status");
+            Debug.Log($"{GetType().Name} Deativate Status");
         }
 
         public void Tick()
         {
             СurrentTimer = 0;
-            
+
             TickCount--;
             OnTick();
 
