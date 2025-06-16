@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Effects;
-using Statuses;
+﻿using Abilities.AbilityActions.Armaments;
+using Abilities.AbilityActions.Castaments;
 using UnityEngine;
 
 namespace Abilities
@@ -12,11 +11,9 @@ namespace Abilities
         
         [field: SerializeField] public TargetMode TargetMode { get; private set; }
         [field: SerializeField] public float Cost { get; private set; }
-        [field: SerializeField] public bool IsArmament { get; private set; }
 
-        [field: SerializeField] public List<StatusSetup> Statuses { get; private set; }
-        [field: SerializeField] public List<EffectSetup> EffectInfo { get; private set; }
-        
+        [field: SerializeField] public ArmamentSetup ArmamentSetup{ get; private set; }
+        [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; }
         [field: SerializeField] public AbilityView Prefab { get; private set; }
         [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
     }
