@@ -7,6 +7,7 @@ namespace Stats
         DodgeChance = 3,
         Accuracy = 4,
         ArmorChance = 5,
-        Damage = 6
+        Damage = 6,
+        Agility = 7,
     }
 }

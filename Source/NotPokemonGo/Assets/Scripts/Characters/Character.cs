@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Characters.Configs.Stats;
+using Stats;
 using UnityEngine;
-using VContainer;
 
 namespace Characters
 {
