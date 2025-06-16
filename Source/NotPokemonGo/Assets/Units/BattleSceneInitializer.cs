@@ -31,6 +31,7 @@ public class BattleSceneInitializer : MonoBehaviour
     public Button physicButton;
     public Button effectButton;
     public Button abilityButton;
+    public Button distanceAbilityButton;
 
     private EffectManager _effectManager;
 
@@ -43,6 +44,7 @@ public class BattleSceneInitializer : MonoBehaviour
         physicButton.onClick.AddListener(Physical);
         effectButton.onClick.AddListener(Effect);
         abilityButton.onClick.AddListener(AbilitySpell);
+        distanceAbilityButton.onClick.AddListener(DistanceAbilitySpell);
     }
 
     private void OnDisable()
@@ -50,6 +52,7 @@ public class BattleSceneInitializer : MonoBehaviour
         physicButton.onClick.RemoveListener(Physical);
         effectButton.onClick.RemoveListener(Effect);
         abilityButton.onClick.RemoveListener(AbilitySpell);
+        distanceAbilityButton.onClick.RemoveListener(DistanceAbilitySpell);
     }
 
     private void Start()
@@ -89,6 +92,20 @@ public class BattleSceneInitializer : MonoBehaviour
         Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit, EffectResolver);
 
         _abilityViewFactory.Create(sourceUnit.abilityPos.position, ability, _abilityConfig.Prefab, targetUnit);
+    }
+
+    private void DistanceAbilitySpell()
+    {
+        Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit, EffectResolver);
+
+        foreach (var status in ability.Statuses)
+        {
+            _effectManager.RegisterStatusEffect(status);
+        }
+
+        ParticleSystem effect = Instantiate(_abilityConfig.ParticleSystem);
+        effect.transform.position = targetUnit.transform.position;
+        effect.Play();
     }
 
     private void Update()

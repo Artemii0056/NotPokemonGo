@@ -18,5 +18,6 @@ namespace Abilities
         [field: SerializeField] public List<EffectSetup> EffectInfo { get; private set; }
         
         [field: SerializeField] public AbilityView Prefab { get; private set; }
+        [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
     }
 }
