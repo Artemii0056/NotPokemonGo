@@ -36,28 +36,4 @@ namespace Factories
             return status;
         }
     }
-    
-    public class EffectFactory
-    {
-        public EffectInfo Create(EffectInfo setup, Unit target, EffectResolver effectResolver)
-        {
-            EffectInfo status = default;
-
-            switch (setup.Type)
-            {
-                case EffectType.Damage:
-                    
-                    break;
-                
-                case EffectType.Heal:
-                    status = new EffectInfo(setup.Type,setup.Value);
-                    break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return status;
-        }
-    }
 }
