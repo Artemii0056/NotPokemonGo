@@ -1,4 +1,5 @@
 ﻿using Units;
+using UnityEngine;
 
 namespace Statuses
 {
@@ -15,9 +16,17 @@ namespace Statuses
 
         public bool IsReady => СurrentTimer >= TargetTime;
 
-        public abstract void OnApply();
-        public abstract void OnTick();
-        public abstract void OnExpire();
+        public virtual void OnApply()
+        {
+            Debug.Log("Activate Status");
+        }
+
+        public virtual void OnTick() { }
+
+        public virtual void OnExpire()
+        {
+            Debug.Log("Deativate Status");
+        }
 
         public void Tick()
         {

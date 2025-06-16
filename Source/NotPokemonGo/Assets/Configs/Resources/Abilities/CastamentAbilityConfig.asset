@@ -26,12 +26,12 @@ MonoBehaviour:
     - EffectSetup:
         Type: 1
         Value: 5
-      Type: 0
+      Type: 1
       TargetTime: 1
       TickCount: 3
     <EffectInfo>k__BackingField:
     - Type: 2
-      Value: 60
+      Value: 0
     <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}
-  <Prefab>k__BackingField: {fileID: 0}
-  <ParticleSystem>k__BackingField: {fileID: 0}
+  <Prefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
+  <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}

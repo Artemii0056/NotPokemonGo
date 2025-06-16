@@ -9,25 +9,6 @@ namespace Abilities
         
         private Unit _target;
         private Ability _ability;
-        private EffectManager _effectManager;
-
-        // private void OnTriggerEnter(Collider other)
-        // {
-        //     if (other.TryGetComponent(out Unit unit))
-        //     {
-        //         if (_ability.HasStatus)
-        //         {
-        //             foreach (var status in _ability.Statuses) 
-        //                 _effectManager.RegisterStatusEffect(status);
-        //         }
-        //
-        //         if (_ability.HasEffect)
-        //         {
-        //             foreach (var effect in _ability.EffectInfo) 
-        //                 unit.ReceiveDamage(effect);
-        //         }
-        //     }
-        // }
 
         private void Update()
         {
@@ -38,11 +19,9 @@ namespace Abilities
                 Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * delta);
         }
 
-        public void Initialize(Ability ability, Unit targetUnit, EffectManager effectManager)
+        public void Initialize(Unit targetUnit)
         {
-            _ability = ability;
             _target = targetUnit;
-            _effectManager = effectManager;
         }
     }
 }

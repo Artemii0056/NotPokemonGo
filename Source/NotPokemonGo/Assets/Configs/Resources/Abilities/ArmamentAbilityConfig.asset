@@ -23,12 +23,6 @@ MonoBehaviour:
       Type: 2
       TargetTime: 1
       TickCount: 5
-    - EffectSetup:
-        Type: 1
-        Value: 5
-      Type: 2
-      TargetTime: 1.5
-      TickCount: 5
     <EffectInfo>k__BackingField:
     - Type: 1
       Value: 50

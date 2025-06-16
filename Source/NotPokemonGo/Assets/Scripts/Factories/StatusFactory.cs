@@ -1,5 +1,4 @@
 ﻿using System;
-using Effects;
 using Statuses;
 using Units;
 
@@ -14,6 +13,7 @@ namespace Factories
             switch (setup.Type)
             {
                 case StatusType.Damage:
+                    status = new DamageStatus(setup, target, effectResolver);
                     break;
                 
                 case StatusType.Heal:

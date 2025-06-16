@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Abilities;
 using Characters;
@@ -6,12 +7,12 @@ using Factories;
 using Statuses;
 using Units;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BattleSceneInitializer : MonoBehaviour
 {
-    public AbilityConfig _abilityConfig;
+    public AbilityConfig _castamentAbilityConfig;
+    public AbilityConfig _armamntAbilityConfig;
 
     public StatusSetup StatusSetup;
 
@@ -66,7 +67,7 @@ public class BattleSceneInitializer : MonoBehaviour
         _abilityFactory = new AbilityFactory(_statusFactory);
         EffectResolver = new EffectResolver();
         _effectManager = new EffectManager();
-        _abilityViewFactory = new AbilityViewFactory(_effectManager);
+        _abilityViewFactory = new AbilityViewFactory();
 
         targetUnit = Instantiate(UnitPrefab);
         targetUnit.Initialize(TargetConfig.Stats, EffectResolver);
@@ -79,6 +80,7 @@ public class BattleSceneInitializer : MonoBehaviour
         UnitStatsPanel.unit = targetUnit;
     }
 
+    #region TestsSpells //Пусть останется в этой ветке для тестов. Или перенесем класс в другую
     private void Physical()
     {
         EffectInfo effectInfo = new EffectInfo(EffectType.Damage, 30);
@@ -94,58 +96,83 @@ public class BattleSceneInitializer : MonoBehaviour
 
     private void AbilitySpell()
     {
-        Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit);
+        Ability ability = _abilityFactory.Create(_castamentAbilityConfig, targetUnit);
 
-        _abilityViewFactory.Create(sourceUnit.abilityPos.position, ability, _abilityConfig.Prefab, targetUnit);
+        _abilityViewFactory.Create(sourceUnit.abilityPos.position, _castamentAbilityConfig.Prefab, targetUnit);
+    }
+    #endregion
+
+    private void CastamentAbilitySpell()
+    {
+        List<Status> statuses = new List<Status>();
+        List<EffectInfo> effects = new List<EffectInfo>();
+
+        Ability ability = _abilityFactory.Create(_castamentAbilityConfig, targetUnit);
+
+        Debug.Log(ability.ArmamentSetup.EffectsSetup.Count + " " + ability.ArmamentSetup.Statuses.Count);
+        
+        if (ability.HasCastament)
+        {
+            foreach (var effectSetup in ability.CastamentSetup.EffectsSetup)
+                effects.Add(new EffectInfo(effectSetup.Type, effectSetup.Value));
+
+            foreach (var status in ability.CastamentSetup.Statuses)
+                statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
+            
+            ApplyEffectsToTarget(statuses, effects);
+        }
+
+        ParticleSystem effect = Instantiate(_castamentAbilityConfig.ParticleSystem);
+        effect.transform.position = targetUnit.transform.position;
+        effect.Play();
     }
 
     private void ArmamentAbilitySpell()
     {
         List<Status> statuses = new List<Status>();
         List<EffectInfo> effects = new List<EffectInfo>();
+
+        Ability ability = _abilityFactory.Create(_armamntAbilityConfig, targetUnit);
+
+        if (ability.HasArmament) 
+            CreateStatsAndEffects(ability,  effects,  statuses);
         
-        Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit);
+        AbilityView abilityView =
+            _abilityViewFactory.Create(sourceUnit.abilityPos.position, _armamntAbilityConfig.Prefab, targetUnit);
 
-        if (ability.HasArmament)
-        {
-            foreach (var status in ability.ArmamentSetup.Statuses)
-            {
-                statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
-            }
-
-            foreach (var effectSetup in ability.ArmamentSetup.EffectsSetup)
-            {
-                effects.Add(new EffectInfo(effectSetup.Type, effectSetup.Value));
-            }
-        }
-
-        foreach (var status in statuses)
-        {
-            _effectManager.RegisterStatusEffect(status);
-        }
-
-        foreach (var effectInfo in effects)
-        {
-            targetUnit.ReceiveDamage(effectInfo);
-        }
-
-        ParticleSystem effect = Instantiate(_abilityConfig.ParticleSystem);
-        effect.transform.position = targetUnit.transform.position;
-        effect.Play();
+        StartCoroutine(PlayArmamentAbility(statuses, effects, abilityView));
     }
-    
-    private void CastamentAbilitySpell()
+
+    private void CreateStatsAndEffects(Ability ability, List<EffectInfo> effects, List<Status> statuses)
     {
-        // Ability ability = _abilityFactory.Create(_abilityConfig, targetUnit, EffectResolver);
-        //
-        // foreach (var status in ability.Statuses)
-        // {
-        //     _effectManager.RegisterStatusEffect(status);
-        // }
-        //
-        // ParticleSystem effect = Instantiate(_abilityConfig.ParticleSystem);
-        // effect.transform.position = targetUnit.transform.position;
-        // effect.Play();
+        foreach (var effectSetup in ability.ArmamentSetup.EffectsSetup)
+            effects.Add(new EffectInfo(effectSetup.Type, effectSetup.Value));
+
+        foreach (var status in ability.ArmamentSetup.Statuses)
+            statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
+    }
+
+    private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects, AbilityView abilityView)
+    {
+        while (Vector3.Distance(targetUnit.transform.position, abilityView.transform.position) > 0.1f)
+            yield return null;
+
+        ApplyEffectsToTarget(statuses, effects);
+    }
+
+    private void ApplyEffectsToTarget(List<Status> statuses, List<EffectInfo> effects)
+    {
+        if (statuses.Count > 0)
+        {
+            foreach (var status in statuses)
+                _effectManager.RegisterStatusEffect(status);
+        }
+
+        if (effects.Count > 0)
+        {
+            foreach (var effectInfo in effects)
+                targetUnit.ReceiveDamage(effectInfo);
+        }
     }
 
     private void Update()

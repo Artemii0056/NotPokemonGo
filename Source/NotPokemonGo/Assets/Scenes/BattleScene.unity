@@ -1164,7 +1164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767a438574dd4c94fa266ae37a8c0b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abilityConfig: {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}
+  _castamentAbilityConfig: {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}
+  _armamntAbilityConfig: {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}
   StatusSetup:
     EffectSetup:
       Type: 0

@@ -4,11 +4,11 @@ using Units;
 
 namespace Statuses
 {
-    public class HealStatus : Status
+    public class DamageStatus : Status
     {
         private readonly EffectResolver _effectResolver;
 
-        public HealStatus(StatusSetup setup, Unit target, EffectResolver effectResolver)
+        public DamageStatus(StatusSetup setup, Unit target, EffectResolver effectResolver)
         {
             TickCount = setup.TickCount;
             Setup = setup;
@@ -20,10 +20,10 @@ namespace Statuses
 
         public override void OnTick()
         {
-            var damageInfo = new EffectInfo(EffectType.Heal, Setup.EffectSetup.Value );
-            
-            float value =  _effectResolver.CalculateFinalValue(Target, damageInfo);
-            
+            EffectInfo damageInfo = new EffectInfo(EffectType.Damage, Setup.EffectSetup.Value);
+
+            float value = _effectResolver.CalculateFinalValue(Target, damageInfo);
+
             Target.ChangeValue(StatType.Health, value);
         }
     }

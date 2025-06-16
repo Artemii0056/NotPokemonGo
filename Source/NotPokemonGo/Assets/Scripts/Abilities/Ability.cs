@@ -40,6 +40,7 @@ namespace Abilities
         }
         
         public bool HasArmament => ArmamentSetup != null;
+        public bool HasCastament => CastamentSetup != null;
 
         public TargetMode TargetMode { get; private set; }
 
