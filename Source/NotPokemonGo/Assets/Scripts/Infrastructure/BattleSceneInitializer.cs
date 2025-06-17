@@ -13,6 +13,8 @@ namespace Infrastructure
 {
     public class BattleSceneInitializer : MonoBehaviour
     {
+        public UnitFactory UnitFactory;
+        
         public AbilityConfig _castamentAbilityConfig;
         public AbilityConfig _armamntAbilityConfig;
 
@@ -20,7 +22,8 @@ namespace Infrastructure
 
         public UnitStatsPanel UnitStatsPanel;
 
-        public Unit UnitPrefab;
+       // public Unit UnitPrefab;
+        public UnitView UnitPrefab;
 
         public Transform TargetSpawnPoint;
         public Transform SourceSpawnPoint;
@@ -54,17 +57,20 @@ namespace Infrastructure
 
         private void Start()
         {
+            EffectResolver = new EffectResolver();
             _statusFactory = new StatusFactory();
             _abilityFactory = new AbilityFactory(_statusFactory);
-            EffectResolver = new EffectResolver();
             _effectManager = new EffectManager();
             _abilityViewFactory = new AbilityViewFactory();
 
-            targetUnit = Instantiate(UnitPrefab);
+            UnitFactory = new UnitFactory(UnitPrefab);
+            
+
+          //  targetUnit = Instantiate(UnitPrefab);
             targetUnit.Initialize(TargetConfig.Stats, EffectResolver);
             targetUnit.transform.position = TargetSpawnPoint.position;
 
-            sourceUnit = Instantiate(UnitPrefab);
+          //  sourceUnit = Instantiate(UnitPrefab);
             sourceUnit.Initialize(SourceConfig.Stats, EffectResolver);
             sourceUnit.transform.position = SourceSpawnPoint.position;
 
@@ -85,7 +91,7 @@ namespace Infrastructure
 
                 foreach (var status in ability.CastamentSetup.Statuses)
                     statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
-            
+
                 ApplyEffectsToTarget(statuses, effects);
             }
 
@@ -101,9 +107,9 @@ namespace Infrastructure
 
             Ability ability = _abilityFactory.Create(_armamntAbilityConfig, targetUnit);
 
-            if (ability.HasArmament) 
-                CreateStatsAndEffects(ability,  effects,  statuses);
-        
+            if (ability.HasArmament)
+                CreateStatsAndEffects(ability, effects, statuses);
+
             AbilityView abilityView =
                 _abilityViewFactory.Create(sourceUnit.abilityPos.position, _armamntAbilityConfig.Prefab, targetUnit);
 
@@ -119,7 +125,8 @@ namespace Infrastructure
                 statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
         }
 
-        private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects, AbilityView abilityView)
+        private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
+            AbilityView abilityView)
         {
             while (Vector3.Distance(targetUnit.transform.position, abilityView.transform.position) > 0.1f)
                 yield return null;
