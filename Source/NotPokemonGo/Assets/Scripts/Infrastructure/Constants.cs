@@ -1,4 +1,6 @@
-﻿namespace Infrastructure
+﻿using UnityEngine;
+
+namespace Infrastructure
 {
     public static class Constants
     {
@@ -6,13 +8,19 @@
         {
             public const string InitialSceneName = "Initial";
             public const string MainMenuSceneName = "MainMenu";
-            
+
             public const string CharacterSkinItemName = "Canvases/CharacterSkinItem";
             public const string CharacterSelectionCanvasName = "Canvases/CharacterSelectionScreen_Canvas";
             public const string MainMenuCanvasPath = "Canvases/MainMenu_Canvas";
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
-            
+
             public const string CatalogPath = "Catalog/Catalog";
+        }
+
+        public class Positions
+        {
+            public static Vector3 Platoon1Position = new Vector3(0, 0, 10);
+            public static Vector3 Platoon2Position = new Vector3(0, 0, -10);
         }
     }
 }

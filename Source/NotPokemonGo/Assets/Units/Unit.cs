@@ -2,6 +2,7 @@
 using Stats;
 using Statuses;
 using UnityEngine;
+using VContainer;
 
 namespace Units
 {
@@ -12,16 +13,18 @@ namespace Units
         private EffectResolver _effectResolver;
 
         public Transform abilityPos;
-        
-        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver)
+
+        public void Construct(List<StatConfig> statConfig)
         {
-            _effectResolver = effectResolver;
-            
             foreach (var statSetup in statConfig)
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
         }
+        
+        [Inject]
+        public void Initialize(EffectResolver effectResolver) => 
+            _effectResolver = effectResolver;
 
         public float GetStat(StatType statType)
         {

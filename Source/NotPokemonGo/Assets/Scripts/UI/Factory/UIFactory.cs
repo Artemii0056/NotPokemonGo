@@ -10,13 +10,13 @@ namespace UI.Factory
     public class UIFactory : IUIFactory
     {
         private readonly IResourceLoader _resourceLoader;
-        private readonly IStaticDataLoadService _staticDataLoadService;
+        private readonly IStaticDataService _staticDataService;
 
         public UIFactory(IResourceLoader resourceLoader,
-            IStaticDataLoadService staticDataLoadService)
+            IStaticDataService staticDataService)
         {
             _resourceLoader = resourceLoader;
-            _staticDataLoadService = staticDataLoadService;
+            _staticDataService = staticDataService;
         }
 
         public CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel()
@@ -41,7 +41,7 @@ namespace UI.Factory
 
         public CharacterSelectionScreenPanel CreateCharacterSelectionPanel()
         {
-            CharactersCatalogStaticData config = _staticDataLoadService.LoadCharacterCatalogStaticDatas();
+            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
             CharacterSkinItemView iconPrefab =
                 Resources.Load<CharacterSkinItemView>(Constants.AssetPath.CharacterSkinItemName);

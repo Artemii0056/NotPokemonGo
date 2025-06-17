@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Characters.Configs;
 using Stats;
+using Units;
 using UnityEngine;
 
 namespace Characters
@@ -11,6 +12,8 @@ namespace Characters
         [field: SerializeField] public CharacterType Type { get; private set; }
         
         [SerializeField] private List<StatConfig> _stats = new List<StatConfig>();
+        
+        public Unit Prefab;
 
         public List<StatConfig> Stats => new List<StatConfig>(_stats);
     }

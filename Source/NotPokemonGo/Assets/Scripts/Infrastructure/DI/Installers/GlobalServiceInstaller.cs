@@ -8,6 +8,7 @@ using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using UI.Factory;
+using Units;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -37,7 +38,8 @@ namespace Infrastructure.DI.Installers
             builder.Register<IResourceLoader, ResourceLoader>(Lifetime.Singleton);
             builder.Register<ISceneLoader, SceneLoader>(Lifetime.Singleton);
             builder.Register<ISystemFactory, SystemFactory>(Lifetime.Singleton);
-            builder.Register<IStaticDataLoadService, StaticDataLoadService>(Lifetime.Singleton);
+            builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
+            builder.Register<IEffectResolver, EffectResolver>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachine(IContainerBuilder builder)

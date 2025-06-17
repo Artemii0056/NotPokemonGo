@@ -9,16 +9,10 @@ namespace DefaultNamespace
     public class Platoon
     {
         private readonly List<Character> _characters;
-        private float _min;
-        private float _max;
 
-        public Platoon(List<Character> characters, ICoroutineRunner coroutineRunner, float min, float max)
+        public Platoon(List<Character> characters)
         {
-            _max = max;
-            _min = min;
             _characters = characters;
-            
-            coroutineRunner.StartCoroutine(ApplayAbility());
         }
 
         private IEnumerator ApplayAbility()

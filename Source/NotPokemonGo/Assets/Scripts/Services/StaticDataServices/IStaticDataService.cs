@@ -1,9 +1,11 @@
+using Characters;
 using Characters.Configs;
 
 namespace Services.StaticDataServices
 {
-    public interface IStaticDataLoadService
+    public interface IStaticDataService
     {
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
+        SpawnPositionConfig GetLocationTypeConfig(SpawnPositionType spawnPositionType);
     }
 }

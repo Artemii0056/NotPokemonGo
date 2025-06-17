@@ -4,7 +4,7 @@ using Stats;
 
 namespace Units
 {
-    public class EffectResolver
+    public class EffectResolver : IEffectResolver
     {
         public float CalculateFinalValue(Unit target, EffectInfo effectInfo)
         {
