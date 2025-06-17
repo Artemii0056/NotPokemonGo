@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Statuses;
 
-namespace Units
+namespace Effects
 {
     public class EffectManager
     {

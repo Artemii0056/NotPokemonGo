@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Effects;
 using Stats;
 using Statuses;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Units
     public class Unit : MonoBehaviour
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
-        private List<Status> _statuses = new List<Status>();
+        private List<Status> _imposedStatuses = new List<Status>();
         private EffectResolver _effectResolver;
 
         public Transform abilityPos;
@@ -44,23 +45,12 @@ namespace Units
 
         public void AddStatusEffect(Status status)
         {
-            _statuses.Add(status);
+            _imposedStatuses.Add(status);
         }
 
         public void RemoveStatus(Status status)
         {
-            _statuses.Remove(status);
-        }
-
-        public void UpdateStatuses()
-        {
-            if (_statuses.Count <= 0)
-                return;
-            
-            foreach (var status in _statuses)
-            {
-                status.Tick();
-            }
+            _imposedStatuses.Remove(status);
         }
     }
 }
