@@ -1,8 +1,8 @@
 ﻿using System;
-using Effects;
 using Stats;
+using Units;
 
-namespace Units
+namespace Effects
 {
     public class EffectResolver
     {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Characters;
-using DefaultNamespace;
 using Services;
 using UnityEngine;
 

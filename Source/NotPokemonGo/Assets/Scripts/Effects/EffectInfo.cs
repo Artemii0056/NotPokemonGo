@@ -1,6 +1,4 @@
-using Effects;
-
-namespace Units
+namespace Effects
 {
     public struct EffectInfo
     {

@@ -4,69 +4,66 @@ using Characters;
 using Services;
 using UnityEngine;
 
-namespace DefaultNamespace
+public class Platoon
 {
-    public class Platoon
+    private readonly List<Character> _characters;
+    private float _min;
+    private float _max;
+
+    public Platoon(List<Character> characters, ICoroutineRunner coroutineRunner, float min, float max)
     {
-        private readonly List<Character> _characters;
-        private float _min;
-        private float _max;
-
-        public Platoon(List<Character> characters, ICoroutineRunner coroutineRunner, float min, float max)
-        {
-            _max = max;
-            _min = min;
-            _characters = characters;
+        _max = max;
+        _min = min;
+        _characters = characters;
             
-            coroutineRunner.StartCoroutine(ApplayAbility());
-        }
+        coroutineRunner.StartCoroutine(ApplayAbility());
+    }
 
-        private IEnumerator ApplayAbility()
-        {
-            while (true)
-            {
-                foreach (Character character in _characters)
-                {
-                    if (character.Step.IsReadyToAct)
-                    {
-                        character.UseAbility();
-                        Debug.Log($"{character.Name} Use Ability");
-                    }
-                    else
-                    {
-                        Debug.LogError($"{character.Name} Try Use Ability");
-                    }
-                }
-                yield return null;
-            }
-        }
-
-        public bool IsAlive { get; private set; }
-
-        public void Tick(float deltaTime)
+    private IEnumerator ApplayAbility()
+    {
+        while (true)
         {
             foreach (Character character in _characters)
             {
                 if (character.Step.IsReadyToAct)
                 {
-                    character.Step.ResetCurrentValue();
+                    character.UseAbility();
+                    Debug.Log($"{character.Name} Use Ability");
                 }
                 else
                 {
-                    character.UpdateStepCurrentValue(deltaTime);
+                    Debug.LogError($"{character.Name} Try Use Ability");
                 }
             }
+            yield return null;
         }
+    }
 
-        private void VerifyIsAlive()
+    public bool IsAlive { get; private set; }
+
+    public void Tick(float deltaTime)
+    {
+        foreach (Character character in _characters)
         {
-            foreach (Character character in _characters)
+            if (character.Step.IsReadyToAct)
             {
-                if (character.IsAlive)
-                {
-                    IsAlive = true;
-                    break;
-                }
+                character.Step.ResetCurrentValue();
+            }
+            else
+            {
+                character.UpdateStepCurrentValue(deltaTime);
+            }
+        }
+    }
+
+    private void VerifyIsAlive()
+    {
+        foreach (Character character in _characters)
+        {
+            if (character.IsAlive)
+            {
+                IsAlive = true;
+                break;
             }
         }
     }
