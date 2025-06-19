@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
-  m_Name: ArmamentAbilityConfig
+  m_Name: Test2
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300004, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  <Icon>k__BackingField: {fileID: 21300052, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   <TargetMode>k__BackingField: 0
   <Cost>k__BackingField: 1
   <ArmamentSetup>k__BackingField:
-    <Statuses>k__BackingField:
-    - EffectSetup:
-        Type: 1
-        Value: 10
-      Type: 2
-      TargetTime: 1
-      TickCount: 5
-    <EffectInfo>k__BackingField:
-    - Type: 1
-      Value: 50
+    <Statuses>k__BackingField: []
+    <EffectInfo>k__BackingField: []
     <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}
     <ArmamentView>k__BackingField: {fileID: -6023460161808473323, guid: 8c1f7e4aa7b7d764786ffd0a552a4279, type: 3}
     <MoveSpeed>k__BackingField: 0
   <CastamentSetup>k__BackingField:
-    <Statuses>k__BackingField: []
-    <EffectInfo>k__BackingField: []
-    <ParticleSystem>k__BackingField: {fileID: 0}
+    <Statuses>k__BackingField:
+    - EffectSetup:
+        Type: 1
+        Value: 5
+      Type: 1
+      TargetTime: 1
+      TickCount: 3
+    <EffectInfo>k__BackingField:
+    - Type: 2
+      Value: 20
+    <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}
   <Prefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
   <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}

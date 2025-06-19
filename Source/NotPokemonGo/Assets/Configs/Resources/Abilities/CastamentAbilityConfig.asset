@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
   m_Name: CastamentAbilityConfig
   m_EditorClassIdentifier: 
-  <Icon>k__BackingField: {fileID: 21300000, guid: 6e02c321de5352547a25e590d7c6e21d, type: 3}
+  <Icon>k__BackingField: {fileID: 21300014, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   <TargetMode>k__BackingField: 0
   <Cost>k__BackingField: 1
   <ArmamentSetup>k__BackingField:

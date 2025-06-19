@@ -28,3 +28,8 @@ MonoBehaviour:
     Value: 15
   - <StatsType>k__BackingField: 7
     Value: 15
+  _abilityConfigs:
+  - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}
+  - {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}
+  - {fileID: 11400000, guid: 0c2693c681c4b7644b5089b21d6a0629, type: 2}
+  - {fileID: 11400000, guid: eccd0fd99563e1b459eb9d95b45957cc, type: 2}

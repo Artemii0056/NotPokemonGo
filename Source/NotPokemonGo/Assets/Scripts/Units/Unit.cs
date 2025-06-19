@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Abilities.MV;
+using DefaultNamespace;
 using Effects;
 using Stats;
 using Statuses;
@@ -11,13 +14,20 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private EffectResolver _effectResolver;
+        
+        private List<AbilityModel> _abilityModels = new List<AbilityModel>();
+
+        public PlatoonType PlatoonType;
+
+        public List<AbilityModel> AbilityModels => _abilityModels.ToList();
+
 
         public Transform abilityPos;
-        
+
         public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver)
         {
             _effectResolver = effectResolver;
-            
+
             foreach (var statSetup in statConfig)
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
@@ -48,6 +58,18 @@ namespace Units
         public void RemoveStatus(Status status)
         {
             _imposedStatuses.Remove(status);
+        }
+
+        public void AddAbility(AbilityModel ability) => 
+            _abilityModels.Add(ability);
+
+        public void Tick(float deltaTime)
+        {
+            if (_abilityModels.Count > 0)
+            {
+                foreach (var model in _abilityModels) 
+                    model.UpdateTime(deltaTime);
+            }
         }
     }
 }

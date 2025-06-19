@@ -1,10 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Abilities;
+using Abilities.MV;
 using Characters;
+using DefaultNamespace;
 using Effects;
 using Factories;
+using InputServices;
+using Services.StaticDataServices;
 using Statuses;
+using UI.Ability;
 using Units;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,8 +19,14 @@ namespace Infrastructure
 {
     public class BattleSceneInitializer : MonoBehaviour
     {
+        private StaticDataLoadService _staticDataLoadService;
+
+        public Raycaster raycaster;
+
+        public AbilitiesPanel AbilitiesPanel;
+
         public UnitFactory UnitFactory;
-        
+
         public AbilityConfig _castamentAbilityConfig;
         public AbilityConfig _armamntAbilityConfig;
 
@@ -22,7 +34,7 @@ namespace Infrastructure
 
         public UnitStatsPanel UnitStatsPanel;
 
-       // public Unit UnitPrefab;
+        public Unit OriginalUnitPrefab;
         public UnitView UnitPrefab;
 
         public Transform TargetSpawnPoint;
@@ -41,40 +53,67 @@ namespace Infrastructure
 
         private StatusFactory _statusFactory;
         private AbilityFactory _abilityFactory;
-        private AbilityViewFactory _abilityViewFactory;
+        private ArmamentViewFactory _armamentViewFactory;
+
+        private void Awake()
+        {
+            _staticDataLoadService = new StaticDataLoadService();
+            AbilitiesPanel.Initialize(_staticDataLoadService);
+
+            EffectResolver = new EffectResolver();
+            _statusFactory = new StatusFactory();
+            _abilityFactory = new AbilityFactory(_statusFactory);
+            _effectManager = new EffectManager();
+            _armamentViewFactory = new ArmamentViewFactory();
+
+            UnitFactory = new UnitFactory(UnitPrefab);
+        }
 
         private void OnEnable()
         {
             armamentAbilityButton.onClick.AddListener(ArmamentAbilitySpell);
             castamentAbilityButton.onClick.AddListener(CastamentAbilitySpell);
+
+            raycaster.UnitSearched += OnUnitSearched;
         }
 
         private void OnDisable()
         {
             armamentAbilityButton.onClick.RemoveListener(ArmamentAbilitySpell);
             castamentAbilityButton.onClick.RemoveListener(CastamentAbilitySpell);
+
+            raycaster.UnitSearched -= OnUnitSearched;
         }
 
         private void Start()
         {
-            EffectResolver = new EffectResolver();
-            _statusFactory = new StatusFactory();
-            _abilityFactory = new AbilityFactory(_statusFactory);
-            _effectManager = new EffectManager();
-            _abilityViewFactory = new AbilityViewFactory();
-
-            UnitFactory = new UnitFactory(UnitPrefab);
-            
-
-          //  targetUnit = Instantiate(UnitPrefab);
+            targetUnit = Instantiate(OriginalUnitPrefab);
             targetUnit.Initialize(TargetConfig.Stats, EffectResolver);
             targetUnit.transform.position = TargetSpawnPoint.position;
+            targetUnit.PlatoonType = PlatoonType.Enemies;
 
-          //  sourceUnit = Instantiate(UnitPrefab);
+            for (int i = 0; i < TargetConfig.AbilityConfigs.Count; i++)
+            {
+                targetUnit.AddAbility(new AbilityModel(TargetConfig.AbilityConfigs[i]));
+            }
+
+            sourceUnit = Instantiate(OriginalUnitPrefab);
             sourceUnit.Initialize(SourceConfig.Stats, EffectResolver);
             sourceUnit.transform.position = SourceSpawnPoint.position;
+            sourceUnit.PlatoonType = PlatoonType.Friends;
+
+            for (int i = 0; i < SourceConfig.AbilityConfigs.Count; i++)
+            {
+                sourceUnit.AddAbility(new AbilityModel(SourceConfig.AbilityConfigs[i]));
+            }
 
             UnitStatsPanel.unit = targetUnit;
+        }
+
+        private void OnUnitSearched(Unit unit)
+        {
+            if (unit.PlatoonType == PlatoonType.Friends) 
+                ShowAbilityInfos(unit.AbilityModels);
         }
 
         private void CastamentAbilitySpell()
@@ -110,10 +149,10 @@ namespace Infrastructure
             if (ability.HasArmament)
                 CreateStatsAndEffects(ability, effects, statuses);
 
-            AbilityView abilityView =
-                _abilityViewFactory.Create(sourceUnit.abilityPos.position, _armamntAbilityConfig.Prefab, targetUnit);
+            ArmamentView armamentView =
+                _armamentViewFactory.Create(sourceUnit.abilityPos.position, _armamntAbilityConfig.Prefab, targetUnit);
 
-            StartCoroutine(PlayArmamentAbility(statuses, effects, abilityView));
+            StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView));
         }
 
         private void CreateStatsAndEffects(Ability ability, List<EffectInfo> effects, List<Status> statuses)
@@ -126,9 +165,9 @@ namespace Infrastructure
         }
 
         private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
-            AbilityView abilityView)
+            ArmamentView armamentView)
         {
-            while (Vector3.Distance(targetUnit.transform.position, abilityView.transform.position) > 0.1f)
+            while (Vector3.Distance(targetUnit.transform.position, armamentView.transform.position) > 0.1f)
                 yield return null;
 
             ApplyEffectsToTarget(statuses, effects);
@@ -153,6 +192,14 @@ namespace Infrastructure
         {
             _effectManager.Update(Time.deltaTime);
             _effectManager.RemoveInactive();
+
+            targetUnit.Tick(Time.deltaTime);
+            sourceUnit.Tick(Time.deltaTime);
+        }
+
+        public void ShowAbilityInfos(List<AbilityModel> abilityModels)
+        {
+            AbilitiesPanel.SetAbilities(abilityModels);
         }
     }
 }

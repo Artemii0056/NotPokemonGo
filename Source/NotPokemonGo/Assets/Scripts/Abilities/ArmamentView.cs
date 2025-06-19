@@ -3,12 +3,11 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class AbilityView : MonoBehaviour
+    public class ArmamentView : MonoBehaviour
     {
         public float delta = 10f;
         
         private Unit _target;
-        private Ability _ability;
 
         private void Update()
         {
