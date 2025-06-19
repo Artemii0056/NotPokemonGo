@@ -1,8 +1,5 @@
-﻿namespace DefaultNamespace
+﻿public enum PlatoonType
 {
-    public enum PlatoonType
-    {
-        Friends = 1,
-        Enemies = 2,
-    }
+    Friends = 1,
+    Enemies = 2,
 }

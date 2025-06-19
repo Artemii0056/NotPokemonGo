@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Abilities.MV;
-using DefaultNamespace;
 using Effects;
 using Stats;
 using Statuses;
@@ -17,16 +16,17 @@ namespace Units
         
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
-        public PlatoonType PlatoonType;
+        public PlatoonType PlatoonType { get; private set; }
 
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
 
 
         public Transform abilityPos;
 
-        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver)
+        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver, PlatoonType platoonType)
         {
             _effectResolver = effectResolver;
+            PlatoonType = platoonType;
 
             foreach (var statSetup in statConfig)
             {

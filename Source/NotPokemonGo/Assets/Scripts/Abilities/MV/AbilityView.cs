@@ -1,6 +1,4 @@
-﻿using Factories;
-using Units;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Abilities.MV
@@ -12,7 +10,7 @@ namespace Abilities.MV
         [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         
-        private AbilityApplicationService _abilityApplicationService;
+        private AbilityApplicatorService _abilityApplicatorService;
 
         private AbilityModel _abilityModel;
 
@@ -59,8 +57,8 @@ namespace Abilities.MV
 
         private void OnClick()
         {
-            _abilityApplicationService.Remember(_abilityModel);
-            _abilityModel.DiscardCurrentTime();
+            _abilityApplicatorService.Remember(_abilityModel);
+            //_abilityModel.DiscardCurrentTime();
         }
 
         public void SetImage(Sprite sprite) =>
@@ -71,29 +69,10 @@ namespace Abilities.MV
             _icon.sprite = _defaultImage.sprite;
             _abilityModel = null;
         }
-    }
 
-    public class AbilityApplicationService
-    {
-        private AbilityModel _abilityModel;
-        private AbilityFactory _abilityFactory;
-
-        public AbilityApplicationService(AbilityFactory abilityFactory)
+        public void InitService(AbilityApplicatorService abilityApplicatorService)
         {
-            _abilityFactory = abilityFactory;
-        }
-
-        public void Remember(AbilityModel abilityModel)
-        {
-            _abilityModel = abilityModel;
-        }
-
-        private void Apply(params Unit[] targets)
-        {
-            foreach (var unit in targets)
-            {
-
-            }
+            _abilityApplicatorService = abilityApplicatorService;
         }
     }
 }
