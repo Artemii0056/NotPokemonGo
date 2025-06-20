@@ -12,12 +12,14 @@ public class StatusViewPanel : MonoBehaviour
 
     public void Add(Status status)
     {
-        if (TrySearch(status.Setup.Type, out StatusView statusView) == false)
-        {
-            GetFreeView().Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
-        }
+        StatusView view;
 
-        statusView.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
+        if (TrySearch(status.Setup.Type, out StatusView statusView) == false)
+            view = GetFreeView();
+        else
+            view = statusView;
+
+        view.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
     }
 
     public void Remove(Status status)
@@ -37,7 +39,7 @@ public class StatusViewPanel : MonoBehaviour
     private bool TrySearch(StatusType searchType, out StatusView status)
     {
         status = null;
-        
+
         foreach (var searchedStatus in _statusViews)
         {
             if (searchedStatus.HasStatus && searchedStatus.StatusType == searchType)
@@ -46,7 +48,7 @@ public class StatusViewPanel : MonoBehaviour
                 return true;
             }
         }
-        
+
         return false;
     }
 

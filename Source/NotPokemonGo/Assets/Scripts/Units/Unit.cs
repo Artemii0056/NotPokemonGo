@@ -25,9 +25,6 @@ namespace Units
 
         public Transform abilityPos;
 
-        public Transform StatusContainer;
-
-
         public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver, PlatoonType platoonType,
             StaticDataLoadService staticDataLoadService)
         {

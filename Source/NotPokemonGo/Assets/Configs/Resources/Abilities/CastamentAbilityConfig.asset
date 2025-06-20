@@ -29,7 +29,7 @@ MonoBehaviour:
         Type: 1
         Value: 5
       Type: 1
-      TargetTime: 1
+      TargetTime: 5
       TickCount: 3
     <EffectInfo>k__BackingField:
     - Type: 2
