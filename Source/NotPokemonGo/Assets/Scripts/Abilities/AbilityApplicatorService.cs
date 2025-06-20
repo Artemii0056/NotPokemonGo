@@ -21,16 +21,16 @@ namespace Abilities
         private ArmamentViewFactory _armamentViewFactory;
         private StatusFactory _statusFactory;
         private EffectResolver _effectResolver;
-        private EffectManager _effectManager;
+        private StatusManager _statusManager;
 
         public AbilityApplicatorService(ArmamentViewFactory armamentViewFactory,
-            StatusFactory statusFactory, EffectResolver effectResolver, EffectManager effectManager,
+            StatusFactory statusFactory, EffectResolver effectResolver, StatusManager statusManager,
             ICoroutineRunner coroutineRunner)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
-            _effectManager = effectManager;
+            _statusManager = statusManager;
             _coroutineRunner = coroutineRunner;
         }
 
@@ -104,7 +104,10 @@ namespace Abilities
         private void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects)
         {
             foreach (var status in statuses)
-                _effectManager.RegisterStatusEffect(status);
+            {
+                _statusManager.RegisterStatusEffect(status);
+                target.AddStatus(status);
+            }
 
             foreach (var effectInfo in effects)
                 target.ReceiveDamage(effectInfo);

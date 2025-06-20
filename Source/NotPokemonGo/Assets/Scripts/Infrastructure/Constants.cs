@@ -14,6 +14,8 @@
             
             public const string CatalogPath = "Catalog/Catalog";
             public const string AbilityConfigPath = "Abilities";
+            
+            public const string StatusTypePath = "Statuses/StatusTypesConfig";
         }
     }
 }

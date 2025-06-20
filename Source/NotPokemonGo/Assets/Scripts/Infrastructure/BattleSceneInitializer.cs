@@ -7,6 +7,7 @@ using Factories;
 using InputServices;
 using Services;
 using Services.StaticDataServices;
+using Statuses;
 using UI.Ability;
 using Units;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace Infrastructure
         public Unit targetUnit2;
         public Unit sourceUnit;
 
-        private EffectManager _effectManager;
+        private StatusManager _statusManager;
 
         private StatusFactory _statusFactory;
         private ArmamentViewFactory _armamentViewFactory;
@@ -54,12 +55,12 @@ namespace Infrastructure
             _effectResolver = new EffectResolver();
             _statusFactory = new StatusFactory();
 
-            _effectManager = new EffectManager();
+            _statusManager = new StatusManager();
             _armamentViewFactory = new ArmamentViewFactory();
-            _abilityApplicatorService = new AbilityApplicatorService(_armamentViewFactory,_statusFactory,_effectResolver, _effectManager, this);
+            _abilityApplicatorService = new AbilityApplicatorService(_armamentViewFactory,_statusFactory,_effectResolver, _statusManager, this);
             AbilitiesPanel.Initialize(_staticDataLoadService, _abilityApplicatorService);
 
-            UnitFactory = new UnitFactory(OriginalUnitPrefab, _effectResolver);
+            UnitFactory = new UnitFactory(OriginalUnitPrefab, _effectResolver, _staticDataLoadService);
         }
 
         private void OnEnable()
@@ -101,8 +102,8 @@ namespace Infrastructure
 
         private void Update()
         {
-            _effectManager.Update(Time.deltaTime);
-            _effectManager.RemoveInactive();
+            _statusManager.Update(Time.deltaTime);
+            _statusManager.RemoveInactive();
 
             targetUnit.Tick(Time.deltaTime);
             sourceUnit.Tick(Time.deltaTime);

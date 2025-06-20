@@ -4,6 +4,7 @@ using Abilities;
 using Characters.Configs;
 using Infrastructure;
 using Services.AssetManagement;
+using Statuses;
 using UnityEngine;
 
 namespace Services.StaticDataServices
@@ -12,6 +13,8 @@ namespace Services.StaticDataServices
     {
         private IResourceLoader _resourceLoader;
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
+        
+        private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
 
         public StaticDataLoadService(IResourceLoader resourceLoader)
         {
@@ -22,6 +25,7 @@ namespace Services.StaticDataServices
         public StaticDataLoadService()
         {
             LoadAbilityConfigs();
+            LoadStatusTypeIcons();
         }
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
@@ -35,10 +39,24 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
 
+        public Sprite GetStatusIcon(StatusType statusType)
+        {
+            if (_statusTypeIcons.TryGetValue(statusType, out StatusTypeIcon statusTypeIcon))
+                return statusTypeIcon.Icon;
+            
+            throw new KeyNotFoundException($"No ability config found for mode {statusType}");
+        }
+
         private void LoadAbilityConfigs()
         {
             _abilityConfigs = Resources.LoadAll<AbilityConfig>(Constants.AssetPath.AbilityConfigPath)
                 .ToDictionary(x => x.AbilityType, x => x);
+        }
+
+        private void LoadStatusTypeIcons()
+        {
+            _statusTypeIcons = Resources.Load<StatusTypesConfig>(Constants.AssetPath.StatusTypePath).StatusTypes
+                .ToDictionary(x => x.Type, x => x);
         }
     }
 }

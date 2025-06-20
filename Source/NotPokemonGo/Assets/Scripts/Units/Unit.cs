@@ -2,6 +2,7 @@
 using System.Linq;
 using Abilities.MV;
 using Effects;
+using Services.StaticDataServices;
 using Stats;
 using Statuses;
 using UnityEngine;
@@ -10,23 +11,30 @@ namespace Units
 {
     public class Unit : MonoBehaviour
     {
+        [SerializeField] private StatusViewPanel _statusViewPanel;
+
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private EffectResolver _effectResolver;
-        
+
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
         public PlatoonType PlatoonType { get; private set; }
 
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
 
-
         public Transform abilityPos;
 
-        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver, PlatoonType platoonType)
+        public Transform StatusContainer;
+
+
+        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver, PlatoonType platoonType,
+            StaticDataLoadService staticDataLoadService)
         {
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
+
+            _statusViewPanel.Init(staticDataLoadService);
 
             foreach (var statSetup in statConfig)
             {
@@ -50,24 +58,27 @@ namespace Units
             _stats[statType].Modify(value);
         }
 
-        public void AddStatusEffect(Status status)
+        public void AddStatus(Status status)
         {
+            _statusViewPanel.Add(status);
+            //Тут 
             _imposedStatuses.Add(status);
         }
 
         public void RemoveStatus(Status status)
         {
             _imposedStatuses.Remove(status);
+            _statusViewPanel.Remove(status);
         }
 
-        public void AddAbility(AbilityModel ability) => 
+        public void AddAbility(AbilityModel ability) =>
             _abilityModels.Add(ability);
 
         public void Tick(float deltaTime)
         {
             if (_abilityModels.Count > 0)
             {
-                foreach (var model in _abilityModels) 
+                foreach (var model in _abilityModels)
                     model.UpdateTime(deltaTime);
             }
         }
