@@ -34,6 +34,7 @@ namespace UI.SpawnPositions
         private void OnSpawnPositionChanged(SpawnPositionType spawnPositionType)
         {
             _stateMachine.Enter<LoadingBattleState, SpawnPositionType>(spawnPositionType);
+            Disable();
         }
     }
 }

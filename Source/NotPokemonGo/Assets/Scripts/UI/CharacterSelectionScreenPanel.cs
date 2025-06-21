@@ -44,7 +44,7 @@ namespace UI
             CharacterInfoPanel.CreateItemViews(itemView.CharacterItemConfig);
         
             _startGameButton.gameObject.SetActive(true);
-            _characterType = itemView.CharacterItemConfig.CharacterStaticData.Type;
+            _characterType = itemView.CharacterItemConfig.CharacterConfig.Type;
         }
     
         private void OnStartGameButtonClicked()

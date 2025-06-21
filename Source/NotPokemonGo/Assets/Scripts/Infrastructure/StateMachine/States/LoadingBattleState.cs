@@ -23,11 +23,13 @@ namespace Infrastructure.StateMachine.States
             SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
             SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
             
-            _battlefieldFactory.Create(spawnPositionConfigFirstCommand, spawnPositionConfigSecondCommand);
+            Battlefield battlefield = _battlefieldFactory.Create(spawnPositionConfigFirstCommand, spawnPositionConfigSecondCommand);
             
             //_gameStateMachine.Enter<BattleLoopState>();
             
             Debug.Log($"Entering {nameof(LoadingBattleState)}");
+            
+            battlefield.Tick(Time.deltaTime);
         }
 
         public void Exit()

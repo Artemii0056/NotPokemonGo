@@ -15,7 +15,7 @@ namespace Units
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
-        private EffectResolver _effectResolver;
+        private IEffectResolver _effectResolver;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
@@ -25,8 +25,8 @@ namespace Units
 
         public Transform abilityPos;
 
-        public void Initialize(List<StatConfig> statConfig, EffectResolver effectResolver, PlatoonType platoonType,
-            StaticDataLoadService staticDataLoadService)
+        public void Initialize(List<StatConfig> statConfig, IEffectResolver effectResolver, PlatoonType platoonType,
+            IStaticDataService staticDataLoadService)
         {
             _effectResolver = effectResolver;
             PlatoonType = platoonType;

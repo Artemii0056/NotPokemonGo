@@ -10,10 +10,10 @@ namespace UI.Ability
     {
         [SerializeField] private List<AbilityView> _abilitiesView;
 
-        private StaticDataLoadService _staticDataLoadService;
+        private IStaticDataService _staticDataLoadService;
         private AbilityApplicatorService _abilityApplicatorService;
 
-        public void Initialize(StaticDataLoadService staticDataLoadService, AbilityApplicatorService abilityApplicatorService)
+        public void Initialize(IStaticDataService staticDataLoadService, AbilityApplicatorService abilityApplicatorService)
         {
             _staticDataLoadService = staticDataLoadService;
             _abilityApplicatorService = abilityApplicatorService;

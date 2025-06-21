@@ -1,4 +1,5 @@
 ﻿using Effects;
+using Factories;
 using Infrastructure.DI.Initializers;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
@@ -33,6 +34,8 @@ namespace Infrastructure.DI.Installers.Gloabals
         private void RegisterFactories(IContainerBuilder builder)
         {
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<IUnitFactory, UnitFactory>(Lifetime.Singleton);
+            builder.Register<IPlatoonFactory, PlatoonFactory>(Lifetime.Singleton);
             builder.Register<IBattlefieldFactory, BattlefieldFactory>(Lifetime.Singleton);
         }
 
@@ -48,7 +51,6 @@ namespace Infrastructure.DI.Installers.Gloabals
         private void RegisterGameStateMachine(IContainerBuilder builder)
         {
             builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
-            builder.Register<IPlatoonFactory, PlatoonFactory>(Lifetime.Singleton);
         }
 
         private void RegisterStates(IContainerBuilder builder)

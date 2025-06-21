@@ -8,7 +8,7 @@ public class StatusViewPanel : MonoBehaviour
 {
     [SerializeField] private List<StatusView> _statusViews;
 
-    private StaticDataLoadService _staticDataLoadService;
+    private IStaticDataService _staticDataLoadService;
 
     public void Add(Status status)
     {
@@ -52,7 +52,7 @@ public class StatusViewPanel : MonoBehaviour
         return false;
     }
 
-    public void Init(StaticDataLoadService staticDataLoadService)
+    public void Init(IStaticDataService staticDataLoadService)
     {
         _staticDataLoadService = staticDataLoadService;
     }

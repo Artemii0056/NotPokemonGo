@@ -41,23 +41,23 @@ namespace UI.Factory
 
         public CharacterSelectionScreenPanel CreateCharacterSelectionPanel()
         {
-            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
+            // CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
+            //
+            // CharacterSkinItemView iconPrefab =
+            //     Resources.Load<CharacterSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
+            //
+            // CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel();
+            //
+            // foreach (CharacterItemConfig characterItemConfig in config.CharacterItemConfigs)
+            // {
+            //     CharacterSkinItemView icon = Object.Instantiate(iconPrefab);
+            //     icon.InitImage(characterItemConfig);
+            //     characterSelectionScreenPanel.CharacterSelectionPanel.AddItem(icon);
+            //     characterSelectionScreenPanel.CharacterInfoPanel.SetCharacteristicItemView(
+            //         CreateCharacteristicItemView());
+            // }
             
-            CharacterSkinItemView iconPrefab =
-                Resources.Load<CharacterSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
-            
-            CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel();
-            
-            foreach (CharacterItemConfig characterItemConfig in config.CharacterItemConfigs)
-            {
-                CharacterSkinItemView icon = Object.Instantiate(iconPrefab);
-                icon.InitImage(characterItemConfig);
-                characterSelectionScreenPanel.CharacterSelectionPanel.AddItem(icon);
-                characterSelectionScreenPanel.CharacterInfoPanel.SetCharacteristicItemView(
-                    CreateCharacteristicItemView());
-            }
-            
-            return characterSelectionScreenPanel;
+            return default;
         }
 
         private CharacteristicItemView CreateCharacteristicItemView()

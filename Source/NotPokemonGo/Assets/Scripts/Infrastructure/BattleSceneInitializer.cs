@@ -18,7 +18,7 @@ namespace Infrastructure
     {
         private AbilityApplicatorService _abilityApplicatorService;
 
-        private StaticDataLoadService _staticDataLoadService;
+        private IStaticDataService _staticDataLoadService;
 
         public Raycaster raycaster;
 
@@ -36,8 +36,8 @@ namespace Infrastructure
         public Transform TargetSpawnPoint2;
         public Transform SourceSpawnPoint;
 
-        public CharacterStaticData TargetConfig;
-        public CharacterStaticData SourceConfig;
+        public CharacterConfig TargetConfig;
+        public CharacterConfig SourceConfig;
 
         public Unit targetUnit;
         public Unit targetUnit2;
@@ -50,7 +50,7 @@ namespace Infrastructure
 
         private void Awake()
         {
-            _staticDataLoadService = new StaticDataLoadService();
+            //_staticDataLoadService = new StaticDataService();
 
             _effectResolver = new EffectResolver();
             _statusFactory = new StatusFactory();
@@ -60,7 +60,7 @@ namespace Infrastructure
             _abilityApplicatorService = new AbilityApplicatorService(_armamentViewFactory,_statusFactory,_effectResolver, _statusManager, this);
             AbilitiesPanel.Initialize(_staticDataLoadService, _abilityApplicatorService);
 
-            UnitFactory = new UnitFactory(OriginalUnitPrefab, _effectResolver, _staticDataLoadService);
+            //UnitFactory = new UnitFactory(OriginalUnitPrefab, _effectResolver, _staticDataLoadService);
         }
 
         private void OnEnable()
@@ -75,14 +75,14 @@ namespace Infrastructure
 
         private void Start()
         {
-            targetUnit = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
-            targetUnit.transform.position = TargetSpawnPoint.position;
-            
-            targetUnit2 = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
-            targetUnit2.transform.position = TargetSpawnPoint2.position;
-            
-            sourceUnit = UnitFactory.Create(SourceConfig, PlatoonType.Friends);
-            sourceUnit.transform.position = SourceSpawnPoint.position;
+            // targetUnit = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
+            // targetUnit.transform.position = TargetSpawnPoint.position;
+            //
+            // targetUnit2 = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
+            // targetUnit2.transform.position = TargetSpawnPoint2.position;
+            //
+            // sourceUnit = UnitFactory.Create(SourceConfig, PlatoonType.Friends);
+            // sourceUnit.transform.position = SourceSpawnPoint.position;
 
             UnitStatsPanel.unit = targetUnit;
         }

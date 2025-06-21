@@ -6,6 +6,7 @@ namespace Infrastructure.StateMachine.States
 {
     public interface IPlatoonFactory
     {
-        Platoon Create(SpawnPositionConfig spawnPositionConfigFirstCommand, Transform platoonPosition);
+        Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
+            PlatoonType enemies, CharacterConfig characterConfig);
     }
 }

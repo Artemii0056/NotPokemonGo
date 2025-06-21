@@ -19,8 +19,9 @@ namespace Infrastructure
             
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
             public const string SpawnPositionConfigsPath = "SpawnPositions";
+            public const string CharacterConfigsPath = "Characters";
         }
-
+        
         public class Positions
         {
             public static Vector3 Platoon1Position = new Vector3(0, 0, 10);

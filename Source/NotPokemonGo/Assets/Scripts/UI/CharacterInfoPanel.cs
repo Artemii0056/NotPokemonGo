@@ -22,7 +22,7 @@ namespace UI
         {
             ClearItemViews();
 
-            foreach (var stat in characterItemConfig.CharacterStaticData.Stats)
+            foreach (var stat in characterItemConfig.CharacterConfig.Stats)
             {
                 CharacteristicItemView itemView = Instantiate(_characterInfoPanel, _gridLayoutGroupTransform, false);
 
