@@ -1,43 +1,37 @@
-﻿using System;
+﻿using Abilities.MV;
 using Characters;
-using Characters.Configs;
+using Effects;
+using Services.StaticDataServices;
+using Statuses;
 using Units;
-using Object = UnityEngine.Object;
+using UnityEngine;
 
 namespace Factories
 {
     public class UnitFactory
     {
-        private readonly UnitView _unitView;
+        private readonly Unit _prefab;
+        private readonly EffectResolver _effectResolver;
+        private readonly StaticDataLoadService _staticDataLoadService;
 
-        public UnitFactory(UnitView unitView)
+        public UnitFactory(Unit prefab, EffectResolver effectResolver, StaticDataLoadService staticDataLoadService)
         {
-            _unitView = unitView;
+            _prefab = prefab;
+            _effectResolver = effectResolver;
+            _staticDataLoadService = staticDataLoadService;
         }
 
-        public UnitView Create(CharacterType characterType,  CharacterStaticData config)
+        public Unit Create(CharacterStaticData config, PlatoonType platoonType)
         {
-            UnitView unit = null;
-
-            switch (characterType)
+            Unit unit = Object.Instantiate(_prefab);
+            unit.Initialize(config.Stats, _effectResolver, platoonType, _staticDataLoadService);
+            
+            for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
-                case CharacterType.First:
-                    unit = Object.Instantiate(_unitView);
-                    UnitModel model = new UnitModel(config.Stats);
-                    UnitPresenter presenter = new UnitPresenter(unit, model);
-                    presenter.Enable();
-                    break;
-
-                case CharacterType.Second:
-
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(characterType), characterType, null);
+                unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
             }
 
             return unit;
         }
     }
-
 }

@@ -15,6 +15,9 @@ namespace Infrastructure
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
 
             public const string CatalogPath = "Catalog/Catalog";
+            public const string AbilityConfigPath = "Abilities";
+            
+            public const string StatusTypePath = "Statuses/StatusTypesConfig";
         }
 
         public class Positions

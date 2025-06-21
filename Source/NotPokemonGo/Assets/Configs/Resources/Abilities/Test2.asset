@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
-  m_Name: CastamentAbilityConfig
+  m_Name: Test2
   m_EditorClassIdentifier: 
-  <AbilityType>k__BackingField: 1
-  <Icon>k__BackingField: {fileID: 21300014, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  <AbilityType>k__BackingField: 3
+  <Icon>k__BackingField: {fileID: 21300052, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   <TargetMode>k__BackingField: 0
   <Cost>k__BackingField: 1
-  <Cooldown>k__BackingField: 2
+  <Cooldown>k__BackingField: 1
   <ArmamentSetup>k__BackingField:
     <Statuses>k__BackingField: []
     <EffectInfo>k__BackingField: []
@@ -29,7 +29,7 @@ MonoBehaviour:
         Type: 1
         Value: 5
       Type: 1
-      TargetTime: 5
+      TargetTime: 1
       TickCount: 3
     <EffectInfo>k__BackingField:
     - Type: 2

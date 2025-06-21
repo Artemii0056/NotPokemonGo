@@ -1,158 +1,117 @@
-using System.Collections;
 using System.Collections.Generic;
 using Abilities;
+using Abilities.MV;
 using Characters;
 using Effects;
 using Factories;
+using InputServices;
+using Services;
+using Services.StaticDataServices;
 using Statuses;
+using UI.Ability;
 using Units;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Infrastructure
 {
-    public class BattleSceneInitializer : MonoBehaviour
+    public class BattleSceneInitializer : MonoBehaviour, ICoroutineRunner
     {
-        public UnitFactory UnitFactory;
-        
-        public AbilityConfig _castamentAbilityConfig;
-        public AbilityConfig _armamntAbilityConfig;
+        private AbilityApplicatorService _abilityApplicatorService;
 
-        public EffectResolver EffectResolver;
+        private StaticDataLoadService _staticDataLoadService;
+
+        public Raycaster raycaster;
+
+        public AbilitiesPanel AbilitiesPanel;
+
+        public UnitFactory UnitFactory;
+
+        private EffectResolver _effectResolver;
 
         public UnitStatsPanel UnitStatsPanel;
 
-       // public Unit UnitPrefab;
-        public UnitView UnitPrefab;
+        public Unit OriginalUnitPrefab;
 
         public Transform TargetSpawnPoint;
+        public Transform TargetSpawnPoint2;
         public Transform SourceSpawnPoint;
 
         public CharacterStaticData TargetConfig;
         public CharacterStaticData SourceConfig;
 
         public Unit targetUnit;
+        public Unit targetUnit2;
         public Unit sourceUnit;
 
-        public Button armamentAbilityButton;
-        public Button castamentAbilityButton;
-
-        private EffectManager _effectManager;
+        private StatusManager _statusManager;
 
         private StatusFactory _statusFactory;
-        private AbilityFactory _abilityFactory;
-        private AbilityViewFactory _abilityViewFactory;
+        private ArmamentViewFactory _armamentViewFactory;
+
+        private void Awake()
+        {
+            _staticDataLoadService = new StaticDataLoadService();
+
+            _effectResolver = new EffectResolver();
+            _statusFactory = new StatusFactory();
+
+            _statusManager = new StatusManager();
+            _armamentViewFactory = new ArmamentViewFactory();
+            _abilityApplicatorService = new AbilityApplicatorService(_armamentViewFactory,_statusFactory,_effectResolver, _statusManager, this);
+            AbilitiesPanel.Initialize(_staticDataLoadService, _abilityApplicatorService);
+
+            UnitFactory = new UnitFactory(OriginalUnitPrefab, _effectResolver, _staticDataLoadService);
+        }
 
         private void OnEnable()
         {
-            armamentAbilityButton.onClick.AddListener(ArmamentAbilitySpell);
-            castamentAbilityButton.onClick.AddListener(CastamentAbilitySpell);
+            raycaster.UnitSearched += OnUnitSearched;
         }
 
         private void OnDisable()
         {
-            armamentAbilityButton.onClick.RemoveListener(ArmamentAbilitySpell);
-            castamentAbilityButton.onClick.RemoveListener(CastamentAbilitySpell);
+            raycaster.UnitSearched -= OnUnitSearched;
         }
 
         private void Start()
         {
-            EffectResolver = new EffectResolver();
-            _statusFactory = new StatusFactory();
-            _abilityFactory = new AbilityFactory(_statusFactory);
-            _effectManager = new EffectManager();
-            _abilityViewFactory = new AbilityViewFactory();
-
-            UnitFactory = new UnitFactory(UnitPrefab);
-            
-
-          //  targetUnit = Instantiate(UnitPrefab);
-            targetUnit.Construct(TargetConfig.Stats);
+            targetUnit = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
             targetUnit.transform.position = TargetSpawnPoint.position;
-
-          //  sourceUnit = Instantiate(UnitPrefab);
-            sourceUnit.Construct(SourceConfig.Stats);
+            
+            targetUnit2 = UnitFactory.Create(TargetConfig, PlatoonType.Enemies);
+            targetUnit2.transform.position = TargetSpawnPoint2.position;
+            
+            sourceUnit = UnitFactory.Create(SourceConfig, PlatoonType.Friends);
             sourceUnit.transform.position = SourceSpawnPoint.position;
 
             UnitStatsPanel.unit = targetUnit;
         }
 
-        private void CastamentAbilitySpell()
+        private void OnUnitSearched(Unit unit)
         {
-            List<Status> statuses = new List<Status>();
-            List<EffectInfo> effects = new List<EffectInfo>();
-
-            Ability ability = _abilityFactory.Create(_castamentAbilityConfig, targetUnit);
-
-            if (ability.HasCastament)
+            if (unit.PlatoonType == PlatoonType.Friends)
             {
-                foreach (var effectSetup in ability.CastamentSetup.EffectsSetup)
-                    effects.Add(new EffectInfo(effectSetup.Type, effectSetup.Value));
-
-                foreach (var status in ability.CastamentSetup.Statuses)
-                    statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
-
-                ApplyEffectsToTarget(statuses, effects);
+                ShowAbilityInfos(unit.AbilityModels);
+                _abilityApplicatorService.RememberSource(unit);
             }
-
-            ParticleSystem effect = Instantiate(_castamentAbilityConfig.ParticleSystem);
-            effect.transform.position = targetUnit.transform.position;
-            effect.Play();
-        }
-
-        private void ArmamentAbilitySpell()
-        {
-            List<Status> statuses = new List<Status>();
-            List<EffectInfo> effects = new List<EffectInfo>();
-
-            Ability ability = _abilityFactory.Create(_armamntAbilityConfig, targetUnit);
-
-            if (ability.HasArmament)
-                CreateStatsAndEffects(ability, effects, statuses);
-
-            AbilityView abilityView =
-                _abilityViewFactory.Create(sourceUnit.abilityPos.position, _armamntAbilityConfig.Prefab, targetUnit);
-
-            StartCoroutine(PlayArmamentAbility(statuses, effects, abilityView));
-        }
-
-        private void CreateStatsAndEffects(Ability ability, List<EffectInfo> effects, List<Status> statuses)
-        {
-            foreach (var effectSetup in ability.ArmamentSetup.EffectsSetup)
-                effects.Add(new EffectInfo(effectSetup.Type, effectSetup.Value));
-
-            foreach (var status in ability.ArmamentSetup.Statuses)
-                statuses.Add(_statusFactory.Create(status, targetUnit, EffectResolver));
-        }
-
-        private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
-            AbilityView abilityView)
-        {
-            while (Vector3.Distance(targetUnit.transform.position, abilityView.transform.position) > 0.1f)
-                yield return null;
-
-            ApplyEffectsToTarget(statuses, effects);
-        }
-
-        private void ApplyEffectsToTarget(List<Status> statuses, List<EffectInfo> effects)
-        {
-            if (statuses.Count > 0)
+            else if (unit.PlatoonType == PlatoonType.Enemies)
             {
-                foreach (var status in statuses)
-                    _effectManager.RegisterStatusEffect(status);
-            }
-
-            if (effects.Count > 0)
-            {
-                foreach (var effectInfo in effects)
-                    targetUnit.ReceiveDamage(effectInfo);
+                _abilityApplicatorService.Apply(unit,targetUnit2);
             }
         }
 
         private void Update()
         {
-            _effectManager.Update(Time.deltaTime);
-            _effectManager.RemoveInactive();
+            _statusManager.Update(Time.deltaTime);
+            _statusManager.RemoveInactive();
+
+            targetUnit.Tick(Time.deltaTime);
+            sourceUnit.Tick(Time.deltaTime);
+        }
+
+        public void ShowAbilityInfos(List<AbilityModel> abilityModels)
+        {
+            AbilitiesPanel.SetAbilities(abilityModels);
         }
     }
 }

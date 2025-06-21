@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Statuses;
 
-namespace Effects
+namespace Statuses
 {
-    public class EffectManager
+    public class StatusManager
     {
        private List<Status> _statusEffects = new List<Status>();
 

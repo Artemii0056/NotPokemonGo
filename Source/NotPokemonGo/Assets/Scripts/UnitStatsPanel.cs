@@ -23,6 +23,7 @@ public class UnitStatsPanel : MonoBehaviour
     private string GetStatsText()
     {
         var text = "";
+        
         foreach (StatType statType in System.Enum.GetValues(typeof(StatType)))
         {
             var a = unit.GetStat(statType);

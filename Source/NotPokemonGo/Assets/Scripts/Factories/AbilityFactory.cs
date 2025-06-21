@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Abilities;
-using Statuses;
+﻿using Abilities;
+using Abilities.MV;
 using Units;
 
 namespace Factories
@@ -12,9 +11,9 @@ namespace Factories
         public AbilityFactory(StatusFactory statusFactory) => 
             _statusFactory = statusFactory;
 
-        public Ability Create(AbilityConfig abilityConfig, params Unit[] targetUnits)
+        public AbilityModel Create(AbilityConfig abilityConfig, params Unit[] targetUnits)
         {
-            return new Ability(abilityConfig, targetUnits);
+            return new AbilityModel(abilityConfig);
         }
     }
 }
