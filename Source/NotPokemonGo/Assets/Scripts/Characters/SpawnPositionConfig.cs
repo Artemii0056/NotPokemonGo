@@ -8,6 +8,6 @@ namespace Characters
     public class SpawnPositionConfig : ScriptableObject
     {
         public SpawnPositionType SpawnPositionType;
-        public GameObject Prefab;
+        public GameObject PositionContainer;
     }
 }

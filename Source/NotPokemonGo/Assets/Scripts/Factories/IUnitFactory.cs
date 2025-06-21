@@ -6,6 +6,6 @@ namespace Factories
 {
     public interface IUnitFactory
     {
-        Unit Create(Transform position, Transform parentPosition, CharacterConfig config, PlatoonType platoonType);
+        Unit Create(Vector3 spawnPosition, Transform parentPosition, CharacterConfig config, PlatoonType platoonType);
     }
 }

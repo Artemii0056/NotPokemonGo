@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SpawnPosition2
   m_EditorClassIdentifier: 
   SpawnPositionType: 2
-  Prefab: {fileID: 4829072344479923854, guid: a494d3453915f0444bbdcca6e6928617, type: 3}
+  PositionContainer: {fileID: 4829072344479923854, guid: a494d3453915f0444bbdcca6e6928617, type: 3}

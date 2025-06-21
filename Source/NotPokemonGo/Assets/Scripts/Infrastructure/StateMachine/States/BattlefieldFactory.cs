@@ -23,10 +23,12 @@ namespace Infrastructure.StateMachine.States
             
             GameObject platoonPosition1 = new GameObject("plattonPosition1");
             platoonPosition1.transform.position = Constants.Positions.Platoon1Position;
+            
             GameObject platoonPosition2 = new GameObject("plattonPosition2");
             platoonPosition2.transform.position = Constants.Positions.Platoon2Position;
-            platoonPosition2.transform.Rotate(Vector3.up, 180);
             
+            platoonPosition1.transform.Rotate(Vector3.up, 180); 
+
             platoonPosition1.transform.SetParent(battlefieldPosition.transform);
             platoonPosition2.transform.SetParent(battlefieldPosition.transform);
 

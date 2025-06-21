@@ -28,6 +28,7 @@ MonoBehaviour:
     Value: 15
   - <StatsType>k__BackingField: 7
     Value: 15
+  Prefab: {fileID: 3270850016428127065, guid: dca5c19ee98a7b54c86488015f30569f, type: 3}
   _abilityConfigs:
   - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}
   - {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}

@@ -51,13 +51,13 @@ namespace Infrastructure.StateMachine.States
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
             SpawnPositionConfig spawnPositionConfig, CharacterConfig characterConfig, int unitCount)
         {
-            Transform[] unitPosition = spawnPositionConfig.Prefab.GetComponentsInChildren<Transform>();
-
+            SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
+            
             for (int i = 0; i < unitCount; i++)
             {
                 if (i < unitPosition.Length)
                 {
-                    units.Add(_unitFactory.Create(unitPosition[i], platoonPosition, characterConfig, platoonType));
+                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, characterConfig, platoonType));
                 }
             }
         }
