@@ -14,14 +14,6 @@ namespace InputServices
             _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 
         }
         
-/// <summary>
-/// говно
-/// </summary>
-        ~Raycaster()
-        {
-            _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed; 
-        }
-        
         public event Action<Unit> UnitSearched;
 
         public void OnLeftMouseButtonPressed()
@@ -30,10 +22,8 @@ namespace InputServices
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.TryGetComponent(out Unit unit))
-                {
+                if (hit.collider.TryGetComponent(out Unit unit)) 
                     UnitSearched?.Invoke(unit);
-                }
             }
         }
     }

@@ -79,6 +79,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<LoadingBattleState>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
+            
+            builder.Register<BattleLoopState>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
         }
     }
 }
