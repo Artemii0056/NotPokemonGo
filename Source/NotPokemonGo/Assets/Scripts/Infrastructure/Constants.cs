@@ -18,6 +18,7 @@ namespace Infrastructure
             public const string AbilityConfigPath = "Abilities";
             
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
+            public const string SpawnPositionConfigsPath = "SpawnPositions";
         }
 
         public class Positions

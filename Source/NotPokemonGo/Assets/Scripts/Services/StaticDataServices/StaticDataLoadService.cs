@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Characters;
 using Characters.Configs;
 using Infrastructure;
 using Services.AssetManagement;
@@ -11,21 +12,23 @@ namespace Services.StaticDataServices
 {
     public class StaticDataLoadService : IStaticDataLoadService
     {
-        private IResourceLoader _resourceLoader;
+        private readonly IResourceLoader _resourceLoader;
+
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
-        
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
+        private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
 
         public StaticDataLoadService(IResourceLoader resourceLoader)
         {
             _resourceLoader = resourceLoader;
             //LoadAbilityConfigs();
         }
-        
+
         public StaticDataLoadService()
         {
             LoadAbilityConfigs();
             LoadStatusTypeIcons();
+            LoadSpawnPositionConfigs();
         }
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
@@ -35,7 +38,7 @@ namespace Services.StaticDataServices
         {
             if (_abilityConfigs.TryGetValue(abilityType, out AbilityConfig abilityConfig))
                 return abilityConfig;
-            
+
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
 
@@ -43,8 +46,16 @@ namespace Services.StaticDataServices
         {
             if (_statusTypeIcons.TryGetValue(statusType, out StatusTypeIcon statusTypeIcon))
                 return statusTypeIcon.Icon;
-            
+
             throw new KeyNotFoundException($"No ability config found for mode {statusType}");
+        }
+        
+        public SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType)
+        {
+            if (_spawnPositionConfigs.TryGetValue(spawnPositionType, out SpawnPositionConfig spawnPositionConfig))
+                return spawnPositionConfig;
+
+            throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
         }
 
         private void LoadAbilityConfigs()
@@ -58,5 +69,18 @@ namespace Services.StaticDataServices
             _statusTypeIcons = Resources.Load<StatusTypesConfig>(Constants.AssetPath.StatusTypePath).StatusTypes
                 .ToDictionary(x => x.Type, x => x);
         }
+
+        private void LoadSpawnPositionConfigs()
+        {
+            _spawnPositionConfigs = Resources.LoadAll<SpawnPositionConfig>(Constants.AssetPath.SpawnPositionConfigsPath)
+                .ToDictionary(x => x.SpawnPositionType, x => x);
+        }
+    }
+
+    public interface IStaticDataLoadService
+    {
+        AbilityConfig GetAbilityConfig(AbilityType abilityType);
+        Sprite GetStatusIcon(StatusType statusType);
+        SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType);
     }
 }
