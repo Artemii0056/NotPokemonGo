@@ -19,7 +19,7 @@ namespace Infrastructure.StateMachine.States
         }
 
         public void Enter(string payload) => 
-            _sceneLoader.Load("Main", OnLoadMainMenuState);
+            _sceneLoader.Load(payload, OnLoadMainMenuState);
 
         public void Exit()
         {

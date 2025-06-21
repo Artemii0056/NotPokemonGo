@@ -19,7 +19,7 @@ namespace Services.StaticDataServices
         {
             _resourceLoader = resourceLoader;
             LoadAbilityConfigs();
-            LoadLocationTypeConfigs();
+            LoadSpawnPositionConfigs();
         }
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
@@ -33,7 +33,7 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {mode}");
         }
         
-        public SpawnPositionConfig GetLocationTypeConfig(SpawnPositionType spawnPositionType)
+        public SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType)
         {
             if (_locationTypeConfigs.TryGetValue(spawnPositionType, out  SpawnPositionConfig locationTypeConfig))
                 return locationTypeConfig;
@@ -41,12 +41,12 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No location type config found for {spawnPositionType}");
         }
 
-        private void LoadLocationTypeConfigs()
+        private void LoadSpawnPositionConfigs()
         {
-            // _locationTypeConfigs = Resources.LoadAll<LocationTypeConfig>("Abilities")
-            //     .ToDictionary(x => x.LocationType, x => x);
+             _locationTypeConfigs = Resources.LoadAll<SpawnPositionConfig>("SpawnPositions")
+                 .ToDictionary(x => x.SpawnPositionType, x => x);
         }
-
+// 
         private void LoadAbilityConfigs()
         {
             // _abilityConfigs = Resources.LoadAll<AbilityConfig>("Abilities")

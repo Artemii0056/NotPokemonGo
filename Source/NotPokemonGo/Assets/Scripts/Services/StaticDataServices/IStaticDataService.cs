@@ -6,6 +6,6 @@ namespace Services.StaticDataServices
     public interface IStaticDataService
     {
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
-        SpawnPositionConfig GetLocationTypeConfig(SpawnPositionType spawnPositionType);
+        SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType);
     }
 }

@@ -67,11 +67,11 @@ namespace Infrastructure
             
 
           //  targetUnit = Instantiate(UnitPrefab);
-            targetUnit.Initialize(TargetConfig.Stats, EffectResolver);
+            targetUnit.Construct(TargetConfig.Stats);
             targetUnit.transform.position = TargetSpawnPoint.position;
 
           //  sourceUnit = Instantiate(UnitPrefab);
-            sourceUnit.Initialize(SourceConfig.Stats, EffectResolver);
+            sourceUnit.Construct(SourceConfig.Stats);
             sourceUnit.transform.position = SourceSpawnPoint.position;
 
             UnitStatsPanel.unit = targetUnit;

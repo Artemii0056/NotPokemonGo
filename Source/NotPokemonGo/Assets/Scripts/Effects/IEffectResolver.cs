@@ -1,3 +1,5 @@
+using Effects;
+
 namespace Units
 {
     public interface IEffectResolver

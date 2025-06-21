@@ -11,7 +11,7 @@ namespace Units
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
-        private EffectResolver _effectResolver;
+        private IEffectResolver _effectResolver;
 
         public Transform abilityPos;
 
@@ -24,7 +24,7 @@ namespace Units
         }
         
         [Inject]
-        public void Initialize(EffectResolver effectResolver) => 
+        public void Initialize(IEffectResolver effectResolver) => 
             _effectResolver = effectResolver;
 
         public float GetStat(StatType statType)

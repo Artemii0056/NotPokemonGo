@@ -20,14 +20,4 @@ namespace Infrastructure.StateMachine.States
             return default;
         }
     }
-
-    public class UnitFactory
-    {
-        public Unit Create(Transform position, CharacterStaticData stats)
-        {
-            // по любому их нужно проициализировать
-
-            return default;
-        }
-    }
 }

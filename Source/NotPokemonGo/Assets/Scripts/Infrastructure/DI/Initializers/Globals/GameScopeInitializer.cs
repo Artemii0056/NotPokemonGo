@@ -5,9 +5,9 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.DI.Initializers
+namespace Infrastructure.DI.Initializers.Globals
 {
-    public class GameScopeInitializer : MonoBehaviour, IInitializable
+    public class GameScopeInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
     {
         private IGameStateMachine _gameStateMachine;
 

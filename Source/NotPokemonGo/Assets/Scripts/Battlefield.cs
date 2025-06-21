@@ -1,4 +1,6 @@
-﻿public class Battlefield
+﻿using DefaultNamespace;
+
+public class Battlefield
 {
     private Platoon _platoon1;
     private Platoon _platoon2;

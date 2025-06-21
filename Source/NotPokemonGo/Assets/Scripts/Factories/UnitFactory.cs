@@ -25,7 +25,7 @@ namespace Factories
                     unit = Object.Instantiate(_unitView);
                     UnitModel model = new UnitModel(config.Stats);
                     UnitPresenter presenter = new UnitPresenter(unit, model);
-                    presenter.OnEnable();
+                    presenter.Enable();
                     break;
 
                 case CharacterType.Second:

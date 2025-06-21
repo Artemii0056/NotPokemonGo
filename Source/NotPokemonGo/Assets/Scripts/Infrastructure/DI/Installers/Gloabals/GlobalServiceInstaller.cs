@@ -1,4 +1,6 @@
-﻿using Infrastructure.DI.Initializers;
+﻿using Effects;
+using Infrastructure.DI.Initializers;
+using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
 using Infrastructure.StateMachine;
 using Infrastructure.StateMachine.States;
@@ -13,7 +15,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Infrastructure.DI.Installers
+namespace Infrastructure.DI.Installers.Gloabals
 {
     public class GlobalServiceInstaller : MonoInstaller
     {
@@ -31,6 +33,7 @@ namespace Infrastructure.DI.Installers
         private void RegisterFactories(IContainerBuilder builder)
         {
             builder.Register<IUIFactory, UIFactory>(Lifetime.Singleton);
+            builder.Register<IBattlefieldFactory, BattlefieldFactory>(Lifetime.Singleton);
         }
 
         private void RegisterServices(IContainerBuilder builder)
@@ -45,6 +48,7 @@ namespace Infrastructure.DI.Installers
         private void RegisterGameStateMachine(IContainerBuilder builder)
         {
             builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
+            builder.Register<IPlatoonFactory, PlatoonFactory>(Lifetime.Singleton);
         }
 
         private void RegisterStates(IContainerBuilder builder)
@@ -56,6 +60,10 @@ namespace Infrastructure.DI.Installers
                 .AsSelf();
 
             builder.Register<LoadMainMenuState>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.Register<LoadingBattleState>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
         }

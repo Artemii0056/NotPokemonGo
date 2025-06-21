@@ -2,7 +2,7 @@
 {
     public interface IPresenter
     {
-        void OnEnable();
-        void OnDisable();
+        void Enable();
+        void Disable();
     }
 }

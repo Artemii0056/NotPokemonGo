@@ -1,10 +1,11 @@
 using Characters;
 using Infrastructure.StateMachine.States.Interfaces;
 using Services.StaticDataServices;
+using UnityEngine;
 
 namespace Infrastructure.StateMachine.States
 {
-    public class LoadingBattleState : IPayloadedState<LocationTypeInfo>
+    public class LoadingBattleState : IPayloadedState<SpawnPositionType>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IStaticDataService _staticDataService;
@@ -16,16 +17,17 @@ namespace Infrastructure.StateMachine.States
             _staticDataService = staticDataService;
             _gameStateMachine = gameStateMachine;
         }
-
-        public void Enter(LocationTypeInfo payload)
+        
+        public void Enter(SpawnPositionType spawnPositionType)
         {
-            // пока получаем только "аля сколько бойцов" в группе через enum. 
-            SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetLocationTypeConfig(payload.SpawnPositionTypeFirstCommand);
-            SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetLocationTypeConfig(payload.SpawnPositionTypeSecondCommand);
+            SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
+            SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
             
             _battlefieldFactory.Create(spawnPositionConfigFirstCommand, spawnPositionConfigSecondCommand);
             
-            _gameStateMachine.Enter<BattleLoopState>();
+            //_gameStateMachine.Enter<BattleLoopState>();
+            
+            Debug.Log($"Entering {nameof(LoadingBattleState)}");
         }
 
         public void Exit()

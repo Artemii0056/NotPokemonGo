@@ -13,12 +13,12 @@ namespace Infrastructure.MVP
             _model = model;
         }
         
-        public void OnEnable()
+        public void Enable()
         {
             _view.Show();
         }
 
-        public void OnDisable()
+        public void Disable()
         {
             _view.Hide();
         }
