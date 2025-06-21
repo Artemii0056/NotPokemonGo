@@ -25,8 +25,8 @@ namespace Infrastructure
         
         public class Positions
         {
-            public static Vector3 Platoon1Position = new Vector3(0, 0, 10);
-            public static Vector3 Platoon2Position = new Vector3(0, 0, -10);
+            public static Vector3 Platoon1Position = new Vector3(0, 0, 5);
+            public static Vector3 Platoon2Position = new Vector3(0, 0, -5);
         }
     }
 }
