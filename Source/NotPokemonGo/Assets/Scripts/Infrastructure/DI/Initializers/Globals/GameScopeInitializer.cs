@@ -1,5 +1,7 @@
-﻿using Infrastructure.StateMachine;
+﻿using System;
+using Infrastructure.StateMachine;
 using Infrastructure.StateMachine.States;
+using InputServices;
 using Services;
 using UnityEngine;
 using VContainer;
@@ -10,6 +12,7 @@ namespace Infrastructure.DI.Initializers.Globals
     public class GameScopeInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
     {
         private IGameStateMachine _gameStateMachine;
+        private IInputReader _inputReader;
 
         [Inject]
         public void Construct(IGameStateMachine gameStateMachine)
@@ -20,6 +23,11 @@ namespace Infrastructure.DI.Initializers.Globals
         public void Initialize()
         {
             _gameStateMachine.Enter<BootstrapState>();
+        }
+
+        public void Update()
+        {
+            _gameStateMachine.Update(Time.deltaTime);
         }
     }
 }

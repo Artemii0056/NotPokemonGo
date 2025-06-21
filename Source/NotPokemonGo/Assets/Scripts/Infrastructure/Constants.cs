@@ -20,6 +20,7 @@ namespace Infrastructure
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
             public const string SpawnPositionConfigsPath = "SpawnPositions";
             public const string CharacterConfigsPath = "Characters";
+            public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
         }
         
         public class Positions

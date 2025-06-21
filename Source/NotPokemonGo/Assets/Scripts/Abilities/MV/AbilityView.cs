@@ -10,7 +10,7 @@ namespace Abilities.MV
         [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         
-        private AbilityApplicatorService _abilityApplicatorService;
+        private IAbilityApplicatorService _abilityApplicatorService;
 
         private AbilityModel _abilityModel;
 
@@ -70,7 +70,7 @@ namespace Abilities.MV
             _abilityModel = null;
         }
 
-        public void InitService(AbilityApplicatorService abilityApplicatorService)
+        public void InitService(IAbilityApplicatorService abilityApplicatorService)
         {
             _abilityApplicatorService = abilityApplicatorService;
         }

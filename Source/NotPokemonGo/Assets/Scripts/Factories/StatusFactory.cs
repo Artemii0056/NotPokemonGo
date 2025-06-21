@@ -5,9 +5,9 @@ using Units;
 
 namespace Factories
 {
-    public class StatusFactory
+    public class StatusFactory : IStatusFactory
     {
-        public Status Create(StatusSetup setup, Unit target, EffectResolver effectResolver)
+        public Status Create(StatusSetup setup, Unit target, IEffectResolver effectResolver)
         {
             Status status = null;
 

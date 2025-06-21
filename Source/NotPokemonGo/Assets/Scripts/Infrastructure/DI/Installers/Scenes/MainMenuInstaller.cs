@@ -1,5 +1,6 @@
 ﻿using Infrastructure.DI.Initializers.Scenes;
 using Infrastructure.DI.Scopes;
+using UI.Ability;
 using UI.SpawnPositions;
 using UnityEngine;
 using VContainer;
@@ -17,6 +18,7 @@ namespace Infrastructure.DI.Installers.Scenes
             builder.RegisterComponent(_spawnPositionView);
             
             builder.Register<SpawnPositionPresenter>(Lifetime.Singleton);
+            
             builder.RegisterComponent(_mainMenuInitializer).AsImplementedInterfaces();
         }
     }

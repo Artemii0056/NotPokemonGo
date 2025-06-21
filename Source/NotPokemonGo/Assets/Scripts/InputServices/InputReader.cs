@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace InputServices
 {
-    public class InputReader : MonoBehaviour
+    public class InputReader : MonoBehaviour, IInputReader
     {
-        private Unit _currentUnit;
-        
         public event Action LeftMouseButtonPressed; 
 
         private void Update()

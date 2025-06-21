@@ -21,6 +21,12 @@ namespace Infrastructure.StateMachine
             state?.Enter();
         }
 
+        public void Update(float deltaTime)
+        {
+            if (_currentState is IUpdateState updateState) 
+                updateState.Update(deltaTime);
+        }
+
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedState<TPayload>
         {
             var state = ChangeState<TState>();

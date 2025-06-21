@@ -2,7 +2,7 @@
 
 namespace Statuses
 {
-    public class StatusManager
+    public class StatusManager : IStatusManager
     {
        private List<Status> _statusEffects = new List<Status>();
 

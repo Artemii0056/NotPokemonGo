@@ -6,9 +6,9 @@ namespace Statuses
 {
     public class HealStatus : Status
     {
-        private readonly EffectResolver _effectResolver;
+        private readonly IEffectResolver _effectResolver;
 
-        public HealStatus(StatusSetup setup, Unit target, EffectResolver effectResolver)
+        public HealStatus(StatusSetup setup, Unit target, IEffectResolver effectResolver)
         {
             TickCount = setup.TickCount;
             Setup = setup;

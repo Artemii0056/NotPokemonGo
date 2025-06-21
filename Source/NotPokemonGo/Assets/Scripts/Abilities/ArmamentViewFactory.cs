@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class ArmamentViewFactory
+    public class ArmamentViewFactory : IArmamentViewFactory
     {
         public ArmamentView Create(Vector3 position, ArmamentView armamentConfigPrefab, Unit targetUnit)
         {

@@ -11,20 +11,20 @@ using UnityEngine;
 
 namespace Abilities
 {
-    public class AbilityApplicatorService
+    public class AbilityApplicatorService : IAbilityApplicatorService
     {
         private AbilityModel _abilityModel;
 
         private ICoroutineRunner _coroutineRunner;
 
         private Unit _source;
-        private ArmamentViewFactory _armamentViewFactory;
-        private StatusFactory _statusFactory;
-        private EffectResolver _effectResolver;
-        private StatusManager _statusManager;
+        private IArmamentViewFactory _armamentViewFactory;
+        private IStatusFactory _statusFactory;
+        private IEffectResolver _effectResolver;
+        private IStatusManager _statusManager;
 
-        public AbilityApplicatorService(ArmamentViewFactory armamentViewFactory,
-            StatusFactory statusFactory, EffectResolver effectResolver, StatusManager statusManager,
+        public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
+            IStatusFactory statusFactory, IEffectResolver effectResolver, IStatusManager statusManager,
             ICoroutineRunner coroutineRunner)
         {
             _armamentViewFactory = armamentViewFactory;

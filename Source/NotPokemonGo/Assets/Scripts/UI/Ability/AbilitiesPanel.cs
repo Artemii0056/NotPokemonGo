@@ -3,6 +3,7 @@ using Abilities;
 using Abilities.MV;
 using Services.StaticDataServices;
 using UnityEngine;
+using VContainer;
 
 namespace UI.Ability
 {
@@ -11,9 +12,10 @@ namespace UI.Ability
         [SerializeField] private List<AbilityView> _abilitiesView;
 
         private IStaticDataService _staticDataLoadService;
-        private AbilityApplicatorService _abilityApplicatorService;
+        private IAbilityApplicatorService _abilityApplicatorService;
 
-        public void Initialize(IStaticDataService staticDataLoadService, AbilityApplicatorService abilityApplicatorService)
+        [Inject]
+        public void Initialize(IStaticDataService staticDataLoadService, IAbilityApplicatorService abilityApplicatorService)
         {
             _staticDataLoadService = staticDataLoadService;
             _abilityApplicatorService = abilityApplicatorService;
@@ -35,7 +37,7 @@ namespace UI.Ability
                 _abilitiesView[i].SetDefaultImage();
             }
 
-            foreach (var view in _abilitiesView)
+            foreach (AbilityView view in _abilitiesView)
             {
                 view.InitService(_abilityApplicatorService);
             }

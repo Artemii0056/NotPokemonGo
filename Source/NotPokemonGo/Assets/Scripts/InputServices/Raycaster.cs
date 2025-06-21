@@ -4,22 +4,27 @@ using UnityEngine;
 
 namespace InputServices
 {
-    public class Raycaster : MonoBehaviour
+    public class Raycaster : IRaycaster
     {
-        private InputReader _inputReader;
+        private IInputReader _inputReader;
+
+        public Raycaster(IInputReader inputReader)
+        {
+            _inputReader = inputReader;
+            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 
+        }
+        
+/// <summary>
+/// говно
+/// </summary>
+        ~Raycaster()
+        {
+            _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed; 
+        }
         
         public event Action<Unit> UnitSearched;
 
-        private void Awake() => 
-            _inputReader = GetComponent<InputReader>();
-
-        private void OnEnable() => 
-            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
-
-        private void OnDisable() => 
-            _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
-
-        private void OnLeftMouseButtonPressed()
+        public void OnLeftMouseButtonPressed()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

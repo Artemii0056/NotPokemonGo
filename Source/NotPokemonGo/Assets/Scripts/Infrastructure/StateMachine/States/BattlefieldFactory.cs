@@ -2,6 +2,7 @@ using Characters;
 using Characters.Configs;
 using DefaultNamespace;
 using Services.StaticDataServices;
+using Statuses;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine.States
@@ -10,9 +11,11 @@ namespace Infrastructure.StateMachine.States
     {
         private IPlatoonFactory _platoonFactory;
         private IStaticDataService _staticDataService;
+        private IStatusManager _statusManager;
 
-        public BattlefieldFactory(IPlatoonFactory platoonFactory, IStaticDataService  staticDataService)
+        public BattlefieldFactory(IPlatoonFactory platoonFactory, IStaticDataService  staticDataService, IStatusManager statusManager)
         {
+            _statusManager = statusManager;
             _staticDataService = staticDataService;
             _platoonFactory = platoonFactory;
         }
@@ -38,7 +41,7 @@ namespace Infrastructure.StateMachine.States
             Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, characterConfigFirst);
             Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, characterConfigSecond);
 
-            Battlefield battlefield = new Battlefield(platoon1, platoon2);
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
             return battlefield;
         }
