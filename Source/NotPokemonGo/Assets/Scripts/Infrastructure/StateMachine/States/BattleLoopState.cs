@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Characters;
 using Infrastructure.StateMachine.States.Interfaces;
 using InputServices;
 using Services.SceneServices;

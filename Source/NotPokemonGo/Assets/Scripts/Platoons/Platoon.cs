@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Characters;
-using Services;
+﻿using System.Collections.Generic;
 using Units;
-using UnityEngine;
 
-namespace DefaultNamespace
+namespace Platoons
 {
     public class Platoon
     {

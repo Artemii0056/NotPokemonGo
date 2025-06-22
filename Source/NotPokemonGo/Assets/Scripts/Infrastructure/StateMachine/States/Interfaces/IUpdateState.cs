@@ -1,4 +1,4 @@
-namespace Infrastructure.StateMachine.States
+namespace Infrastructure.StateMachine.States.Interfaces
 {
     public interface IUpdateState
     {

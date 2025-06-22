@@ -1,5 +1,5 @@
 using Characters;
-using DefaultNamespace;
+using Platoons;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine.States

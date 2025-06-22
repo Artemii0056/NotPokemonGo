@@ -1,6 +1,6 @@
 using Characters;
 using Characters.Configs;
-using DefaultNamespace;
+using Platoons;
 using Services.StaticDataServices;
 using Statuses;
 using UnityEngine;

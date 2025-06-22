@@ -4,56 +4,59 @@ using Services.StaticDataServices;
 using Statuses;
 using UnityEngine;
 
-public class StatusViewPanel : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private List<StatusView> _statusViews;
-
-    private IStaticDataService _staticDataLoadService;
-
-    public void Add(Status status)
+    public class StatusViewPanel : MonoBehaviour
     {
-        StatusView view;
+        [SerializeField] private List<StatusView> _statusViews;
 
-        if (TrySearch(status.Setup.Type, out StatusView statusView) == false)
-            view = GetFreeView();
-        else
-            view = statusView;
+        private IStaticDataService _staticDataLoadService;
 
-        view.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
-    }
-
-    public void Remove(Status status)
-    {
-        if (TrySearch(status.Setup.Type, out StatusView statusView))
+        public void Add(Status status)
         {
-            statusView.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
-            statusView.Dispose();
+            StatusView view;
+
+            if (TrySearch(status.Setup.Type, out StatusView statusView) == false)
+                view = GetFreeView();
+            else
+                view = statusView;
+
+            view.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
         }
-    }
 
-    private StatusView GetFreeView()
-    {
-        return _statusViews.FirstOrDefault(view => !view.HasStatus);
-    }
-
-    private bool TrySearch(StatusType searchType, out StatusView status)
-    {
-        status = null;
-
-        foreach (var searchedStatus in _statusViews)
+        public void Remove(Status status)
         {
-            if (searchedStatus.HasStatus && searchedStatus.StatusType == searchType)
+            if (TrySearch(status.Setup.Type, out StatusView statusView))
             {
-                status = searchedStatus;
-                return true;
+                statusView.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
+                statusView.Dispose();
             }
         }
 
-        return false;
-    }
+        private StatusView GetFreeView()
+        {
+            return _statusViews.FirstOrDefault(view => !view.HasStatus);
+        }
 
-    public void Init(IStaticDataService staticDataLoadService)
-    {
-        _staticDataLoadService = staticDataLoadService;
+        private bool TrySearch(StatusType searchType, out StatusView status)
+        {
+            status = null;
+
+            foreach (var searchedStatus in _statusViews)
+            {
+                if (searchedStatus.HasStatus && searchedStatus.StatusType == searchType)
+                {
+                    status = searchedStatus;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void Init(IStaticDataService staticDataLoadService)
+        {
+            _staticDataLoadService = staticDataLoadService;
+        }
     }
 }

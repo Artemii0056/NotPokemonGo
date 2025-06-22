@@ -1,5 +1,4 @@
 using Characters;
-using DefaultNamespace;
 
 namespace Infrastructure.StateMachine.States
 {
