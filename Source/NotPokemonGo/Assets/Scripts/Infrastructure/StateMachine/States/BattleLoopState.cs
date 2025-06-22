@@ -40,8 +40,6 @@ namespace Infrastructure.StateMachine.States
 
         public void Enter(BattleLoopPayload payload)
         {
-            Debug.Log("Entering BattleLoopState");
-            
             _battlefield = payload.Battlefield;
             _abilitiesPanel = payload.AbilitiesPanel;
             

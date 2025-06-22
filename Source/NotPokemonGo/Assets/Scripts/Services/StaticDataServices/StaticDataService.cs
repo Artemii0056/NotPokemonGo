@@ -83,7 +83,6 @@ namespace Services.StaticDataServices
 
         private void LoadSpawnPositionConfigs()
         {
-            Debug.Log("Loading spawn position configs");
             _spawnPositionConfigs = Resources.LoadAll<SpawnPositionConfig>(Constants.AssetPath.SpawnPositionConfigsPath)
                 .ToDictionary(x => x.SpawnPositionType, x => x);
         }

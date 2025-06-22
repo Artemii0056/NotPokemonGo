@@ -1,38 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Abilities.MV;
+using Characters;
 using Effects;
 using Services.StaticDataServices;
 using Stats;
 using Statuses;
-using UI;
 using UnityEngine;
 
 namespace Units
 {
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private StatusViewPanel _statusViewPanel;
-
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
 
+        public event Action<Status> StatusAdded;
+        public event Action<Status> StatusRemoved;
+        
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
         public PlatoonType PlatoonType { get; private set; }
-
+        public UnitStep Step { get; private set; }
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
 
         public Transform abilityPos;
 
-        public void Initialize(List<StatConfig> statConfig, IEffectResolver effectResolver, PlatoonType platoonType,
-            IStaticDataService staticDataLoadService)
+        public void Initialize(
+            List<StatConfig> statConfig, 
+            IEffectResolver effectResolver,
+            PlatoonType platoonType
+            )
         {
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
-
-            _statusViewPanel.Init(staticDataLoadService);
+            
+            Step = new UnitStep(5);
 
             foreach (var statSetup in statConfig)
             {
@@ -58,15 +63,14 @@ namespace Units
 
         public void AddStatus(Status status)
         {
-            _statusViewPanel.Add(status);
-            //Тут 
+            StatusAdded?.Invoke(status);
             _imposedStatuses.Add(status);
         }
 
         public void RemoveStatus(Status status)
         {
             _imposedStatuses.Remove(status);
-            _statusViewPanel.Remove(status);
+            StatusRemoved?.Invoke(status);
         }
 
         public void AddAbility(AbilityModel ability) =>
@@ -79,6 +83,8 @@ namespace Units
                 foreach (var model in _abilityModels)
                     model.UpdateTime(deltaTime);
             }
+            
+            Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
     }
 }

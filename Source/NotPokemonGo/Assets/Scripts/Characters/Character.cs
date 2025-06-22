@@ -7,13 +7,13 @@ namespace Characters
     public class Character : MonoBehaviour
     {
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
-        public CharacterStep Step { get; private set; }
+        public UnitStep Step { get; private set; }
         public bool IsAlive { get; private set; }
         public string Name { get; set; }
 
         public void Initialize(List<StatConfig> statConfig)
         {
-            Step = new CharacterStep(5);
+            Step = new UnitStep(5);
             
             IsAlive = true;
             foreach (var statSetup in statConfig)

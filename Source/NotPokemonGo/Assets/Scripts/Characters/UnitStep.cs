@@ -1,8 +1,8 @@
 ﻿namespace Characters
 {
-    public class CharacterStep
+    public class UnitStep
     {
-        public CharacterStep(float maxValue)
+        public UnitStep(float maxValue)
         {
             MaxValue = maxValue;
             CurrentValue = 0f;

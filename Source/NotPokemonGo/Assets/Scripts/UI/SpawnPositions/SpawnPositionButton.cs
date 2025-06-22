@@ -24,7 +24,6 @@ namespace UI.SpawnPositions
 
         private void Clicked()
         {
-            Debug.Log("Clicked");
             OnClick?.Invoke(SpawnPositionType);
         }
     }

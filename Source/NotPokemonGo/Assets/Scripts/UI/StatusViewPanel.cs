@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Services.StaticDataServices;
 using Statuses;
+using Units;
 using UnityEngine;
+using VContainer;
 
 namespace UI
 {
@@ -11,8 +13,28 @@ namespace UI
         [SerializeField] private List<StatusView> _statusViews;
 
         private IStaticDataService _staticDataLoadService;
+        private Unit _unit;
 
-        public void Add(Status status)
+        public void Construct(Unit unit)
+        {
+            _unit = unit;
+            _unit.StatusAdded += OnStatusAdded;
+            _unit.StatusRemoved += OnStatusRemoved;
+        }
+        
+        [Inject]
+        public void Initialize(IStaticDataService staticDataLoadService)
+        {
+            _staticDataLoadService = staticDataLoadService;
+        }
+        
+        private void OnDestroy()
+        {
+            _unit.StatusAdded -= OnStatusAdded;
+            _unit.StatusRemoved -= OnStatusRemoved;
+        }
+
+        private void OnStatusAdded(Status status)
         {
             StatusView view;
 
@@ -24,7 +46,7 @@ namespace UI
             view.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
         }
 
-        public void Remove(Status status)
+        private void OnStatusRemoved(Status status)
         {
             if (TrySearch(status.Setup.Type, out StatusView statusView))
             {
@@ -52,11 +74,6 @@ namespace UI
             }
 
             return false;
-        }
-
-        public void Init(IStaticDataService staticDataLoadService)
-        {
-            _staticDataLoadService = staticDataLoadService;
         }
     }
 }

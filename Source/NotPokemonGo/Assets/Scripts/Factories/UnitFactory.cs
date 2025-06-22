@@ -2,20 +2,22 @@
 using Characters;
 using Effects;
 using Services.StaticDataServices;
+using UI;
 using Units;
 using UnityEngine;
+using VContainer;
 
 namespace Factories
 {
     public class UnitFactory : IUnitFactory
     {
         private readonly IEffectResolver _effectResolver;
-        private readonly IStaticDataService _staticDataLoadService;
+        private readonly IObjectResolver _objectResolver;
 
-        public UnitFactory(IEffectResolver effectResolver, IStaticDataService staticDataLoadService)
+        public UnitFactory(IEffectResolver effectResolver, IObjectResolver  objectResolver)
         {
             _effectResolver = effectResolver;
-            _staticDataLoadService = staticDataLoadService;
+            _objectResolver = objectResolver;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, CharacterConfig config, PlatoonType platoonType)
@@ -24,14 +26,23 @@ namespace Factories
             
             unit.transform.SetParent(parentPosition, false);
             
-            unit.Initialize(config.Stats, _effectResolver, platoonType, _staticDataLoadService);
+            unit.Initialize(config.Stats, _effectResolver, platoonType);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
                 unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
             }
 
+            InitializeView(unit);
+            
             return unit;
+        }
+
+        private void InitializeView(Unit unit)
+        {
+            StatusViewPanel statusViewPanel = unit.GetComponentInChildren<StatusViewPanel>();
+            statusViewPanel.Construct(unit);
+            _objectResolver.Inject(statusViewPanel);
         }
     }
 }

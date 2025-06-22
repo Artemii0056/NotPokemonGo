@@ -22,7 +22,6 @@ namespace UI.SpawnPositions
         {
             _spawnPositionView.gameObject.SetActive(true);
             _spawnPositionView.SpawnPositionChanged += OnSpawnPositionChanged;
-            Debug.Log("OnEnable presenter");
         }
 
         public void Disable()

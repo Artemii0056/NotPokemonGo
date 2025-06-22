@@ -17,7 +17,6 @@ namespace Infrastructure.DI.Initializers.Scenes
         
         public void Initialize()
         {
-            Debug.Log("Initializing scenes");
             _spawnPositionPresenter.Enable();
         }
 
