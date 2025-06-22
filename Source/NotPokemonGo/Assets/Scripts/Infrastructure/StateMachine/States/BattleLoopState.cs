@@ -25,7 +25,12 @@ namespace Infrastructure.StateMachine.States
         private Battlefield _battlefield;
         private AbilitiesPanel _abilitiesPanel;
 
-        public BattleLoopState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IUIFactory uiFactory, IRaycaster raycaster, IAbilityApplicatorService abilityApplicatorService)
+        public BattleLoopState(
+            IGameStateMachine gameStateMachine, 
+            ISceneLoader sceneLoader, 
+            IUIFactory uiFactory, 
+            IRaycaster raycaster, 
+            IAbilityApplicatorService abilityApplicatorService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -33,11 +38,6 @@ namespace Infrastructure.StateMachine.States
             _raycaster = raycaster;
             _abilityApplicatorService = abilityApplicatorService;
         }
-
-        // public void Enter(Battlefield battlefield,  AbilitiesPanel abilitiesPanel)
-        // {
-        //     _raycaster.UnitSearched += OnUnitSearched;
-        // }
 
         public void Enter(BattleLoopPayload payload)
         {
@@ -48,15 +48,15 @@ namespace Infrastructure.StateMachine.States
             
             _raycaster.UnitSearched += OnUnitSearched;
         }
+        
+        public void Update(float deltaTime)
+        {
+            _battlefield?.Tick(deltaTime);
+        }
 
         public void Exit()
         {
             _raycaster.UnitSearched -= OnUnitSearched;
-        }
-
-        public void Update(float deltaTime)
-        {
-            _battlefield?.Tick(deltaTime);
         }
         
         private void OnUnitSearched(Unit unit)
@@ -79,7 +79,6 @@ namespace Infrastructure.StateMachine.States
         
         private void ShowAbilityInfos(List<AbilityModel> abilityModels)
         {
-            Debug.Log("Ability Infos");
             _abilitiesPanel.SetAbilities(abilityModels);
         }
     }

@@ -15,9 +15,9 @@ namespace Abilities
     {
         private AbilityModel _abilityModel;
 
-        private ICoroutineRunner _coroutineRunner;
-
         private Unit _source;
+
+        private ICoroutineRunner _coroutineRunner;
         private IArmamentViewFactory _armamentViewFactory;
         private IStatusFactory _statusFactory;
         private IEffectResolver _effectResolver;
@@ -42,18 +42,20 @@ namespace Abilities
 
         public void Apply(params Unit[] targets)
         {
-            AbilityModel abilityModel = new AbilityModel(_abilityModel);
-
-            if (abilityModel.HasArmament)
+            if (_abilityModel == null || _abilityModel.IsReady == false)
+                return;
+            
+            if (_abilityModel.HasArmament)
             {
-                ApplyArmament(abilityModel, targets);
+                ApplyArmament(_abilityModel, targets);
             }
-            else if (abilityModel.HasCastament)
+            else if (_abilityModel.HasCastament)
             {
-                ApplyCastament(abilityModel, targets);
+                ApplyCastament(_abilityModel, targets);
             }
 
             _abilityModel.DiscardCurrentTime();
+            _abilityModel = null;
         }
 
         private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)
