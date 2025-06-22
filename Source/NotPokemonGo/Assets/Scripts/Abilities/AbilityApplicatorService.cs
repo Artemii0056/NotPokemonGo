@@ -6,6 +6,7 @@ using Effects;
 using Factories;
 using Services;
 using Statuses;
+using Statuses.Services;
 using Units;
 using UnityEngine;
 
@@ -21,17 +22,17 @@ namespace Abilities
         private IArmamentViewFactory _armamentViewFactory;
         private IStatusFactory _statusFactory;
         private IEffectResolver _effectResolver;
-        private IStatusManager _statusManager;
+        private IStatusResolver _statusResolver;
 
         public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
-            IStatusFactory statusFactory, IEffectResolver effectResolver, IStatusManager statusManager,
-            ICoroutineRunner coroutineRunner)
+            IStatusFactory statusFactory, IEffectResolver effectResolver,
+            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
-            _statusManager = statusManager;
             _coroutineRunner = coroutineRunner;
+            _statusResolver = statusResolver;
         }
 
         public void Remember(AbilityModel abilityModel) =>
@@ -105,11 +106,8 @@ namespace Abilities
 
         private void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects)
         {
-            foreach (var status in statuses)
-            {
-                _statusManager.RegisterStatusEffect(status);
-                target.AddStatus(status);
-            }
+            foreach (var status in statuses) 
+                _statusResolver.Resolve(status, target);
 
             foreach (var effectInfo in effects)
                 target.ReceiveDamage(effectInfo);

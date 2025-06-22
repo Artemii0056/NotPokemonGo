@@ -4,7 +4,6 @@ using System.Linq;
 using Abilities.MV;
 using Characters;
 using Effects;
-using Services.StaticDataServices;
 using Stats;
 using Statuses;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
-
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
         
@@ -24,6 +22,7 @@ namespace Units
 
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
+        public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
 
         public Transform abilityPos;

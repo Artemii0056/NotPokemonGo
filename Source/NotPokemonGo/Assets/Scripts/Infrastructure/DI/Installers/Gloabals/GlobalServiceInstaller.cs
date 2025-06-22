@@ -1,7 +1,6 @@
 ﻿using Abilities;
 using Effects;
 using Factories;
-using Infrastructure.DI.Initializers;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
 using Infrastructure.StateMachine;
@@ -12,9 +11,8 @@ using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
-using Statuses;
+using Statuses.Services;
 using UI.Factory;
-using Units;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -54,6 +52,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ISceneLoader, SceneLoader>(Lifetime.Singleton);
             builder.Register<IStaticDataService, StaticDataService>(Lifetime.Singleton);
             builder.Register<IEffectResolver, EffectResolver>(Lifetime.Singleton);
+            builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
             builder.Register<IRaycaster, Raycaster>(Lifetime.Singleton);

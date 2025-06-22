@@ -3,6 +3,7 @@ using Characters.Configs;
 using Platoons;
 using Services.StaticDataServices;
 using Statuses;
+using Statuses.Services;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine.States

@@ -14,7 +14,12 @@ namespace Statuses
         public StatusSetup Setup { get; protected set; }
         public Unit Target { get; protected set; }
 
+        public bool IsPermanent { get; protected set; }
+        public bool IsRefreshed { get; protected set; }
+
         public bool IsReady => СurrentTimer >= TargetTime;
+
+        public bool IsEnded { get; protected set; }
 
         public virtual void OnApply()
         {
@@ -35,16 +40,21 @@ namespace Statuses
             TickCount--;
             OnTick();
 
-            if (TickCount <= 0)
-            {
-                OnExpire();
-                Target.RemoveStatus(this);
-            }
+            if (TickCount <= 0) 
+                IsEnded = true;
         }
 
-        public void UpdateTimer(float time)
-        {
+        public void UpdateTimer(float time) => 
             СurrentTimer += time;
+
+        public void IncreaseTickCount(float tickCount) => 
+            TickCount += tickCount;
+
+        public void Refresh(Status status)
+        {
+            СurrentTimer = 0;
+            TickCount = status.TickCount;
+            TargetTime = status.TargetTime;
         }
     }
 }

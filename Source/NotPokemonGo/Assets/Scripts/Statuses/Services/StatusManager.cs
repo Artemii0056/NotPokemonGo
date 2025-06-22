@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Statuses
+namespace Statuses.Services
 {
     public class StatusManager : IStatusManager
     {
@@ -14,7 +14,9 @@ namespace Statuses
 
         public void UnregisterStatusEffect(Status status)
         {
+            status.Target.RemoveStatus(status);
             _statusEffects.Remove(status);
+            status.OnExpire();
         }
 
         public void Update(float deltaTime)
@@ -33,15 +35,13 @@ namespace Statuses
 
         public void RemoveInactive()
         {
-            // if (_statusEffects.Count <= 0)
-            //     return;
+            if (_statusEffects.Count <= 0)
+                return;
             
             for (int i = _statusEffects.Count - 1; i >= 0; i--)
             {
-                if (_statusEffects[i].TickCount <= 0)
-                {
+                if (_statusEffects[i].IsEnded) 
                     UnregisterStatusEffect(_statusEffects[i]);
-                }
             }
         }
     }

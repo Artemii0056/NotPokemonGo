@@ -16,6 +16,8 @@ namespace Statuses
             _effectResolver = effectResolver;
 
             TargetTime = setup.TargetTime;
+            IsRefreshed = setup.IsRefreshed;
+            IsPermanent = setup.IsPermanent;
         }
 
         public override void OnTick()

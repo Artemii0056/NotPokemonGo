@@ -1,4 +1,4 @@
-﻿namespace Statuses
+﻿namespace Statuses.Services
 {
     public interface IStatusManager
     {
