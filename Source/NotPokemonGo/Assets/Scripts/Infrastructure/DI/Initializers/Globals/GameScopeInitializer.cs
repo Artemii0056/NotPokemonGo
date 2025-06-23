@@ -1,6 +1,6 @@
 ﻿using System;
-using Infrastructure.StateMachine;
-using Infrastructure.StateMachine.States;
+using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.States;
 using InputServices;
 using Services;
 using UnityEngine;
