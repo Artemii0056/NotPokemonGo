@@ -16,17 +16,44 @@ namespace Infrastructure
 
             public const string CatalogPath = "Catalog/Catalog";
             public const string AbilityConfigPath = "Abilities";
-            
+
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
             public const string SpawnPositionConfigsPath = "SpawnPositions";
             public const string CharacterConfigsPath = "Characters";
             public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
         }
-        
+
         public class Positions
         {
             public static Vector3 Platoon1Position = new Vector3(0, 0, 5);
             public static Vector3 Platoon2Position = new Vector3(0, 0, -5);
+        }
+
+        public class AnimationsName
+        {
+            public const string Idle = nameof(Idle);
+            public const string Death = nameof(Death);
+            public const string Dodge = nameof(Dodge);
+            public const string TakeDamage = nameof(TakeDamage);
+
+            public class Mage
+            {
+                public const string FireballAttack = nameof(FireballAttack);
+                public const string CastSpell = nameof(CastSpell);
+                public const string RadialAttack = nameof(RadialAttack);
+            }
+
+            public class Swordsman
+            {
+                public const string TwoSwordsAttack = nameof(TwoSwordsAttack);
+            }
+
+            public class Archer
+            {
+                public const string MiddleShoot = nameof(MiddleShoot);
+                public const string ShootInSky = nameof(ShootInSky);
+
+            }
         }
     }
 }
