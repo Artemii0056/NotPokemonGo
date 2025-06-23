@@ -1,8 +1,7 @@
-﻿using Infrastructure.StateMachines.GlobalStateMachine;
-using Infrastructure.StateMachines.States.Interfaces;
+﻿using Infrastructure.StateMachines.States.Interfaces;
 using Services.SceneServices;
 
-namespace Infrastructure.StateMachines.States
+namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
     public class BootstrapState : IState
     {

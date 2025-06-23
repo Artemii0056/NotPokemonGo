@@ -1,9 +1,8 @@
-﻿using Infrastructure.StateMachines.GlobalStateMachine;
-using Infrastructure.StateMachines.States.Interfaces;
+﻿using Infrastructure.StateMachines.States.Interfaces;
 using Services.SceneServices;
 using UI.Factory;
 
-namespace Infrastructure.StateMachines.States
+namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
     public class LoadMainMenuState : IPayloadedState<string>
     {

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.BattleStateMachine;
+using Infrastructure.StateMachines.BattleStateMachine.States;
+using Infrastructure.StateMachines.GlobalStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using InputServices;
 using Services.SceneServices;
@@ -10,7 +12,7 @@ using UI.Ability;
 using UI.Factory;
 using Units;
 
-namespace Infrastructure.StateMachines.States
+namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
     public class BattleLoopState : IUpdateState, IPayloadedState<BattleLoopPayload>
     {
@@ -20,7 +22,8 @@ namespace Infrastructure.StateMachines.States
         private readonly IRaycaster _raycaster;
         
         private IAbilityApplicatorService _abilityApplicatorService;
-        
+        private readonly IBattleStateMachine _battleStateMachine;
+
         private Battlefield _battlefield;
         private AbilitiesPanel _abilitiesPanel;
 
@@ -29,22 +32,27 @@ namespace Infrastructure.StateMachines.States
             ISceneLoader sceneLoader, 
             IUIFactory uiFactory, 
             IRaycaster raycaster, 
-            IAbilityApplicatorService abilityApplicatorService)
+            IAbilityApplicatorService abilityApplicatorService,
+            IBattleStateMachine battleStateMachine
+            )
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _uiFactory = uiFactory;
             _raycaster = raycaster;
             _abilityApplicatorService = abilityApplicatorService;
+            _battleStateMachine = battleStateMachine;
         }
 
         public void Enter(BattleLoopPayload payload)
         {
+            //_battleStateMachine.Enter<InitializeBattleState>();
+            
+            
+            
             _battlefield = payload.Battlefield;
             _abilitiesPanel = payload.AbilitiesPanel;
-            
             _raycaster.UnitSearched += OnUnitSearched;
-            
         }
         
         public void Update(float deltaTime)

@@ -1,5 +1,6 @@
 using Characters;
-using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.Payloads;
+using Infrastructure.StateMachines.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services.AssetManagement;
 using Services.StaticDataServices;
@@ -7,7 +8,7 @@ using UI.Ability;
 using VContainer;
 using Object = UnityEngine.Object;
 
-namespace Infrastructure.StateMachines.States
+namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
     public class LoadingBattleState : IPayloadedState<SpawnPositionType>
     {

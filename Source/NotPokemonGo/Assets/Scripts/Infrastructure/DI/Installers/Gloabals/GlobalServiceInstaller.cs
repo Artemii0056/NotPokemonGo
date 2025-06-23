@@ -5,6 +5,7 @@ using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States;
 using InputServices;
 using Services.AssetManagement;

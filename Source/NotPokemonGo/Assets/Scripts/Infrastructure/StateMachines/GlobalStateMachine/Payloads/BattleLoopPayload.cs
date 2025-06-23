@@ -1,6 +1,6 @@
 ﻿using UI.Ability;
 
-namespace Infrastructure.StateMachines.States.Interfaces
+namespace Infrastructure.StateMachines.GlobalStateMachine.Payloads
 {
     public class BattleLoopPayload
     {
