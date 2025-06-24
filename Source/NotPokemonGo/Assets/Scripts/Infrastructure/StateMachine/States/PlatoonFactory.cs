@@ -18,26 +18,26 @@ namespace Infrastructure.StateMachine.States
         }
 
         public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
-            PlatoonType platoonType, CharacterConfig characterConfig)
+            PlatoonType platoonType, UnitConfig unitConfig)
         {
             List<Unit> units = new List<Unit>();
 
             switch (spawnPositionConfig.SpawnPositionType)
             {
                 case SpawnPositionType.One:
-                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, characterConfig, 1);
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 1);
                     break;
 
                 case SpawnPositionType.Two:
-                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, characterConfig, 2);
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 2);
                     break;
 
                 case SpawnPositionType.Three:
-                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, characterConfig, 3);
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 3);
                     break;
 
                 case SpawnPositionType.Four:
-                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, characterConfig, 4);
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 4);
                     break;
 
                 case SpawnPositionType.None:
@@ -49,7 +49,7 @@ namespace Infrastructure.StateMachine.States
         }
 
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
-            SpawnPositionConfig spawnPositionConfig, CharacterConfig characterConfig, int unitCount)
+            SpawnPositionConfig spawnPositionConfig, UnitConfig unitConfig, int unitCount)
         {
             SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
             
@@ -57,7 +57,7 @@ namespace Infrastructure.StateMachine.States
             {
                 if (i < unitPosition.Length)
                 {
-                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, characterConfig, platoonType));
+                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, unitConfig, platoonType));
                 }
             }
         }

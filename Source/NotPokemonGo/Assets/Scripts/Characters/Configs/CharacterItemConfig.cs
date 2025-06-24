@@ -6,7 +6,7 @@ namespace Characters.Configs
     public class CharacterItemConfig : ScriptableObject
     {
         [field: SerializeField]
-        public CharacterConfig CharacterConfig { get; private set; }
+        public UnitConfig UnitConfig { get; private set; }
 
         [field: SerializeField] public GameObject CharacterModel { get; private set; }
         [field: SerializeField] public int Price { get; private set; }

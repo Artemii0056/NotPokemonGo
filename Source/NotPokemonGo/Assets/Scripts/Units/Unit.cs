@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities.MV;
 using Characters;
+using Characters.Configs;
 using Effects;
 using Infrastructure;
 using Stats;
@@ -20,19 +21,21 @@ namespace Units
         private Animator _animator;
         private AnimatorController _animatorController;
 
+        private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
-        private List<AbilityModel> _abilityModels = new List<AbilityModel>();
-
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
+        [field: SerializeField] public UnitType UnitType { get; private set; }
+        
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
 
         public Transform abilityPos;
 
         public ParticleSystem ImposedEffect;
+        public ParticleSystem ExplosionEffect;
 
         public void Awake()
         {
@@ -68,10 +71,8 @@ namespace Units
             ChangeValue(StatType.Health, damage);
         }
 
-        public void ChangeValue(StatType statType, float value)
-        {
+        public void ChangeValue(StatType statType, float value) => 
             _stats[statType].Modify(value);
-        }
 
         public void AddStatus(Status status)
         {
@@ -104,17 +105,6 @@ namespace Units
         public void PlayIdleAnimation()
         {
             _animatorController.PlayAnimation(Constants.AnimationsName.Idle);
-            
-            AnimatorClipInfo[] clipInfos = _animator.GetCurrentAnimatorClipInfo(0);
-
-            // AnimatorClipInfo[] clipInfos2 = _animator.GetCurrentAnimatorClipInfo(0);
-            // var value = clipInfos2[0].clip.name;
-            // Debug.Log(value);
-            //
-            // AnimatorClipInfo[] clipInfos = _animator.GetCurrentAnimatorClipInfo(0);
-            // float animationLength = clipInfos[0].clip.length;
-
-            Debug.Log(clipInfos.Length);
         }
 
         private IEnumerator Timer(float time)
@@ -124,11 +114,27 @@ namespace Units
             while (startTime < time)
             {
                 startTime += Time.deltaTime;
+                
                 yield return null;
             }
 
-            Debug.Log("Finished");
             Instantiate(ImposedEffect, transform.position, Quaternion.identity).Play();
+        }
+        
+        private IEnumerator Timer2(float time)
+        {
+            float startTime = 0;
+
+            while (startTime < time)
+            {
+                startTime += Time.deltaTime;
+                
+                yield return null;
+            }
+            
+            ExplosionEffect.Play();
+
+//            Instantiate(ExplosionEffect, transform.position, Quaternion.identity).Play();
         }
         
         public float GetDeathAnimationLength(string animationName)
@@ -146,15 +152,10 @@ namespace Units
         {
             _animatorController.PlayAnimation(Constants.AnimationsName.Mage.CastSpell);
 
-            // AnimatorClipInfo[] clipInfos = _animator.GetCurrentAnimatorClipInfo(0);
-            //
-            // AnimatorClipInfo animationClip = clipInfos.FirstOrDefault(x => x.clip.name == "CastSpell");
-            
             float lenght = GetDeathAnimationLength(Constants.AnimationsName.Mage.CastSpell);
-            Debug.Log(lenght);
-
 
             StartCoroutine(Timer(lenght - 0.8f));
+            StartCoroutine(Timer2(1.6f));
         }
 
         [ContextMenu(Constants.AnimationsName.Mage.FireballAttack)]

@@ -11,6 +11,6 @@ namespace Services.StaticDataServices
         SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType);
         AbilityConfig GetAbilityConfig(AbilityType abilityType);
         Sprite GetStatusIcon(StatusType statusType);
-        CharacterConfig GetCharacterConfig(CharacterType characterType);
+        UnitConfig GetUnitConfig(UnitType unitType);
     }
 }

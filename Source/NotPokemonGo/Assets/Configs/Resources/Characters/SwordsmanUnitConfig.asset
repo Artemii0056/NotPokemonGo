@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5844dfbe42fcbb14ab254d4cb1be3339, type: 3}
-  m_Name: CharacterConfig 2
+  m_Name: SwordsmanUnitConfig
   m_EditorClassIdentifier: 
-  <Type>k__BackingField: 1
+  <Type>k__BackingField: 2
+  <Prefab>k__BackingField: {fileID: 5494254139291904022, guid: e3ea299512e53db498bf9f177f344bdc, type: 3}
   _stats:
   - <StatsType>k__BackingField: 1
-    Value: 0
+    Value: 10
   - <StatsType>k__BackingField: 2
-    Value: 0
+    Value: 20
   - <StatsType>k__BackingField: 3
-    Value: 0
+    Value: 15
   - <StatsType>k__BackingField: 4
-    Value: 0
+    Value: 10
   - <StatsType>k__BackingField: 5
     Value: 3
   - <StatsType>k__BackingField: 6
     Value: 5
   - <StatsType>k__BackingField: 7
     Value: 5
-  Prefab: {fileID: 3270850016428127065, guid: dca5c19ee98a7b54c86488015f30569f, type: 3}
   _abilityConfigs:
   - {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}
   - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}

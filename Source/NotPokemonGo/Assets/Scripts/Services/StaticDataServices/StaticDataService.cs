@@ -17,7 +17,7 @@ namespace Services.StaticDataServices
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
-        private Dictionary<CharacterType, CharacterConfig> _characterConfigs;
+        private Dictionary<UnitType, UnitConfig> _unitConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -25,7 +25,7 @@ namespace Services.StaticDataServices
             LoadAbilityConfigs();
             LoadStatusTypeIcons();
             LoadSpawnPositionConfigs();
-            LoadCharacterConfigs();
+            LoadUnitConfigs();
         }
 
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
@@ -52,17 +52,17 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
         }
         
-        public CharacterConfig GetCharacterConfig(CharacterType characterType)
+        public UnitConfig GetUnitConfig(UnitType unitType)
         {
-            if (_characterConfigs.TryGetValue(characterType, out CharacterConfig characterConfig))
+            if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
                 return characterConfig;
 
-            throw new KeyNotFoundException($"No character config found for mode {characterType}");
+            throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
-        private void LoadCharacterConfigs()
+        private void LoadUnitConfigs()
         {
-            _characterConfigs = Resources.LoadAll<CharacterConfig>(Constants.AssetPath.CharacterConfigsPath)
+            _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
         }
 

@@ -15,7 +15,7 @@ namespace UI
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _startGameButton;
     
-        private CharacterType _characterType;
+        private UnitType _unitType;
         private LoadMainMenuState _loadMainMenuState;
 
         private void OnEnable()
@@ -44,7 +44,7 @@ namespace UI
             CharacterInfoPanel.CreateItemViews(itemView.CharacterItemConfig);
         
             _startGameButton.gameObject.SetActive(true);
-            _characterType = itemView.CharacterItemConfig.CharacterConfig.Type;
+            _unitType = itemView.CharacterItemConfig.UnitConfig.Type;
         }
     
         private void OnStartGameButtonClicked()
