@@ -15,7 +15,7 @@ MonoBehaviour:
   <Type>k__BackingField: 1
   _stats:
   - <StatsType>k__BackingField: 1
-    Value: 0
+    Value: 100
   - <StatsType>k__BackingField: 2
     Value: 0
   - <StatsType>k__BackingField: 3
@@ -28,7 +28,7 @@ MonoBehaviour:
     Value: 5
   - <StatsType>k__BackingField: 7
     Value: 5
-  Prefab: {fileID: 3270850016428127065, guid: dca5c19ee98a7b54c86488015f30569f, type: 3}
+  Prefab: {fileID: 5494254139291904022, guid: e3ea299512e53db498bf9f177f344bdc, type: 3}
   _abilityConfigs:
   - {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}
   - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}

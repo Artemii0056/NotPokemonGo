@@ -17,8 +17,11 @@ namespace Infrastructure.StateMachines.States
             _unitFactory = unitFactory;
         }
 
-        public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
-            PlatoonType platoonType, CharacterConfig characterConfig)
+        public Platoon Create(
+            SpawnPositionConfig spawnPositionConfig,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            CharacterConfig characterConfig)
         {
             List<Unit> units = new List<Unit>();
 
@@ -48,8 +51,13 @@ namespace Infrastructure.StateMachines.States
             return new Platoon(units);
         }
 
-        private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
-            SpawnPositionConfig spawnPositionConfig, CharacterConfig characterConfig, int unitCount)
+        private void FillUnits(
+            List<Unit> units,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            SpawnPositionConfig spawnPositionConfig,
+            CharacterConfig characterConfig,
+            int unitCount)
         {
             SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
             

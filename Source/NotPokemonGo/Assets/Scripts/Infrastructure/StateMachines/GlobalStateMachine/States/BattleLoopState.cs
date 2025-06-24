@@ -11,6 +11,7 @@ using Services.SceneServices;
 using UI.Ability;
 using UI.Factory;
 using Units;
+using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -67,6 +68,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         private void OnUnitSearched(Unit unit)
         {
+            Debug.LogError("Залупа");
             switch (unit.PlatoonType)
             {
                 case PlatoonType.Friends:

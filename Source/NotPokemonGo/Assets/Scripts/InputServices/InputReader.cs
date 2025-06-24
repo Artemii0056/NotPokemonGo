@@ -9,8 +9,11 @@ namespace InputServices
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0)) 
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Left Mouse Button Pressed");
                 LeftMouseButtonPressed?.Invoke();
+            }
         }
     }
 }

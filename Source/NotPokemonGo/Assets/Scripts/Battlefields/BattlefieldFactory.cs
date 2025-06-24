@@ -36,10 +36,10 @@ namespace Infrastructure.StateMachines.States
             platoonPosition2.transform.SetParent(battlefieldPosition.transform);
 
             CharacterConfig characterConfigFirst = _staticDataService.GetCharacterConfig(CharacterType.First);
-            CharacterConfig characterConfigSecond = _staticDataService.GetCharacterConfig(CharacterType.First);
+            CharacterConfig characterConfigSecond = _staticDataService.GetCharacterConfig(CharacterType.Second);
             
-            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, characterConfigFirst);
-            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, characterConfigSecond);
+            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Friends, characterConfigFirst);
+            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Enemies, characterConfigSecond);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
