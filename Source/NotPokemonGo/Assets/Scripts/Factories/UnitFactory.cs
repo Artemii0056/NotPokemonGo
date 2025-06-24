@@ -19,9 +19,11 @@ namespace Factories
             _objectResolver = objectResolver;
         }
 
-        public Unit Create(Vector3 spawnPosition, Transform parentPosition, CharacterConfig config, PlatoonType platoonType)
+        public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
         {
-            Unit unit = Object.Instantiate(config.Prefab, spawnPosition, Quaternion.identity);
+            var posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
+            
+            Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
             
             unit.transform.SetParent(parentPosition, false);
             

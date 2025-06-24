@@ -5,7 +5,7 @@ using Services.StaticDataServices;
 using Statuses.Services;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines.States
+namespace Infrastructure.StateMachine.States
 {
     public class BattlefieldFactory : IBattlefieldFactory
     {
@@ -35,11 +35,11 @@ namespace Infrastructure.StateMachines.States
             platoonPosition1.transform.SetParent(battlefieldPosition.transform);
             platoonPosition2.transform.SetParent(battlefieldPosition.transform);
 
-            CharacterConfig characterConfigFirst = _staticDataService.GetCharacterConfig(CharacterType.First);
-            CharacterConfig characterConfigSecond = _staticDataService.GetCharacterConfig(CharacterType.Second);
+            UnitConfig unitConfigFirst = _staticDataService.GetUnitConfig(UnitType.Swordsman);
+            UnitConfig unitConfigSecond = _staticDataService.GetUnitConfig(UnitType.Archer);
             
-            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Friends, characterConfigFirst);
-            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Enemies, characterConfigSecond);
+            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
+            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
