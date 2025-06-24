@@ -80,9 +80,10 @@ namespace Abilities
             {
                 List<EffectInfo> effects = CreateEffects(abilityModel.ArmamentSetup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(abilityModel.ArmamentSetup.Statuses, target);
-
+                
                 ArmamentView armamentView =
-                    _armamentViewFactory.Create(_source.abilityPos.position,
+                    _armamentViewFactory.Create(
+                        _source.abilityPos.position,
                         abilityModel.ArmamentSetup.ArmamentView, target);
 
                 _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));

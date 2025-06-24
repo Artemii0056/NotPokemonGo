@@ -22,10 +22,8 @@ namespace InputServices
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Debug.LogError("насрал");   
                 if (hit.collider.TryGetComponent(out Unit unit))
                 {
-                 Debug.LogError("попали в " + hit.collider.name);   
                     UnitSearched?.Invoke(unit);
                 }
             }

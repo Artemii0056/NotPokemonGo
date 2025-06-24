@@ -68,7 +68,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         private void OnUnitSearched(Unit unit)
         {
-            Debug.LogError("Залупа");
             switch (unit.PlatoonType)
             {
                 case PlatoonType.Friends:

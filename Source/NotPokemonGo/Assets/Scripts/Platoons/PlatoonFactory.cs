@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Abilities;
 using Characters;
 using Factories;
+using Infrastructure.StateMachines.States;
 using Platoons;
 using Units;
 using UnityEngine;
@@ -11,10 +13,12 @@ namespace Infrastructure.StateMachine.States
     public class PlatoonFactory : IPlatoonFactory
     {
         private IUnitFactory _unitFactory;
+        private readonly IAbilityApplicatorService _abilityApplicatorService;
 
-        public PlatoonFactory(IUnitFactory unitFactory)
+        public PlatoonFactory(IUnitFactory unitFactory, IAbilityApplicatorService abilityApplicatorService)
         {
             _unitFactory = unitFactory;
+            _abilityApplicatorService = abilityApplicatorService;
         }
 
         public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
@@ -45,7 +49,7 @@ namespace Infrastructure.StateMachine.States
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Platoon(units);
+            return new Platoon(units, platoonType, _abilityApplicatorService);
         }
 
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
