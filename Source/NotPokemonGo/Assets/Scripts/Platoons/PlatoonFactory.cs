@@ -15,10 +15,12 @@ namespace Platoons
         private IAbilityProvider _abilityProvider;
         private ISourceProvider _sourceProvider;
 
-        public PlatoonFactory(IUnitFactory unitFactory, IAbilityApplicatorService abilityApplicatorService)
+        public PlatoonFactory(IUnitFactory unitFactory, IAbilityApplicatorService abilityApplicatorService, IAbilityProvider abilityProvider, ISourceProvider sourceProvider)
         {
             _unitFactory = unitFactory;
             _abilityApplicatorService = abilityApplicatorService;
+            _abilityProvider = abilityProvider;
+            _sourceProvider = sourceProvider;
         }
 
         public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
