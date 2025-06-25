@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Factories;
-using Infrastructure.StateMachines.States;
-using Platoons;
 using Units;
 using UnityEngine;
 
-namespace Infrastructure.StateMachine.States
+namespace Platoons
 {
     public class PlatoonFactory : IPlatoonFactory
     {
         private IUnitFactory _unitFactory;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private IAbilityProvider _abilityProvider;
+        private ISourceProvider _sourceProvider;
 
         public PlatoonFactory(IUnitFactory unitFactory, IAbilityApplicatorService abilityApplicatorService)
         {
@@ -49,7 +49,7 @@ namespace Infrastructure.StateMachine.States
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Platoon(units, platoonType, _abilityApplicatorService);
+            return new Platoon(units, platoonType, _abilityApplicatorService, _sourceProvider, _abilityProvider);
         }
 
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,

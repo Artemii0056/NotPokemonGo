@@ -1,8 +1,7 @@
 using Characters;
-using Platoons;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines.States
+namespace Platoons
 {
     public interface IPlatoonFactory
     {

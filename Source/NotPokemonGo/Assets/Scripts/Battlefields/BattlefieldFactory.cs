@@ -1,12 +1,12 @@
 using Characters;
 using Characters.Configs;
-using Infrastructure.StateMachines.States;
+using Infrastructure;
 using Platoons;
 using Services.StaticDataServices;
 using Statuses.Services;
 using UnityEngine;
 
-namespace Infrastructure.StateMachine.States
+namespace Battlefields
 {
     public class BattlefieldFactory : IBattlefieldFactory
     {

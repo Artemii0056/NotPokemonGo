@@ -1,6 +1,6 @@
 using Characters;
 
-namespace Infrastructure.StateMachines.States
+namespace Battlefields
 {
     public interface IBattlefieldFactory
     {

@@ -2,8 +2,9 @@
 using System.Linq;
 using Abilities;
 using Abilities.MV;
-using Units;
+using Unity.VisualScripting;
 using UnityEngine;
+using Unit = Units.Unit;
 
 namespace Platoons
 {
@@ -12,12 +13,16 @@ namespace Platoons
         private readonly List<Unit> _units;
         private readonly PlatoonType _platoonType;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private ISourceProvider _sourceProvider;
+        private IAbilityProvider _abilityProvider;
 
-        public Platoon(List<Unit> units, PlatoonType platoonType, IAbilityApplicatorService abilityApplicatorService)
+        public Platoon(List<Unit> units, PlatoonType platoonType, IAbilityApplicatorService abilityApplicatorService, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
         {
             _units = units;
             _platoonType = platoonType;
             _abilityApplicatorService = abilityApplicatorService;
+            _sourceProvider = sourceProvider;
+            _abilityProvider = abilityProvider;
         }
 
         public List<Unit> Units => _units.ToList();
@@ -35,8 +40,10 @@ namespace Platoons
                         {
                             if (abilityModel.IsReady)
                             {
-                                _abilityApplicatorService.RememberSource(unit);
-                                _abilityApplicatorService.Remember(abilityModel);
+                                _sourceProvider.Remember(unit);
+                                _abilityProvider.Remember(abilityModel);
+                                // _abilityApplicatorService.RememberSource(unit);
+                                // _abilityApplicatorService.Remember(abilityModel);
                                 _abilityApplicatorService.Apply(targets.ToArray());
                             }
                         }

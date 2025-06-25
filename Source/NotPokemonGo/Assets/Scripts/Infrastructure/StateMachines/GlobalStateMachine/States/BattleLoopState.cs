@@ -21,6 +21,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         private readonly ISceneLoader _sceneLoader;
         private readonly IUIFactory _uiFactory;
         private readonly IRaycaster _raycaster;
+        private ISourceProvider _sourceProvider;
+        private IAbilityProvider _abilityProvider;
         
         private IAbilityApplicatorService _abilityApplicatorService;
         private readonly IBattleStateMachine _battleStateMachine;
@@ -34,8 +36,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             IUIFactory uiFactory, 
             IRaycaster raycaster, 
             IAbilityApplicatorService abilityApplicatorService,
-            IBattleStateMachine battleStateMachine
-            )
+            IBattleStateMachine battleStateMachine, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -43,6 +44,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _raycaster = raycaster;
             _abilityApplicatorService = abilityApplicatorService;
             _battleStateMachine = battleStateMachine;
+            _sourceProvider = sourceProvider;
+            _abilityProvider = abilityProvider;
         }
 
         public void Enter(BattleLoopPayload payload)
@@ -72,7 +75,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             {
                 case PlatoonType.Friends:
                     ShowAbilityInfos(unit.AbilityModels);
-                    _abilityApplicatorService.RememberSource(unit);
+                    _sourceProvider.Remember(unit);
+                    //_abilityApplicatorService.RememberSource(unit);
                     break;
                 
                 case PlatoonType.Enemies:
