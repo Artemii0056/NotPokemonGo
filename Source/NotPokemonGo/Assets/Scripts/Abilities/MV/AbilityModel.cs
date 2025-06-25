@@ -17,16 +17,6 @@ namespace Abilities.MV
             Cooldown = config.Cooldown;
         }
 
-        public AbilityModel(AbilityModel abilityModel)
-        {
-            TargetMode = abilityModel.TargetMode;
-            AbilityType = abilityModel.AbilityType;
-            CastamentSetup = abilityModel.CastamentSetup;
-            ArmamentSetup = abilityModel.ArmamentSetup;
-            Cost = abilityModel.Cost;
-            Cooldown = abilityModel.Cooldown;
-        }
-
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }
         

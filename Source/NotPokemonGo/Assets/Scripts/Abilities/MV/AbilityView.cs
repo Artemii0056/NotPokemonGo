@@ -10,7 +10,8 @@ namespace Abilities.MV
         [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         
-        private IAbilityApplicatorService _abilityApplicatorService;
+      //  private IAbilityApplicatorService _abilityApplicatorService;
+        private IAbilityProvider _abilityProvider;
 
         private AbilityModel _abilityModel;
 
@@ -57,7 +58,9 @@ namespace Abilities.MV
 
         private void OnClick()
         {
-            _abilityApplicatorService.Remember(_abilityModel);
+            _abilityProvider.Remember(_abilityModel);
+            
+           // _abilityApplicatorService.Remember(_abilityModel);
             //_abilityModel.DiscardCurrentTime();
         }
 
@@ -70,9 +73,9 @@ namespace Abilities.MV
             _abilityModel = null;
         }
 
-        public void InitService(IAbilityApplicatorService abilityApplicatorService)
+        public void InitService(IAbilityProvider abilityProvider)
         {
-            _abilityApplicatorService = abilityApplicatorService;
+            _abilityProvider = abilityProvider;
         }
     }
 }

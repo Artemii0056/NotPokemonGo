@@ -100,13 +100,6 @@ namespace Units
             Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
 
-
-        [ContextMenu(Constants.AnimationsName.Idle)]
-        public void PlayIdleAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Idle);
-        }
-
         private IEnumerator Timer(float time)
         {
             float startTime = 0;
@@ -133,8 +126,6 @@ namespace Units
             }
             
             ExplosionEffect.Play();
-
-//            Instantiate(ExplosionEffect, transform.position, Quaternion.identity).Play();
         }
         
         public float GetDeathAnimationLength(string animationName)
@@ -145,6 +136,12 @@ namespace Units
                 throw new Exception($"Animator not contains animation {animationName}");
 
             return clip.length;
+        }
+        
+        [ContextMenu(Constants.AnimationsName.Idle)]
+        public void PlayIdleAnimation()
+        {
+            _animatorController.PlayAnimation(Constants.AnimationsName.Idle);
         }
 
         [ContextMenu(Constants.AnimationsName.Mage.CastSpell)]
@@ -159,7 +156,7 @@ namespace Units
         }
 
         [ContextMenu(Constants.AnimationsName.Mage.FireballAttack)]
-        public void PlayFireballAttackkAnimation()
+        public void PlayFireballAttackAnimation()
         {
             _animatorController.PlayAnimation(Constants.AnimationsName.Mage.FireballAttack);
         }

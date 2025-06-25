@@ -56,6 +56,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
             builder.Register<IRaycaster, Raycaster>(Lifetime.Singleton);
+            
+            
+            builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
+            builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachine(IContainerBuilder builder)

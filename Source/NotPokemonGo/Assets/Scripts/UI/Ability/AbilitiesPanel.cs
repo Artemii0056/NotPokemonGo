@@ -12,13 +12,13 @@ namespace UI.Ability
         [SerializeField] private List<AbilityView> _abilitiesView;
 
         private IStaticDataService _staticDataLoadService;
-        private IAbilityApplicatorService _abilityApplicatorService;
+        private IAbilityProvider _abilityProvider;
 
         [Inject]
-        public void Initialize(IStaticDataService staticDataLoadService, IAbilityApplicatorService abilityApplicatorService)
+        public void Initialize(IStaticDataService staticDataLoadService, IAbilityProvider abilityProvider)
         {
             _staticDataLoadService = staticDataLoadService;
-            _abilityApplicatorService = abilityApplicatorService;
+            _abilityProvider = abilityProvider;
         }
 
         public void SetAbilities(List<AbilityModel> abilityModels)
@@ -32,15 +32,11 @@ namespace UI.Ability
                 _abilitiesView[i].SetImage(config.Icon);
             }
 
-            for (int i = abilityModels.Capacity; i < _abilitiesView.Capacity; i++)
-            {
+            for (int i = abilityModels.Capacity; i < _abilitiesView.Capacity; i++) 
                 _abilitiesView[i].SetDefaultImage();
-            }
 
-            foreach (AbilityView view in _abilitiesView)
-            {
-                view.InitService(_abilityApplicatorService);
-            }
+            foreach (AbilityView view in _abilitiesView) 
+                view.InitService(_abilityProvider);
         }
     }
 }

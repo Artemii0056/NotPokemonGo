@@ -14,49 +14,46 @@ namespace Abilities
 {
     public class AbilityApplicatorService : IAbilityApplicatorService
     {
-        private AbilityModel _abilityModel;
-
-        private Unit _source;
-
         private ICoroutineRunner _coroutineRunner;
         private IArmamentViewFactory _armamentViewFactory;
         private IStatusFactory _statusFactory;
         private IEffectResolver _effectResolver;
         private IStatusResolver _statusResolver;
+        private ISourceProvider _sourceProvider;
+        private IAbilityProvider _abilityProvider;
 
         public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
             IStatusFactory statusFactory, IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver)
+            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
             _coroutineRunner = coroutineRunner;
             _statusResolver = statusResolver;
+            _sourceProvider = sourceProvider;
+            _abilityProvider = abilityProvider;
         }
 
-        public void Remember(AbilityModel abilityModel) =>
-            _abilityModel = abilityModel;
-
-        public void RememberSource(Unit unit) =>
-            _source = unit;
-
-        public void Apply(params Unit[] targets)
+        public void Apply(params Unit[] targets) 
         {
-            if (_abilityModel == null || _abilityModel.IsReady == false)
+            var abilityModel = _abilityProvider.AbilityModel;
+            
+            if (abilityModel == null || abilityModel.IsReady == false)
                 return;
             
-            if (_abilityModel.HasArmament)
+            if (abilityModel.HasArmament)
             {
-                ApplyArmament(_abilityModel, targets);
+                ApplyArmament(abilityModel, targets);
             }
-            else if (_abilityModel.HasCastament)
+            else if (abilityModel.HasCastament)
             {
-                ApplyCastament(_abilityModel, targets);
+                ApplyCastament(abilityModel, targets);
             }
 
-            _abilityModel.DiscardCurrentTime();
-            _abilityModel = null;
+            abilityModel.DiscardCurrentTime();
+            _abilityProvider.Discard();
+            _sourceProvider.Discard();
         }
 
         private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)
@@ -82,7 +79,7 @@ namespace Abilities
                 List<Status> statuses = CreateStatuses(abilityModel.ArmamentSetup.Statuses, target);
 
                 ArmamentView armamentView =
-                    _armamentViewFactory.Create(_source.abilityPos.position,
+                    _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
                         abilityModel.ArmamentSetup.ArmamentView, target);
 
                 _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
