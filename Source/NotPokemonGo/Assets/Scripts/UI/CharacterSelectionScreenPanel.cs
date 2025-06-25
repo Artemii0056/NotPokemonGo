@@ -1,6 +1,7 @@
 using Characters;
 using Characters.Configs;
-using Infrastructure.StateMachine.States;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
+using Infrastructure.StateMachines.States;
 using UnityEngine;
 using UnityEngine.UI;
 

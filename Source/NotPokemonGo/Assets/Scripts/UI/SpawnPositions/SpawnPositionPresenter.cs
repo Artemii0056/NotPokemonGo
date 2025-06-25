@@ -1,7 +1,8 @@
 ﻿using Characters;
 using Infrastructure.MVP.Implementation;
-using Infrastructure.StateMachine;
-using Infrastructure.StateMachine.States;
+using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
+using Infrastructure.StateMachines.States;
 using UnityEngine;
 
 namespace UI.SpawnPositions

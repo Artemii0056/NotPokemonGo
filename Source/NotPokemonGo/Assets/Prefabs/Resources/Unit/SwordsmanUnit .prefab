@@ -140,6 +140,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6272663069519567012, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6695308746705974478, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
@@ -295,6 +299,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2283364625427053730, guid: d37d229f96af2d54293079b223fabe81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518680219853220232, guid: d37d229f96af2d54293079b223fabe81, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518680219853220232, guid: d37d229f96af2d54293079b223fabe81, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4199477929737979562, guid: d37d229f96af2d54293079b223fabe81, type: 3}

@@ -3,8 +3,11 @@ using Effects;
 using Factories;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
-using Infrastructure.StateMachine;
 using Infrastructure.StateMachine.States;
+using Infrastructure.StateMachines.BattleStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
+using Infrastructure.StateMachines.States;
 using InputServices;
 using Services.AssetManagement;
 using Services.SceneServices;
@@ -25,7 +28,7 @@ namespace Infrastructure.DI.Installers.Gloabals
          [SerializeField] private InputReader _inputReader;
         public override void Install(IContainerBuilder builder)
         {
-            RegisterGameStateMachine(builder);
+            RegisterGameStateMachines(builder);
             
             builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
             builder.RegisterComponent(_inputReader).AsImplementedInterfaces();
@@ -62,9 +65,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
         }
 
-        private void RegisterGameStateMachine(IContainerBuilder builder)
+        private void RegisterGameStateMachines(IContainerBuilder builder)
         {
             builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
+            builder.Register<IBattleStateMachine, BattleStateMachine>(Lifetime.Singleton);
         }
 
         private void RegisterStates(IContainerBuilder builder)

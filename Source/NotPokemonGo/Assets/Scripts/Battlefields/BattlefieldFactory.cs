@@ -1,0 +1,50 @@
+using Characters;
+using Characters.Configs;
+using Infrastructure.StateMachines.States;
+using Platoons;
+using Services.StaticDataServices;
+using Statuses.Services;
+using UnityEngine;
+
+namespace Infrastructure.StateMachine.States
+{
+    public class BattlefieldFactory : IBattlefieldFactory
+    {
+        private IPlatoonFactory _platoonFactory;
+        private IStaticDataService _staticDataService;
+        private IStatusManager _statusManager;
+
+        public BattlefieldFactory(IPlatoonFactory platoonFactory, IStaticDataService  staticDataService, IStatusManager statusManager)
+        {
+            _statusManager = statusManager;
+            _staticDataService = staticDataService;
+            _platoonFactory = platoonFactory;
+        }
+        
+        public Battlefield Create(SpawnPositionConfig spawnPositionConfigFirstCommand, SpawnPositionConfig spawnPositionConfigSecondCommand)
+        {
+            GameObject battlefieldPosition = new GameObject("Battlefield");
+            
+            GameObject platoonPosition1 = new GameObject("plattonPosition1");
+            platoonPosition1.transform.position = Constants.Positions.Platoon1Position;
+            
+            GameObject platoonPosition2 = new GameObject("plattonPosition2");
+            platoonPosition2.transform.position = Constants.Positions.Platoon2Position;
+            
+            platoonPosition1.transform.Rotate(Vector3.up, 180); 
+
+            platoonPosition1.transform.SetParent(battlefieldPosition.transform);
+            platoonPosition2.transform.SetParent(battlefieldPosition.transform);
+
+            UnitConfig unitConfigFirst = _staticDataService.GetUnitConfig(UnitType.Swordsman);
+            UnitConfig unitConfigSecond = _staticDataService.GetUnitConfig(UnitType.Archer);
+            
+            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
+            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
+
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
+            
+            return battlefield;
+        }
+    }
+}

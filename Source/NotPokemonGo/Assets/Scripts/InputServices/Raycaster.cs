@@ -22,8 +22,10 @@ namespace InputServices
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.TryGetComponent(out Unit unit)) 
+                if (hit.collider.TryGetComponent(out Unit unit))
+                {
                     UnitSearched?.Invoke(unit);
+                }
             }
         }
     }

@@ -1,4 +1,4 @@
-using Infrastructure.StateMachine.States.Interfaces;
+using Infrastructure.StateMachines.States.Interfaces;
 using VContainer;
 
 namespace Services.StatesServices

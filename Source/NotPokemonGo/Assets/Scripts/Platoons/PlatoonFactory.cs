@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using Abilities;
+using Characters;
+using Factories;
+using Infrastructure.StateMachines.States;
+using Platoons;
+using Units;
+using UnityEngine;
+
+namespace Infrastructure.StateMachine.States
+{
+    public class PlatoonFactory : IPlatoonFactory
+    {
+        private IUnitFactory _unitFactory;
+        private readonly IAbilityApplicatorService _abilityApplicatorService;
+
+        public PlatoonFactory(IUnitFactory unitFactory, IAbilityApplicatorService abilityApplicatorService)
+        {
+            _unitFactory = unitFactory;
+            _abilityApplicatorService = abilityApplicatorService;
+        }
+
+        public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
+            PlatoonType platoonType, UnitConfig unitConfig)
+        {
+            List<Unit> units = new List<Unit>();
+
+            switch (spawnPositionConfig.SpawnPositionType)
+            {
+                case SpawnPositionType.One:
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 1);
+                    break;
+
+                case SpawnPositionType.Two:
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 2);
+                    break;
+
+                case SpawnPositionType.Three:
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 3);
+                    break;
+
+                case SpawnPositionType.Four:
+                    FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 4);
+                    break;
+
+                case SpawnPositionType.None:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return new Platoon(units, platoonType, _abilityApplicatorService);
+        }
+
+        private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
+            SpawnPositionConfig spawnPositionConfig, UnitConfig unitConfig, int unitCount)
+        {
+            SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
+            
+            for (int i = 0; i < unitCount; i++)
+            {
+                if (i < unitPosition.Length)
+                {
+                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, unitConfig, platoonType));
+                }
+            }
+        }
+    }
+}
