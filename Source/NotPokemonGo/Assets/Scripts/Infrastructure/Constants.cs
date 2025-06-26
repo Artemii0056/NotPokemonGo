@@ -31,27 +31,27 @@ namespace Infrastructure
 
         public class AnimationsName
         {
-            public const string Idle = nameof(Idle);
-            public const string Death = nameof(Death);
-            public const string Dodge = nameof(Dodge);
-            public const string TakeDamage = nameof(TakeDamage);
+            public static int Idle =  Animator.StringToHash(nameof(Idle));
+            public static int Death =  Animator.StringToHash(nameof(Death));
+            public static int Dodge =  Animator.StringToHash(nameof(Dodge));
+            public static int TakeDamage = Animator.StringToHash( nameof(TakeDamage));
 
             public class Mage
             {
-                public const string FireballAttack = nameof(FireballAttack);
-                public const string CastSpell = nameof(CastSpell);
-                public const string RadialAttack = nameof(RadialAttack);
+                public static int FireballAttack = Animator.StringToHash( nameof(FireballAttack));
+                public static int CastSpell =  Animator.StringToHash(nameof(CastSpell));
+                public static int RadialAttack =  Animator.StringToHash(nameof(RadialAttack));
             }
 
             public class Swordsman
             {
-                public const string TwoSwordsAttack = nameof(TwoSwordsAttack);
+                public static int TwoSwordsAttack =  Animator.StringToHash(nameof(TwoSwordsAttack));
             }
 
             public class Archer
             {
-                public const string MiddleShoot = nameof(MiddleShoot);
-                public const string ShootInSky = nameof(ShootInSky);
+                public static int MiddleShoot =  Animator.StringToHash(nameof(MiddleShoot));
+                public static int ShootInSky =  Animator.StringToHash(nameof(ShootInSky));
 
             }
         }

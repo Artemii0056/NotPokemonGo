@@ -1,20 +1,20 @@
 using System;
-using System.Collections.Generic;
-using Services.StaticDataServices;
 using UnityEngine;
 
-namespace Animations
+namespace Units.AnimationControllers
 {
-    public class AbilityAnimationControllerBase : MonoBehaviour
+    public class AbilityAnimationControllerBase : MonoBehaviour // TODO Сюда передать сервис 
     {
+        //private IAbilityApplicatorService 
         public Animator _animator;
         private bool _isPlaying;
         
         public event Action ParticleSystem1Started;
         public event Action ParticleSystem2Started;
         public event Action ParticleSystem3Started;
+        public event Action Attack1Started;
 
-        public void Play(string animationName)
+        public void Play(int animationName)
         {
             if (_isPlaying)
             {
@@ -24,43 +24,26 @@ namespace Animations
             _isPlaying = true;
             _animator.Play(animationName);
         }
-
+        
         public void FlagParticleSystem1()
         {
-            ParticleSystem1Started?.Invoke();
+            // AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            // string animationName = stateInfo.shortNameHash.ToString();
+            
+            ParticleSystem1Started?.Invoke(); 
+            //Двойной удар попробовать 
         }
 
-        public void FlagParticleSystem2()
-        {
+        public void FlagParticleSystem2() => 
             ParticleSystem2Started?.Invoke();
-        }
 
-        public void FlagParticleSystem3()
-        {
+        public void FlagParticleSystem3() => 
             ParticleSystem3Started?.Invoke();
-        }
-    }
 
-    public interface IParticleSystemFactory
-    {
-        void Create(List<ParticleSystem> particleSystems, Vector3 position, Quaternion rotation);
-    }
+        public void FlagAttack() => 
+            Attack1Started?.Invoke();
 
-    public class ParticleSystemFactory : IParticleSystemFactory
-    {
-        private readonly IStaticDataService _staticDataService;
-
-        public ParticleSystemFactory(IStaticDataService staticDataService)
-        {
-            _staticDataService = staticDataService;
-        }
-        
-        public void Create(List<ParticleSystem> particleSystems, Vector3 position, Quaternion rotation)
-        {
-            foreach (ParticleSystem particleSystem in particleSystems)
-            {
-                GameObject.Instantiate(particleSystem,  position, rotation);
-            }
-        }
+        public void FlagFinishAnimation() => 
+            _isPlaying = false;
     }
 }

@@ -32,6 +32,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private Battlefield _battlefield;
         private AbilitiesPanel _abilitiesPanel;
+        private ITargetProvider _targetProvider;
 
         public BattleLoopState(
             IGameStateMachine gameStateMachine, 
@@ -43,7 +44,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ICoroutineRunner coroutineRunner,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService, ITargetProvider targetProvider)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -55,6 +56,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _abilityProvider = abilityProvider;
             _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
+            _targetProvider = targetProvider;
         }
 
         public void Enter(BattleLoopPayload payload)
@@ -86,10 +88,15 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                     //_abilityApplicatorService.RememberSource(unit);
                     break;
                 
-                case PlatoonType.Enemies:
+                case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
+                    
+                    
                     AnimationProcessingService animationProcessingService = new AnimationProcessingService();
-                    animationProcessingService.PlayAnimation(unit, _sourceProvider.Source, _abilityProvider.AbilityModel);
-                    _abilityApplicatorService.Apply(unit);
+                    animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
+                    _targetProvider.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
+                    
+                    
+                    //_abilityApplicatorService.Apply(unit);
                     break;
                 
                 default:

@@ -18,6 +18,7 @@ using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using Statuses.Services;
 using UI.Factory;
+using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -66,6 +67,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
+            builder.Register<ITargetProvider, TargetProvider>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

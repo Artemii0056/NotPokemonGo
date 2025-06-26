@@ -1,10 +1,12 @@
-﻿using Abilities.MV;
+﻿using Abilities;
+using Abilities.MV;
 using Animations;
 using Characters;
 using Effects;
 using Services.StaticDataServices;
 using UI;
 using Units;
+using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
 
@@ -17,30 +19,45 @@ namespace Factories
         private readonly IParticleSystemFactory _particleSystemFactory;
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
+        private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private ITargetProvider _targetProvider;
 
         public UnitFactory(
             IEffectResolver effectResolver, 
             IObjectResolver  objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetProvider targetProvider)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
             _particleSystemFactory = particleSystemFactory;
             _abilityProvider = abilityProvider;
             _staticDataService = staticDataService;
+            _abilityApplicatorService = abilityApplicatorService;
+            _targetProvider = targetProvider;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
         {
-            var posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
+            Vector3 posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
             
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
             
             unit.transform.SetParent(parentPosition, false);
             
-            unit.Construct(config.Stats, _effectResolver, platoonType, _particleSystemFactory, _abilityProvider, _staticDataService);
+            unit.Construct(config.Stats, _effectResolver, platoonType);
+            
+            AbilityAnimationControllerBase animationController = unit.GetComponentInChildren<AbilityAnimationControllerBase>();
+            
+            UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
+                unit, 
+                _staticDataService, 
+                _abilityProvider, 
+                animationController, 
+                _particleSystemFactory, 
+                _abilityApplicatorService,
+                _targetProvider);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

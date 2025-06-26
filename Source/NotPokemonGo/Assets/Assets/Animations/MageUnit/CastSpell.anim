@@ -199933,7 +199933,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.5
+  - time: 1.0666667
     functionName: FlagParticleSystem1
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -199944,6 +199944,20 @@ AnimationClip:
     functionName: FlagParticleSystem2
     data: 
     objectReferenceParameter: {fileID: 7400000}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.7666667
+    functionName: FlagAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 2.9666667
+    functionName: FlagFinishAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
