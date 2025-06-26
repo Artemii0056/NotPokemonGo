@@ -21,6 +21,8 @@ namespace Factories
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
         {
+            //Создать из префаба
+            //Энэми,Initialize(CreateStateMS, position...)
             var posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
             
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);

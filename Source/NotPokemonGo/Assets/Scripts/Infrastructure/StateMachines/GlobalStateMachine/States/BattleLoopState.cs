@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
+using Animations;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using InputServices;
+using Services;
 using Services.SceneServices;
 using UI.Ability;
 using UI.Factory;
@@ -26,6 +28,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         private IAbilityApplicatorService _abilityApplicatorService;
         private readonly IBattleStateMachine _battleStateMachine;
+        private AnimationProcessingService _animationProcessingService;
+        private readonly ICoroutineRunner _coroutineRunner;
 
         private Battlefield _battlefield;
         private AbilitiesPanel _abilitiesPanel;
@@ -36,7 +40,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             IUIFactory uiFactory, 
             IRaycaster raycaster, 
             IAbilityApplicatorService abilityApplicatorService,
-            IBattleStateMachine battleStateMachine, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
+            IBattleStateMachine battleStateMachine, ISourceProvider sourceProvider, IAbilityProvider abilityProvider, ICoroutineRunner coroutineRunner)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -46,6 +50,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battleStateMachine = battleStateMachine;
             _sourceProvider = sourceProvider;
             _abilityProvider = abilityProvider;
+            _coroutineRunner = coroutineRunner;
+
+            _animationProcessingService = new AnimationProcessingService(abilityApplicatorService, _coroutineRunner);
         }
 
         public void Enter(BattleLoopPayload payload)
@@ -80,7 +87,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                     break;
                 
                 case PlatoonType.Enemies:
-                    _abilityApplicatorService.Apply(unit);
+                    _animationProcessingService.PlayAnimation(unit, _sourceProvider.Source, _abilityProvider.AbilityModel);
+                    //TODO Вот тут нужно включить нужную анимацию. 
+                   // _abilityApplicatorService.Apply(unit);
                     break;
                 
                 default:

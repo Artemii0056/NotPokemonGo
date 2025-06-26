@@ -5,6 +5,7 @@
         FireBall,
         FrostBall,
         PoisonBall,
-        AlcoholBall
+        AlcoholBall, 
+        CastSpell
     }
 }

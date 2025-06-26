@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,24 @@ using Statuses;
 using Statuses.Services;
 using Units;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Abilities
 {
     public class AbilityApplicatorService : IAbilityApplicatorService
     {
-        private ICoroutineRunner _coroutineRunner;
-        private IArmamentViewFactory _armamentViewFactory;
-        private IStatusFactory _statusFactory;
-        private IEffectResolver _effectResolver;
-        private IStatusResolver _statusResolver;
-        private ISourceProvider _sourceProvider;
-        private IAbilityProvider _abilityProvider;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IArmamentViewFactory _armamentViewFactory;
+        private readonly IStatusFactory _statusFactory;
+        private readonly IEffectResolver _effectResolver;
+        private readonly IStatusResolver _statusResolver;
+        private readonly ISourceProvider _sourceProvider;
+        private readonly IAbilityProvider _abilityProvider;
 
         public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
             IStatusFactory statusFactory, IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
+            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver, ISourceProvider sourceProvider,
+            IAbilityProvider abilityProvider)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
@@ -35,13 +38,13 @@ namespace Abilities
             _abilityProvider = abilityProvider;
         }
 
-        public void Apply(params Unit[] targets) 
+        public void Apply(params Unit[] targets)
         {
-            var abilityModel = _abilityProvider.AbilityModel;
-            
+            AbilityModel abilityModel = _abilityProvider.AbilityModel;
+
             if (abilityModel == null || abilityModel.IsReady == false)
-                return;
-            
+                throw new NullReferenceException("AbilityModel is null or not ready");
+
             if (abilityModel.HasArmament)
             {
                 ApplyArmament(abilityModel, targets);
@@ -53,7 +56,13 @@ namespace Abilities
 
             abilityModel.DiscardCurrentTime();
             _abilityProvider.Discard();
-            //_sourceProvider.Discard();
+            _sourceProvider.Discard();
+            //TODO Дискарднуть абидити панел
+        }
+
+        private void Test(Unit source, AbilityModel ability, Action onHitCallback)
+        {
+            
         }
 
         private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)
@@ -103,7 +112,7 @@ namespace Abilities
 
         private void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects)
         {
-            foreach (var status in statuses) 
+            foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
             foreach (var effectInfo in effects)

@@ -10,7 +10,6 @@ namespace Abilities.MV
         [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         
-      //  private IAbilityApplicatorService _abilityApplicatorService;
         private IAbilityProvider _abilityProvider;
 
         private AbilityModel _abilityModel;

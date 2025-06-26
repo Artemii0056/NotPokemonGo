@@ -37,6 +37,15 @@ namespace Units
         public ParticleSystem ImposedEffect;
         public ParticleSystem ExplosionEffect;
 
+        public event Action Ready;
+        
+        public void ApplyAnimationEvent() //Todo. Есть анимация - есть ее тип. Как тыкнули на врага - запускаем анимацию.
+        {
+            Ready?.Invoke();
+            //Типо он тут предлагает вызвать _applicatorService.Apply();
+            Debug.Log("Applying animation event");
+        }
+
         public void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
@@ -111,7 +120,7 @@ namespace Units
                 yield return null;
             }
 
-            Instantiate(ImposedEffect, transform.position, Quaternion.identity).Play();
+            //Instantiate(ImposedEffect, transform.position, Quaternion.identity).Play();
         }
         
         private IEnumerator Timer2(float time)
@@ -125,7 +134,7 @@ namespace Units
                 yield return null;
             }
             
-            ExplosionEffect.Play();
+            //ExplosionEffect.Play();
         }
         
         public float GetDeathAnimationLength(string animationName)
@@ -202,5 +211,7 @@ namespace Units
         {
             _animatorController.PlayAnimation(Constants.AnimationsName.Archer.ShootInSky);
         }
+
+        
     }
 }

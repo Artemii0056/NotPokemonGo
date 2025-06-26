@@ -20,7 +20,7 @@ public class Battlefield
         _enemyPlatoon.Tick(deltaTime);
         _platoon2.Tick(deltaTime);
         
-        _enemyPlatoon.Attack(_platoon2.Units);
+        //_enemyPlatoon.Attack(_platoon2.Units);
         //_platoon2.Attack(_platoon1.Units);
         
         _statusManager.Update(deltaTime);

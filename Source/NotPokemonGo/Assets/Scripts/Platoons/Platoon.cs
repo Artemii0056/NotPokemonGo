@@ -42,8 +42,6 @@ namespace Platoons
                             {
                                 _sourceProvider.Remember(unit);
                                 _abilityProvider.Remember(abilityModel);
-                                // _abilityApplicatorService.RememberSource(unit);
-                                // _abilityApplicatorService.Remember(abilityModel);
                                 _abilityApplicatorService.Apply(targets.ToArray());
                             }
                         }
