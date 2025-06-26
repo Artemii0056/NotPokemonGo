@@ -55,14 +55,9 @@ namespace Abilities
             }
 
             abilityModel.DiscardCurrentTime();
-            _abilityProvider.Discard();
-            _sourceProvider.Discard();
+            // _abilityProvider.Discard();
+            // _sourceProvider.Discard();
             //TODO Дискарднуть абидити панел
-        }
-
-        private void Test(Unit source, AbilityModel ability, Action onHitCallback)
-        {
-            
         }
 
         private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)

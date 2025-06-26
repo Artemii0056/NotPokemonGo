@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities;
 using Abilities.MV;
+using Animations;
 using Characters;
 using Characters.Configs;
 using Effects;
 using Infrastructure;
+using Services.StaticDataServices;
 using Stats;
 using Statuses;
 using UnityEngine;
@@ -15,11 +18,12 @@ namespace Units
 {
     public class Unit : MonoBehaviour
     {
+        public AbilityAnimationControllerBase AbilityAnimationControllerBase;
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
         private Animator _animator;
-        private AnimatorController _animatorController;
+        
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         public event Action<Status> StatusAdded;
@@ -36,28 +40,27 @@ namespace Units
 
         public ParticleSystem ImposedEffect;
         public ParticleSystem ExplosionEffect;
-
-        public event Action Ready;
-        
-        public void ApplyAnimationEvent() //Todo. Есть анимация - есть ее тип. Как тыкнули на врага - запускаем анимацию.
-        {
-            Ready?.Invoke();
-            //Типо он тут предлагает вызвать _applicatorService.Apply();
-            Debug.Log("Applying animation event");
-        }
+        private IParticleSystemFactory _particleSystemFactory;
+        private IAbilityProvider _abilityProvider;
+        private IStaticDataService _staticDataService;
 
         public void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
-            _animatorController = new AnimatorController(_animator);
         }
 
-        public void Initialize(
+        public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
-            PlatoonType platoonType
+            PlatoonType platoonType,
+            IParticleSystemFactory particleSystemFactory,
+            IAbilityProvider abilityProvider,
+            IStaticDataService staticDataService
         )
         {
+            _staticDataService = staticDataService;
+            _abilityProvider = abilityProvider;
+            _particleSystemFactory = particleSystemFactory;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
@@ -67,6 +70,20 @@ namespace Units
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
+        }
+
+        private void OnEnable()
+        {
+            AbilityAnimationControllerBase.ParticleSystem1Started += OnParticleSystem1Started;
+            AbilityAnimationControllerBase.ParticleSystem2Started += OnParticleSystem2Started;
+            AbilityAnimationControllerBase.ParticleSystem3Started += OnParticleSystem3Started;
+        }
+
+        private void OnDisable()
+        {
+            AbilityAnimationControllerBase.ParticleSystem1Started -= OnParticleSystem1Started;
+            AbilityAnimationControllerBase.ParticleSystem2Started -= OnParticleSystem2Started;
+            AbilityAnimationControllerBase.ParticleSystem3Started -= OnParticleSystem3Started;
         }
 
         public float GetStat(StatType statType)
@@ -147,71 +164,23 @@ namespace Units
             return clip.length;
         }
         
-        [ContextMenu(Constants.AnimationsName.Idle)]
-        public void PlayIdleAnimation()
+        private void OnParticleSystem3Started()
         {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Idle);
+            AbilityConfig abilityConfig = _staticDataService.GetAbilityConfig(_abilityProvider.AbilityModel.AbilityType);
+            _particleSystemFactory.Create(abilityConfig.EndAnimationParticles, transform.position, Quaternion.identity);
         }
 
-        [ContextMenu(Constants.AnimationsName.Mage.CastSpell)]
-        public void PlayCastAnimation()
+        private void OnParticleSystem2Started()
         {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Mage.CastSpell);
-
-            float lenght = GetDeathAnimationLength(Constants.AnimationsName.Mage.CastSpell);
-
-            StartCoroutine(Timer(lenght - 0.8f));
-            StartCoroutine(Timer2(1.6f));
+            Debug.Log(_abilityProvider.AbilityModel == null);
+            AbilityConfig abilityConfig = _staticDataService.GetAbilityConfig(_abilityProvider.AbilityModel.AbilityType);
+            _particleSystemFactory.Create(abilityConfig.MiddleAnimationParticles, transform.position, Quaternion.identity);
         }
 
-        [ContextMenu(Constants.AnimationsName.Mage.FireballAttack)]
-        public void PlayFireballAttackAnimation()
+        private void OnParticleSystem1Started()
         {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Mage.FireballAttack);
+            AbilityConfig abilityConfig = _staticDataService.GetAbilityConfig(_abilityProvider.AbilityModel.AbilityType);
+            _particleSystemFactory.Create(abilityConfig.StartAnimationParticles, transform.position, Quaternion.identity);
         }
-
-        [ContextMenu(Constants.AnimationsName.Dodge)]
-        public void PlayDodgeAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Dodge);
-        }
-
-        [ContextMenu(Constants.AnimationsName.Death)]
-        public void PlayDeathAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Death);
-        }
-
-        [ContextMenu(Constants.AnimationsName.TakeDamage)]
-        public void PlayApplyDamageAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.TakeDamage);
-        }
-
-        [ContextMenu(Constants.AnimationsName.Mage.RadialAttack)]
-        public void PlayRadialAttackAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Mage.RadialAttack);
-        }
-
-        [ContextMenu(Constants.AnimationsName.Swordsman.TwoSwordsAttack)]
-        public void PlayRadialTwoSwordsAttackAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Swordsman.TwoSwordsAttack);
-        }
-
-        [ContextMenu(Constants.AnimationsName.Archer.MiddleShoot)]
-        public void PlayMiddleShootAttackAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Archer.MiddleShoot);
-        }
-
-        [ContextMenu(Constants.AnimationsName.Archer.ShootInSky)]
-        public void PlayShootInSkyAnimation()
-        {
-            _animatorController.PlayAnimation(Constants.AnimationsName.Archer.ShootInSky);
-        }
-
-        
     }
 }

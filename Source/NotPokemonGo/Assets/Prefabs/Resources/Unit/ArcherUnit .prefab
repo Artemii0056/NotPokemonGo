@@ -63,11 +63,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4199477929737979562, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257303622648830399}
   m_SourcePrefab: {fileID: 100100000, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+--- !u!1 &541518629176048506 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4199477929737979562, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+  m_PrefabInstance: {fileID: 4450777712762256848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1257303622648830399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541518629176048506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70d68b511f1439d90908b95e0abb162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2528874875965527988}
 --- !u!4 &2482735433217130866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2283364625427053730, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+  m_PrefabInstance: {fileID: 4450777712762256848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2528874875965527988 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2223662153775098468, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
   m_PrefabInstance: {fileID: 4450777712762256848}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6686149135419505583
@@ -178,6 +204,10 @@ PrefabInstance:
       propertyPath: <UnitType>k__BackingField
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: AbilityAnimationControllerBase
+      value: 
+      objectReference: {fileID: 1257303622648830399}
     - target: {fileID: 8218181868472811484, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

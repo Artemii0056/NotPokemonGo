@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AbilityType>k__BackingField: 4
   <Icon>k__BackingField: {fileID: 21300014, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  <StartAnimationParticles>k__BackingField:
+  - {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
+  - {fileID: 19827778, guid: ec1c5863f61e8ff4a84dbdb8a282a7ac, type: 3}
+  <MiddleAnimationParticles>k__BackingField: []
+  <EndAnimationParticles>k__BackingField: []
   <TargetMode>k__BackingField: 0
   <Cost>k__BackingField: 1
   <Cooldown>k__BackingField: 2

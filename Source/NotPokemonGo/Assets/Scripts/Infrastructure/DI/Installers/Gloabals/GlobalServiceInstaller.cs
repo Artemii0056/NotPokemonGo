@@ -1,4 +1,5 @@
 ﻿using Abilities;
+using Animations;
 using Battlefields;
 using Effects;
 using Factories;
@@ -60,6 +61,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
             builder.Register<IRaycaster, Raycaster>(Lifetime.Singleton);
+            builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
             
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
