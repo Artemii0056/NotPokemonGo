@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
   m_Name: DoubleAttackAbilityConfig
   m_EditorClassIdentifier: 
-  <AbilityType>k__BackingField: 0
+  <AbilityType>k__BackingField: 5
   <Icon>k__BackingField: {fileID: 0}
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
