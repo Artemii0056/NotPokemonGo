@@ -1,13 +1,20 @@
-﻿using Units;
-using UnityEngine;
+﻿using UnityEngine;
+using Unit = Units.Unit;
 
 namespace Abilities
 {
     public class ArmamentView : MonoBehaviour
     {
+        [SerializeField] private ParticleSystem _particleSystem;
+
         public float delta = 10f;
-        
+
         private Unit _target;
+
+        private void Start()
+        {
+            _particleSystem.Play();
+        }
 
         private void Update()
         {
@@ -21,6 +28,17 @@ namespace Abilities
         public void Initialize(Unit targetUnit)
         {
             _target = targetUnit;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out Unit unit))
+            {
+                if (_target == unit)
+                {
+                  Destroy(gameObject);
+                }
+            }
         }
     }
 }

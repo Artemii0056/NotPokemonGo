@@ -89,14 +89,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                     break;
                 
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
-                    
-                    
                     AnimationProcessingService animationProcessingService = new AnimationProcessingService();
                     animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
-                    
-                    
-                    //_abilityApplicatorService.Apply(unit);
                     break;
                 
                 default:
