@@ -77,6 +77,8 @@ namespace Factories
             StatusViewPanel statusViewPanel = unit.GetComponentInChildren<StatusViewPanel>();
             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
             
+            statusViewPanel.Construct(unit);
+
             _objectResolver.Inject(statusViewPanel);
             _objectResolver.Inject(slidersView);
         }

@@ -22,12 +22,15 @@ namespace Statuses
             if (icon != null)
                 _icon.sprite = icon;
 
-            _icon.gameObject.SetActive(true);
+            transform.gameObject.SetActive(true);
         }
 
-        public void Dispose() => 
-            _status = null;
-        
+        public void Dispose()
+        {
+            _icon.sprite = null;
+            transform.gameObject.SetActive(false);
+        }
+
         private void Update()
         {
             if (_status == null)
