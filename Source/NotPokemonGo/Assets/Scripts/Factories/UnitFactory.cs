@@ -48,7 +48,7 @@ namespace Factories
             
             unit.Construct(config.Stats, _effectResolver, platoonType);
             
-            AbilityAnimationControllerBase animationController = unit.GetComponentInChildren<AbilityAnimationControllerBase>();
+            UnitAnimatorController animationController = unit.GetComponentInChildren<UnitAnimatorController>();
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 

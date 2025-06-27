@@ -12,17 +12,13 @@ namespace Units.AnimationControllers
 {
     public class UnitAnimatorTrigger : IDisposable
     {
-        //часть ищз юнита
-        //абилити апликэйш сервис
-        //мьюзик сервис
-        // партиклы
         private IStaticDataService _staticDataService;
         private IAbilityProvider _abilityProvider;
         private IParticleSystemFactory _particleSystemFactory;
         private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
 
-        private AbilityAnimationControllerBase _controller;
+        private UnitAnimatorController _controller;
         private Unit _unit;
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
@@ -34,7 +30,7 @@ namespace Units.AnimationControllers
             Unit unit,
             IStaticDataService staticDataService,
             IAbilityProvider abilityProvider,
-            AbilityAnimationControllerBase controller,
+            UnitAnimatorController controller,
             IParticleSystemFactory particleSystemFactory, IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector)
         {

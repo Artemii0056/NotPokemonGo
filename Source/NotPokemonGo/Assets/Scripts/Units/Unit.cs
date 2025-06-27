@@ -9,6 +9,7 @@ using Stats;
 using Statuses;
 using Units.AnimationControllers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -16,7 +17,7 @@ namespace Units
     {
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
         
-        public AbilityAnimationControllerBase AbilityAnimationControllerBase;
+        [FormerlySerializedAs("AbilityAnimationControllerBase")] public UnitAnimatorController unitAnimatorController;
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
@@ -34,7 +35,6 @@ namespace Units
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
 
         public Transform abilityPos;
-
 
         public void Construct(
             List<StatConfig> statConfig,
