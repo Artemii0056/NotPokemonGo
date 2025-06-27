@@ -27,7 +27,9 @@ namespace Units.AnimationControllers
             IStaticDataService staticDataService, 
             IAbilityProvider abilityProvider, 
             AbilityAnimationControllerBase controller, 
-            IParticleSystemFactory particleSystemFactory, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
+            IParticleSystemFactory particleSystemFactory,
+            IAbilityApplicatorService abilityApplicatorService, 
+            ITargetSelector targetSelector)
         {
             _unit = unit;
             _staticDataService = staticDataService;

@@ -1,4 +1,6 @@
-﻿using Infrastructure.MVP.Implementation;
+﻿using System.Collections.Generic;
+using Abilities.MV;
+using Infrastructure.MVP.Implementation;
 
 namespace UI.Ability
 {
@@ -20,6 +22,11 @@ namespace UI.Ability
         public void Disable()
         {
             _abilitiesPanel.gameObject.SetActive(false);
+        }
+
+        public void FillAbilityView(List<AbilityModel> abilityModels)
+        {
+            _abilitiesPanel.SetAbilities(abilityModels);
         }
     }
 }

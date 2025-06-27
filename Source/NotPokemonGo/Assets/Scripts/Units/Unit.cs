@@ -22,11 +22,15 @@ namespace Units
         private IEffectResolver _effectResolver;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
+
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
+        public event Action<Unit> Prepared; 
+        
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
+        
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
@@ -34,7 +38,6 @@ namespace Units
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
 
         public Transform abilityPos;
-
 
         public void Construct(
             List<StatConfig> statConfig,
@@ -81,7 +84,7 @@ namespace Units
 
         public void AddAbility(AbilityModel ability) =>
             _abilityModels.Add(ability);
-
+        
         public void Tick(float deltaTime)
         {
             if (_abilityModels.Count > 0)
@@ -90,7 +93,10 @@ namespace Units
                     model.UpdateTime(deltaTime);
             }
 
-            Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
+            if (Step.IsReadyToAct)
+                Prepared?.Invoke(this);
+            else
+                Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
     }
 }

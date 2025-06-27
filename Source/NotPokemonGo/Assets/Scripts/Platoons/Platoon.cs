@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Abilities;
 using Abilities.MV;
 using Unity.VisualScripting;
-using UnityEngine;
 using Unit = Units.Unit;
 
 namespace Platoons
@@ -15,7 +15,14 @@ namespace Platoons
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
 
-        public Platoon(List<Unit> units, PlatoonType platoonType, IAbilityApplicatorService abilityApplicatorService, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
+        public event Action<Unit> UnitPrepared; 
+
+        public Platoon(
+            List<Unit> units,
+            PlatoonType platoonType, 
+            IAbilityApplicatorService abilityApplicatorService,
+            ISourceProvider sourceProvider,
+            IAbilityProvider abilityProvider)
         {
             _units = units;
             PlatoonType = platoonType;
@@ -24,8 +31,23 @@ namespace Platoons
             _abilityProvider = abilityProvider;
         }
 
+        public void Enable()
+        {
+            foreach (Unit unit in _units) 
+                unit.Prepared += OnUnitPrepared;
+        }
+
+        public void Disable()
+        {
+            foreach (Unit unit in _units) 
+                unit.Prepared -= OnUnitPrepared;
+        }
+
+
         public PlatoonType PlatoonType { get; private set; }
+
         public List<Unit> Units => _units.ToList();
+
         public bool IsAlive { get; private set; }
 
         public void Attack(List<Unit> targets)
@@ -59,5 +81,8 @@ namespace Platoons
                 unit.Tick(deltaTime);
             }
         }
+
+        private void OnUnitPrepared(Unit unit) => 
+            UnitPrepared?.Invoke(unit);
     }
 }

@@ -1,6 +1,7 @@
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using Infrastructure.StateMachines.BattleStateMachine;
 using Platoons;
 using Services.StaticDataServices;
 using Statuses.Services;
@@ -10,13 +11,19 @@ namespace Battlefields
 {
     public class BattlefieldFactory : IBattlefieldFactory
     {
-        private IPlatoonFactory _platoonFactory;
-        private IStaticDataService _staticDataService;
-        private IStatusManager _statusManager;
+        private readonly IPlatoonFactory _platoonFactory;
+        private readonly IStaticDataService _staticDataService;
+        private readonly IStatusManager _statusManager;
+        private readonly IBattleStateMachine _battleStateMachine;
 
-        public BattlefieldFactory(IPlatoonFactory platoonFactory, IStaticDataService  staticDataService, IStatusManager statusManager)
+        public BattlefieldFactory(
+            IPlatoonFactory platoonFactory,
+            IStaticDataService  staticDataService,
+            IStatusManager statusManager,
+            IBattleStateMachine battleStateMachine)
         {
             _statusManager = statusManager;
+            _battleStateMachine = battleStateMachine;
             _staticDataService = staticDataService;
             _platoonFactory = platoonFactory;
         }
@@ -42,7 +49,7 @@ namespace Battlefields
             Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
             Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
 
-            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager, _battleStateMachine);
             
             return battlefield;
         }

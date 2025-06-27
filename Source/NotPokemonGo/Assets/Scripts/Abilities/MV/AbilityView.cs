@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Abilities.MV
 {
@@ -16,14 +17,20 @@ namespace Abilities.MV
 
         private Image _defaultImage;
 
-        private void Awake() =>
-            _defaultImage = GetComponent<Image>();
+        [Inject]
+        public void Initialize(IAbilityProvider abilityProvider)
+        {
+            _abilityProvider = abilityProvider;
+        }
 
-        public void Initialize(AbilityModel abilityModel)
+        public void Construct(AbilityModel abilityModel)
         {
             _abilityModel = abilityModel;
             CooldownImage.gameObject.SetActive(true);
         }
+
+        private void Awake() =>
+            _defaultImage = GetComponent<Image>();
 
         private void OnEnable() =>
             _button.onClick.AddListener(OnClick);
@@ -70,11 +77,6 @@ namespace Abilities.MV
         {
             _icon.sprite = _defaultImage.sprite;
             _abilityModel = null;
-        }
-
-        public void InitService(IAbilityProvider abilityProvider)
-        {
-            _abilityProvider = abilityProvider;
         }
     }
 }
