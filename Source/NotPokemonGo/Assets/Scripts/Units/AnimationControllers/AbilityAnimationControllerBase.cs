@@ -20,7 +20,7 @@ namespace Units.AnimationControllers
         {
             if (_isPlaying)
             {
-                throw new Exception();
+                return;
             }
 
             _isPlaying = true;

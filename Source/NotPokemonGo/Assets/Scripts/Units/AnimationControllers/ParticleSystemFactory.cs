@@ -13,13 +13,19 @@ namespace Units.AnimationControllers
             _staticDataService = staticDataService;
         }
         
-        public void Create(List<ParticleSystem> particleSystems, Vector3 position, Quaternion rotation)
+        public List<ParticleSystem> Create(List<ParticleSystem> particleSystems, Transform transform, Quaternion rotation)
         {
+            List<ParticleSystem> particleSystemList = new List<ParticleSystem>();
+            
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-              var a =  GameObject.Instantiate(particleSystem,  position, rotation);
-              a.Play();
+              //ParticleSystem system =  GameObject.Instantiate(particleSystem,  position, rotation);
+              ParticleSystem system =  GameObject.Instantiate(particleSystem, transform.position, Quaternion.identity, transform);
+              particleSystemList.Add(system);
+              system.Play();
             }
+
+            return particleSystemList;
         }
     }
 }

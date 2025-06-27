@@ -5,6 +5,6 @@ namespace Units.AnimationControllers
 {
     public interface IParticleSystemFactory
     {
-        void Create(List<ParticleSystem> particleSystems, Vector3 position, Quaternion rotation);
+        List<ParticleSystem> Create(List<ParticleSystem> particleSystems, Transform transform, Quaternion rotation);
     }
 }
