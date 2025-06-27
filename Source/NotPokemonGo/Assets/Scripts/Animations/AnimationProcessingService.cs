@@ -18,7 +18,8 @@ namespace Animations
                 { AbilityType.FireBall, PlayFireball },
                 { AbilityType.FrostBall, PlayFrostBall },
                 { AbilityType.PoisonBall, PlayPoisonBall },
-                { AbilityType.CastSpell, PlayCastSpell }
+                { AbilityType.CastSpell, PlayCastSpell },
+                { AbilityType.DoubleAttack, PlayDoubleAttack }
             };
         }
 
@@ -46,5 +47,7 @@ namespace Animations
         private void PlayCastSpell(Unit source) =>
             source.unitAnimatorController.Play(Constants.AnimationsName.Mage.CastSpell);
         
+        private void PlayDoubleAttack(Unit source) =>
+            source.unitAnimatorController.Play(Constants.AnimationsName.Swordsman.DoubleAttack);
     }
 }

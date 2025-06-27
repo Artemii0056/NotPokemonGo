@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
+  m_Name: DoubleAttackAbilityConfig
+  m_EditorClassIdentifier: 
+  <AbilityType>k__BackingField: 0
+  <Icon>k__BackingField: {fileID: 0}
+  <StartAnimationParticles>k__BackingField: []
+  <MiddleAnimationParticles>k__BackingField: []
+  <EndAnimationParticles>k__BackingField: []
+  <Cost>k__BackingField: 0
+  <Cooldown>k__BackingField: 0
+  <TargetMode>k__BackingField: 0
+  <ArmamentSetup>k__BackingField:
+    <Statuses>k__BackingField: []
+    <EffectInfo>k__BackingField: []
+    <ParticleSystem>k__BackingField: {fileID: 0}
+    <ArmamentView>k__BackingField: {fileID: 0}
+    <MoveSpeed>k__BackingField: 0
+  <CastamentSetup>k__BackingField:
+    <Statuses>k__BackingField: []
+    <EffectInfo>k__BackingField: []
+    <ParticleSystem>k__BackingField: {fileID: 0}
+  <Prefab>k__BackingField: {fileID: 0}
+  <ParticleSystem>k__BackingField: {fileID: 0}
