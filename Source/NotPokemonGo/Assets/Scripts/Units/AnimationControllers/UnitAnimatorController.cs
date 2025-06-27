@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Units.AnimationControllers
 {
-    public class AbilityAnimationControllerBase : MonoBehaviour // TODO Сюда передать сервис 
+    public class UnitAnimatorController : MonoBehaviour
     {
-        //private IAbilityApplicatorService 
-        public Animator _animator;
+        private Animator _animator;
         private bool _isPlaying;
 
         public event Action ParticleSystem1Started;
@@ -16,25 +15,22 @@ namespace Units.AnimationControllers
 
         public event Action Finished;
 
+        private void Awake() => 
+            _animator = GetComponent<Animator>();
+
         public void Play(int animationName)
         {
             if (_isPlaying)
             {
-                throw new Exception();
+                return;
             }
 
             _isPlaying = true;
             _animator.Play(animationName);
         }
 
-        public void FlagParticleSystem1()
-        {
-            // AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            // string animationName = stateInfo.shortNameHash.ToString();
-
+        public void FlagParticleSystem1() => 
             ParticleSystem1Started?.Invoke();
-            //Двойной удар попробовать 
-        }
 
         public void FlagParticleSystem2() =>
             ParticleSystem2Started?.Invoke();

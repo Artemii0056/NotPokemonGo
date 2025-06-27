@@ -60,6 +60,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 738855304108303289}
   m_SourcePrefab: {fileID: 100100000, guid: 11cbfe7e47bc62946b0a43b3024df81d, type: 3}
+--- !u!4 &997169958031230590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2462365903037481191, guid: 11cbfe7e47bc62946b0a43b3024df81d, type: 3}
+  m_PrefabInstance: {fileID: 3457282875541538457}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1566468273209458739 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4199477929737979562, guid: 11cbfe7e47bc62946b0a43b3024df81d, type: 3}
@@ -230,6 +235,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[1].ParticlesType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].Transforms.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -248,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[1].Transforms.Array.data[1]
       value: 
-      objectReference: {fileID: 4789249301284137058}
+      objectReference: {fileID: 997169958031230590}
     - target: {fileID: 7641836187178369961, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

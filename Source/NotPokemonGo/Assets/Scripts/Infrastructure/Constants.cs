@@ -35,6 +35,7 @@ namespace Infrastructure
             public static int Death =  Animator.StringToHash(nameof(Death));
             public static int Dodge =  Animator.StringToHash(nameof(Dodge));
             public static int TakeDamage = Animator.StringToHash( nameof(TakeDamage));
+            public static int Run =  Animator.StringToHash(nameof(Run));
 
             public class Mage
             {
@@ -46,6 +47,7 @@ namespace Infrastructure
             public class Swordsman
             {
                 public static int TwoSwordsAttack =  Animator.StringToHash(nameof(TwoSwordsAttack));
+                public static int DoubleAttack =  Animator.StringToHash(nameof(DoubleAttack));
             }
 
             public class Archer

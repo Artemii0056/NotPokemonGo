@@ -40,6 +40,7 @@ namespace Abilities
 
         public void Apply(params Unit[] targets)
         {
+            Debug.Log("Applying ability applicator");
             AbilityModel abilityModel = _abilityProvider.AbilityModel;
 
             if (abilityModel == null || abilityModel.IsReady == false)

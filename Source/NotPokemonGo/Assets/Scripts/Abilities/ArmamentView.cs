@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using Unit = Units.Unit;
 
 namespace Abilities
 {
     public class ArmamentView : MonoBehaviour
     {
-        [SerializeField] private ParticleSystem _particleSystem;
+        [FormerlySerializedAs("_particleSystem")] [SerializeField] private ParticleSystem _particleSystemPrefab;
 
         public float delta = 10f;
 
@@ -13,7 +14,8 @@ namespace Abilities
 
         private void Start()
         {
-            _particleSystem.Play();
+            var parcticle = Instantiate(_particleSystemPrefab, transform);
+            parcticle.Play();
         }
 
         private void Update()
@@ -36,7 +38,7 @@ namespace Abilities
             {
                 if (_target == unit)
                 {
-                  Destroy(gameObject);
+                    // Destroy(gameObject);
                 }
             }
         }

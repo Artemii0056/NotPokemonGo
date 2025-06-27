@@ -7,5 +7,6 @@ using UnityEngine;
 public class AbilityAnchor
 {
     public AbilityType AbilityType;
+    public ParticlesType ParticlesType;
     public List<Transform> Transforms;
 }

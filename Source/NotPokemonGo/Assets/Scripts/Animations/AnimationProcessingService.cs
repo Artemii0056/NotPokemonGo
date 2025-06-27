@@ -7,7 +7,7 @@ using Units;
 
 namespace Animations
 {
-    public class AnimationProcessingService
+    public class AnimationProcessingService //Интерфейс и скормить юниту
     {
         private readonly Dictionary<AbilityType, Action<Unit>> _animationMap;
 
@@ -18,7 +18,8 @@ namespace Animations
                 { AbilityType.FireBall, PlayFireball },
                 { AbilityType.FrostBall, PlayFrostBall },
                 { AbilityType.PoisonBall, PlayPoisonBall },
-                { AbilityType.CastSpell, PlayCastSpell }
+                { AbilityType.CastSpell, PlayCastSpell },
+                { AbilityType.DoubleAttack, PlayDoubleAttack }
             };
         }
 
@@ -35,44 +36,18 @@ namespace Animations
         }
 
         private void PlayFireball(Unit source) =>
-            source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.FireballAttack);
+            source.unitAnimatorController.Play(Constants.AnimationsName.Mage.FireballAttack);
 
         private void PlayFrostBall(Unit source) =>
-            source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.CastSpell);
+            source.unitAnimatorController.Play(Constants.AnimationsName.Mage.CastSpell);
 
         private void PlayPoisonBall(Unit source) =>
-            source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.RadialAttack);
+            source.unitAnimatorController.Play(Constants.AnimationsName.Mage.RadialAttack);
 
         private void PlayCastSpell(Unit source) =>
-            source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.CastSpell);
+            source.unitAnimatorController.Play(Constants.AnimationsName.Mage.CastSpell);
         
-       // public void PlayAnimation(Unit source, AbilityModel abilityModel)
-        // {
-        //     switch (abilityModel.AbilityType)
-        //     {
-        //         case AbilityType.FireBall:
-        //             source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.FireballAttack);
-        //             break;
-        //         
-        //         case AbilityType.FrostBall:
-        //             
-        //             break;
-        //         
-        //         case AbilityType.PoisonBall:
-        //             
-        //             break;
-        //         
-        //         case AbilityType.AlcoholBall:
-        //             
-        //             break;
-        //         
-        //         case AbilityType.CastSpell:
-        //             source.AbilityAnimationControllerBase.Play(Constants.AnimationsName.Mage.CastSpell);
-        //             break;
-        //         
-        //         default:
-        //             throw new ArgumentOutOfRangeException();
-        //     }
-        // }
+        private void PlayDoubleAttack(Unit source) =>
+            source.unitAnimatorController.Play(Constants.AnimationsName.Swordsman.DoubleAttack);
     }
 }
