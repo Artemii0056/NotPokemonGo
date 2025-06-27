@@ -14,6 +14,8 @@ namespace Units
 {
     public class Unit : MonoBehaviour
     {
+        [SerializeField] private List<AbilityAnchor> abilityAnchors;
+        
         public AbilityAnimationControllerBase AbilityAnimationControllerBase;
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
@@ -29,6 +31,7 @@ namespace Units
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
+        public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
 
         public Transform abilityPos;
 

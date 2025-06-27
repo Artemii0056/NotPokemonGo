@@ -19,9 +19,9 @@ MonoBehaviour:
   <MiddleAnimationParticles>k__BackingField:
   - {fileID: 19827778, guid: ec1c5863f61e8ff4a84dbdb8a282a7ac, type: 3}
   <EndAnimationParticles>k__BackingField: []
-  <TargetMode>k__BackingField: 0
   <Cost>k__BackingField: 1
   <Cooldown>k__BackingField: 2
+  <TargetMode>k__BackingField: 2
   <ArmamentSetup>k__BackingField:
     <Statuses>k__BackingField: []
     <EffectInfo>k__BackingField: []

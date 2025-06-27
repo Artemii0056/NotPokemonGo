@@ -17,15 +17,11 @@ MonoBehaviour:
   <StartAnimationParticles>k__BackingField:
   - {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
   - {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
-  <MiddleAnimationParticles>k__BackingField:
-  - {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
-  - {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
-  <EndAnimationParticles>k__BackingField:
-  - {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
-  - {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
-  <TargetMode>k__BackingField: 0
+  <MiddleAnimationParticles>k__BackingField: []
+  <EndAnimationParticles>k__BackingField: []
   <Cost>k__BackingField: 1
   <Cooldown>k__BackingField: 3
+  <TargetMode>k__BackingField: 0
   <ArmamentSetup>k__BackingField:
     <Statuses>k__BackingField:
     - EffectSetup:
@@ -41,7 +37,7 @@ MonoBehaviour:
       Value: 50
     <ParticleSystem>k__BackingField: {fileID: 1002095764754300477, guid: 04ddf54ddb327d342ad9eeb8f5e1a523, type: 3}
     <ArmamentView>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
-    <MoveSpeed>k__BackingField: 0
+    <MoveSpeed>k__BackingField: 1
   <CastamentSetup>k__BackingField:
     <Statuses>k__BackingField: []
     <EffectInfo>k__BackingField: []

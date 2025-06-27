@@ -6,7 +6,7 @@ using Units;
 
 public class TargetSelector : ITargetSelector
 {
-    public Unit Target { get; private set; }
+    private Unit _target;
 
     private List<Platoon> _platoons = new();
 
@@ -17,13 +17,13 @@ public class TargetSelector : ITargetSelector
     }
 
     public void Remember(Unit unit, TargetMode abilityModelTargetMode) => 
-        Target = unit;
+        _target = unit;
 
     public List<Unit> GetTargets(TargetMode abilityModelTargetMode)
     {
         Platoon targetPlatoon;
 
-        if (_platoons[0].PlatoonType == Target.PlatoonType)
+        if (_platoons[0].PlatoonType == _target.PlatoonType)
             targetPlatoon = _platoons[0];
         else
             targetPlatoon = _platoons[1];
@@ -33,7 +33,7 @@ public class TargetSelector : ITargetSelector
         switch (abilityModelTargetMode)
         {
             case TargetMode.Single:
-                targets.Add(Target);
+                targets.Add(_target);
                break;
             
             case TargetMode.Several:
