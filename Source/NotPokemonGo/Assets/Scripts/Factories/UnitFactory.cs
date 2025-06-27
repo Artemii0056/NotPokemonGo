@@ -20,14 +20,14 @@ namespace Factories
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetProvider _targetProvider;
+        private ITargetSelector _targetSelector;
 
         public UnitFactory(
             IEffectResolver effectResolver, 
             IObjectResolver  objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetProvider targetProvider)
+            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
@@ -35,7 +35,7 @@ namespace Factories
             _abilityProvider = abilityProvider;
             _staticDataService = staticDataService;
             _abilityApplicatorService = abilityApplicatorService;
-            _targetProvider = targetProvider;
+            _targetSelector = targetSelector;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -57,7 +57,7 @@ namespace Factories
                 animationController, 
                 _particleSystemFactory, 
                 _abilityApplicatorService,
-                _targetProvider);
+                _targetSelector);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

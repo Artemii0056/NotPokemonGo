@@ -67,7 +67,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
-            builder.Register<ITargetProvider, TargetProvider>(Lifetime.Singleton);
+            builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

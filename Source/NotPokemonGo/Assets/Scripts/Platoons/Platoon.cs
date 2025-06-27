@@ -11,7 +11,6 @@ namespace Platoons
     public class Platoon
     {
         private readonly List<Unit> _units;
-        private readonly PlatoonType _platoonType;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
@@ -19,18 +18,19 @@ namespace Platoons
         public Platoon(List<Unit> units, PlatoonType platoonType, IAbilityApplicatorService abilityApplicatorService, ISourceProvider sourceProvider, IAbilityProvider abilityProvider)
         {
             _units = units;
-            _platoonType = platoonType;
+            PlatoonType = platoonType;
             _abilityApplicatorService = abilityApplicatorService;
             _sourceProvider = sourceProvider;
             _abilityProvider = abilityProvider;
         }
 
+        public PlatoonType PlatoonType { get; private set; }
         public List<Unit> Units => _units.ToList();
         public bool IsAlive { get; private set; }
 
         public void Attack(List<Unit> targets)
         {
-            if (_platoonType == PlatoonType.Enemies)
+            if (PlatoonType == PlatoonType.Enemies)
             {
                 foreach (Unit unit in _units)
                 {

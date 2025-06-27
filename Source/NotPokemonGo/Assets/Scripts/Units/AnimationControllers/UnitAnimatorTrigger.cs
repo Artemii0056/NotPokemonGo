@@ -15,7 +15,7 @@ namespace Units.AnimationControllers
         private IAbilityProvider _abilityProvider;
         private IParticleSystemFactory _particleSystemFactory;
         private IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetProvider _targetProvider;
+        private ITargetSelector _targetSelector;
         
         private AbilityAnimationControllerBase _controller;
         private Unit _unit;
@@ -25,7 +25,7 @@ namespace Units.AnimationControllers
             IStaticDataService staticDataService, 
             IAbilityProvider abilityProvider, 
             AbilityAnimationControllerBase controller, 
-            IParticleSystemFactory particleSystemFactory, IAbilityApplicatorService abilityApplicatorService, ITargetProvider targetProvider)
+            IParticleSystemFactory particleSystemFactory, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
         {
             _unit = unit;
             _staticDataService = staticDataService;
@@ -33,7 +33,7 @@ namespace Units.AnimationControllers
             _controller = controller;
             _particleSystemFactory = particleSystemFactory;
             _abilityApplicatorService = abilityApplicatorService;
-            _targetProvider = targetProvider;
+            _targetSelector = targetSelector;
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
@@ -80,7 +80,9 @@ namespace Units.AnimationControllers
 
         private void OnAttackStarted()
         {
-            _abilityApplicatorService.Apply(_targetProvider.Unit);
+            _abilityApplicatorService
+                .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
+                    .ToArray());
         }
     }
 }

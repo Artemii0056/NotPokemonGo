@@ -32,7 +32,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private Battlefield _battlefield;
         private AbilitiesPanel _abilitiesPanel;
-        private ITargetProvider _targetProvider;
+        private ITargetSelector _targetSelector;
 
         public BattleLoopState(
             IGameStateMachine gameStateMachine, 
@@ -44,7 +44,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ICoroutineRunner coroutineRunner,
-            IStaticDataService staticDataService, ITargetProvider targetProvider)
+            IStaticDataService staticDataService, ITargetSelector targetSelector)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -56,7 +56,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _abilityProvider = abilityProvider;
             _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
-            _targetProvider = targetProvider;
+            _targetSelector = targetSelector;
         }
 
         public void Enter(BattleLoopPayload payload)
@@ -66,6 +66,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battlefield = payload.Battlefield;
             _abilitiesPanel = payload.AbilitiesPanel;
             _raycaster.UnitSearched += OnUnitSearched;
+            
+            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Platoon2);
         }
         
         public void Update(float deltaTime)
@@ -93,7 +95,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                     
                     AnimationProcessingService animationProcessingService = new AnimationProcessingService();
                     animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
-                    _targetProvider.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
+                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
                     
                     
                     //_abilityApplicatorService.Apply(unit);
