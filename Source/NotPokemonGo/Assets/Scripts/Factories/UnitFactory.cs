@@ -1,14 +1,17 @@
-﻿using Abilities;
+﻿using System;
+using Abilities;
 using Abilities.MV;
 using Animations;
 using Characters;
 using Effects;
 using Services.StaticDataServices;
 using UI;
+using UI.Sliders;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
+using Object = UnityEngine.Object;
 
 namespace Factories
 {
@@ -48,7 +51,7 @@ namespace Factories
             
             unit.Construct(config.Stats, _effectResolver, platoonType);
             
-            AbilityAnimationControllerBase animationController = unit.GetComponentInChildren<AbilityAnimationControllerBase>();
+            AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 
@@ -72,8 +75,10 @@ namespace Factories
         private void InitializeView(Unit unit)
         {
             StatusViewPanel statusViewPanel = unit.GetComponentInChildren<StatusViewPanel>();
-            statusViewPanel.Construct(unit);
+            UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
+            
             _objectResolver.Inject(statusViewPanel);
+            _objectResolver.Inject(slidersView);
         }
     }
 }

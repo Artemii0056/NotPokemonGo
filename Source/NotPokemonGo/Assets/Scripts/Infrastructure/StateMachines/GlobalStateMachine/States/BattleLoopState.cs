@@ -61,8 +61,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         public void Enter(BattleLoopPayload payload)
         {
-            //_battleStateMachine.Enter<InitializeBattleState>();
-            
             _battlefield = payload.Battlefield;
             _abilitiesPanel = payload.AbilitiesPanel;
             _raycaster.UnitSearched += OnUnitSearched;

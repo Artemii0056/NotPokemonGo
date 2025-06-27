@@ -11,7 +11,9 @@ using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States;
 using InputServices;
 using Platoons;
+using Services;
 using Services.AssetManagement;
+using Services.Cameras;
 using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
@@ -68,6 +70,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
             builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
+            
+            builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
