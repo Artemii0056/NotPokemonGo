@@ -12,6 +12,7 @@ namespace Units.AnimationControllers
         public event Action ParticleSystem2Started;
         public event Action ParticleSystem3Started;
         public event Action Attack1Started;
+        public event Action Attack2Started;
 
         public event Action Finished;
 
@@ -40,6 +41,9 @@ namespace Units.AnimationControllers
 
         public void FlagAttack() =>
             Attack1Started?.Invoke();
+        
+        public void FlagAttack2() =>
+            Attack2Started?.Invoke();
 
         public void FlagFinishAnimation()
         {

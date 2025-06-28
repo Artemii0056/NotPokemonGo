@@ -189,8 +189,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300014, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: unitAnimatorController
+      value: 
+      objectReference: {fileID: 6803579719754832547}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitType>k__BackingField
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: AbilityAnimationControllerBase
@@ -404,14 +412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b70d68b511f1439d90908b95e0abb162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 8603479101501124776}
 --- !u!4 &8505503494508357230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2283364625427053730, guid: d37d229f96af2d54293079b223fabe81, type: 3}
-  m_PrefabInstance: {fileID: 7618325141814385356}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8603479101501124776 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2223662153775098468, guid: d37d229f96af2d54293079b223fabe81, type: 3}
   m_PrefabInstance: {fileID: 7618325141814385356}
   m_PrefabAsset: {fileID: 0}

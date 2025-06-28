@@ -51,13 +51,15 @@ namespace Factories
             
             unit.Construct(config.Stats, _effectResolver, platoonType);
             
-            AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
+            UnitAnimatorController controller =unit.unitAnimatorController;
+            
+         //   AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 
                 _staticDataService, 
                 _abilityProvider, 
-                animationController, 
+                controller, 
                 _particleSystemFactory, 
                 _abilityApplicatorService,
                 _targetSelector);
@@ -83,4 +85,5 @@ namespace Factories
             _objectResolver.Inject(slidersView);
         }
     }
+
 }

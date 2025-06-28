@@ -10,7 +10,6 @@ using Statuses;
 using Statuses.Services;
 using Units;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Abilities
 {
@@ -24,9 +23,13 @@ namespace Abilities
         private readonly ISourceProvider _sourceProvider;
         private readonly IAbilityProvider _abilityProvider;
 
-        public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
-            IStatusFactory statusFactory, IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver, ISourceProvider sourceProvider,
+        public AbilityApplicatorService(
+            IArmamentViewFactory armamentViewFactory,
+            IStatusFactory statusFactory, 
+            IEffectResolver effectResolver,
+            ICoroutineRunner coroutineRunner, 
+            IStatusResolver statusResolver, 
+            ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider)
         {
             _armamentViewFactory = armamentViewFactory;
@@ -40,8 +43,7 @@ namespace Abilities
 
         public void Apply(params Unit[] targets)
         {
-            Debug.Log("Applying ability applicator");
-            AbilityModel abilityModel = _abilityProvider.AbilityModel;
+            AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
 
             if (abilityModel == null || abilityModel.IsReady == false)
                 throw new NullReferenceException("AbilityModel is null or not ready");
@@ -70,9 +72,9 @@ namespace Abilities
 
                 ApplyEffectsOnTarget(target, statuses, effects);
 
-                ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
-                effect.transform.position = target.transform.position;
-                effect.Play();
+                // ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
+                // effect.transform.position = target.transform.position;
+                // effect.Play();
             }
         }
 

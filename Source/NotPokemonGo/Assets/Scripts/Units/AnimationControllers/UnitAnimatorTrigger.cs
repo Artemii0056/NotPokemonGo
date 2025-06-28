@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Abilities.MV;
+using Effects;
 using Services.StaticDataServices;
 using UnityEngine;
 
@@ -20,6 +22,8 @@ namespace Units.AnimationControllers
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
         private  List<ParticleSystem> _particles;
+        
+        private List<EffectSetup> _effects;
 
         private int _abilityCount;
 
@@ -38,13 +42,15 @@ namespace Units.AnimationControllers
             _particleSystemFactory = particleSystemFactory;
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
+            _effects = new List<EffectSetup>();
             _particles = new List<ParticleSystem>();
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
             _controller.ParticleSystem3Started += OnParticleSystem3Started;
 
-            _controller.Attack1Started += OnAttackStarted;
+            _controller.Attack1Started += OnAttack1Started;
+            _controller.Attack2Started += OnAttack2Started;
 
             _controller.Finished += OnFinished;
 
@@ -59,7 +65,8 @@ namespace Units.AnimationControllers
             _controller.ParticleSystem2Started -= OnParticleSystem2Started;
             _controller.ParticleSystem3Started -= OnParticleSystem3Started;
 
-            _controller.Attack1Started -= OnAttackStarted;
+            _controller.Attack1Started -= OnAttack1Started;
+            _controller.Attack2Started -= OnAttack2Started;
 
             _controller.Finished -= OnFinished;
         }
@@ -111,8 +118,26 @@ namespace Units.AnimationControllers
             _particles.AddRange(a);
         }
 
-        private void OnAttackStarted()
+        private void OnAttack1Started()
         {
+            AbilityModel ability = _abilityProvider.AbilityModel; // Todo - разделить логику? Передавать и абилку/список абилок?
+            
+            if (ability.CastamentSetup.EffectsSetup.Count > 1)
+            {
+                _effects = ability.CastamentSetup.EffectsSetup;
+            }
+            
+            Debug.Log("OnAttack1Started");
+            
+            _abilityApplicatorService
+                .Apply(_targetSelector.GetTargets(ability.TargetMode)
+                    .ToArray());
+        }
+        
+        private void OnAttack2Started()
+        {
+            Debug.Log("OnAttack2Started");
+
             _abilityApplicatorService
                 .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
                     .ToArray());

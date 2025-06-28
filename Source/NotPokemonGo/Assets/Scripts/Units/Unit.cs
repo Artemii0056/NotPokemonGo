@@ -64,8 +64,12 @@ namespace Units
             ChangeValue(StatType.Health, damage);
         }
 
-        public void ChangeValue(StatType statType, float value) =>
-            _stats[statType].Modify(value);
+        public void ChangeValue(StatType statType, float value)
+        {
+        _stats[statType].Modify(value);
+        Debug.Log(_stats[statType].CurrentValue + ", " + value);
+        }
+
 
         public void AddStatus(Status status)
         {
