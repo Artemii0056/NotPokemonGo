@@ -1,71 +1,45 @@
 using System;
-using System.Collections.Generic;
-using Abilities.MV;
-using Animations;
+using Battlefields;
+using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
-using InputServices;
-using UI.Ability;
-using Units;
+using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class UnitActionState : IPayloadedState<Unit>
+    public class UnitActionState : IPayloadedState<UnitActionPayload>
     {
-        private readonly IRaycaster _raycaster;
-        private readonly ISourceProvider _sourceProvider;
-        private readonly ITargetSelector _targetSelector;
-        private readonly IAbilityProvider _abilityProvider;
-        private readonly AbilityPanelPresenter _abilityPanelPresenter;
+        private readonly IObjectResolver _objectResolver;
+        private UnitActionStrategy _unitActionStrategy;
 
-        public UnitActionState(
-            IRaycaster raycaster,
-            ISourceProvider sourceProvider,
-            ITargetSelector targetSelector,
-            IAbilityProvider abilityProvider,
-            AbilityPanelPresenter abilityPanelPresenter)
+        public UnitActionState(IObjectResolver objectResolver)
         {
-            _raycaster = raycaster;
-            _sourceProvider = sourceProvider;
-            _targetSelector = targetSelector;
-            _abilityProvider = abilityProvider;
-            _abilityPanelPresenter = abilityPanelPresenter;
+            _objectResolver = objectResolver;
         }
         
-        public void Enter(Unit unit)
+        public void Enter(UnitActionPayload payload)
         {
-            _raycaster.UnitSearched += OnUnitSearched;
+            switch (payload.UnitSorce.PlatoonType)
+            {
+                case PlatoonType.Friends:
+                    _unitActionStrategy = new FriendUnitActionStrategy(payload.Battlefield);
+                    break;
+
+                case PlatoonType.Enemies:
+                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            _objectResolver.Inject(_unitActionStrategy);
+
+            _unitActionStrategy.Enable();        
         }
 
         public void Exit()
         {
-            _raycaster.UnitSearched -= OnUnitSearched;
-        }
-        
-        private void OnUnitSearched(Unit unit)
-        {
-            switch (unit.PlatoonType)
-            {
-                case PlatoonType.Friends:
-                    ShowAbilityInfos(unit.AbilityModels);
-                    _sourceProvider.Remember(unit);
-                    //_abilityApplicatorService.RememberSource(unit);
-                    break;
-                
-                case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
-                    AnimationProcessingService animationProcessingService = new AnimationProcessingService();
-                    animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
-                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
-                    break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        
-        private void ShowAbilityInfos(List<AbilityModel> abilityModels)
-        {
-            _abilityPanelPresenter.Enable();
-            _abilityPanelPresenter.FillAbilityView(abilityModels);
+            _unitActionStrategy.Disable();
         }
     }
 }

@@ -1,14 +1,7 @@
-using Battlefields;
 using Characters;
-using Infrastructure.StateMachines.GlobalStateMachine.Payloads;
-using Infrastructure.StateMachines.States;
 using Infrastructure.StateMachines.States.Interfaces;
-using Services.AssetManagement;
 using Services.BattleUnitContainers;
 using Services.StaticDataServices;
-using UI.Ability;
-using VContainer;
-using Object = UnityEngine.Object;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -36,7 +29,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
             Battlefield battlefield = _battlefieldFactory.Create(spawnPositionConfigFirstCommand, spawnPositionConfigSecondCommand);
             
-            _gameStateMachine.Enter<BattleLoopState, BattleLoopPayload>(new BattleLoopPayload(battlefield));
+            _gameStateMachine.Enter<BattleLoopState, Battlefield>(battlefield);
         }
 
         public void Exit()
