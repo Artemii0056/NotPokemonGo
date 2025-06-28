@@ -3,6 +3,7 @@ using Characters.Configs;
 using Infrastructure;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Platoons;
+using Services.BattleUnitContainers;
 using Services.StaticDataServices;
 using Statuses.Services;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace Battlefields
             Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
             Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
 
-            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager, _battleStateMachine);
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
             return battlefield;
         }

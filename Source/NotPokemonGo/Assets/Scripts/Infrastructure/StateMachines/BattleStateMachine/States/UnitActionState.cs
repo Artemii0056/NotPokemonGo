@@ -67,5 +67,5 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _abilityPanelPresenter.Enable();
             _abilityPanelPresenter.FillAbilityView(abilityModels);
         }
-    }    
+    }
 }

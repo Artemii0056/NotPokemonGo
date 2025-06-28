@@ -14,6 +14,7 @@ using InputServices;
 using Platoons;
 using Services;
 using Services.AssetManagement;
+using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.SceneServices;
 using Services.StatesServices;
@@ -85,6 +86,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
             
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
+
+            builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

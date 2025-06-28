@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using Statuses.Services;
@@ -9,20 +8,16 @@ using Units;
 public class Battlefield
 {
     private readonly IStatusManager _statusManager;
-    private readonly IBattleStateMachine _battleStateMachine;
-    private readonly BattleUnitContainer _battleUnitContainer;
 
+    public List<Unit> Units = new List<Unit>();
     public Battlefield(
         Platoon enemyPlatoon, 
         Platoon platoon2, 
-        IStatusManager statusManager,
-        IBattleStateMachine battleStateMachine)
+        IStatusManager statusManager)
     {
         _statusManager = statusManager;
-        _battleStateMachine = battleStateMachine;
         EnemyPlatoon = enemyPlatoon;
         Platoon2 = platoon2;
-        _battleUnitContainer = new BattleUnitContainer();
     }
 
     public Platoon EnemyPlatoon { get; private set; }
@@ -32,24 +27,21 @@ public class Battlefield
     {
         EnemyPlatoon.Enable();
         Platoon2.Enable();
-        EnemyPlatoon.UnitPrepared += OnUnitPrepared;
         Platoon2.UnitPrepared += OnUnitPrepared;
+        EnemyPlatoon.UnitPrepared += OnUnitPrepared;
     }
 
     public void Disable()
     {
         EnemyPlatoon.Disable();
         Platoon2.Disable();
-        EnemyPlatoon.UnitPrepared -= OnUnitPrepared;
         Platoon2.UnitPrepared -= OnUnitPrepared;
+        EnemyPlatoon.UnitPrepared -= OnUnitPrepared;
     }
 
-    private void OnUnitPrepared(Unit unit)
+    private void OnUnitPrepared(Unit obj)
     {
-        _battleUnitContainer.Add(unit);
-
-        Unit sourceUnit = _battleUnitContainer.Give() ?? throw new Exception("BattleUnitContainer is empty");
-        _battleStateMachine.Enter<UnitActionState, Unit>(sourceUnit);
+        Units.Add(obj);
     }
 
     public void Tick(float deltaTime)
@@ -59,25 +51,5 @@ public class Battlefield
 
         _statusManager.Update(deltaTime);
         _statusManager.RemoveInactive();
-    }
-}
-
-class BattleUnitContainer
-{
-    public List<Unit> Units = new List<Unit>();
-
-    public void Add(Unit unit) => 
-        Units.Add(unit);
-
-    public Unit Give()
-    {
-        if (Units.Count > 0)
-        {
-            Unit unit = Units[0];
-            Units.Remove(unit);
-            return unit;
-        }
-
-        return null;
     }
 }
