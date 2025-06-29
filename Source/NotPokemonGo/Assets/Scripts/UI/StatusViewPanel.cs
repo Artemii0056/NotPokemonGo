@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Services.StaticDataServices;
 using Statuses;
+using UI.Sliders;
 using Units;
 using UnityEngine;
 using VContainer;
@@ -11,6 +12,7 @@ namespace UI
     public class StatusViewPanel : MonoBehaviour
     {
         [SerializeField] private List<StatusView> _statusViews;
+        [SerializeField] private UnitSliderView _unitSliderView;
 
         private IStaticDataService _staticDataLoadService;
         private Unit _unit;
