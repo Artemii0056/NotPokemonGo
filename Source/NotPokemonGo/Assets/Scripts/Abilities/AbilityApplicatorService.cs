@@ -43,9 +43,12 @@ namespace Abilities
             Debug.Log("Applying ability applicator");
             AbilityModel abilityModel = _abilityProvider.AbilityModel;
 
-            if (abilityModel == null || abilityModel.IsReady == false)
+            if (abilityModel == null)
                 throw new NullReferenceException("AbilityModel is null or not ready");
 
+            if (abilityModel.IsReady == false)
+                throw new NullReferenceException("AbilityModel is not ready");
+            
             if (abilityModel.HasArmament)
             {
                 ApplyArmament(abilityModel, targets);

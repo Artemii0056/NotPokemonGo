@@ -1,9 +1,11 @@
-﻿using Abilities;
+﻿using System.Linq;
+using Abilities;
 using Abilities.MV;
 using Animations;
 using Characters;
 using Effects;
 using Services.StaticDataServices;
+using Stats;
 using UI;
 using Units;
 using Units.AnimationControllers;
@@ -20,14 +22,16 @@ namespace Factories
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetSelector _targetSelector;
+        private readonly ITargetSelector _targetSelector;
 
         public UnitFactory(
             IEffectResolver effectResolver, 
             IObjectResolver  objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
+            IStaticDataService staticDataService, 
+            IAbilityApplicatorService abilityApplicatorService, 
+            ITargetSelector targetSelector)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
@@ -46,8 +50,6 @@ namespace Factories
             
             unit.transform.SetParent(parentPosition, false);
             
-            unit.Construct(config.Stats, _effectResolver, platoonType);
-            
             UnitAnimatorController animationController = unit.GetComponentInChildren<UnitAnimatorController>();
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
@@ -58,6 +60,8 @@ namespace Factories
                 _particleSystemFactory, 
                 _abilityApplicatorService,
                 _targetSelector);
+            
+            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

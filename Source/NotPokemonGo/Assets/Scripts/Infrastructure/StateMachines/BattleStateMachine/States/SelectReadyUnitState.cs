@@ -2,7 +2,6 @@ using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Units;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
@@ -32,6 +31,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                         unitSorce,
                         batlfield)
                 );
+                
+                batlfield.Units.Clear();
             }
             else
             {

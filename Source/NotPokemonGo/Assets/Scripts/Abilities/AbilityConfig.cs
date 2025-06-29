@@ -21,7 +21,5 @@ namespace Abilities
         [field: SerializeField] public TargetMode TargetMode { get; private set; } // TODO Вот для этого создать доп. класс и тут работать со списком 
         [field: SerializeField] public ArmamentSetup ArmamentSetup{ get; private set; }
         [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; }
-        [field: SerializeField] public ArmamentView Prefab { get; private set; }
-        [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
     }
 }

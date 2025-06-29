@@ -8,8 +8,11 @@ namespace Services.BattleUnitContainers
     {
         private List<Unit> _units = new List<Unit>();
 
-        public void Add(Unit unit) => 
-            _units.Add(unit);
+        public void Add(Unit unit)
+        {
+            if (_units.Contains(unit) == false)
+                _units.Add(unit);
+        }
 
         public Unit Give()
         {

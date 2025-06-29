@@ -21,6 +21,7 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
+        private UnitAnimatorTrigger _unitAnimatorTrigger;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
@@ -28,6 +29,7 @@ namespace Units
         public event Action<Status> StatusRemoved;
 
         public event Action<Unit> Prepared; 
+        public event Action AnimationActionEnded; 
         
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
@@ -43,9 +45,10 @@ namespace Units
         public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
-            PlatoonType platoonType
-        )
+            PlatoonType platoonType, 
+            UnitAnimatorTrigger unitAnimatorTrigger)
         {
+            _unitAnimatorTrigger = unitAnimatorTrigger;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
@@ -55,6 +58,13 @@ namespace Units
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
+
+            _unitAnimatorTrigger.ActionEnded += OnActionEnded;
+        }
+
+        private void OnDestroy()
+        {
+            _unitAnimatorTrigger.ActionEnded -= OnActionEnded;
         }
 
         public float GetStat(StatType statType)
@@ -85,7 +95,7 @@ namespace Units
 
         public void AddAbility(AbilityModel ability) =>
             _abilityModels.Add(ability);
-        
+
         public void Tick(float deltaTime)
         {
             if (_abilityModels.Count > 0)
@@ -99,5 +109,8 @@ namespace Units
             else
                 Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
+
+        private void OnActionEnded() => 
+            AnimationActionEnded?.Invoke();
     }
 }

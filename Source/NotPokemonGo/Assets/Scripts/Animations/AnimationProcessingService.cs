@@ -4,6 +4,7 @@ using Abilities;
 using Abilities.MV;
 using Infrastructure;
 using Units;
+using UnityEngine;
 
 namespace Animations
 {
@@ -19,12 +20,23 @@ namespace Animations
                 { AbilityType.FrostBall, PlayFrostBall },
                 { AbilityType.PoisonBall, PlayPoisonBall },
                 { AbilityType.CastSpell, PlayCastSpell },
-                { AbilityType.DoubleAttack, PlayDoubleAttack }
+                { AbilityType.DoubleAttack, PlayDoubleAttack },
+                // TODO насрано базовой абилкой
+                { AbilityType.BaseAbility, PlayCastSpell },
             };
         }
 
         public void PlayAnimation(Unit source, AbilityModel abilityModel)
         {
+            if (source == null)
+                Debug.LogError("source == null");
+
+            if (abilityModel == null)
+                Debug.LogError("abilityModel == null");
+
+            if (_animationMap == null)
+                Debug.LogError("_animationMap == null");
+            
             if (_animationMap.TryGetValue(abilityModel.AbilityType, out var playAnimation))
             {
                 playAnimation.Invoke(source);

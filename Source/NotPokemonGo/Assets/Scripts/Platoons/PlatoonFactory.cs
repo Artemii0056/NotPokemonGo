@@ -51,7 +51,7 @@ namespace Platoons
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Platoon(units, platoonType, _abilityApplicatorService, _sourceProvider, _abilityProvider);
+            return new Platoon(units, platoonType);
         }
 
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,

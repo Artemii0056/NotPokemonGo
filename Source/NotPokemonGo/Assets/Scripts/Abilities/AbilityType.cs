@@ -7,6 +7,7 @@
         PoisonBall,
         AlcoholBall, 
         CastSpell,
-        DoubleAttack
+        DoubleAttack,
+        BaseAbility
     }
 }

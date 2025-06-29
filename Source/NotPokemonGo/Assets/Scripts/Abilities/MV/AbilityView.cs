@@ -32,13 +32,31 @@ namespace Abilities.MV
         private void Awake() =>
             _defaultImage = GetComponent<Image>();
 
-        private void OnEnable() =>
+        private void OnEnable()
+        {
             _button.onClick.AddListener(OnClick);
+        }
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             _button.onClick.RemoveListener(OnClick);
+        }
 
-        public void Update()
+        private void OnClick()
+        {
+            _abilityProvider.Remember(_abilityModel);
+        }
+
+        public void SetImage(Sprite sprite) =>
+            _icon.sprite = sprite;
+
+        public void SetDefaultImage()
+        {
+            _icon.sprite = _defaultImage.sprite;
+            _abilityModel = null;
+        }
+
+        public void Tick(float deltaTime)
         {
             CooldownImage.gameObject.SetActive(false);
             
@@ -60,23 +78,6 @@ namespace Abilities.MV
             {
                 CooldownImage.gameObject.SetActive(true);
             }
-        }
-
-        private void OnClick()
-        {
-            _abilityProvider.Remember(_abilityModel);
-            
-           // _abilityApplicatorService.Remember(_abilityModel);
-            //_abilityModel.DiscardCurrentTime();
-        }
-
-        public void SetImage(Sprite sprite) =>
-            _icon.sprite = sprite;
-
-        public void SetDefaultImage()
-        {
-            _icon.sprite = _defaultImage.sprite;
-            _abilityModel = null;
         }
     }
 }

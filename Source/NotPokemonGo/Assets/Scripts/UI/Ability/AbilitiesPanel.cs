@@ -21,6 +21,14 @@ namespace UI.Ability
             _staticDataLoadService = staticDataLoadService;
         }
 
+        public void Tick(float deltaTime)
+        {
+            foreach (AbilityView abilityView in _abilitiesView)
+            {
+                abilityView.Tick(deltaTime);
+            }
+        }
+        
         public void SetAbilities(List<AbilityModel> abilityModels)
         {
             for (int i = 0; i < abilityModels.Capacity; i++)

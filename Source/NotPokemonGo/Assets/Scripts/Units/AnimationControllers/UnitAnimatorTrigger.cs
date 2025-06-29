@@ -19,10 +19,12 @@ namespace Units.AnimationControllers
         private Unit _unit;
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
-        private  List<ParticleSystem> _particles;
+        private List<ParticleSystem> _particles;
 
         private int _abilityCount;
-
+ 
+        public event Action ActionEnded;
+        
         public UnitAnimatorTrigger(
             Unit unit,
             IStaticDataService staticDataService,
@@ -127,6 +129,8 @@ namespace Units.AnimationControllers
                 UnityEngine.Object.Destroy(particle.gameObject);
                 _particles.Remove(particle);
             }
+            
+            ActionEnded?.Invoke();
         }
 
         private void InitializeAnchors(Unit unit)
