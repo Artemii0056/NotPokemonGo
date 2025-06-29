@@ -87,7 +87,6 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            Debug.Log("Animation action ended");
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }

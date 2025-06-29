@@ -11,7 +11,7 @@ namespace UI.Ability
         public AbilityPanelPresenter(AbilitiesPanel abilitiesPanel)
         {
             _abilitiesPanel = abilitiesPanel;
-            _abilitiesPanel.gameObject.SetActive(false);
+            Disable();
         }
         
         public void Enable()

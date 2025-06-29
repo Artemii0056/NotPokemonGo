@@ -38,7 +38,8 @@ namespace Battlefields
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
-            AbilityPanelPresenter abilityPanelPresenter)
+            AbilityPanelPresenter abilityPanelPresenter
+            )
         {
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
@@ -81,6 +82,7 @@ namespace Battlefields
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
                     _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
+                    _abilityPanelPresenter.Disable();
                     break;
                 
                 default:
