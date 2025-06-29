@@ -1,7 +1,6 @@
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
-using Services.BattleUnitContainers;
 using Units;
 using UnityEngine;
 
@@ -22,13 +21,22 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         {
             foreach (Unit unit in batlfield.Units) 
                 _battleUnitContainer.Add(unit);
-            
-            _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
-                new UnitActionPayload
-                (
-                    _battleUnitContainer.Give(),
-                    batlfield)
+
+            Unit unitSorce = _battleUnitContainer.Give();
+
+            if (unitSorce != null)
+            {
+                _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
+                    new UnitActionPayload
+                    (
+                        unitSorce,
+                        batlfield)
                 );
+            }
+            else
+            {
+                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(batlfield);
+            }
         }
 
         public void Exit()

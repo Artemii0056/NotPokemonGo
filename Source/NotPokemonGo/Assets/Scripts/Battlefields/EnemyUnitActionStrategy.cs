@@ -26,7 +26,7 @@ namespace Battlefields
         {
             base.Enable();
             Debug.Log("Враг походил");
-            _battleStateMachine.Enter<UpdateBattleTickState>();
+            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
 
         public override void Disable()

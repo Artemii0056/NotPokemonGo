@@ -126,6 +126,14 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<UnitActionState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+                
+                builder.Register<UpdateBattleTickState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+
+                builder.Register<SelectReadyUnitState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
             }
         }
     }
