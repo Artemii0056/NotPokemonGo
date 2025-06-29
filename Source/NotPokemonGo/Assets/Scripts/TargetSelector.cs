@@ -41,7 +41,7 @@ public class TargetSelector : ITargetSelector
                 break;
             
             case TargetMode.All:
-                targets.AddRange(targetPlatoon.Units);
+                targets.AddRange(targetPlatoon.Heroes);
                 break;
             
             default:

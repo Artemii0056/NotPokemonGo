@@ -23,8 +23,11 @@ namespace Platoons
             _sourceProvider = sourceProvider;
         }
 
-        public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
-            PlatoonType platoonType, UnitConfig[] unitConfig)
+        public Platoon Create(
+            SpawnPositionConfig spawnPositionConfig,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            UnitConfig[] unitConfig)
         {
             List<Unit> units = new List<Unit>();
 
@@ -51,11 +54,16 @@ namespace Platoons
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Platoon(units, platoonType, _abilityApplicatorService, _sourceProvider, _abilityProvider);
+            return new Platoon(units, platoonType);
         }
 
-        private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
-            SpawnPositionConfig spawnPositionConfig, UnitConfig[] unitConfig, int unitCount)
+        private void FillUnits(
+            List<Unit> units,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            SpawnPositionConfig spawnPositionConfig,
+            UnitConfig[] unitConfig,
+            int unitCount)
         {
             SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
             

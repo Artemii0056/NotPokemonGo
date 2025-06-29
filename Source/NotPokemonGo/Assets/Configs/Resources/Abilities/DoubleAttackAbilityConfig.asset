@@ -20,6 +20,31 @@ MonoBehaviour:
   <Cost>k__BackingField: 0
   <Cooldown>k__BackingField: 0
   <TargetMode>k__BackingField: 0
+  <Phases>k__BackingField:
+  - ArmamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField: []
+      <ParticleSystem>k__BackingField: {fileID: 0}
+      <ArmamentView>k__BackingField: {fileID: 0}
+      <MoveSpeed>k__BackingField: 0
+    CastamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField:
+      - Type: 1
+        Value: 20
+      <ParticleSystem>k__BackingField: {fileID: 0}
+  - ArmamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField: []
+      <ParticleSystem>k__BackingField: {fileID: 0}
+      <ArmamentView>k__BackingField: {fileID: 0}
+      <MoveSpeed>k__BackingField: 0
+    CastamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField:
+      - Type: 1
+        Value: 50
+      <ParticleSystem>k__BackingField: {fileID: 0}
   <ArmamentSetup>k__BackingField:
     <Statuses>k__BackingField: []
     <EffectInfo>k__BackingField: []

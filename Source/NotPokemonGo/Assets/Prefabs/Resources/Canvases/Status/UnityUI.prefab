@@ -99,6 +99,7 @@ MonoBehaviour:
   - {fileID: 6735234400602276118}
   - {fileID: 6853091357956726872}
   - {fileID: 8356925160513812061}
+  _unitSliderView: {fileID: 6021144396607824338}
 --- !u!114 &6851402878353076452
 MonoBehaviour:
   m_ObjectHideFlags: 0

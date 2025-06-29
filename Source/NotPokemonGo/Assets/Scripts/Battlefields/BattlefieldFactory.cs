@@ -1,7 +1,9 @@
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using Infrastructure.StateMachines.BattleStateMachine;
 using Platoons;
+using Services.BattleUnitContainers;
 using Services.StaticDataServices;
 using Statuses.Services;
 using UnityEngine;
@@ -10,13 +12,19 @@ namespace Battlefields
 {
     public class BattlefieldFactory : IBattlefieldFactory
     {
-        private IPlatoonFactory _platoonFactory;
-        private IStaticDataService _staticDataService;
-        private IStatusManager _statusManager;
+        private readonly IPlatoonFactory _platoonFactory;
+        private readonly IStaticDataService _staticDataService;
+        private readonly IStatusManager _statusManager;
+        private readonly IBattleStateMachine _battleStateMachine;
 
-        public BattlefieldFactory(IPlatoonFactory platoonFactory, IStaticDataService  staticDataService, IStatusManager statusManager)
+        public BattlefieldFactory(
+            IPlatoonFactory platoonFactory,
+            IStaticDataService  staticDataService,
+            IStatusManager statusManager,
+            IBattleStateMachine battleStateMachine)
         {
             _statusManager = statusManager;
+            _battleStateMachine = battleStateMachine;
             _staticDataService = staticDataService;
             _platoonFactory = platoonFactory;
         }
@@ -36,13 +44,20 @@ namespace Battlefields
             platoonPosition1.transform.SetParent(battlefieldPosition.transform);
             platoonPosition2.transform.SetParent(battlefieldPosition.transform);
 
-            UnitConfig unitConfigFirst = _staticDataService.GetUnitConfig(UnitType.Mage);
-            UnitConfig unitConfigSecond = _staticDataService.GetUnitConfig(UnitType.Swordsman);
+            UnitConfig[] unitConfigFirst = new []
+            {
+                _staticDataService.GetUnitConfig(UnitType.Mage),
+                _staticDataService.GetUnitConfig(UnitType.Mage)
+            };
 
-            UnitConfig[] configs = new[] { unitConfigFirst, unitConfigSecond };
+            UnitConfig[] unitConfigSecond = new []
+            {
+                _staticDataService.GetUnitConfig(UnitType.Mage),
+                _staticDataService.GetUnitConfig(UnitType.Swordsman)
+            };
             
-            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, configs);
-            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, configs);
+            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
+            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             

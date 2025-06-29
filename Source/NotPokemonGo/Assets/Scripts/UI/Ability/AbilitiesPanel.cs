@@ -12,20 +12,28 @@ namespace UI.Ability
         [SerializeField] private List<AbilityView> _abilitiesView;
 
         private IStaticDataService _staticDataLoadService;
-        private IAbilityProvider _abilityProvider;
+        private IObjectResolver _objectResolver;
 
         [Inject]
-        public void Initialize(IStaticDataService staticDataLoadService, IAbilityProvider abilityProvider)
+        public void Initialize(IStaticDataService staticDataLoadService, IObjectResolver objectResolver)
         {
+            _objectResolver = objectResolver;
             _staticDataLoadService = staticDataLoadService;
-            _abilityProvider = abilityProvider;
         }
 
+        public void Tick(float deltaTime)
+        {
+            foreach (AbilityView abilityView in _abilitiesView)
+            {
+                abilityView.Tick(deltaTime);
+            }
+        }
+        
         public void SetAbilities(List<AbilityModel> abilityModels)
         {
             for (int i = 0; i < abilityModels.Capacity; i++)
             {
-                _abilitiesView[i].Initialize(abilityModels[i]);
+                _abilitiesView[i].Construct(abilityModels[i]);
 
                 AbilityConfig config = _staticDataLoadService.GetAbilityConfig(abilityModels[i].AbilityType);
 
@@ -36,7 +44,7 @@ namespace UI.Ability
                 _abilitiesView[i].SetDefaultImage();
 
             foreach (AbilityView view in _abilitiesView) 
-                view.InitService(_abilityProvider);
+                _objectResolver.Inject(view);
         }
     }
 }

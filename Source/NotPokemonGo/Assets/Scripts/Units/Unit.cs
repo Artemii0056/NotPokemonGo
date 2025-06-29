@@ -23,13 +23,19 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
+        private UnitAnimatorTrigger _unitAnimatorTrigger;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
+
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
+        public event Action<Unit> Prepared; 
+        public event Action AnimationActionEnded; 
+        
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
+        
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
@@ -41,9 +47,10 @@ namespace Units
         public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
-            PlatoonType platoonType
-        )
+            PlatoonType platoonType, 
+            UnitAnimatorTrigger unitAnimatorTrigger)
         {
+            _unitAnimatorTrigger = unitAnimatorTrigger;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
@@ -53,6 +60,13 @@ namespace Units
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
+
+            _unitAnimatorTrigger.ActionEnded += OnActionEnded;
+        }
+
+        private void OnDestroy()
+        {
+            _unitAnimatorTrigger.ActionEnded -= OnActionEnded;
         }
 
         public float GetStat(StatType statType)
@@ -95,7 +109,13 @@ namespace Units
                     model.UpdateTime(deltaTime);
             }
 
-            Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
+            if (Step.IsReadyToAct)
+                Prepared?.Invoke(this);
+            else
+                Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
+
+        private void OnActionEnded() => 
+            AnimationActionEnded?.Invoke();
     }
 }

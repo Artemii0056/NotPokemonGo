@@ -48,9 +48,12 @@ namespace Abilities
         {
             AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
 
-            if (abilityModel == null || abilityModel.IsReady == false)
+            if (abilityModel == null)
                 throw new NullReferenceException("AbilityModel is null or not ready");
 
+            if (abilityModel.IsReady == false)
+                throw new NullReferenceException("AbilityModel is not ready");
+            
             if (abilityModel.HasArmament)
             {
                 ApplyArmament(abilityModel, targets);
@@ -153,7 +156,10 @@ namespace Abilities
                 _statusResolver.Resolve(status, target);
 
             foreach (var effectInfo in effects)
+            {
+                
                 target.ReceiveDamage(effectInfo);
+            }
         }
     }
 }

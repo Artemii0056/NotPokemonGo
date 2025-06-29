@@ -9,5 +9,6 @@ namespace Stats
         ArmorChance = 5,
         Damage = 6,
         Agility = 7,
+        AgilitySpeed = 8
     }
 }

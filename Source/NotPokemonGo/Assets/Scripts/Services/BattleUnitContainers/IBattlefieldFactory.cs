@@ -1,6 +1,6 @@
 using Characters;
 
-namespace Battlefields
+namespace Services.BattleUnitContainers
 {
     public interface IBattlefieldFactory
     {

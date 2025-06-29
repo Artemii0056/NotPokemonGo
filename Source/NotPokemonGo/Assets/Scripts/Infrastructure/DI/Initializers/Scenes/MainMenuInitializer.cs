@@ -23,10 +23,5 @@ namespace Infrastructure.DI.Initializers.Scenes
             _cameraProvider.Camera = Camera.main;
             _spawnPositionPresenter.Enable();
         }
-
-        private void OnDestroy()
-        {
-            _spawnPositionPresenter.Disable();
-        }
     }
 }

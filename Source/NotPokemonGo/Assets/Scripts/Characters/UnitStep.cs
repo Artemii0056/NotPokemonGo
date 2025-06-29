@@ -1,4 +1,6 @@
-﻿namespace Characters
+﻿using System;
+
+namespace Characters
 {
     public class UnitStep
     {
@@ -13,10 +15,18 @@
 
         public bool IsReadyToAct => CurrentValue >= MaxValue;
 
+        public event Action Fulled; 
+        
         public void IncreaseCurrentValue(float value)
         {
             if (value > 0)
                 CurrentValue += value;
+
+            if (CurrentValue >= MaxValue)
+            {
+                CurrentValue = MaxValue;
+                Fulled?.Invoke();
+            }
         }
 
         public void DecreaseCurrentValue(float value)
