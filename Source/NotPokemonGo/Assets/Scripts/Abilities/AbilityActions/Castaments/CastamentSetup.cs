@@ -18,7 +18,7 @@ namespace Abilities.AbilityActions.Castaments
         public List<StatusSetup> StatusesSetup => Statuses.ToList();
         public List<EffectSetup> EffectsSetup => EffectInfo.ToList();
         
-        public bool IsActive => StatusesSetup.Any() || EffectsSetup.Any();
+        public bool HasSetupData => StatusesSetup.Any() || EffectsSetup.Any();
         //[field: SerializeField] public CastamentView ArmamentView { get; private set; }
     }
 }
