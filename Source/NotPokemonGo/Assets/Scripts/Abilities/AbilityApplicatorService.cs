@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities.AbilityActions.Armaments;
+using Abilities.AbilityActions.Castaments;
 using Abilities.MV;
 using Effects;
 using Factories;
@@ -10,7 +12,6 @@ using Statuses;
 using Statuses.Services;
 using Units;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Abilities
 {
@@ -24,9 +25,13 @@ namespace Abilities
         private readonly ISourceProvider _sourceProvider;
         private readonly IAbilityProvider _abilityProvider;
 
-        public AbilityApplicatorService(IArmamentViewFactory armamentViewFactory,
-            IStatusFactory statusFactory, IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner, IStatusResolver statusResolver, ISourceProvider sourceProvider,
+        public AbilityApplicatorService(
+            IArmamentViewFactory armamentViewFactory,
+            IStatusFactory statusFactory, 
+            IEffectResolver effectResolver,
+            ICoroutineRunner coroutineRunner, 
+            IStatusResolver statusResolver, 
+            ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider)
         {
             _armamentViewFactory = armamentViewFactory;
@@ -40,8 +45,7 @@ namespace Abilities
 
         public void Apply(params Unit[] targets)
         {
-            Debug.Log("Applying ability applicator");
-            AbilityModel abilityModel = _abilityProvider.AbilityModel;
+            AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
 
             if (abilityModel == null)
                 throw new NullReferenceException("AbilityModel is null or not ready");
@@ -64,6 +68,36 @@ namespace Abilities
             //TODO Дискарднуть абидити панел
         }
 
+        public void Apply(CastamentSetup setup, params Unit[] targets)
+        {
+            foreach (var target in targets)
+            {
+                List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
+                List<Status> statuses = CreateStatuses(setup.Statuses, target);
+
+                ApplyEffectsOnTarget(target, statuses, effects);
+
+                // ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
+                // effect.transform.position = target.transform.position;
+                // effect.Play();
+            }
+        }
+        
+        public void Apply(ArmamentSetup setup, params Unit[] targets)
+        {
+            foreach (var target in targets)
+            {
+                List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
+                List<Status> statuses = CreateStatuses(setup.Statuses, target);
+
+                ArmamentView armamentView =
+                    _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
+                        setup.ArmamentView, target);
+
+                _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
+            }
+        }
+
         private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)
         {
             foreach (var target in targets)
@@ -73,9 +107,9 @@ namespace Abilities
 
                 ApplyEffectsOnTarget(target, statuses, effects);
 
-                ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
-                effect.transform.position = target.transform.position;
-                effect.Play();
+                // ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
+                // effect.transform.position = target.transform.position;
+                // effect.Play();
             }
         }
 

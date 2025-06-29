@@ -1,4 +1,5 @@
-﻿using Abilities.AbilityActions.Armaments;
+﻿using System.Collections.Generic;
+using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
 
 namespace Abilities.MV
@@ -15,16 +16,20 @@ namespace Abilities.MV
 
             Cost = config.Cost;
             Cooldown = config.Cooldown;
+
+            Phases = config.Phases;
         }
 
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }
         
+        public List<AbilityPhase> Phases { get; private set; }
+        
         public ArmamentSetup ArmamentSetup { get; private set; }
         public CastamentSetup CastamentSetup { get; private set; }
         
         public bool HasArmament => ArmamentSetup.HasSetupData;
-        public bool HasCastament => CastamentSetup.IsActive;
+        public bool HasCastament => CastamentSetup.HasSetupData;
 
         public float Cost { get; private set; }
         public float CurrentTime { get; private set; } = 0;

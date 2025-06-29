@@ -1,16 +1,17 @@
-﻿using System.Linq;
+﻿using System;
 using Abilities;
 using Abilities.MV;
 using Animations;
 using Characters;
 using Effects;
 using Services.StaticDataServices;
-using Stats;
 using UI;
+using UI.Sliders;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
+using Object = UnityEngine.Object;
 
 namespace Factories
 {
@@ -22,16 +23,14 @@ namespace Factories
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
-        private readonly ITargetSelector _targetSelector;
+        private ITargetSelector _targetSelector;
 
         public UnitFactory(
             IEffectResolver effectResolver, 
             IObjectResolver  objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService, 
-            IAbilityApplicatorService abilityApplicatorService, 
-            ITargetSelector targetSelector)
+            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
@@ -50,18 +49,20 @@ namespace Factories
             
             unit.transform.SetParent(parentPosition, false);
             
-            UnitAnimatorController animationController = unit.GetComponentInChildren<UnitAnimatorController>();
+            unit.Construct(config.Stats, _effectResolver, platoonType);
+            
+            UnitAnimatorController controller =unit.unitAnimatorController;
+            
+         //   AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 
                 _staticDataService, 
                 _abilityProvider, 
-                animationController, 
+                controller, 
                 _particleSystemFactory, 
                 _abilityApplicatorService,
                 _targetSelector);
-            
-            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
@@ -76,8 +77,13 @@ namespace Factories
         private void InitializeView(Unit unit)
         {
             StatusViewPanel statusViewPanel = unit.GetComponentInChildren<StatusViewPanel>();
+            UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
+            
             statusViewPanel.Construct(unit);
+
             _objectResolver.Inject(statusViewPanel);
+            _objectResolver.Inject(slidersView);
         }
     }
+
 }

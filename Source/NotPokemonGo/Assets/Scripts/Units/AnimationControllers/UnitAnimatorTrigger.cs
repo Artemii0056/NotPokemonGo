@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Abilities.MV;
+using Effects;
+using Services.AbilityServices;
 using Services.StaticDataServices;
 using UnityEngine;
 
@@ -14,23 +17,24 @@ namespace Units.AnimationControllers
         private IParticleSystemFactory _particleSystemFactory;
         private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
+        
+        private AbilityPhaseService _abilityPhaseService;
 
         private UnitAnimatorController _controller;
         private Unit _unit;
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
-        private List<ParticleSystem> _particles;
-
-        private int _abilityCount;
- 
-        public event Action ActionEnded;
+        private  List<ParticleSystem> _particles;
         
+        private List<EffectSetup> _effects;
+
         public UnitAnimatorTrigger(
             Unit unit,
             IStaticDataService staticDataService,
             IAbilityProvider abilityProvider,
             UnitAnimatorController controller,
-            IParticleSystemFactory particleSystemFactory, IAbilityApplicatorService abilityApplicatorService,
+            IParticleSystemFactory particleSystemFactory, 
+            IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector)
         {
             _unit = unit;
@@ -40,17 +44,20 @@ namespace Units.AnimationControllers
             _particleSystemFactory = particleSystemFactory;
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
+            _effects = new List<EffectSetup>();
             _particles = new List<ParticleSystem>();
+
+            _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector);
+            _abilityPhaseService.Initialize(_abilityProvider.AbilityModel);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
             _controller.ParticleSystem3Started += OnParticleSystem3Started;
 
-            _controller.Attack1Started += OnAttackStarted;
+            _controller.Attack1Started += OnAttack1Started;
+            _controller.Attack2Started += OnAttack2Started;
 
             _controller.Finished += OnFinished;
-
-            _abilityCount = 0;
 
             InitializeAnchors(_unit);
         }
@@ -61,7 +68,8 @@ namespace Units.AnimationControllers
             _controller.ParticleSystem2Started -= OnParticleSystem2Started;
             _controller.ParticleSystem3Started -= OnParticleSystem3Started;
 
-            _controller.Attack1Started -= OnAttackStarted;
+            _controller.Attack1Started -= OnAttack1Started;
+            _controller.Attack2Started -= OnAttack2Started;
 
             _controller.Finished -= OnFinished;
         }
@@ -113,24 +121,44 @@ namespace Units.AnimationControllers
             _particles.AddRange(a);
         }
 
-        private void OnAttackStarted()
+        private void OnAttack1Started()
         {
-            _abilityApplicatorService
-                .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
-                    .ToArray());
+            _abilityPhaseService.Initialize(_abilityProvider.AbilityModel);
+            
+            // AbilityModel ability = _abilityProvider.AbilityModel; // Todo - разделить логику? Передавать и абилку/список абилок?
+            //
+            // if (ability.CastamentSetup.EffectsSetup.Count > 1)
+            // {
+            //     _effects = ability.CastamentSetup.EffectsSetup;
+            // }
+            
+            Debug.Log("OnAttack1Started");
+            
+            _abilityPhaseService.OnNextTrigger();
+            
+            // _abilityApplicatorService
+            //     .Apply(_targetSelector.GetTargets(ability.TargetMode)
+            //         .ToArray());
+        }
+        
+        private void OnAttack2Started()
+        {
+            Debug.Log("OnAttack2Started");
+            
+            _abilityPhaseService.OnNextTrigger();
+
+            // _abilityApplicatorService
+            //     .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
+            //         .ToArray());
         }
 
         private void OnFinished()
         {
-            _abilityCount = 0;
-
             foreach (var particle in _particles.ToList())
             {
                 UnityEngine.Object.Destroy(particle.gameObject);
                 _particles.Remove(particle);
             }
-            
-            ActionEnded?.Invoke();
         }
 
         private void InitializeAnchors(Unit unit)
@@ -146,4 +174,5 @@ namespace Units.AnimationControllers
             }
         }
     }
+
 }
