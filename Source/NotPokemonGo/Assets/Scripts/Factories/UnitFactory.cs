@@ -1,7 +1,5 @@
-﻿using System;
-using Abilities;
+﻿using Abilities;
 using Abilities.MV;
-using Animations;
 using Characters;
 using Effects;
 using Services.StaticDataServices;
@@ -52,8 +50,6 @@ namespace Factories
             unit.Construct(config.Stats, _effectResolver, platoonType);
             
             UnitAnimatorController controller =unit.unitAnimatorController;
-            
-         //   AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 

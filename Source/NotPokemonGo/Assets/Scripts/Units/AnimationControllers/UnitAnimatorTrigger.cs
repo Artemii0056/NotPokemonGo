@@ -85,6 +85,7 @@ namespace Units.AnimationControllers
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
+                Debug.Log("111");
                 var point = anchor.Transforms[0];
 
                 List<ParticleSystem> a =_particleSystemFactory.Create(SearchAbility().StartAnimationParticles, point,
@@ -124,13 +125,6 @@ namespace Units.AnimationControllers
         private void OnAttack1Started()
         {
             _abilityPhaseService.Initialize(_abilityProvider.AbilityModel);
-            
-            // AbilityModel ability = _abilityProvider.AbilityModel; // Todo - разделить логику? Передавать и абилку/список абилок?
-            //
-            // if (ability.CastamentSetup.EffectsSetup.Count > 1)
-            // {
-            //     _effects = ability.CastamentSetup.EffectsSetup;
-            // }
             
             Debug.Log("OnAttack1Started");
             

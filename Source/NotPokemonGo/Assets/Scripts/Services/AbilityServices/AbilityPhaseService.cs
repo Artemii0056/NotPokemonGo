@@ -31,8 +31,8 @@ namespace Services.AbilityServices
             AbilityPhase phase = _currentAbility.Phases[_currentPhaseIndex];
             
             if (phase.CastamentSetup.HasSetupData)
-                _abilityApplicatorService.Apply(phase.CastamentSetup, _targetSelector.GetTargets(_currentAbility.TargetMode).ToArray()); // Тут таргет мод должен быть у фазы 
-
+                _abilityApplicatorService.Apply(phase.CastamentSetup, _targetSelector.GetTargets(_currentAbility.TargetMode).ToArray()); 
+            
             if (phase.ArmamentSetup.HasSetupData)
                 _abilityApplicatorService.Apply(phase.ArmamentSetup, _targetSelector.GetTargets(_currentAbility.TargetMode).ToArray());
 

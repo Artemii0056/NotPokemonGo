@@ -6,6 +6,6 @@ namespace Platoons
     public interface IPlatoonFactory
     {
         Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
-            PlatoonType enemies, UnitConfig unitConfig);
+            PlatoonType enemies, UnitConfig[] unitConfig);
     }
 }

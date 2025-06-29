@@ -24,7 +24,7 @@ namespace Platoons
         }
 
         public Platoon Create(SpawnPositionConfig spawnPositionConfig, Transform platoonPosition,
-            PlatoonType platoonType, UnitConfig unitConfig)
+            PlatoonType platoonType, UnitConfig[] unitConfig)
         {
             List<Unit> units = new List<Unit>();
 
@@ -55,7 +55,7 @@ namespace Platoons
         }
 
         private void FillUnits(List<Unit> units, Transform platoonPosition, PlatoonType platoonType,
-            SpawnPositionConfig spawnPositionConfig, UnitConfig unitConfig, int unitCount)
+            SpawnPositionConfig spawnPositionConfig, UnitConfig[] unitConfig, int unitCount)
         {
             SpawnPoint[] unitPosition = spawnPositionConfig.PositionContainer.GetComponentsInChildren<SpawnPoint>();
             
@@ -63,7 +63,7 @@ namespace Platoons
             {
                 if (i < unitPosition.Length)
                 {
-                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, unitConfig, platoonType));
+                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, unitConfig[i], platoonType));
                 }
             }
         }

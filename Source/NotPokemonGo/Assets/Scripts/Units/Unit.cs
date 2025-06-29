@@ -72,7 +72,6 @@ namespace Units
             Debug.Log(_stats[statType].CurrentValue + ", " + value);
         }
 
-
         public void AddStatus(Status status)
         {
             StatusAdded?.Invoke(status);

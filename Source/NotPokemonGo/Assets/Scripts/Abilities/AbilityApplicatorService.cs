@@ -12,6 +12,7 @@ using Statuses;
 using Statuses.Services;
 using Units;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Abilities
 {
@@ -43,7 +44,7 @@ namespace Abilities
             _abilityProvider = abilityProvider;
         }
 
-        public void Apply(params Unit[] targets)
+        public void Apply(params Unit[] targets) //TODO Удалить 
         {
             AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
 
@@ -73,10 +74,13 @@ namespace Abilities
                 List<Status> statuses = CreateStatuses(setup.Statuses, target);
 
                 ApplyEffectsOnTarget(target, statuses, effects);
-
-                // ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
-                // effect.transform.position = target.transform.position;
-                // effect.Play();
+                
+                if (setup.ParticleSystem != null)
+                {
+                    ParticleSystem effect = Object.Instantiate(setup.ParticleSystem);
+                    effect.transform.position = target.transform.position;
+                    effect.Play();
+                }
             }
         }
         
@@ -104,9 +108,12 @@ namespace Abilities
 
                 ApplyEffectsOnTarget(target, statuses, effects);
 
-                // ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
-                // effect.transform.position = target.transform.position;
-                // effect.Play();
+                if (abilityModel.CastamentSetup.ParticleSystem != null)
+                {
+                    ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
+                    effect.transform.position = target.transform.position;
+                    effect.Play();
+                }
             }
         }
 

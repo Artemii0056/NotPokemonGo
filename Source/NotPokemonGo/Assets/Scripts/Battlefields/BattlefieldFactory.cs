@@ -38,9 +38,11 @@ namespace Battlefields
 
             UnitConfig unitConfigFirst = _staticDataService.GetUnitConfig(UnitType.Mage);
             UnitConfig unitConfigSecond = _staticDataService.GetUnitConfig(UnitType.Swordsman);
+
+            UnitConfig[] configs = new[] { unitConfigFirst, unitConfigSecond };
             
-            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, unitConfigFirst);
-            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, unitConfigSecond);
+            Platoon platoon1 = _platoonFactory.Create(spawnPositionConfigFirstCommand, platoonPosition1.transform, PlatoonType.Enemies, configs);
+            Platoon platoon2 = _platoonFactory.Create(spawnPositionConfigSecondCommand, platoonPosition2.transform, PlatoonType.Friends, configs);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
