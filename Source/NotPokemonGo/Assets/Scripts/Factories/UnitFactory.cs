@@ -49,11 +49,8 @@ namespace Factories
             
             unit.transform.SetParent(parentPosition, false);
             
-            unit.Construct(config.Stats, _effectResolver, platoonType);
             
             UnitAnimatorController controller =unit.unitAnimatorController;
-            
-         //   AbilityAnimationControllerBase animationController = unit.AbilityAnimationControllerBase;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 
@@ -63,6 +60,8 @@ namespace Factories
                 _particleSystemFactory, 
                 _abilityApplicatorService,
                 _targetSelector);
+            
+            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

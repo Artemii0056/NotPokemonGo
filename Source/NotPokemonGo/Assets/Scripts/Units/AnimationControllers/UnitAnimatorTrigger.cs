@@ -25,6 +25,8 @@ namespace Units.AnimationControllers
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
         private  List<ParticleSystem> _particles;
+
+        public event Action ActionEnded;
         
         private List<EffectSetup> _effects;
 
@@ -159,6 +161,8 @@ namespace Units.AnimationControllers
                 UnityEngine.Object.Destroy(particle.gameObject);
                 _particles.Remove(particle);
             }
+            
+            ActionEnded?.Invoke();
         }
 
         private void InitializeAnchors(Unit unit)
@@ -173,6 +177,7 @@ namespace Units.AnimationControllers
                 }
             }
         }
+
     }
 
 }

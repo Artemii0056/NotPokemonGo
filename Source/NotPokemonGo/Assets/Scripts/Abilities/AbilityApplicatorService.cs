@@ -149,7 +149,10 @@ namespace Abilities
                 _statusResolver.Resolve(status, target);
 
             foreach (var effectInfo in effects)
+            {
+                
                 target.ReceiveDamage(effectInfo);
+            }
         }
     }
 }

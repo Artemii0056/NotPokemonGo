@@ -1,5 +1,6 @@
 ﻿using Abilities;
 using Abilities.MV;
+using UnityEngine;
 
 namespace Services.AbilityServices
 {
@@ -25,6 +26,8 @@ namespace Services.AbilityServices
 
         public void OnNextTrigger()
         {
+            Debug.Log(_currentAbility == null ? "абилка налл" : "ea залупа");
+            
             if (_currentAbility == null || _currentPhaseIndex >= _currentAbility.Phases.Count)
                 return;
 
