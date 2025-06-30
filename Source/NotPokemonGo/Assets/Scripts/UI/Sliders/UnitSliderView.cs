@@ -22,7 +22,6 @@ namespace UI.Sliders
         {
             _cameraProvider = cameraProvider;
         }
-        
         private void LateUpdate()
         {
             if (_cameraProvider == null)
@@ -32,6 +31,20 @@ namespace UI.Sliders
             LookTowardCamera(_agilitySliderView.transform);
         }
 
+        public void ChangeAgilityViewSlider(float currentValue, float maxValue)
+        {
+            _agilitySliderView.ChangeFilling(currentValue, maxValue);
+        } 
+
+        private void LookTowardCamera(Transform source)
+        {
+            source.LookAt(source.position + _cameraProvider.Camera.transform.rotation * Vector3.forward,
+                _cameraProvider.Camera.transform.rotation * Vector3.up);
+        }
+
+        /// <summary>
+        /// настройка офсетов для объекта. Мб пригодится
+        /// </summary>
         private void MoveCloserToCamera()
         {
             Transform parent = transform.parent;
@@ -39,12 +52,6 @@ namespace UI.Sliders
             Vector3 directionToCamera = _cameraProvider.Camera.transform.position - parent.position;
             transform.position = parent.position + directionToCamera.normalized * Offset;
             transform.position += Vector3.up * HeightOffset;
-        }
-
-        private void LookTowardCamera(Transform source)
-        {
-            source.LookAt(source.position + _cameraProvider.Camera.transform.rotation * Vector3.forward,
-                _cameraProvider.Camera.transform.rotation * Vector3.up);
         }
     }
 }

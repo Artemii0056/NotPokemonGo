@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Characters;
 using Services.StaticDataServices;
 using Statuses;
 using UI.Sliders;
@@ -9,7 +10,7 @@ using VContainer;
 
 namespace UI
 {
-    public class StatusViewPanel : MonoBehaviour
+    public class UnitViewPanel : MonoBehaviour
     {
         [SerializeField] private List<StatusView> _statusViews;
         [SerializeField] private UnitSliderView _unitSliderView;
@@ -22,18 +23,25 @@ namespace UI
             _unit = unit;
             _unit.StatusAdded += OnStatusAdded;
             _unit.StatusRemoved += OnStatusRemoved;
+            _unit.Step.CurrentValueChanged += OnUnitAgilityChanged;
         }
-        
+
         [Inject]
         public void Initialize(IStaticDataService staticDataLoadService)
         {
             _staticDataLoadService = staticDataLoadService;
         }
-        
+
         private void OnDestroy()
         {
             _unit.StatusAdded -= OnStatusAdded;
             _unit.StatusRemoved -= OnStatusRemoved;
+            _unit.Step.CurrentValueChanged -= OnUnitAgilityChanged;
+        }
+
+        private void OnUnitAgilityChanged(UnitStep unitStep)
+        {
+            _unitSliderView.ChangeAgilityViewSlider(unitStep.CurrentValue, unitStep.MaxValue);
         }
 
         private void OnStatusAdded(Status status)

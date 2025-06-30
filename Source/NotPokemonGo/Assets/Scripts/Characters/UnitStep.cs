@@ -16,26 +16,35 @@ namespace Characters
         public bool IsReadyToAct => CurrentValue >= MaxValue;
 
         public event Action Fulled; 
+        public event Action<UnitStep> CurrentValueChanged; 
         
         public void IncreaseCurrentValue(float value)
         {
             if (value > 0)
-                CurrentValue += value;
-
-            if (CurrentValue >= MaxValue)
             {
-                CurrentValue = MaxValue;
-                Fulled?.Invoke();
+                CurrentValue += value;
+             
+                if (CurrentValue >= MaxValue)
+                {
+                    CurrentValue = MaxValue;
+                    Fulled?.Invoke();
+                }
+
+                CurrentValueChanged?.Invoke(this);
             }
         }
 
         public void DecreaseCurrentValue(float value)
         {
             if (value > 0)
+            {
                 CurrentValue -= value;
-            
-            if (CurrentValue < 0)
-                ResetCurrentValue();
+             
+                if (CurrentValue < 0)
+                    ResetCurrentValue();
+                
+                CurrentValueChanged?.Invoke(this);
+            }
         }
 
         public void ChangeMaxValue(float value)

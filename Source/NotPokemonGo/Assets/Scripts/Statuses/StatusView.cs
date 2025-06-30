@@ -31,27 +31,27 @@ namespace Statuses
             transform.gameObject.SetActive(false);
         }
 
-        private void Update()
-        {
-            if (_status == null)
-            {
-                _icon.gameObject.SetActive(false);
-                return;
-            }
-
-            if (_status.TargetTime <= 0f)
-            {
-                _icon.fillAmount = 0f;
-                _icon.gameObject.SetActive(false);
-                return;
-            }
-            
-            _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
-
-            float ratio = Mathf.Clamp01(1f - (_status.СurrentTimer / _status.TargetTime));
-            _icon.fillAmount = ratio;
-
-            _icon.gameObject.SetActive(ratio > 0f);
-        }
+        // private void Update()
+        // {
+        //     if (_status == null)
+        //     {
+        //         _icon.gameObject.SetActive(false);
+        //         return;
+        //     }
+        //
+        //     if (_status.TargetTime <= 0f)
+        //     {
+        //         _icon.fillAmount = 0f;
+        //         _icon.gameObject.SetActive(false);
+        //         return;
+        //     }
+        //     
+        //     _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
+        //
+        //     float ratio = Mathf.Clamp01(1f - (_status.СurrentTimer / _status.TargetTime));
+        //     _icon.fillAmount = ratio;
+        //
+        //     _icon.gameObject.SetActive(ratio > 0f);
+        // }
     }
 }

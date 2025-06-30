@@ -23,7 +23,6 @@ namespace Abilities
         [field: SerializeField] public List<AbilityPhase> Phases { get; private set; }
         [field: SerializeField] public ArmamentSetup ArmamentSetup{ get; private set; } // Это должно уйти
         [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; }// Это должно уйти
-        [field: SerializeField] public ArmamentView Prefab { get; private set; }
         [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
     }
 }

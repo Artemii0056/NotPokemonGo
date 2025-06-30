@@ -75,12 +75,12 @@ namespace Factories
 
         private void InitializeView(Unit unit)
         {
-            StatusViewPanel statusViewPanel = unit.GetComponentInChildren<StatusViewPanel>();
+            UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
             
-            statusViewPanel.Construct(unit);
+            unitViewPanel.Construct(unit);
 
-            _objectResolver.Inject(statusViewPanel);
+            _objectResolver.Inject(unitViewPanel);
             _objectResolver.Inject(slidersView);
         }
     }

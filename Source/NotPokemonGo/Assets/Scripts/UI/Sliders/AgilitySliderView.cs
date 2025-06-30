@@ -1,9 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Sliders
 {
     public class AgilitySliderView : MonoBehaviour
     {
+        [SerializeField] private Image _icon;
         
+        public void ChangeFilling(float currentValue, float maxValue)
+        {
+            float ratio = Mathf.Clamp01(1f - (currentValue / maxValue));
+            _icon.fillAmount = ratio;
+        }
     }
 }
