@@ -15,10 +15,9 @@ namespace Units
 {
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private List<AbilityAnchor> abilityAnchors;
+        [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
-        [FormerlySerializedAs("AbilityAnimationControllerBase")]
-        public UnitAnimatorController unitAnimatorController;
+        [SerializeField] private List<AbilityAnchor> abilityAnchors;
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
@@ -83,7 +82,6 @@ namespace Units
         public void ChangeValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
-            Debug.Log(_stats[statType].CurrentValue + ", " + value);
         }
 
         public void AddStatus(Status status)

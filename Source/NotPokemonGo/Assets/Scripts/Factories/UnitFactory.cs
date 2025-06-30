@@ -48,7 +48,7 @@ namespace Factories
             unit.transform.SetParent(parentPosition, false);
             
             
-            UnitAnimatorController controller =unit.unitAnimatorController;
+            UnitAnimatorController controller =unit.UnitAnimatorController;
             
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit, 

@@ -15,6 +15,6 @@ namespace Animations
             _staticDataService.GetAbilityConfig(abilityType).AnimationHash;
 
         public void PlayAnimation(Unit source, AbilityType abilityType) => 
-            source.unitAnimatorController.Play(GetAnimationHash(abilityType));
+            source.UnitAnimatorController.Play(GetAnimationHash(abilityType));
     }
 }
