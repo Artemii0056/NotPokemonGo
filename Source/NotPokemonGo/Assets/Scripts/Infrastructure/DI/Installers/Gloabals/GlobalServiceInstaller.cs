@@ -88,6 +88,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
             builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
+            
+            builder.Register<IAnimationProcessingService, AnimationProcessingService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
-using Abilities.MV;
 using Effects;
 using Factories;
 using Services;
@@ -24,7 +22,6 @@ namespace Abilities
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
         private readonly ISourceProvider _sourceProvider;
-        private readonly IAbilityProvider _abilityProvider;
 
         public AbilityApplicatorService(
             IArmamentViewFactory armamentViewFactory,
@@ -32,8 +29,7 @@ namespace Abilities
             IEffectResolver effectResolver,
             ICoroutineRunner coroutineRunner, 
             IStatusResolver statusResolver, 
-            ISourceProvider sourceProvider,
-            IAbilityProvider abilityProvider)
+            ISourceProvider sourceProvider)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
@@ -41,32 +37,6 @@ namespace Abilities
             _coroutineRunner = coroutineRunner;
             _statusResolver = statusResolver;
             _sourceProvider = sourceProvider;
-            _abilityProvider = abilityProvider;
-        }
-
-        public void Apply(params Unit[] targets) //TODO Удалить 
-        {
-            AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
-
-            if (abilityModel == null)
-                throw new NullReferenceException("AbilityModel is null or not ready");
-
-            if (abilityModel.IsReady == false)
-                throw new NullReferenceException("AbilityModel is not ready");
-            
-            if (abilityModel.HasArmament)
-            {
-                ApplyArmament(abilityModel, targets);
-            }
-            else if (abilityModel.HasCastament)
-            {
-                ApplyCastament(abilityModel, targets);
-            }
-
-            abilityModel.DiscardCurrentTime();
-            // _abilityProvider.Discard();
-            // _sourceProvider.Discard();
-            //TODO Дискарднуть абидити панел
         }
 
         public void Apply(CastamentSetup setup, params Unit[] targets)
@@ -102,39 +72,6 @@ namespace Abilities
             }
         }
 
-        private void ApplyCastament(AbilityModel abilityModel, params Unit[] targets)
-        {
-            foreach (var target in targets)
-            {
-                List<EffectInfo> effects = CreateEffects(abilityModel.CastamentSetup.EffectsSetup);
-                List<Status> statuses = CreateStatuses(abilityModel.CastamentSetup.Statuses, target);
-
-                ApplyEffectsOnTarget(target, statuses, effects);
-
-                if (abilityModel.CastamentSetup.ParticleSystem != null)
-                {
-                    ParticleSystem effect = Object.Instantiate(abilityModel.CastamentSetup.ParticleSystem);
-                    effect.transform.position = target.transform.position;
-                    effect.Play();
-                }
-            }
-        }
-
-        private void ApplyArmament(AbilityModel abilityModel, params Unit[] targets)
-        {
-            foreach (var target in targets)
-            {
-                List<EffectInfo> effects = CreateEffects(abilityModel.ArmamentSetup.EffectsSetup);
-                List<Status> statuses = CreateStatuses(abilityModel.ArmamentSetup.Statuses, target);
-
-                ArmamentView armamentView =
-                    _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
-                        abilityModel.ArmamentSetup.ArmamentView, target);
-
-                _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
-            }
-        }
-
         private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
             ArmamentView armamentView, Unit target)
         {
@@ -155,11 +92,8 @@ namespace Abilities
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
-            foreach (var effectInfo in effects)
-            {
-                
+            foreach (var effectInfo in effects) 
                 target.ReceiveDamage(effectInfo);
-            }
         }
     }
 }

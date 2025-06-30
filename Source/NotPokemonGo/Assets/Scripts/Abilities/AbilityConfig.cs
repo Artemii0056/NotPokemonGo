@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Abilities.AbilityActions.Armaments;
-using Abilities.AbilityActions.Castaments;
+using System.IO;
 using UnityEngine;
 
 namespace Abilities
@@ -8,6 +7,7 @@ namespace Abilities
     [CreateAssetMenu(fileName = nameof(AbilityConfig), menuName = "StaticData/" + nameof(AbilityConfig))]
     public class AbilityConfig : ScriptableObject
     {
+        [SerializeField] private AnimationClip _animationClip;
         [field: SerializeField] public AbilityType AbilityType { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
         
@@ -21,9 +21,7 @@ namespace Abilities
         [field: SerializeField] public TargetMode TargetMode { get; private set; } 
         
         [field: SerializeField] public List<AbilityPhase> Phases { get; private set; }
-        [field: SerializeField] public ArmamentSetup ArmamentSetup{ get; private set; } // Это должно уйти
-        [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; }// Это должно уйти
-        [field: SerializeField] public ArmamentView Prefab { get; private set; }
-        [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
+        
+        public int AnimationHash => Animator.StringToHash(_animationClip.name);
     }
 }

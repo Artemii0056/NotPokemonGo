@@ -23,11 +23,11 @@ namespace Battlefields
         private IAbilityProvider _abilityProvider;
         private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
-        private AnimationProcessingService _animationProcessingService;
+        private readonly IAnimationProcessingService _animationProcessingService;
 
-        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
+        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source,IAnimationProcessingService animationProcessingService )
         {
-            _animationProcessingService = new AnimationProcessingService();
+            _animationProcessingService = animationProcessingService;
             _source = source;
             _battlefield = battlefield;
         }
@@ -73,8 +73,9 @@ namespace Battlefields
                     _abilityProvider.Remember(abilityModel);
                     _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode); 
                     
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
-
+                    Debug.Log("EnemyUnitActionStrategy");
+                    
+                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     break;
                 }
             }

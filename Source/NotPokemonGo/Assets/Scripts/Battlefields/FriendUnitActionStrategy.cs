@@ -23,7 +23,7 @@ namespace Battlefields
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
-        private AnimationProcessingService _animationProcessingService;
+        private IAnimationProcessingService _animationProcessingService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -38,7 +38,8 @@ namespace Battlefields
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
-            AbilityPanelPresenter abilityPanelPresenter
+            AbilityPanelPresenter abilityPanelPresenter, 
+            IAnimationProcessingService animationProcessingService
             )
         {
             _battleStateMachine = battleStateMachine;
@@ -47,7 +48,7 @@ namespace Battlefields
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
-            _animationProcessingService = new AnimationProcessingService();
+            _animationProcessingService = animationProcessingService;
         }
         
         public override void Enable()
@@ -80,7 +81,7 @@ namespace Battlefields
                     break;
                 
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
+                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
                     _abilityPanelPresenter.Disable();
                     break;

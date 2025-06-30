@@ -11,9 +11,6 @@ namespace Abilities.MV
             TargetMode = config.TargetMode;
             AbilityType = config.AbilityType;
             
-            CastamentSetup = config.CastamentSetup;
-            ArmamentSetup = config.ArmamentSetup;
-
             Cost = config.Cost;
             Cooldown = config.Cooldown;
 
@@ -25,12 +22,6 @@ namespace Abilities.MV
         
         public List<AbilityPhase> Phases { get; private set; }
         
-        public ArmamentSetup ArmamentSetup { get; private set; }
-        public CastamentSetup CastamentSetup { get; private set; }
-        
-        public bool HasArmament => ArmamentSetup.HasSetupData;
-        public bool HasCastament => CastamentSetup.HasSetupData;
-
         public float Cost { get; private set; }
         public float CurrentTime { get; private set; } = 0;
         public float Cooldown { get; private set; }

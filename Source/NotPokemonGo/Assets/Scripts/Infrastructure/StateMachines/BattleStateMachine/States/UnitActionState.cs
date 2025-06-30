@@ -1,4 +1,5 @@
 using System;
+using Animations;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
@@ -9,12 +10,14 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
     public class UnitActionState : IPayloadedState<UnitActionPayload>
     {
         private readonly IObjectResolver _objectResolver;
-        
+        private readonly IAnimationProcessingService _animationProcessingService;
+
         private UnitActionStrategy _unitActionStrategy;
 
-        public UnitActionState(IObjectResolver objectResolver)
+        public UnitActionState(IObjectResolver objectResolver, IAnimationProcessingService animationProcessingService)
         {
             _objectResolver = objectResolver;
+            _animationProcessingService = animationProcessingService;
         }
         
         public void Enter(UnitActionPayload payload)
@@ -26,7 +29,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     break;
 
                 case PlatoonType.Enemies:
-                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield, payload.UnitSorce);
+                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield, payload.UnitSorce, _animationProcessingService);
                     break;
 
                 default:

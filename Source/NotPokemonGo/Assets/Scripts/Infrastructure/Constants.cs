@@ -28,34 +28,5 @@ namespace Infrastructure
             public static Vector3 Platoon1Position = new Vector3(0, 0, 3);
             public static Vector3 Platoon2Position = new Vector3(0, 0, -3);
         }
-
-        public class AnimationsName
-        {
-            public static int Idle =  Animator.StringToHash(nameof(Idle));
-            public static int Death =  Animator.StringToHash(nameof(Death));
-            public static int Dodge =  Animator.StringToHash(nameof(Dodge));
-            public static int TakeDamage = Animator.StringToHash( nameof(TakeDamage));
-            public static int Run =  Animator.StringToHash(nameof(Run));
-
-            public class Mage
-            {
-                public static int FireballAttack = Animator.StringToHash( nameof(FireballAttack));
-                public static int CastSpell =  Animator.StringToHash(nameof(CastSpell));
-                public static int RadialAttack =  Animator.StringToHash(nameof(RadialAttack));
-            }
-
-            public class Swordsman
-            {
-                public static int TwoSwordsAttack =  Animator.StringToHash(nameof(TwoSwordsAttack));
-                public static int DoubleAttack =  Animator.StringToHash(nameof(DoubleAttack));
-            }
-
-            public class Archer
-            {
-                public static int MiddleShoot =  Animator.StringToHash(nameof(MiddleShoot));
-                public static int ShootInSky =  Animator.StringToHash(nameof(ShootInSky));
-
-            }
-        }
     }
 }
