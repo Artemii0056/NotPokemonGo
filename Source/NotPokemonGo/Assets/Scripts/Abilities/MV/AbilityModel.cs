@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Abilities.AbilityActions.Armaments;
-using Abilities.AbilityActions.Castaments;
 
 namespace Abilities.MV
 {
@@ -8,6 +6,7 @@ namespace Abilities.MV
     {
         public AbilityModel(AbilityConfig config)
         {
+            IsMelee = config.IsMeleeAttack;
             TargetMode = config.TargetMode;
             AbilityType = config.AbilityType;
             
@@ -22,6 +21,7 @@ namespace Abilities.MV
         
         public List<AbilityPhase> Phases { get; private set; }
         
+        public bool IsMelee { get; private set; }
         public float Cost { get; private set; }
         public float CurrentTime { get; private set; } = 0;
         public float Cooldown { get; private set; }

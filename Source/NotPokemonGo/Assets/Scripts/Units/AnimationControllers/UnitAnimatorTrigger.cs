@@ -171,7 +171,5 @@ namespace Units.AnimationControllers
                 }
             }
         }
-
     }
-
 }

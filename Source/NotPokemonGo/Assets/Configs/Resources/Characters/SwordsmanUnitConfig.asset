@@ -31,5 +31,3 @@ MonoBehaviour:
     Value: 5
   _abilityConfigs:
   - {fileID: 11400000, guid: 918e75e14e72ceb418a4eb70ea4761f5, type: 2}
-  - {fileID: 11400000, guid: 073acc7879cbbc7458e7b45ddbe19c1f, type: 2}
-  - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}

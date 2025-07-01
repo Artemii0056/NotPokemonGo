@@ -9,5 +9,6 @@ namespace Abilities
     {
         public ArmamentSetup ArmamentSetup;
         public CastamentSetup CastamentSetup;
+        public bool IsMelee;
     }
 }

@@ -53,7 +53,7 @@ namespace Units
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
-            Step = new UnitStep(5);
+            //Step = new UnitStep(); //TODO Попробовать логику через него
 
             foreach (var statSetup in statConfig)
             {
@@ -106,11 +106,8 @@ namespace Units
                 foreach (var model in _abilityModels)
                     model.UpdateTime(deltaTime);
             }
-
-            if (Step.IsReadyToAct)
-                Prepared?.Invoke(this);
-            else
-                Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
+            
+            Prepared?.Invoke(this);
         }
 
         private void OnActionEnded() => 

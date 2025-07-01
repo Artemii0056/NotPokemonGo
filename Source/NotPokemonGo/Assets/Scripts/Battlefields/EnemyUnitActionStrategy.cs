@@ -76,8 +76,6 @@ namespace Battlefields
                     break;
                 }
             }
-
-            _source.Step.ResetCurrentValue();
         }
 
         private Unit GetRandomTarget(List<Unit> targets) => 

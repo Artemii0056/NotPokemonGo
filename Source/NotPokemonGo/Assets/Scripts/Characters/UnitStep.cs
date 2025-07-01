@@ -1,50 +1,37 @@
 ﻿using System;
+using Abilities.MV;
+using Units.AnimationControllers;
 
 namespace Characters
 {
     public class UnitStep
     {
-        public UnitStep(float maxValue)
+        private  AbilityModel _abilityModel;
+        private UnitAnimatorTrigger _unitAnimatorTrigger;
+
+        public UnitStep(UnitAnimatorTrigger unitAnimatorTrigger)
         {
-            MaxValue = maxValue;
-            CurrentValue = 0f;
+            _unitAnimatorTrigger = unitAnimatorTrigger;
         }
 
-        public float CurrentValue { get; private  set; }
-        public float MaxValue { get; private set; }
-
-        public bool IsReadyToAct => CurrentValue >= MaxValue;
-
-        public event Action Fulled; 
+        public event Action<AbilityModel> OnAbility;
         
-        public void IncreaseCurrentValue(float value)
+        public event Action ActionEnded;
+
+        public void SetAbilityModel(AbilityModel abilityModel)
         {
-            if (value > 0)
-                CurrentValue += value;
-
-            if (CurrentValue >= MaxValue)
-            {
-                CurrentValue = MaxValue;
-                Fulled?.Invoke();
-            }
+            _abilityModel = abilityModel;
         }
-
-        public void DecreaseCurrentValue(float value)
-        {
-            if (value > 0)
-                CurrentValue -= value;
-            
-            if (CurrentValue < 0)
-                ResetCurrentValue();
-        }
-
-        public void ChangeMaxValue(float value)
-        {
-            if (value > 0)
-                MaxValue = value;
-        }
-
-        public void ResetCurrentValue() =>
-            CurrentValue = 0;
+        
+        //Должен работать с UnitAnimatorTrigger
+        
+        //установили абилку
+        //условный метод Run
+        //проверить тип Фазы
+        //проиграть логику
+        //проверить есть ли дальше фаза
+        //нет - кинуть событие
+        
+        
     }
 }
