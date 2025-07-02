@@ -50,7 +50,7 @@ namespace Abilities
             if (abilityModel == null)
                 throw new NullReferenceException("AbilityModel is null or not ready");
 
-            if (abilityModel.IsReady == false)
+            if (abilityModel.IsReady() == false)
                 throw new NullReferenceException("AbilityModel is not ready");
             
             if (abilityModel.HasArmament)
@@ -150,7 +150,6 @@ namespace Abilities
 
             foreach (var effectInfo in effects)
             {
-                
                 target.ReceiveDamage(effectInfo);
             }
         }

@@ -39,7 +39,7 @@ namespace Battlefields
             IAbilityProvider abilityProvider,
             IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector
-            )
+        )
         {
             _targetSelector = targetSelector;
             _abilityApplicatorService = abilityApplicatorService;
@@ -51,9 +51,8 @@ namespace Battlefields
         public override void Enable()
         {
             base.Enable();
-            Attack(_battlefield.Platoon2.Heroes);
+            Attack(_battlefield.Heroes.Heroes);
             _source.AnimationActionEnded += OnAnimationActionEnded;
-            
         }
 
         public override void Disable()
@@ -67,27 +66,31 @@ namespace Battlefields
         {
             foreach (AbilityModel abilityModel in _source.AbilityModels)
             {
-                if (abilityModel.IsReady)
+                if (abilityModel.IsReady())
                 {
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
-                    _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode); 
-                    
+                    _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode);
+
                     _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
+
+                    abilityModel.DiscardCurrentTime();
+
+                    if (abilityModel.Cost > 0) 
+                        _source.ResetAgility();
+
+                    // UnitActionState - отнять выносливость
+                    // UnitActionState - сбросить кулдаун абилки
 
                     break;
                 }
             }
-
-            _source.Step.ResetCurrentValue();
         }
 
-        private Unit GetRandomTarget(List<Unit> targets) => 
+        private Unit GetRandomTarget(List<Unit> targets) =>
             targets[Random.Range(0, targets.Count)];
 
-        private void OnAnimationActionEnded()
-        {
+        private void OnAnimationActionEnded() =>
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
-        }
     }
 }

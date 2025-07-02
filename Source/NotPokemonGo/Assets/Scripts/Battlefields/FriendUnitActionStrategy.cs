@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Abilities;
 using Abilities.MV;
 using Animations;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using InputServices;
+using Services.StaticDataServices;
 using UI.Ability;
 using Units;
 using UnityEngine;
@@ -39,7 +41,7 @@ namespace Battlefields
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
             AbilityPanelPresenter abilityPanelPresenter
-            )
+        )
         {
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
@@ -49,7 +51,7 @@ namespace Battlefields
             _abilityPanelPresenter = abilityPanelPresenter;
             _animationProcessingService = new AnimationProcessingService();
         }
-        
+
         public override void Enable()
         {
             base.Enable();
@@ -70,24 +72,35 @@ namespace Battlefields
 
         private void OnUnitSearched(Unit unit)
         {
+            if (_abilityProvider.AbilityModel == null)
+                return;
+
             if (_source == unit)
                 return;
-            
+
             switch (unit.PlatoonType)
             {
                 case PlatoonType.Friends:
                     Debug.Log("Выбрали союзника");
                     break;
-                
+
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
                     _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
                     _abilityPanelPresenter.Disable();
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _abilityProvider.AbilityModel.DiscardCurrentTime();
+
+            if (_abilityProvider.AbilityModel.Cost > 0)
+                _source.ResetAgility();
+
+            // UnitActionState - отнять выносливость
+            // UnitActionState - сбросить кулдаун абилки
         }
 
         private void ShowAbilityInfos(List<AbilityModel> abilityModels)

@@ -2,58 +2,58 @@
 
 namespace Characters
 {
-    public class UnitStep
-    {
-        public UnitStep(float maxValue)
-        {
-            MaxValue = maxValue;
-            CurrentValue = 0f;
-        }
-
-        public float CurrentValue { get; private  set; }
-        public float MaxValue { get; private set; }
-
-        public bool IsReadyToAct => CurrentValue >= MaxValue;
-
-        public event Action Fulled; 
-        public event Action<UnitStep> CurrentValueChanged; 
-        
-        public void IncreaseCurrentValue(float value)
-        {
-            if (value > 0)
-            {
-                CurrentValue += value;
-             
-                if (CurrentValue >= MaxValue)
-                {
-                    CurrentValue = MaxValue;
-                    Fulled?.Invoke();
-                }
-
-                CurrentValueChanged?.Invoke(this);
-            }
-        }
-
-        public void DecreaseCurrentValue(float value)
-        {
-            if (value > 0)
-            {
-                CurrentValue -= value;
-             
-                if (CurrentValue < 0)
-                    ResetCurrentValue();
-                
-                CurrentValueChanged?.Invoke(this);
-            }
-        }
-
-        public void ChangeMaxValue(float value)
-        {
-            if (value > 0)
-                MaxValue = value;
-        }
-
-        public void ResetCurrentValue() =>
-            CurrentValue = 0;
-    }
+    // public class UnitStep
+    // {
+    //     public UnitStep(float maxValue)
+    //     {
+    //         MaxValue = maxValue;
+    //         CurrentValue = 0f;
+    //     }
+    //
+    //     public float CurrentValue { get; private  set; }
+    //     public float MaxValue { get; private set; }
+    //
+    //     public bool IsReadyToAct => CurrentValue >= MaxValue;
+    //
+    //     public event Action Fulled; 
+    //     public event Action<UnitStep> CurrentValueChanged; 
+    //     
+    //     public void IncreaseCurrentValue(float value)
+    //     {
+    //         if (value > 0)
+    //         {
+    //             CurrentValue += value;
+    //          
+    //             if (CurrentValue >= MaxValue)
+    //             {
+    //                 CurrentValue = MaxValue;
+    //                 Fulled?.Invoke();
+    //             }
+    //
+    //             CurrentValueChanged?.Invoke(this);
+    //         }
+    //     }
+    //
+    //     public void DecreaseCurrentValue(float value)
+    //     {
+    //         if (value > 0)
+    //         {
+    //             CurrentValue -= value;
+    //          
+    //             if (CurrentValue < 0)
+    //                 ResetCurrentValue();
+    //             
+    //             CurrentValueChanged?.Invoke(this);
+    //         }
+    //     }
+    //
+    //     public void ChangeMaxValue(float value)
+    //     {
+    //         if (value > 0)
+    //             MaxValue = value;
+    //     }
+    //
+    //     public void ResetCurrentValue() =>
+    //         CurrentValue = 0;
+    // }
 }

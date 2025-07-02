@@ -10,19 +10,18 @@ namespace Abilities
     {
         [field: SerializeField] public AbilityType AbilityType { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
-        
+
         [field: SerializeField] public List<ParticleSystem> StartAnimationParticles { get; private set; }
         [field: SerializeField] public List<ParticleSystem> MiddleAnimationParticles { get; private set; }
         [field: SerializeField] public List<ParticleSystem> EndAnimationParticles { get; private set; }
-
-        [field: SerializeField] public float Cost { get; private set; }
-        [field: SerializeField] public float Cooldown { get; private set; }
-
-        [field: SerializeField] public TargetMode TargetMode { get; private set; } 
         
+        [field: SerializeField] public List<AbilityStatSetup> AbilityStatSetup { get; private set; }
+
+        [field: SerializeField] public TargetMode TargetMode { get; private set; }
+
         [field: SerializeField] public List<AbilityPhase> Phases { get; private set; }
-        [field: SerializeField] public ArmamentSetup ArmamentSetup{ get; private set; } // Это должно уйти
-        [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; }// Это должно уйти
+        [field: SerializeField] public ArmamentSetup ArmamentSetup { get; private set; } // Это должно уйти
+        [field: SerializeField] public CastamentSetup CastamentSetup { get; private set; } // Это должно уйти
         [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
     }
 }

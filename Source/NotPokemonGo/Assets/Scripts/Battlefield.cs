@@ -10,32 +10,33 @@ public class Battlefield
     private readonly IStatusManager _statusManager;
 
     public readonly List<Unit> Units = new List<Unit>();
+
     public Battlefield(
-        Platoon enemyPlatoon, 
-        Platoon platoon2, 
+        Platoon enemyPlatoon,
+        Platoon heroes,
         IStatusManager statusManager)
     {
         _statusManager = statusManager;
         EnemyPlatoon = enemyPlatoon;
-        Platoon2 = platoon2;
+        Heroes = heroes;
     }
 
     public Platoon EnemyPlatoon { get; private set; }
-    public Platoon Platoon2 { get; private set; }
+    public Platoon Heroes { get; private set; }
 
     public void Enable()
     {
         EnemyPlatoon.Enable();
-        Platoon2.Enable();
-        Platoon2.UnitPrepared += OnUnitPrepared;
+        Heroes.Enable();
+        Heroes.UnitPrepared += OnUnitPrepared;
         EnemyPlatoon.UnitPrepared += OnUnitPrepared;
     }
 
     public void Disable()
     {
         EnemyPlatoon.Disable();
-        Platoon2.Disable();
-        Platoon2.UnitPrepared -= OnUnitPrepared;
+        Heroes.Disable();
+        Heroes.UnitPrepared -= OnUnitPrepared;
         EnemyPlatoon.UnitPrepared -= OnUnitPrepared;
     }
 
@@ -44,12 +45,12 @@ public class Battlefield
         Units.Add(obj);
     }
 
-    public void Tick(float deltaTime)
+    public void Tick()
     {
-        EnemyPlatoon.Tick(deltaTime);
-        Platoon2.Tick(deltaTime);
-
-        _statusManager.Update(deltaTime);
+        EnemyPlatoon.Tick();
+        Heroes.Tick();
+        
+        _statusManager.Update();
         _statusManager.RemoveInactive();
     }
 }

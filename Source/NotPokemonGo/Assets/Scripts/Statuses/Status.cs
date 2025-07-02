@@ -44,8 +44,8 @@ namespace Statuses
                 IsEnded = true;
         }
 
-        public void UpdateTimer(float time) => 
-            СurrentTimer += time;
+        public void UpdateTimer() => 
+            СurrentTimer++;
 
         public void IncreaseTickCount(float tickCount) => 
             TickCount += tickCount;

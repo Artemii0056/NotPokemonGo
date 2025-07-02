@@ -35,7 +35,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battlefield = battlefield;
             _battlefield.Enable();
 
-            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Platoon2);
+            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Heroes);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
 

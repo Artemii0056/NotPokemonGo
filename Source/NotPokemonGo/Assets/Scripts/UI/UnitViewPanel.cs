@@ -23,7 +23,6 @@ namespace UI
             _unit = unit;
             _unit.StatusAdded += OnStatusAdded;
             _unit.StatusRemoved += OnStatusRemoved;
-            _unit.Step.CurrentValueChanged += OnUnitAgilityChanged;
         }
 
         [Inject]
@@ -36,14 +35,8 @@ namespace UI
         {
             _unit.StatusAdded -= OnStatusAdded;
             _unit.StatusRemoved -= OnStatusRemoved;
-            _unit.Step.CurrentValueChanged -= OnUnitAgilityChanged;
         }
-
-        private void OnUnitAgilityChanged(UnitStep unitStep)
-        {
-            _unitSliderView.ChangeAgilityViewSlider(unitStep.CurrentValue, unitStep.MaxValue);
-        }
-
+        
         private void OnStatusAdded(Status status)
         {
             StatusView view;

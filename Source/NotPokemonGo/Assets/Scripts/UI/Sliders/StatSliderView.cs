@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace UI.Sliders
 {
-    public class AgilitySliderView : MonoBehaviour
+    public class StatSliderView : MonoBehaviour
     {
         [SerializeField] private Image _icon;
         

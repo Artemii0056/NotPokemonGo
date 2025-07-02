@@ -26,7 +26,7 @@ namespace Statuses
             
             float value =  _effectResolver.CalculateFinalValue(Target, damageInfo);
             
-            Target.ChangeValue(StatType.Health, value);
+            Target.ChangeStatValue(StatType.Health, value);
         }
     }
 }

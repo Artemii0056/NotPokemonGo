@@ -20,6 +20,10 @@ namespace Platoons
             PlatoonType = platoonType;
         }
 
+        public PlatoonType PlatoonType { get; private set; }
+
+        public List<Unit> Heroes => _units.ToList();
+
         public void Enable()
         {
             foreach (Unit unit in _units)
@@ -31,21 +35,13 @@ namespace Platoons
             foreach (Unit unit in _units)
                 unit.Prepared -= OnUnitPrepared;
         }
-
-
-        public PlatoonType PlatoonType { get; private set; }
-
-        public List<Unit> Heroes => _units.ToList();
-
-
-        public void Tick(float deltaTime)
+        
+        public void Tick()
         {
-            foreach (Unit unit in _units)
-            {
-                unit.Tick(deltaTime);
-            }
+            foreach (Unit unit in _units) 
+                unit.Tick();
         }
-
+        
         private void OnUnitPrepared(Unit unit) =>
             UnitPrepared?.Invoke(unit);
     }

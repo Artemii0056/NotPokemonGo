@@ -8,7 +8,9 @@ namespace Stats
         Accuracy = 4,
         ArmorChance = 5,
         Damage = 6,
-        Agility = 7,
-        AgilitySpeed = 8
+        
+        CurrentAgility = 20,
+        MaxAgility = 21,
+        AgilityRestoreSpeed = 22
     }
 }

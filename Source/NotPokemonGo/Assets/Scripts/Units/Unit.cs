@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Abilities;
 using Abilities.MV;
 using Characters;
 using Characters.Configs;
@@ -20,6 +21,9 @@ namespace Units
         [FormerlySerializedAs("AbilityAnimationControllerBase")]
         public UnitAnimatorController unitAnimatorController;
 
+        [field: SerializeField] public UnitType UnitType { get; private set; }
+
+
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
@@ -30,13 +34,10 @@ namespace Units
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
-        public event Action<Unit> Prepared; 
-        public event Action AnimationActionEnded; 
-        
+        public event Action<Unit> Prepared;
+        public event Action AnimationActionEnded;
+
         public PlatoonType PlatoonType { get; private set; }
-        public UnitStep Step { get; private set; }
-        
-        [field: SerializeField] public UnitType UnitType { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
@@ -47,14 +48,12 @@ namespace Units
         public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
-            PlatoonType platoonType, 
+            PlatoonType platoonType,
             UnitAnimatorTrigger unitAnimatorTrigger)
         {
             _unitAnimatorTrigger = unitAnimatorTrigger;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
-
-            Step = new UnitStep(5);
 
             foreach (var statSetup in statConfig)
             {
@@ -77,15 +76,15 @@ namespace Units
         public void ReceiveDamage(EffectInfo effectInfo)
         {
             float damage = _effectResolver.CalculateFinalValue(this, effectInfo);
-            ChangeValue(StatType.Health, damage);
+            ChangeStatValue(StatType.Health, damage);
         }
 
-        public void ChangeValue(StatType statType, float value)
+        public void ChangeStatValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
-            Debug.Log(_stats[statType].CurrentValue + ", " + value);
+            Debug.Log(
+                $" текущее значение стата {_stats[statType].Type.ToString()} {_stats[statType].CurrentValue} + {value}");
         }
-
 
         public void AddStatus(Status status)
         {
@@ -102,21 +101,38 @@ namespace Units
         public void AddAbility(AbilityModel ability) =>
             _abilityModels.Add(ability);
 
-        public void Tick(float deltaTime)
+        private void OnActionEnded() =>
+            AnimationActionEnded?.Invoke();
+
+        public void ResetAgility() =>
+            _stats[StatType.CurrentAgility].Set(0);
+
+        public void Tick()
+        {
+            TickAbilities();
+
+            TickAgility();
+        }
+
+        private void TickAbilities()
         {
             if (_abilityModels.Count > 0)
             {
-                foreach (var model in _abilityModels)
-                    model.UpdateTime(deltaTime);
+                foreach (AbilityModel abilityModel in _abilityModels)
+                    abilityModel.Tick();
             }
-
-            if (Step.IsReadyToAct)
-                Prepared?.Invoke(this);
-            else
-                Step.IncreaseCurrentValue(deltaTime * GetStat(StatType.Agility));
         }
 
-        private void OnActionEnded() => 
-            AnimationActionEnded?.Invoke();
+        private void TickAgility()
+        {
+            if (GetStat(StatType.CurrentAgility) < GetStat(StatType.MaxAgility))
+                ChangeStatValue(StatType.CurrentAgility, GetStat(StatType.AgilityRestoreSpeed));
+
+            if (GetStat(StatType.CurrentAgility) >= GetStat(StatType.MaxAgility))
+            {
+                _stats[StatType.CurrentAgility].Set(GetStat(StatType.MaxAgility));
+                Prepared?.Invoke(this);
+            }
+        }
     }
 }

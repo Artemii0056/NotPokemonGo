@@ -4,7 +4,7 @@
     {
         void RegisterStatusEffect(Status status);
         void UnregisterStatusEffect(Status status);
-        void Update(float deltaTime);
+        void Update();
         void RemoveInactive();
     }
 }

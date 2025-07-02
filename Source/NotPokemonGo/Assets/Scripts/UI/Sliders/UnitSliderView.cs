@@ -1,13 +1,15 @@
 using Services;
 using Services.Cameras;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace UI.Sliders
 {
     public class UnitSliderView : MonoBehaviour
     {
-        [SerializeField] private AgilitySliderView _agilitySliderView;
+        [SerializeField] private StatSliderView _agility;
+        [SerializeField] private StatSliderView _health;
         
         private ICameraProvider _cameraProvider;
 
@@ -22,20 +24,26 @@ namespace UI.Sliders
         {
             _cameraProvider = cameraProvider;
         }
+        
         private void LateUpdate()
         {
             if (_cameraProvider == null)
                 return;
             
             //MoveCloserToCamera();
-            LookTowardCamera(_agilitySliderView.transform);
+            LookTowardCamera(_agility.transform);
         }
 
-        public void ChangeAgilityViewSlider(float currentValue, float maxValue)
+        public void ChangeAgilitySlider(float currentValue, float maxValue)
         {
-            _agilitySliderView.ChangeFilling(currentValue, maxValue);
+            _agility.ChangeFilling(currentValue, maxValue);
         } 
-
+        
+        public void ChangeHealthSlider(float currentValue, float maxValue)
+        {
+            _health.ChangeFilling(currentValue, maxValue);
+        } 
+        
         private void LookTowardCamera(Transform source)
         {
             source.LookAt(source.position + _cameraProvider.Camera.transform.rotation * Vector3.forward,
