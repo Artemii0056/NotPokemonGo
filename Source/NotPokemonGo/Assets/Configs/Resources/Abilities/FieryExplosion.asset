@@ -47,3 +47,4 @@ MonoBehaviour:
     IsMovementPhase: 0
     IsReturnPhase: 0
     TargetMode: 2
+    <PhaseType>k__BackingField: 3

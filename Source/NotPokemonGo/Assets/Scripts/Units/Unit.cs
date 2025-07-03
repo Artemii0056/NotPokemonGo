@@ -29,7 +29,6 @@ namespace Units
         public event Action<Status> StatusRemoved;
 
         public event Action<Unit> Prepared; 
-        public event Action AnimationActionEnded; 
         
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
@@ -59,15 +58,6 @@ namespace Units
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
-            
-             _unitAnimatorTrigger.ActionEnded += OnActionEnded;
-            Step.ActionEnded += OnActionEnded;
-        }
-
-        private void OnDestroy()
-        {
-            _unitAnimatorTrigger.ActionEnded -= OnActionEnded;
-            Step.ActionEnded -= OnActionEnded;
         }
 
         public float GetStat(StatType statType)
@@ -111,8 +101,5 @@ namespace Units
             
             Prepared?.Invoke(this);
         }
-
-        private void OnActionEnded() => 
-            AnimationActionEnded?.Invoke();
     }
 }

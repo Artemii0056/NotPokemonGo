@@ -58,14 +58,15 @@ namespace Battlefields
             _sourceProvider.Remember(_source);
 
             _raycaster.UnitSearched += OnUnitSearched;
-            _source.AnimationActionEnded += OnAnimationActionEnded;
+            _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
         public override void Disable()
         {
             base.Disable();
+
+            _source.Step.ActionEnded -= OnAnimationActionEnded;
             _raycaster.UnitSearched -= OnUnitSearched;
-            _source.AnimationActionEnded -= OnAnimationActionEnded;
             _sourceProvider.Discard();
         }
 

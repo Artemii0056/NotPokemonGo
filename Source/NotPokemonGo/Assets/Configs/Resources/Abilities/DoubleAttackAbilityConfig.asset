@@ -37,6 +37,7 @@ MonoBehaviour:
     IsMovementPhase: 1
     IsReturnPhase: 0
     TargetMode: 0
+    <PhaseType>k__BackingField: 1
   - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -54,6 +55,7 @@ MonoBehaviour:
     IsMovementPhase: 0
     IsReturnPhase: 0
     TargetMode: 0
+    <PhaseType>k__BackingField: 0
   - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -71,6 +73,7 @@ MonoBehaviour:
     IsMovementPhase: 0
     IsReturnPhase: 0
     TargetMode: 0
+    <PhaseType>k__BackingField: 0
   - AnimationClip: {fileID: 7400000, guid: 4d3d3482af9a61941bace981b70278af, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -88,3 +91,4 @@ MonoBehaviour:
     IsMovementPhase: 0
     IsReturnPhase: 1
     TargetMode: 0
+    <PhaseType>k__BackingField: 2

@@ -52,15 +52,14 @@ namespace Battlefields
         {
             base.Enable();
             Attack(_battlefield.Platoon2.Heroes);
-            _source.AnimationActionEnded += OnAnimationActionEnded;
-            
+            _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
         public override void Disable()
         {
             base.Disable();
-            _source.AnimationActionEnded -= OnAnimationActionEnded;
             _sourceProvider.Discard();
+            _source.Step.ActionEnded -= OnAnimationActionEnded;
         }
 
         private void Attack(List<Unit> targets)
@@ -74,12 +73,6 @@ namespace Battlefields
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
                     _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode); 
-                    
-                    Debug.Log("EnemyUnitActionStrategy");
-                    
-                    //_unitAnimatorController.
-                    
-                    //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     break;
                 }
             }
