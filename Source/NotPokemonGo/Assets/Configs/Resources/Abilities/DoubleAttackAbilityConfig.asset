@@ -12,18 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
   m_Name: DoubleAttackAbilityConfig
   m_EditorClassIdentifier: 
-  _animationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
   <AbilityType>k__BackingField: 5
   <Icon>k__BackingField: {fileID: 21300120, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
-  <Cost>k__BackingField: 1
+  <Cost>k__BackingField: 2
   <Cooldown>k__BackingField: 2
-  <IsMeleeAttack>k__BackingField: 1
-  <TargetMode>k__BackingField: 0
   <Phases>k__BackingField:
-  - AnimationClip: {fileID: 0}
+  - AnimationClip: {fileID: 7400000, guid: 340c607605a8ff74fb553547a12b23c0, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField: []
@@ -39,6 +36,7 @@ MonoBehaviour:
     IsMelee: 0
     IsMovementPhase: 1
     IsReturnPhase: 0
+    TargetMode: 0
   - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -52,9 +50,10 @@ MonoBehaviour:
       - Type: 1
         Value: 20
       <ParticleSystem>k__BackingField: {fileID: 0}
-    IsMelee: 0
+    IsMelee: 1
     IsMovementPhase: 0
     IsReturnPhase: 0
+    TargetMode: 0
   - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -68,9 +67,10 @@ MonoBehaviour:
       - Type: 1
         Value: 50
       <ParticleSystem>k__BackingField: {fileID: 0}
-    IsMelee: 0
+    IsMelee: 1
     IsMovementPhase: 0
     IsReturnPhase: 0
+    TargetMode: 0
   - AnimationClip: {fileID: 7400000, guid: 4d3d3482af9a61941bace981b70278af, type: 2}
     ArmamentSetup:
       <Statuses>k__BackingField: []
@@ -87,3 +87,4 @@ MonoBehaviour:
     IsMelee: 0
     IsMovementPhase: 0
     IsReturnPhase: 1
+    TargetMode: 0
