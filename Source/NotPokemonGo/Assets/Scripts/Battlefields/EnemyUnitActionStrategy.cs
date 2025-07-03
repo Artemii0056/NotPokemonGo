@@ -19,16 +19,11 @@ namespace Battlefields
         private IBattleStateMachine _battleStateMachine;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
-        private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
-        private readonly IAnimationProcessingService _animationProcessingService;
-        private UnitAnimatorController _unitAnimatorController;
 
-        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source,IAnimationProcessingService animationProcessingService)
+        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
         {
-            _animationProcessingService = animationProcessingService;
             _source = source;
-            _unitAnimatorController = _source.GetComponentInChildren<UnitAnimatorController>();
             _battlefield = battlefield;
         }
 
@@ -37,12 +32,10 @@ namespace Battlefields
             IBattleStateMachine battleStateMachine,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
-            IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector
         )
         {
             _targetSelector = targetSelector;
-            _abilityApplicatorService = abilityApplicatorService;
             _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
             _battleStateMachine = battleStateMachine;

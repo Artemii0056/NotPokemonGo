@@ -77,8 +77,6 @@ namespace Units
         public void ChangeStatValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
-            Debug.Log(
-                $" текущее значение стата {_stats[statType].Type.ToString()} {_stats[statType].CurrentValue} + {value}");
         }
 
         public void AddStatus(Status status)

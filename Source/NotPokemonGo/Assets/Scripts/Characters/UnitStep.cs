@@ -14,12 +14,10 @@ namespace Characters
 {
     public class UnitStep
     {
-        private AbilityModel _abilityModel;
-        private UnitAnimatorTrigger _unitAnimatorTrigger;
-        private UnitAnimatorController _unitAnimatorController;
+        private readonly UnitAnimatorTrigger _unitAnimatorTrigger;
+        private readonly UnitAnimatorController _unitAnimatorController;
+        private readonly Animator _animator;
         private readonly ICoroutineRunner _coroutineRunner;
-        private IAnimationProcessingService _animationProcessingService;
-        private Animator _animator;
 
         private Vector3 _startPosition;
 
@@ -28,22 +26,17 @@ namespace Characters
         private Unit _source;
         private Unit _target;
 
-        public UnitStep(UnitAnimatorTrigger unitAnimatorTrigger,
-            ICoroutineRunner coroutineRunner,
+        public UnitStep(
+            UnitAnimatorTrigger unitAnimatorTrigger,
             UnitAnimatorController unitAnimatorController,
-            IAnimationProcessingService animationProcessingService,
-            Animator animator)
+            Animator animator,
+            ICoroutineRunner coroutineRunner)
         {
             _unitAnimatorTrigger = unitAnimatorTrigger;
-            _coroutineRunner = coroutineRunner;
             _unitAnimatorController = unitAnimatorController;
-            _animationProcessingService = animationProcessingService;
             _animator = animator;
+            _coroutineRunner = coroutineRunner;
         }
-
-        const string AttackAnimationName = "DoubleAttack";
-
-        public event Action<AbilityModel> OnAbility;
 
         public event Action ActionEnded;
 
@@ -56,11 +49,8 @@ namespace Characters
             _currentPhaseIndex = 0;
 
             _startPosition = source.transform.position;
-            _abilityModel = abilityModel;
 
-            //_unitAnimatorController.Finished += OnAnimationFinished;
             _coroutineRunner.StartCoroutine(HandlePhase(_phases));
-            //ProcessNextPhase();
         }
 
         private IEnumerator HandlePhase(List<AbilityPhase> phases)
@@ -95,94 +85,8 @@ namespace Characters
                }
            }
            
-           Debug.LogError("После форича");
            ActionEnded?.Invoke();
         }
-
-        // private void ProcessNextPhase()
-        // {
-        //     Debug.Log(_currentPhaseIndex + " Processing phase");
-        //
-        //     if (_currentPhaseIndex >= _phases.Count)
-        //     {
-        //         EndAction();
-        //         return;
-        //     }
-        //
-        //     AbilityPhase phase = _phases[_currentPhaseIndex++];
-        //
-        //     _unitAnimatorTrigger.SetPhase(phase);
-        //     _coroutineRunner.StartCoroutine(HandlePhase(phase));
-        // }
-        //
-        // private IEnumerator HandlePhase(AbilityPhase phase)
-        // {
-        //    // _animationProcessingService.PlayAnimation(_source, phase.AnimationClip.name);
-        //
-        //    foreach (AbilityPhase abilityPhase in _phases)
-        //    {
-        //        switch (abilityPhase.PhaseType)
-        //        {
-        //            case PhaseType.IsMelee:
-        //                _unitAnimatorController.PlayString( phase.AnimationClip.name);
-        //                yield return new WaitForSeconds(GetAnimationLength(phase.AnimationClip.name));
-        //                break;
-        //            
-        //            case PhaseType.IsMovementPhase:
-        //                yield return MoveUnit(_source, _target.transform.position,  phase.AnimationClip,1f);
-        //                break;
-        //            
-        //            case PhaseType.IsReturnPhase:
-        //                yield return MoveUnit(_source, _startPosition,  phase.AnimationClip);
-        //                break;
-        //        }
-        //    }
-        //    
-        //     if (phase.IsMovementPhase)
-        //     {
-        //         //_animationProcessingService.PlayAnimation(_source, phase.AnimationClip.name); //TODO тут будет анимация фазы 
-        //         yield return MoveUnit(_source, _target.transform.position,  phase.AnimationClip,1f);
-        //         ProcessNextPhase();
-        //         yield break;
-        //     }
-        //
-        //     if (phase.IsMelee)
-        //     {
-        //         //_animationProcessingService.PlayAnimation(_source, _abilityModel.AbilityType);
-        //         yield return new WaitForSeconds(GetAnimationLength(phase.AnimationClip.name));
-        //         ProcessNextPhase();
-        //         yield break;
-        //     }
-        //
-        //     if (phase.IsReturnPhase)
-        //     {
-        //         //_animationProcessingService.PlayAnimation(_source, "RunBack");
-        //         yield return MoveUnit(_source, _startPosition,  phase.AnimationClip);
-        //         ProcessNextPhase();
-        //         yield  break;
-        //     }
-        //
-        //     // ProcessNextPhase();
-        //     // yield break;
-        //
-        //     _unitAnimatorController.PlayString( phase.AnimationClip.name);
-        //    // _animationProcessingService.PlayAnimation(_source, _abilityModel.AbilityType);
-        // }
-        //
-
-        
-        // private void OnAnimationFinished()
-        // {
-        //     ProcessNextPhase();
-        // }
-        //
-        // private void EndAction()
-        // {
-        //     _currentPhaseIndex = 0;
-        //     _unitAnimatorController.Finished -= OnAnimationFinished;
-        //     ActionEnded?.Invoke();
-        //     Debug.Log("Ending action");
-        // }
 
         private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, AnimationClip animationClip, float offset = 0)
         {
@@ -197,15 +101,7 @@ namespace Characters
 
                 yield return null;
             }
-
-            //_unitAnimatorController.PlayString(animationClip.name);
-           // _animationProcessingService.PlayAnimation(_source, "Idle"); //Тут не должен вызываться Idle
         }
-
-        // private IEnumerator PlayAbilityAnimation()
-        // {
-        //     yield return new WaitForSeconds(GetAnimationLength() + 0.1f);
-        // }
 
         private float GetAnimationLength(string animationName)
         {

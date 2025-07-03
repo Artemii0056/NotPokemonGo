@@ -11,7 +11,6 @@ namespace InputServices
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Left Mouse Button Pressed");
                 LeftMouseButtonPressed?.Invoke();
             }
         }

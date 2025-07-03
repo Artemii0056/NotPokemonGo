@@ -16,9 +16,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(Battlefield battlefield)
         {
             battlefield.Tick();
-            
-            // UnitActionState - отнять выносливость
-            // UnitActionState - сбросить кулдаун абилки
             _battleStateMachine.Enter<SelectReadyUnitState, Battlefield>(battlefield);
         }
 

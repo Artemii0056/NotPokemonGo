@@ -25,7 +25,6 @@ namespace Battlefields
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
-        private IAnimationProcessingService _animationProcessingService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -40,8 +39,7 @@ namespace Battlefields
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
-            AbilityPanelPresenter abilityPanelPresenter, 
-            IAnimationProcessingService animationProcessingService
+            AbilityPanelPresenter abilityPanelPresenter
             )
         {
             _battleStateMachine = battleStateMachine;
@@ -50,7 +48,6 @@ namespace Battlefields
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
-            _animationProcessingService = animationProcessingService;
         }
 
         public override void Enable()

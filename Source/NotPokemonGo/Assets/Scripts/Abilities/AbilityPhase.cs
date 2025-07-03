@@ -12,19 +12,7 @@ namespace Abilities
         
         public ArmamentSetup ArmamentSetup;
         public CastamentSetup CastamentSetup;
-        
-        public bool IsMelee;
-        public bool IsMovementPhase;
-        public bool IsReturnPhase;
         public TargetMode TargetMode;
         [field: SerializeField] public PhaseType PhaseType { get; set; }
-    }
-
-    public enum PhaseType
-    {
-        IsMelee,
-        IsMovementPhase,
-        IsReturnPhase,
-        Default
     }
 }

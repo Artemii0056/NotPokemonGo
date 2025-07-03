@@ -48,3 +48,12 @@ MonoBehaviour:
     IsReturnPhase: 0
     TargetMode: 2
     <PhaseType>k__BackingField: 3
+  <AbilityStatSetup>k__BackingField:
+  - <StatsType>k__BackingField: 0
+    Value: 0
+  - <StatsType>k__BackingField: 1
+    Value: 0
+  - <StatsType>k__BackingField: 2
+    Value: 0
+  - <StatsType>k__BackingField: 3
+    Value: 0

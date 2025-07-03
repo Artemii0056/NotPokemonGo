@@ -30,7 +30,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     break;
 
                 case PlatoonType.Enemies:
-                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield, payload.UnitSorce, _animationProcessingService);
+                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield, payload.UnitSorce);
                     break;
 
                 default:

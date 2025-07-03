@@ -27,8 +27,6 @@ namespace Units.AnimationControllers
 
         public event Action ActionEnded;
         
-        private List<EffectSetup> _effects;
-
         public UnitAnimatorTrigger(
             Unit unit,
             IStaticDataService staticDataService,
@@ -43,7 +41,7 @@ namespace Units.AnimationControllers
             _abilityProvider = abilityProvider;
             _controller = controller;
             _particleSystemFactory = particleSystemFactory;
-            _effects = new List<EffectSetup>();
+
             _particles = new List<ParticleSystem>();
 
             _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector);
@@ -80,8 +78,6 @@ namespace Units.AnimationControllers
 
         private void OnParticleSystem1Started()
         {
-            Debug.Log("OnParticleSystem1Started");
-
             var type = SearchAbility().AbilityType;
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
@@ -97,8 +93,6 @@ namespace Units.AnimationControllers
 
         private void OnParticleSystem2Started()
         {
-            Debug.Log("OnParticleSystem2Started");
-            
             var type = SearchAbility().AbilityType;
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
@@ -114,8 +108,6 @@ namespace Units.AnimationControllers
 
         private void OnParticleSystem3Started()
         {
-            Debug.Log("OnParticleSystem3Started");
-
             var a = _particleSystemFactory.Create(SearchAbility().EndAnimationParticles, _unit.transform,
                 Quaternion.identity);
             
@@ -124,25 +116,12 @@ namespace Units.AnimationControllers
 
         private void OnAttack()
         {
-            //Todo должен знать конкретный степ
-            
-           // _abilityPhaseService.Initialize(_phase);
-            
-            Debug.Log("OnAttack1Started");
-            
             _abilityPhaseService.OnNext(_phase);
-
-
-            // _abilityApplicatorService
-            //     .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
-            //         .ToArray());
         }
 
 
         private void OnFinished()
         {
-            Debug.Log("OnFinished");
-            
             foreach (var particle in _particles.ToList())
             {
                 UnityEngine.Object.Destroy(particle.gameObject);

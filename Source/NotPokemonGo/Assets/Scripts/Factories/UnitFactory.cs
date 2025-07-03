@@ -25,7 +25,6 @@ namespace Factories
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private readonly ITargetSelector _targetSelector;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IAnimationProcessingService _animationProcessingService;
 
         public UnitFactory(
             IEffectResolver effectResolver,
@@ -35,8 +34,7 @@ namespace Factories
             IStaticDataService staticDataService,
             IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector,
-            ICoroutineRunner coroutineRunner,
-            IAnimationProcessingService animationProcessingService)
+            ICoroutineRunner coroutineRunner)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
@@ -46,7 +44,6 @@ namespace Factories
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
             _coroutineRunner = coroutineRunner;
-            _animationProcessingService = animationProcessingService;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -56,8 +53,7 @@ namespace Factories
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
 
             unit.transform.SetParent(parentPosition, false);
-
-
+            
             UnitAnimatorController controller = unit.UnitAnimatorController;
 
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
@@ -71,8 +67,12 @@ namespace Factories
 
             Animator animator = unit.GetComponentInChildren<Animator>();
 
-            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, _coroutineRunner, controller,
-                _animationProcessingService, animator);
+            UnitStep unitStep = new UnitStep(
+                unitAnimatorTrigger,
+                controller,
+                animator,
+                _coroutineRunner
+                );
 
             unit.Construct(config.Stats, _effectResolver, unitStep, platoonType, unitAnimatorTrigger);
 

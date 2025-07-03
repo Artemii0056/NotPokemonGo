@@ -21,14 +21,14 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             foreach (Unit unit in batlfield.Units) 
                 _battleUnitContainer.Add(unit);
 
-            Unit unitSorce = _battleUnitContainer.Give();
+            Unit unitSource = _battleUnitContainer.Give();
 
-            if (unitSorce != null)
+            if (unitSource != null)
             {
                 _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
                     new UnitActionPayload
                     (
-                        unitSorce,
+                        unitSource,
                         batlfield)
                 );
                 
