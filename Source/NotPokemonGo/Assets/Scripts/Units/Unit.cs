@@ -10,16 +10,14 @@ using Stats;
 using Statuses;
 using Units.AnimationControllers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Units
 {
     public class Unit : MonoBehaviour
     {
-        [SerializeField] private List<AbilityAnchor> abilityAnchors;
+        [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
-        [FormerlySerializedAs("AbilityAnimationControllerBase")]
-        public UnitAnimatorController unitAnimatorController;
+        [SerializeField] private List<AbilityAnchor> abilityAnchors;
 
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
@@ -34,9 +32,8 @@ namespace Units
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
-        public event Action<Unit> Prepared;
-        public event Action AnimationActionEnded;
-
+        public event Action<Unit> Prepared; 
+        
         public PlatoonType PlatoonType { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
@@ -48,6 +45,9 @@ namespace Units
         public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
+            PlatoonType platoonType, 
+            UnitAnimatorTrigger unitAnimatorTrigger, 
+            UnitStep step)
             PlatoonType platoonType,
             UnitAnimatorTrigger unitAnimatorTrigger)
         {
@@ -55,17 +55,12 @@ namespace Units
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
+           Step = step; 
+
             foreach (var statSetup in statConfig)
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
-
-            _unitAnimatorTrigger.ActionEnded += OnActionEnded;
-        }
-
-        private void OnDestroy()
-        {
-            _unitAnimatorTrigger.ActionEnded -= OnActionEnded;
         }
 
         public float GetStat(StatType statType)
@@ -121,6 +116,9 @@ namespace Units
                 foreach (AbilityModel abilityModel in _abilityModels)
                     abilityModel.Tick();
             }
+            
+            Prepared?.Invoke(this);
+        }
         }
 
         private void TickAgility()

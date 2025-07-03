@@ -9,7 +9,6 @@ namespace Abilities.MV
     {
         public AbilityModel(AbilityConfig config)
         {
-            TargetMode = config.TargetMode;
             AbilityType = config.AbilityType;
             
             CastamentSetup = config.CastamentSetup;

@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Units.AnimationControllers
@@ -22,11 +21,12 @@ namespace Units.AnimationControllers
 
         public void Play(int animationName)
         {
-            if (_isPlaying)
-            {
-                return;
-            }
-
+            _isPlaying = true;
+            _animator.Play(animationName);
+        }
+        
+        public void PlayString(string animationName)
+        {
             _isPlaying = true;
             _animator.Play(animationName);
         }

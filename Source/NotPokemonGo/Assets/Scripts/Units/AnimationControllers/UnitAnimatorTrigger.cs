@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
-using Abilities.MV;
 using Effects;
 using Services.AbilityServices;
 using Services.StaticDataServices;
@@ -15,8 +14,6 @@ namespace Units.AnimationControllers
         private IStaticDataService _staticDataService;
         private IAbilityProvider _abilityProvider;
         private IParticleSystemFactory _particleSystemFactory;
-        private IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetSelector _targetSelector;
         
         private AbilityPhaseService _abilityPhaseService;
 
@@ -25,6 +22,8 @@ namespace Units.AnimationControllers
 
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
         private  List<ParticleSystem> _particles;
+        
+        private AbilityPhase _phase;
 
         public event Action ActionEnded;
         
@@ -44,20 +43,16 @@ namespace Units.AnimationControllers
             _abilityProvider = abilityProvider;
             _controller = controller;
             _particleSystemFactory = particleSystemFactory;
-            _abilityApplicatorService = abilityApplicatorService;
-            _targetSelector = targetSelector;
             _effects = new List<EffectSetup>();
             _particles = new List<ParticleSystem>();
 
             _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector);
-            _abilityPhaseService.Initialize(_abilityProvider.AbilityModel);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
             _controller.ParticleSystem3Started += OnParticleSystem3Started;
 
-            _controller.Attack1Started += OnAttack1Started;
-            _controller.Attack2Started += OnAttack2Started;
+            _controller.Attack1Started += OnAttack;
 
             _controller.Finished += OnFinished;
 
@@ -70,10 +65,14 @@ namespace Units.AnimationControllers
             _controller.ParticleSystem2Started -= OnParticleSystem2Started;
             _controller.ParticleSystem3Started -= OnParticleSystem3Started;
 
-            _controller.Attack1Started -= OnAttack1Started;
-            _controller.Attack2Started -= OnAttack2Started;
+            _controller.Attack1Started -= OnAttack;
 
             _controller.Finished -= OnFinished;
+        }
+        
+        public void SetPhase(AbilityPhase phase)
+        {
+            _phase = phase;
         }
 
         private AbilityConfig SearchAbility() =>
@@ -123,39 +122,27 @@ namespace Units.AnimationControllers
             _particles.AddRange(a);
         }
 
-        private void OnAttack1Started()
+        private void OnAttack()
         {
-            _abilityPhaseService.Initialize(_abilityProvider.AbilityModel);
+            //Todo должен знать конкретный степ
             
-            // AbilityModel ability = _abilityProvider.AbilityModel; // Todo - разделить логику? Передавать и абилку/список абилок?
-            //
-            // if (ability.CastamentSetup.EffectsSetup.Count > 1)
-            // {
-            //     _effects = ability.CastamentSetup.EffectsSetup;
-            // }
+           // _abilityPhaseService.Initialize(_phase);
             
             Debug.Log("OnAttack1Started");
             
-            _abilityPhaseService.OnNextTrigger();
-            
-            // _abilityApplicatorService
-            //     .Apply(_targetSelector.GetTargets(ability.TargetMode)
-            //         .ToArray());
-        }
-        
-        private void OnAttack2Started()
-        {
-            Debug.Log("OnAttack2Started");
-            
-            _abilityPhaseService.OnNextTrigger();
+            _abilityPhaseService.OnNext(_phase);
+
 
             // _abilityApplicatorService
             //     .Apply(_targetSelector.GetTargets(_abilityProvider.AbilityModel.TargetMode)
             //         .ToArray());
         }
 
+
         private void OnFinished()
         {
+            Debug.Log("OnFinished");
+            
             foreach (var particle in _particles.ToList())
             {
                 UnityEngine.Object.Destroy(particle.gameObject);
@@ -177,7 +164,5 @@ namespace Units.AnimationControllers
                 }
             }
         }
-
     }
-
 }

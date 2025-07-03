@@ -17,23 +17,11 @@ MonoBehaviour:
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
-  <Cost>k__BackingField: 0
-  <Cooldown>k__BackingField: 0
-  <TargetMode>k__BackingField: 0
+  <Cost>k__BackingField: 3
+  <Cooldown>k__BackingField: 2
   <Phases>k__BackingField:
-  - ArmamentSetup:
-      <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField: []
-      <ParticleSystem>k__BackingField: {fileID: 0}
-      <ArmamentView>k__BackingField: {fileID: 0}
-      <MoveSpeed>k__BackingField: 0
-    CastamentSetup:
-      <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField:
-      - Type: 1
-        Value: 20
-      <ParticleSystem>k__BackingField: {fileID: 0}
-  - ArmamentSetup:
+  - AnimationClip: {fileID: 7400000, guid: 340c607605a8ff74fb553547a12b23c0, type: 2}
+    ArmamentSetup:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField: []
       <ParticleSystem>k__BackingField: {fileID: 0}
@@ -45,19 +33,62 @@ MonoBehaviour:
       - Type: 1
         Value: 50
       <ParticleSystem>k__BackingField: {fileID: 0}
-  <ArmamentSetup>k__BackingField:
-    <Statuses>k__BackingField: []
-    <EffectInfo>k__BackingField: []
-    <ParticleSystem>k__BackingField: {fileID: 0}
-    <ArmamentView>k__BackingField: {fileID: 0}
-    <MoveSpeed>k__BackingField: 0
-  <CastamentSetup>k__BackingField:
-    <Statuses>k__BackingField: []
-    <EffectInfo>k__BackingField:
-    - Type: 1
-      Value: 10
-    - Type: 1
-      Value: 20
-    <ParticleSystem>k__BackingField: {fileID: 0}
-  <Prefab>k__BackingField: {fileID: 0}
-  <ParticleSystem>k__BackingField: {fileID: 0}
+    IsMelee: 0
+    IsMovementPhase: 1
+    IsReturnPhase: 0
+    TargetMode: 0
+    <PhaseType>k__BackingField: 1
+  - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
+    ArmamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField: []
+      <ParticleSystem>k__BackingField: {fileID: 0}
+      <ArmamentView>k__BackingField: {fileID: 0}
+      <MoveSpeed>k__BackingField: 0
+    CastamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField:
+      - Type: 1
+        Value: 20
+      <ParticleSystem>k__BackingField: {fileID: 0}
+    IsMelee: 1
+    IsMovementPhase: 0
+    IsReturnPhase: 0
+    TargetMode: 0
+    <PhaseType>k__BackingField: 0
+  - AnimationClip: {fileID: 7400000, guid: f0cb1e9cb8524e542964ac2a28c25060, type: 2}
+    ArmamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField: []
+      <ParticleSystem>k__BackingField: {fileID: 0}
+      <ArmamentView>k__BackingField: {fileID: 0}
+      <MoveSpeed>k__BackingField: 0
+    CastamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField:
+      - Type: 1
+        Value: 50
+      <ParticleSystem>k__BackingField: {fileID: 0}
+    IsMelee: 1
+    IsMovementPhase: 0
+    IsReturnPhase: 0
+    TargetMode: 0
+    <PhaseType>k__BackingField: 0
+  - AnimationClip: {fileID: 7400000, guid: 4d3d3482af9a61941bace981b70278af, type: 2}
+    ArmamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField: []
+      <ParticleSystem>k__BackingField: {fileID: 0}
+      <ArmamentView>k__BackingField: {fileID: 0}
+      <MoveSpeed>k__BackingField: 0
+    CastamentSetup:
+      <Statuses>k__BackingField: []
+      <EffectInfo>k__BackingField:
+      - Type: 1
+        Value: 50
+      <ParticleSystem>k__BackingField: {fileID: 0}
+    IsMelee: 0
+    IsMovementPhase: 0
+    IsReturnPhase: 1
+    TargetMode: 0
+    <PhaseType>k__BackingField: 2

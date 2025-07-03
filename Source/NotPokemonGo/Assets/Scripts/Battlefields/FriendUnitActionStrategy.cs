@@ -25,7 +25,7 @@ namespace Battlefields
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
-        private AnimationProcessingService _animationProcessingService;
+        private IAnimationProcessingService _animationProcessingService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -40,6 +40,9 @@ namespace Battlefields
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
+            AbilityPanelPresenter abilityPanelPresenter, 
+            IAnimationProcessingService animationProcessingService
+            )
             AbilityPanelPresenter abilityPanelPresenter
         )
         {
@@ -49,7 +52,7 @@ namespace Battlefields
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
-            _animationProcessingService = new AnimationProcessingService();
+            _animationProcessingService = animationProcessingService;
         }
 
         public override void Enable()
@@ -59,14 +62,15 @@ namespace Battlefields
             _sourceProvider.Remember(_source);
 
             _raycaster.UnitSearched += OnUnitSearched;
-            _source.AnimationActionEnded += OnAnimationActionEnded;
+            _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
         public override void Disable()
         {
             base.Disable();
+
+            _source.Step.ActionEnded -= OnAnimationActionEnded;
             _raycaster.UnitSearched -= OnUnitSearched;
-            _source.AnimationActionEnded -= OnAnimationActionEnded;
             _sourceProvider.Discard();
         }
 
@@ -85,9 +89,11 @@ namespace Battlefields
                     break;
 
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
+                    _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
+                    //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
                     _abilityPanelPresenter.Disable();
+                    _sourceProvider.Discard(); //TODO 
                     break;
 
                 default:
