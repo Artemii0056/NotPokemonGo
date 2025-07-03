@@ -5,6 +5,7 @@ using Animations;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Units;
+using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
 
@@ -21,11 +22,13 @@ namespace Battlefields
         private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
         private readonly IAnimationProcessingService _animationProcessingService;
+        private UnitAnimatorController _unitAnimatorController;
 
-        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source,IAnimationProcessingService animationProcessingService )
+        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source,IAnimationProcessingService animationProcessingService)
         {
             _animationProcessingService = animationProcessingService;
             _source = source;
+            _unitAnimatorController = _source.GetComponentInChildren<UnitAnimatorController>();
             _battlefield = battlefield;
         }
 
@@ -66,13 +69,17 @@ namespace Battlefields
             {
                 if (abilityModel.IsReady)
                 {
+                    _source.Step.SetAbilityModel(abilityModel, _source, GetRandomTarget(targets));
+                    
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
                     _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode); 
                     
                     Debug.Log("EnemyUnitActionStrategy");
                     
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
+                    //_unitAnimatorController.
+                    
+                    //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     break;
                 }
             }

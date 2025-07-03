@@ -1,14 +1,13 @@
-﻿using Abilities;
+﻿using System.Diagnostics;
+using Abilities;
 using Abilities.MV;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Services.AbilityServices
 {
-    public class AbilityPhaseService
+    public class AbilityPhaseService //TODO Эта залупа не нужна больше
     {
-        private AbilityModel _currentAbility;
-        private int _currentPhaseIndex;
-        
         private IAbilityApplicatorService _abilityApplicatorService;
         private ITargetSelector _targetSelector;
 
@@ -18,34 +17,15 @@ namespace Services.AbilityServices
             _targetSelector = targetSelector;
         }
 
-        public void Initialize(AbilityModel abilityModel)
+        public void OnNext(AbilityPhase phase)
         {
-            _currentAbility = abilityModel;
-            _currentPhaseIndex = 0;
-        }
-
-        public void OnNextTrigger()
-        {
-            Debug.Log(_currentAbility == null ? "абилка налл" : "ea залупа");
-            
-            if (_currentAbility == null || _currentPhaseIndex >= _currentAbility.Phases.Count)
-                return;
-
-            AbilityPhase phase = _currentAbility.Phases[_currentPhaseIndex];
+            Debug.Log(phase == null);
             
             if (phase.CastamentSetup.HasSetupData)
-                _abilityApplicatorService.Apply(phase.CastamentSetup, _targetSelector.GetTargets(_currentAbility.TargetMode).ToArray()); 
+                _abilityApplicatorService.Apply(phase.CastamentSetup, _targetSelector.GetTargets(phase.TargetMode).ToArray()); 
             
             if (phase.ArmamentSetup.HasSetupData)
-                _abilityApplicatorService.Apply(phase.ArmamentSetup, _targetSelector.GetTargets(_currentAbility.TargetMode).ToArray());
-
-            _currentPhaseIndex++;
-        }
-
-        public void Reset()
-        {
-            _currentAbility = null;
-            _currentPhaseIndex = 0;
+                _abilityApplicatorService.Apply(phase.ArmamentSetup, _targetSelector.GetTargets(phase.TargetMode).ToArray());
         }
     }
 }

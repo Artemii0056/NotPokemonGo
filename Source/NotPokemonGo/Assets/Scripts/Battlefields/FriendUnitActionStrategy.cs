@@ -81,9 +81,11 @@ namespace Battlefields
                     break;
                 
                 case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
+                    _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
+                    //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
                     _abilityPanelPresenter.Disable();
+                    _sourceProvider.Discard(); //TODO 
                     break;
                 
                 default:

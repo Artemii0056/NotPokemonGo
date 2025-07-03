@@ -9,7 +9,6 @@ using Stats;
 using Statuses;
 using Units.AnimationControllers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -47,25 +46,28 @@ namespace Units
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
             PlatoonType platoonType, 
-            UnitAnimatorTrigger unitAnimatorTrigger)
+            UnitAnimatorTrigger unitAnimatorTrigger, 
+            UnitStep step)
         {
             _unitAnimatorTrigger = unitAnimatorTrigger;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
-            //Step = new UnitStep(); //TODO Попробовать логику через него
+           Step = step; 
 
             foreach (var statSetup in statConfig)
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
-
-            _unitAnimatorTrigger.ActionEnded += OnActionEnded;
+            
+             _unitAnimatorTrigger.ActionEnded += OnActionEnded;
+            Step.ActionEnded += OnActionEnded;
         }
 
         private void OnDestroy()
         {
             _unitAnimatorTrigger.ActionEnded -= OnActionEnded;
+            Step.ActionEnded -= OnActionEnded;
         }
 
         public float GetStat(StatType statType)

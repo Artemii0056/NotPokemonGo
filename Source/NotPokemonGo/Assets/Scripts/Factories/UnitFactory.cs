@@ -1,7 +1,9 @@
 ﻿using Abilities;
 using Abilities.MV;
+using Animations;
 using Characters;
 using Effects;
+using Services;
 using Services.StaticDataServices;
 using UI;
 using UI.Sliders;
@@ -21,14 +23,20 @@ namespace Factories
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetSelector _targetSelector;
+        private readonly ITargetSelector _targetSelector;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IAnimationProcessingService _animationProcessingService;
 
         public UnitFactory(
             IEffectResolver effectResolver, 
             IObjectResolver  objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService, IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
+            IStaticDataService staticDataService, 
+            IAbilityApplicatorService abilityApplicatorService, 
+            ITargetSelector targetSelector, 
+            ICoroutineRunner coroutineRunner, 
+            IAnimationProcessingService animationProcessingService)
         {
             _effectResolver = effectResolver;
             _objectResolver = objectResolver;
@@ -37,6 +45,8 @@ namespace Factories
             _staticDataService = staticDataService;
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
+            _coroutineRunner = coroutineRunner;
+            _animationProcessingService = animationProcessingService;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -59,7 +69,11 @@ namespace Factories
                 _abilityApplicatorService,
                 _targetSelector);
             
-            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger);
+            Animator animator = unit.GetComponentInChildren<Animator>();
+
+            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, _coroutineRunner, controller, _animationProcessingService, animator);
+            
+            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger, unitStep);
             
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

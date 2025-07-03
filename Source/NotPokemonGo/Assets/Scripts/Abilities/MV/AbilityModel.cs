@@ -6,8 +6,6 @@ namespace Abilities.MV
     {
         public AbilityModel(AbilityConfig config)
         {
-            IsMelee = config.IsMeleeAttack;
-            TargetMode = config.TargetMode;
             AbilityType = config.AbilityType;
             
             Cost = config.Cost;

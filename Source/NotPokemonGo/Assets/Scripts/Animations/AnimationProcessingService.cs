@@ -11,10 +11,13 @@ namespace Animations
         public AnimationProcessingService(IStaticDataService staticDataService) => 
             _staticDataService = staticDataService;
 
-        private int GetAnimationHash(AbilityType abilityType) =>
-            _staticDataService.GetAbilityConfig(abilityType).AnimationHash;
+        // private int GetAnimationHash(AbilityType abilityType) =>
+        //     _staticDataService.GetAbilityConfig(abilityType).AnimationHash;
 
-        public void PlayAnimation(Unit source, AbilityType abilityType) => 
-            source.UnitAnimatorController.Play(GetAnimationHash(abilityType));
+        // public void PlayAnimation(Unit source, AbilityType abilityType) => 
+        //     source.UnitAnimatorController.Play(GetAnimationHash(abilityType));
+        //
+        // public void PlayAnimation(Unit source, string name) => 
+        //     source.UnitAnimatorController.PlayString(name);
     }
 }
