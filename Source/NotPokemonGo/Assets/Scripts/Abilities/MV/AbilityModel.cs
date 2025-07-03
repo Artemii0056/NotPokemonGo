@@ -11,12 +11,10 @@ namespace Abilities.MV
         {
             AbilityType = config.AbilityType;
             
-            CastamentSetup = config.CastamentSetup;
-            ArmamentSetup = config.ArmamentSetup;
-            
             Phases = config.Phases;
 
             _stats = new Dictionary<AbilityStatType, AbilityStatSetup>();
+
             foreach (AbilityStatSetup abilityStatSetup in config.AbilityStatSetup) 
                 _stats[abilityStatSetup.StatsType] = abilityStatSetup;
         }
@@ -28,11 +26,6 @@ namespace Abilities.MV
         
         public List<AbilityPhase> Phases { get; private set; }
         
-        public ArmamentSetup ArmamentSetup { get; private set; }
-        public CastamentSetup CastamentSetup { get; private set; }
-        
-        public bool HasArmament => ArmamentSetup.HasSetupData;
-        public bool HasCastament => CastamentSetup.HasSetupData;
         public float Cost => _stats[AbilityStatType.Cost].Value; 
 
         public bool IsReady()

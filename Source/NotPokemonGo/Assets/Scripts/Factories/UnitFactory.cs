@@ -28,14 +28,14 @@ namespace Factories
         private readonly IAnimationProcessingService _animationProcessingService;
 
         public UnitFactory(
-            IEffectResolver effectResolver, 
-            IObjectResolver  objectResolver,
+            IEffectResolver effectResolver,
+            IObjectResolver objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService, 
-            IAbilityApplicatorService abilityApplicatorService, 
-            ITargetSelector targetSelector, 
-            ICoroutineRunner coroutineRunner, 
+            IStaticDataService staticDataService,
+            IAbilityApplicatorService abilityApplicatorService,
+            ITargetSelector targetSelector,
+            ICoroutineRunner coroutineRunner,
             IAnimationProcessingService animationProcessingService)
         {
             _effectResolver = effectResolver;
@@ -52,36 +52,37 @@ namespace Factories
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
         {
             Vector3 posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
-            
+
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
-            
+
             unit.transform.SetParent(parentPosition, false);
-            
-            
-            UnitAnimatorController controller =unit.UnitAnimatorController;
-            
+
+
+            UnitAnimatorController controller = unit.UnitAnimatorController;
+
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
-                unit, 
-                _staticDataService, 
-                _abilityProvider, 
-                controller, 
-                _particleSystemFactory, 
+                unit,
+                _staticDataService,
+                _abilityProvider,
+                controller,
+                _particleSystemFactory,
                 _abilityApplicatorService,
                 _targetSelector);
-            
+
             Animator animator = unit.GetComponentInChildren<Animator>();
 
-            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, _coroutineRunner, controller, _animationProcessingService, animator);
-            
-            unit.Construct(config.Stats, _effectResolver, platoonType, unitAnimatorTrigger, unitStep);
-            
+            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, _coroutineRunner, controller,
+                _animationProcessingService, animator);
+
+            unit.Construct(config.Stats, _effectResolver, unitStep, platoonType, unitAnimatorTrigger);
+
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
                 unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
             }
 
             InitializeView(unit);
-            
+
             return unit;
         }
 
@@ -89,12 +90,11 @@ namespace Factories
         {
             UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
-            
+
             unitViewPanel.Construct(unit);
 
             _objectResolver.Inject(unitViewPanel);
             _objectResolver.Inject(slidersView);
         }
     }
-
 }

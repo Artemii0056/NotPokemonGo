@@ -45,9 +45,7 @@ namespace Units
         public void Construct(
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
-            PlatoonType platoonType, 
-            UnitAnimatorTrigger unitAnimatorTrigger, 
-            UnitStep step)
+            UnitStep step,
             PlatoonType platoonType,
             UnitAnimatorTrigger unitAnimatorTrigger)
         {
@@ -62,6 +60,8 @@ namespace Units
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
         }
+
+        public UnitStep Step { get; set; }
 
         public float GetStat(StatType statType)
         {
@@ -95,10 +95,7 @@ namespace Units
 
         public void AddAbility(AbilityModel ability) =>
             _abilityModels.Add(ability);
-
-        private void OnActionEnded() =>
-            AnimationActionEnded?.Invoke();
-
+        
         public void ResetAgility() =>
             _stats[StatType.CurrentAgility].Set(0);
 
@@ -118,7 +115,6 @@ namespace Units
             }
             
             Prepared?.Invoke(this);
-        }
         }
 
         private void TickAgility()

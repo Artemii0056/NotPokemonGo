@@ -51,7 +51,7 @@ namespace Battlefields
         public override void Enable()
         {
             base.Enable();
-            Attack(_battlefield.Platoon2.Heroes);
+            Attack(_battlefield.Heroes.Units);
             _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
@@ -73,16 +73,11 @@ namespace Battlefields
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
                     _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode);
-
-                    _animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel);
-
+                    
                     abilityModel.DiscardCurrentTime();
 
                     if (abilityModel.Cost > 0) 
                         _source.ResetAgility();
-
-                    // UnitActionState - отнять выносливость
-                    // UnitActionState - сбросить кулдаун абилки
 
                     break;
                 }

@@ -17,5 +17,6 @@ namespace Abilities
         [field: SerializeField] public float Cooldown { get; private set; }
 
         [field: SerializeField] public List<AbilityPhase> Phases { get; private set; }
+        [field: SerializeField] public List<AbilityStatSetup> AbilityStatSetup { get; private set; }
     }
 }

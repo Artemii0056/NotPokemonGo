@@ -22,7 +22,7 @@ namespace Platoons
 
         public PlatoonType PlatoonType { get; private set; }
 
-        public List<Unit> Heroes => _units.ToList();
+        public List<Unit> Units => _units.ToList();
 
         public void Enable()
         {

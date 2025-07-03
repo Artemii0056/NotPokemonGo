@@ -43,8 +43,6 @@ namespace Battlefields
             AbilityPanelPresenter abilityPanelPresenter, 
             IAnimationProcessingService animationProcessingService
             )
-            AbilityPanelPresenter abilityPanelPresenter
-        )
         {
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;

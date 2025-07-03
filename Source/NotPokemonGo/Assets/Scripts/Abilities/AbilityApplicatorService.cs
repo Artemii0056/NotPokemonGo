@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
+using Abilities.MV;
 using Effects;
 using Factories;
 using Services;
@@ -22,6 +24,7 @@ namespace Abilities
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
         private readonly ISourceProvider _sourceProvider;
+        private readonly IAbilityProvider _abilityProvider;
 
         public AbilityApplicatorService(
             IArmamentViewFactory armamentViewFactory,
@@ -29,7 +32,8 @@ namespace Abilities
             IEffectResolver effectResolver,
             ICoroutineRunner coroutineRunner, 
             IStatusResolver statusResolver, 
-            ISourceProvider sourceProvider)
+            ISourceProvider sourceProvider,
+            IAbilityProvider abilityProvider)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
@@ -39,32 +43,7 @@ namespace Abilities
             _sourceProvider = sourceProvider;
             _abilityProvider = abilityProvider;
         }
-
-        public void Apply(params Unit[] targets)
-        {
-            AbilityModel abilityModel = _abilityProvider.AbilityModel; // TODO Текущие настройки сюда получить??
-
-            if (abilityModel == null)
-                throw new NullReferenceException("AbilityModel is null or not ready");
-
-            if (abilityModel.IsReady() == false)
-                throw new NullReferenceException("AbilityModel is not ready");
-            
-            if (abilityModel.HasArmament)
-            {
-                ApplyArmament(abilityModel, targets);
-            }
-            else if (abilityModel.HasCastament)
-            {
-                ApplyCastament(abilityModel, targets);
-            }
-
-            abilityModel.DiscardCurrentTime();
-            // _abilityProvider.Discard();
-            // _sourceProvider.Discard();
-            //TODO Дискарднуть абидити панел
-        }
-
+        
         public void Apply(CastamentSetup setup, params Unit[] targets)
         {
             foreach (var target in targets)
