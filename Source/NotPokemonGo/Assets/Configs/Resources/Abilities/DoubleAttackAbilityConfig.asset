@@ -17,7 +17,7 @@ MonoBehaviour:
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
-  <Cost>k__BackingField: 2
+  <Cost>k__BackingField: 3
   <Cooldown>k__BackingField: 2
   <Phases>k__BackingField:
   - AnimationClip: {fileID: 7400000, guid: 340c607605a8ff74fb553547a12b23c0, type: 2}
