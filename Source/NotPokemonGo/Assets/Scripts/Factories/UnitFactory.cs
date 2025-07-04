@@ -83,10 +83,10 @@ namespace Factories
             UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
 
-            unitViewPanel.Construct(unit);
-
             _objectResolver.Inject(unitViewPanel);
             _objectResolver.Inject(slidersView);
+
+            unitViewPanel.Construct(unit);
         }
     }
 }

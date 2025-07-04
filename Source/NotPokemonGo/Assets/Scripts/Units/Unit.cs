@@ -62,6 +62,8 @@ namespace Units
             {
                 stat.CurrentValueChanged += StatChanged;
             }
+            
+            HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
         }
 
         private void OnDestroy()
@@ -70,6 +72,11 @@ namespace Units
             {
                 stat.CurrentValueChanged -= StatChanged;
             }
+        }
+
+        private void Update()
+        {
+            HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
         }
 
         private void StatChanged(float current, StatType statType)

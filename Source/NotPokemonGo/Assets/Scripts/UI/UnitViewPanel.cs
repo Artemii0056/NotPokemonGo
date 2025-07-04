@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Characters;
@@ -27,21 +28,24 @@ namespace UI
             _unit.HealthChanged += OnHealthChanged;
         }
 
+        private void OnDestroy()
+        {
+            _unit.StatusAdded -= OnStatusAdded;
+            _unit.StatusRemoved -= OnStatusRemoved;
+            _unit.AgilityChanged -= OnAgilityChanged;
+            _unit.HealthChanged -= OnHealthChanged;
+        }
+
         [Inject]
         public void Initialize(IStaticDataService staticDataLoadService)
         {
             _staticDataLoadService = staticDataLoadService;
         }
 
-        private void OnDestroy()
-        {
-            _unit.StatusAdded -= OnStatusAdded;
-            _unit.StatusRemoved -= OnStatusRemoved;
-        }
 
         private void OnHealthChanged(float currentHealth, float maxHealth)
         {
-            _unitSliderView.ChangeHealthSlider(currentHealth, currentHealth);
+            _unitSliderView.ChangeHealthSlider(currentHealth, maxHealth);
         }
 
         private void OnAgilityChanged(float currentAgility, float maxAgility)
