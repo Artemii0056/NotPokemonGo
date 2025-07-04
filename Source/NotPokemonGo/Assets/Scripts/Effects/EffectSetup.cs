@@ -1,6 +1,5 @@
 ﻿using System;
-using Characters.Configs.Stats;
-using StatType = Stats.StatType;
+using Stats;
 
 namespace Effects
 {
