@@ -1,6 +1,5 @@
 ﻿using Abilities;
 using Abilities.MV;
-using Animations;
 using Characters;
 using Effects;
 using Services;
@@ -65,16 +64,9 @@ namespace Factories
                 _abilityApplicatorService,
                 _targetSelector);
 
-            Animator animator = unit.GetComponentInChildren<Animator>();
+            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
 
-            UnitStep unitStep = new UnitStep(
-                unitAnimatorTrigger,
-                controller,
-                animator,
-                _coroutineRunner
-                );
-
-            unit.Construct(config.Stats, _effectResolver, unitStep, platoonType, unitAnimatorTrigger);
+            unit.Construct(config.Stats, _effectResolver, unitStep, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

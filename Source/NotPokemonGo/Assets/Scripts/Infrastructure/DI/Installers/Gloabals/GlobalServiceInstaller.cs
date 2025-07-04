@@ -1,5 +1,4 @@
 ﻿using Abilities;
-using Animations;
 using Battlefields;
 using Effects;
 using Factories;
@@ -9,10 +8,8 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
-using Infrastructure.StateMachines.States;
 using InputServices;
 using Platoons;
-using Services;
 using Services.AssetManagement;
 using Services.BattleUnitContainers;
 using Services.Cameras;
@@ -88,8 +85,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
             builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
-            
-            builder.Register<IAnimationProcessingService, AnimationProcessingService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

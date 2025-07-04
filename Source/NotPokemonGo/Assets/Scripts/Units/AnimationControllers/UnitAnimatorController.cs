@@ -25,12 +25,6 @@ namespace Units.AnimationControllers
             _animator.Play(animationName);
         }
         
-        public void PlayString(string animationName)
-        {
-            _isPlaying = true;
-            _animator.Play(animationName);
-        }
-
         public void FlagParticleSystem1() => 
             ParticleSystem1Started?.Invoke();
 

@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Abilities;
 using Abilities.MV;
-using Animations;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using InputServices;
-using Services.StaticDataServices;
 using UI.Ability;
 using Units;
 using UnityEngine;
@@ -99,9 +96,6 @@ namespace Battlefields
 
             if (_abilityProvider.AbilityModel.Cost > 0)
                 _source.ResetAgility();
-
-            // UnitActionState - отнять выносливость
-            // UnitActionState - сбросить кулдаун абилки
         }
 
         private void ShowAbilityInfos(List<AbilityModel> abilityModels)

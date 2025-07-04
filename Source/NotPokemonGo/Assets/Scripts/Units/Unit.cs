@@ -25,7 +25,6 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
         private IEffectResolver _effectResolver;
-        private UnitAnimatorTrigger _unitAnimatorTrigger;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
@@ -35,6 +34,7 @@ namespace Units
         public event Action<Unit> Prepared; 
         
         public PlatoonType PlatoonType { get; private set; }
+        public UnitStep Step { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
@@ -46,10 +46,8 @@ namespace Units
             List<StatConfig> statConfig,
             IEffectResolver effectResolver,
             UnitStep step,
-            PlatoonType platoonType,
-            UnitAnimatorTrigger unitAnimatorTrigger)
+            PlatoonType platoonType)
         {
-            _unitAnimatorTrigger = unitAnimatorTrigger;
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
@@ -61,7 +59,6 @@ namespace Units
             }
         }
 
-        public UnitStep Step { get; set; }
 
         public float GetStat(StatType statType)
         {

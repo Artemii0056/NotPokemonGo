@@ -1,11 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
-using Abilities;
 using Abilities.MV;
-using Animations;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
+using Services;
 using Units;
-using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
 
@@ -20,6 +19,7 @@ namespace Battlefields
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
+        private ICoroutineRunner _coroutineRunner;
 
         public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -32,9 +32,11 @@ namespace Battlefields
             IBattleStateMachine battleStateMachine,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
-            ITargetSelector targetSelector
+            ITargetSelector targetSelector,
+            ICoroutineRunner coroutineRunner
         )
         {
+            _coroutineRunner = coroutineRunner;
             _targetSelector = targetSelector;
             _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
@@ -80,7 +82,15 @@ namespace Battlefields
         private Unit GetRandomTarget(List<Unit> targets) =>
             targets[Random.Range(0, targets.Count)];
 
-        private void OnAnimationActionEnded() =>
+        private void OnAnimationActionEnded()
+        {
+            _coroutineRunner.StartCoroutine(wait());
+        }
+
+        private IEnumerator wait()
+        {
+            yield return new WaitForSeconds(3f);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
+        }
     }
 }

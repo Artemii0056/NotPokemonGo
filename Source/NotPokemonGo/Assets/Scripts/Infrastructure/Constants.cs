@@ -28,5 +28,10 @@ namespace Infrastructure
             public static Vector3 Platoon1Position = new Vector3(0, 0, 3);
             public static Vector3 Platoon2Position = new Vector3(0, 0, -3);
         }
+        
+        public static class BaseAnimations
+        {
+            public static int Idle = Animator.StringToHash(nameof(Idle));
+        }
     }
 }
