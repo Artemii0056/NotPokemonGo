@@ -31,6 +31,7 @@ MonoBehaviour:
       <Statuses>k__BackingField:
       - EffectSetup:
           Type: 1
+          TargetType: 1
           Value: 0
         Type: 1
         TargetTime: 1
@@ -38,7 +39,8 @@ MonoBehaviour:
         IsPermanent: 0
         IsRefreshed: 1
       <EffectInfo>k__BackingField:
-      - Type: 2
+      - Type: 1
+        TargetType: 1
         Value: 30
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 2

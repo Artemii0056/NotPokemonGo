@@ -28,10 +28,10 @@ namespace Abilities
 
         public AbilityApplicatorService(
             IArmamentViewFactory armamentViewFactory,
-            IStatusFactory statusFactory, 
+            IStatusFactory statusFactory,
             IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner, 
-            IStatusResolver statusResolver, 
+            ICoroutineRunner coroutineRunner,
+            IStatusResolver statusResolver,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider)
         {
@@ -43,7 +43,7 @@ namespace Abilities
             _sourceProvider = sourceProvider;
             _abilityProvider = abilityProvider;
         }
-        
+
         public void Apply(CastamentSetup setup, params Unit[] targets)
         {
             foreach (var target in targets)
@@ -52,7 +52,7 @@ namespace Abilities
                 List<Status> statuses = CreateStatuses(setup.Statuses, target);
 
                 ApplyEffectsOnTarget(target, statuses, effects);
-                
+
                 if (setup.ParticleSystem != null)
                 {
                     ParticleSystem effect = Object.Instantiate(setup.ParticleSystem);
@@ -61,25 +61,24 @@ namespace Abilities
                 }
             }
         }
-        
+
         public void Apply(ArmamentSetup setup, params Unit[] targets)
         {
             foreach (var target in targets)
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(setup.Statuses, target);
-                
+
                 if (_sourceProvider.Source == null)
                 {
                     Debug.LogError("No sourceProvider has been setup");
                 }
-                
+
                 ArmamentView armamentView =
                     _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
                         setup.ArmamentView, target);
 
                 _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
-
             }
         }
 
@@ -93,7 +92,7 @@ namespace Abilities
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
-            effects.Select(s => new EffectInfo(s.Type, s.Value)).ToList();
+            effects.Select(s => new EffectInfo(s.Type, s.Value, s.TargetType)).ToList();
 
         private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit target) =>
             setups.Select(s => _statusFactory.Create(s, target, _effectResolver)).ToList();
@@ -103,8 +102,11 @@ namespace Abilities
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
-            foreach (var effectInfo in effects) 
-                target.ReceiveDamage(effectInfo);
+            foreach (var effectInfo in effects)
+            {
+                _effectResolver.ApplyEffect(target, effectInfo);
+                // target.ReceiveDamage(effectInfo);
+            }
         }
     }
 }

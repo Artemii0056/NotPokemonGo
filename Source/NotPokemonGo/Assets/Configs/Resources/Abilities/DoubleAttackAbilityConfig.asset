@@ -29,6 +29,7 @@ MonoBehaviour:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
       - Type: 1
+        TargetType: 0
         Value: 50
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
@@ -44,6 +45,7 @@ MonoBehaviour:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
       - Type: 1
+        TargetType: 1
         Value: 20
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
@@ -59,6 +61,7 @@ MonoBehaviour:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
       - Type: 1
+        TargetType: 1
         Value: 50
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
@@ -74,6 +77,7 @@ MonoBehaviour:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
       - Type: 1
+        TargetType: 0
         Value: 50
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
