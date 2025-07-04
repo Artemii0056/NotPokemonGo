@@ -15,7 +15,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(Battlefield battlefield)
         {
             battlefield.Tick();
-            //Debug.LogError("Разберись с StatusType и EffectType. эффект = урон и хил. Статусы = яд, благословение пизды, увольнение Сени и пр.");
             _battleStateMachine.Enter<SelectReadyUnitState, Battlefield>(battlefield);
         }
 

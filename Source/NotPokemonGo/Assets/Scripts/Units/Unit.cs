@@ -111,12 +111,6 @@ namespace Units
             return _stats[statType].CurrentValue;
         }
 
-        // public void ReceiveDamage(EffectInfo effectInfo)
-        // {
-        //     float damage = _effectResolver.CalculateFinalValue(this, effectInfo);
-        //     ChangeStatValue(StatType.Health, damage);
-        // }
-
         public void ChangeStatValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);

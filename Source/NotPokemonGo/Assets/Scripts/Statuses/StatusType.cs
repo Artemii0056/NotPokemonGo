@@ -6,7 +6,7 @@
         Heal = 2,
         Poison = 3,
         PositiveSpeed = 4,
-        NegativeSpeed = 4,
+        NegativeSpeed = 5,
         Stun = 5,
     }
 }

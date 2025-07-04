@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
-using Abilities.MV;
 using Effects;
 using Factories;
 using Services;
@@ -102,11 +100,8 @@ namespace Abilities
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
-            foreach (var effectInfo in effects)
-            {
+            foreach (var effectInfo in effects) 
                 _effectResolver.ApplyEffect(target, effectInfo);
-                // target.ReceiveDamage(effectInfo);
-            }
         }
     }
 }

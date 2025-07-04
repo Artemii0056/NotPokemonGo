@@ -1,7 +1,6 @@
 ﻿using System;
 using Stats;
 using Units;
-using UnityEngine;
 
 namespace Effects
 {
@@ -23,18 +22,20 @@ namespace Effects
 
             return value;
         }
+        
+        public void ApplyEffect(Unit target, EffectInfo effect)
+        {
+            float finalValue = CalculateFinalValue(target, effect);
+            target.ChangeStatValue(effect.TargetType, finalValue);
+        }
 
         private float CalculateStatModification(Unit target, StatType targetStat, float baseValue)
         {
             float finalValue = baseValue;
             
-            Debug.Log("CalculateStatModification");
-
             switch (targetStat)
             {
                 case StatType.Health:
-                    Debug.Log("StatType.Health" + finalValue);
-
                     finalValue = -finalValue;
                     
                     // if (baseValue < 0)
@@ -48,48 +49,16 @@ namespace Effects
                     break;
 
                 case StatType.AgilityRestoreSpeed:
-                    // Например, любые изменения скорости не модифицируются, возвращаем как есть
                     break;
 
                 case StatType.ArmorChance:
-                    // Можно добавить модификаторы (бафы/дебафы) или ограничения
                     break;
 
                 case StatType.Mana:
-                    // Здесь можно ограничить max/min значения или проверять флаги
-                    break;
-
-                default:
-                    // Поддержка новых статов
                     break;
             }
 
             return finalValue;
         }
-
-        public void ApplyEffect(Unit target, EffectInfo effect)
-        {
-            float finalValue = CalculateFinalValue(target, effect);
-            target.ChangeStatValue(effect.TargetType, finalValue);
-        }
-        
-        // public float CalculateFinalValue(Unit target, EffectInfo effectInfo)
-        // {
-        //     float value = effectInfo.Value;
-        //
-        //     switch (effectInfo.Type)
-        //     {
-        //         case EffectType.Damage:
-        //             float armor = target.GetStat(StatType.ArmorChance);
-        //             value = -Math.Max(0, effectInfo.Value - armor);
-        //             break;
-        //
-        //         case EffectType.Heal:
-        //             value = effectInfo.Value;
-        //             break;
-        //     }
-        //
-        //     return value;
-        // }
     }
 }
