@@ -68,12 +68,18 @@ namespace Abilities
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(setup.Statuses, target);
-
+                
+                if (_sourceProvider.Source == null)
+                {
+                    Debug.LogError("No sourceProvider has been setup");
+                }
+                
                 ArmamentView armamentView =
                     _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
                         setup.ArmamentView, target);
 
                 _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
+
             }
         }
 

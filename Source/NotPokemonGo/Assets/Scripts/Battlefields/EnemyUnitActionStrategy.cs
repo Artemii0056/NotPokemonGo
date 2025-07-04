@@ -84,12 +84,6 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            _coroutineRunner.StartCoroutine(wait());
-        }
-
-        private IEnumerator wait()
-        {
-            yield return new WaitForSeconds(3f);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }

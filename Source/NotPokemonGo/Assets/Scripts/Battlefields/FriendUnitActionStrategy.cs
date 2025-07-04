@@ -85,7 +85,6 @@ namespace Battlefields
                     //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
                     _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
                     _abilityPanelPresenter.Disable();
-                    _sourceProvider.Discard(); //TODO 
                     break;
 
                 default:
