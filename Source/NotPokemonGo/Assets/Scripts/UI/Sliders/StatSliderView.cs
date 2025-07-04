@@ -9,7 +9,7 @@ namespace UI.Sliders
         
         public void ChangeFilling(float currentValue, float maxValue)
         {
-            float ratio = Mathf.Clamp01(1f - (currentValue / maxValue));
+            float ratio = Mathf.Clamp01((currentValue / maxValue));
             _icon.fillAmount = ratio;
         }
     }

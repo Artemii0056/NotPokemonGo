@@ -23,6 +23,8 @@ namespace UI
             _unit = unit;
             _unit.StatusAdded += OnStatusAdded;
             _unit.StatusRemoved += OnStatusRemoved;
+            _unit.AgilityChanged += OnAgilityChanged;
+            _unit.HealthChanged += OnHealthChanged;
         }
 
         [Inject]
@@ -36,7 +38,17 @@ namespace UI
             _unit.StatusAdded -= OnStatusAdded;
             _unit.StatusRemoved -= OnStatusRemoved;
         }
-        
+
+        private void OnHealthChanged(float currentHealth, float maxHealth)
+        {
+            _unitSliderView.ChangeHealthSlider(currentHealth, currentHealth);
+        }
+
+        private void OnAgilityChanged(float currentAgility, float maxAgility)
+        {
+            _unitSliderView.ChangeAgilitySlider(currentAgility, maxAgility);
+        }
+
         private void OnStatusAdded(Status status)
         {
             StatusView view;

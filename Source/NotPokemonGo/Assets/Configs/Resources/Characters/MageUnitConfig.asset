@@ -27,8 +27,10 @@ MonoBehaviour:
     Value: 0
   - <StatsType>k__BackingField: 6
     Value: 15
-  - <StatsType>k__BackingField: 20
+  - <StatsType>k__BackingField: 7
     Value: 1
+  - <StatsType>k__BackingField: 20
+    Value: 0
   - <StatsType>k__BackingField: 21
     Value: 10
   - <StatsType>k__BackingField: 22

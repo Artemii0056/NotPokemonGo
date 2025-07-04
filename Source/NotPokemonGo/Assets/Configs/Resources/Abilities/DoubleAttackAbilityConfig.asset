@@ -17,8 +17,6 @@ MonoBehaviour:
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
-  <Cost>k__BackingField: 3
-  <Cooldown>k__BackingField: 2
   <Phases>k__BackingField:
   - AnimationClip: {fileID: 7400000, guid: 340c607605a8ff74fb553547a12b23c0, type: 2}
     ArmamentSetup:
@@ -82,10 +80,10 @@ MonoBehaviour:
     <PhaseType>k__BackingField: 2
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
-    Value: 0
+    Value: 1
   - <StatsType>k__BackingField: 1
-    Value: 0
+    Value: 2
   - <StatsType>k__BackingField: 2
     Value: 0
   - <StatsType>k__BackingField: 3
-    Value: 0
+    Value: 1

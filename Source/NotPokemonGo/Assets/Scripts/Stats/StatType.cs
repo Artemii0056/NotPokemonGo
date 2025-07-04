@@ -3,11 +3,12 @@ namespace Stats
     public enum StatType
     {
         Health = 1,
-        Mana = 2,
-        DodgeChance = 3,
-        Accuracy = 4,
-        ArmorChance = 5,
-        Damage = 6,
+        MaxHealth = 2,
+        Mana = 3,
+        DodgeChance = 4,
+        Accuracy = 5,
+        ArmorChance = 6,
+        Damage = 7,
         
         CurrentAgility = 20,
         MaxAgility = 21,

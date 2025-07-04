@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
 using Abilities.MV;
 using Characters;
 using Characters.Configs;
@@ -15,6 +14,7 @@ namespace Units
 {
     public class Unit : MonoBehaviour
     {
+        public Transform abilityPos;
         [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
@@ -27,11 +27,6 @@ namespace Units
         private IEffectResolver _effectResolver;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
-
-        public event Action<Status> StatusAdded;
-        public event Action<Status> StatusRemoved;
-
-        public event Action<Unit> Prepared; 
         
         public PlatoonType PlatoonType { get; private set; }
         public UnitStep Step { get; private set; }
@@ -39,8 +34,13 @@ namespace Units
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
+        public event Action<Status> StatusAdded;
+        public event Action<Status> StatusRemoved;
 
-        public Transform abilityPos;
+        public event Action<Unit> Prepared; 
+
+        public event Action<float, float> AgilityChanged;
+        public event Action<float, float> HealthChanged;
 
         public void Construct(
             List<StatConfig> statConfig,
@@ -51,14 +51,53 @@ namespace Units
             _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
-           Step = step; 
+            Step = step; 
 
             foreach (var statSetup in statConfig)
             {
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
             }
+
+            foreach (StatSetup stat in _stats.Values)
+            {
+                stat.CurrentValueChanged += StatChanged;
+            }
         }
 
+        private void OnDestroy()
+        {
+            foreach (StatSetup stat in _stats.Values)
+            {
+                stat.CurrentValueChanged -= StatChanged;
+            }
+        }
+
+        private void StatChanged(float current, StatType statType)
+        {
+            switch (statType)
+            {
+                case StatType.Health:
+                    HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
+                    break;
+                case StatType.Mana:
+                    break;
+                case StatType.DodgeChance:
+                    break;
+                case StatType.Accuracy:
+                    break;
+                case StatType.ArmorChance:
+                    break;
+                case StatType.Damage:
+                    break;
+                case StatType.CurrentAgility:
+                    AgilityChanged?.Invoke(GetStat(StatType.CurrentAgility), GetStat(StatType.MaxAgility));
+                    break;
+                case StatType.MaxAgility:
+                    break;
+                case StatType.AgilityRestoreSpeed:
+                    break;
+            }
+        }
 
         public float GetStat(StatType statType)
         {
@@ -108,8 +147,6 @@ namespace Units
                 foreach (AbilityModel abilityModel in _abilityModels)
                     abilityModel.Tick();
             }
-            
-            Prepared?.Invoke(this);
         }
 
         private void TickAgility()

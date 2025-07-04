@@ -1,7 +1,11 @@
-﻿namespace Stats
+﻿using System;
+
+namespace Stats
 {
     public class StatSetup
     {
+        public event Action<float, StatType> CurrentValueChanged;
+        
         public StatSetup(StatConfig statConfig)
         {
             Type = statConfig.StatsType;
@@ -13,13 +17,22 @@
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
 
-        public void Modify(float value) => 
+        public void Modify(float value)
+        {
             CurrentValue += value;
+            CurrentValueChanged?.Invoke(CurrentValue,  Type);
+        }
 
-        public void Set(float value) => 
+        public void Set(float value)
+        {
             CurrentValue = value;
+            CurrentValueChanged?.Invoke(CurrentValue,  Type);
+        }
 
-        public void Reset() => 
+        public void Reset()
+        {
             CurrentValue = BaseValue;
+            CurrentValueChanged?.Invoke(CurrentValue,  Type);
+        }
     }
 }
