@@ -6,37 +6,33 @@ namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
-        public float CalculateFinalValue(Unit target, EffectInfo effect)
-        {
-            float value = effect.Value;
-
-            switch (effect.Type)
-            {
-                case EffectType.ModifyStat:
-                    value = CalculateStatModification(target, effect.TargetType, effect.Value);
-                    break;
-
-                default:
-                    throw new NotSupportedException($"EffectType '{effect.Type}' не поддерживается.");
-            }
-
-            return value;
-        }
-        
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
-            float finalValue = CalculateFinalValue(target, effect);
+            float finalValue = CalculateStatModification(target, effect.TargetType,effect.Type, effect.Value);
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
-        private float CalculateStatModification(Unit target, StatType targetStat, float baseValue)
+        public float CalculateStatModification(Unit target, StatType targetStat,EffectType effectType, float baseValue)
         {
             float finalValue = baseValue;
             
             switch (targetStat)
             {
                 case StatType.Health:
-                    finalValue = -finalValue;
+
+                    switch (effectType)
+                    {
+                        case EffectType.Damage:
+                            finalValue = -finalValue;
+                            break;
+                        
+                        case EffectType.Heal:
+                            break;
+                        
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
+                    }
+                    
                     
                     // if (baseValue < 0)
                     // {

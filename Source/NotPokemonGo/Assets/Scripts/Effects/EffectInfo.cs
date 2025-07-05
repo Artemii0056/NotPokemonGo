@@ -8,11 +8,11 @@ namespace Effects
         public StatType TargetType;
         public float Value;
 
-        public EffectInfo(EffectType type, float value, StatType targetType)
+        public EffectInfo(float value, StatType targetType, EffectType type)
         {
-            Type = type;
             Value = value;
             TargetType = targetType;
+            Type = type;
         }
     }
 }

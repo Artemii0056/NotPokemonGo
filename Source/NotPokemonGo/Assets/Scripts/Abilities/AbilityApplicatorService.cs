@@ -90,7 +90,7 @@ namespace Abilities
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
-            effects.Select(s => new EffectInfo(s.Type, s.Value, s.TargetType)).ToList();
+            effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type)).ToList();
 
         private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit target) =>
             setups.Select(s => _statusFactory.Create(s, target, _effectResolver)).ToList();

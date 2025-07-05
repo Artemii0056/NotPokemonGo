@@ -1,5 +1,4 @@
 ﻿using Infrastructure.StateMachines.States.Interfaces;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {

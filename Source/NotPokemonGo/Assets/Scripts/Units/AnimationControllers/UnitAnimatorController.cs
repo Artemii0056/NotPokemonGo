@@ -6,7 +6,6 @@ namespace Units.AnimationControllers
     public class UnitAnimatorController : MonoBehaviour
     {
         private Animator _animator;
-        private bool _isPlaying;
 
         public event Action ParticleSystem1Started;
         public event Action ParticleSystem2Started;
@@ -19,12 +18,9 @@ namespace Units.AnimationControllers
         private void Awake() => 
             _animator = GetComponent<Animator>();
 
-        public void Play(int animationName)
-        {
-            _isPlaying = true;
+        public void Play(int animationName) => 
             _animator.Play(animationName);
-        }
-        
+
         public void FlagParticleSystem1() => 
             ParticleSystem1Started?.Invoke();
 
@@ -40,10 +36,7 @@ namespace Units.AnimationControllers
         public void FlagAttack2() =>
             Attack2Started?.Invoke();
 
-        public void FlagFinishAnimation()
-        {
-            _isPlaying = false;
+        public void FlagFinishAnimation() => 
             Finished?.Invoke();
-        }
     }
 }
