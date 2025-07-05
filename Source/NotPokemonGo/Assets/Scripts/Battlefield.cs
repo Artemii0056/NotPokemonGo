@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
+using Services;
 using Statuses.Services;
 using Units;
 using UnityEngine;
@@ -9,15 +11,19 @@ using UnityEngine;
 public class Battlefield
 {
     private readonly IStatusManager _statusManager;
+    private readonly ICoroutineRunner _coroutineRunner;
 
     public readonly List<Unit> Units = new List<Unit>();
 
     public Battlefield(
         Platoon enemyPlatoon,
         Platoon heroes,
-        IStatusManager statusManager)
+        IStatusManager statusManager,
+        ICoroutineRunner coroutineRunner
+        )
     {
         _statusManager = statusManager;
+        _coroutineRunner = coroutineRunner;
         EnemyPlatoon = enemyPlatoon;
         Heroes = heroes;
     }
@@ -50,8 +56,5 @@ public class Battlefield
     {
         EnemyPlatoon.Tick();
         Heroes.Tick();
-        
-        _statusManager.Update();
-        _statusManager.RemoveInactive();
     }
 }

@@ -28,12 +28,12 @@ namespace Effects
         {
             float finalValue = baseValue;
             
-            Debug.Log("CalculateStatModification");
+            //Debug.Log("CalculateStatModification");
 
             switch (targetStat)
             {
                 case StatType.Health:
-                    Debug.Log("StatType.Health" + finalValue);
+                    //Debug.Log("StatType.Health" + finalValue);
 
                     finalValue = -finalValue;
                     

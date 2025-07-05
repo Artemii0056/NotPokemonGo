@@ -1,6 +1,7 @@
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
+using Statuses.Services;
 using Units;
 using UnityEngine;
 
@@ -10,11 +11,13 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
     {
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IBattleUnitContainer _battleUnitContainer;
+        private readonly IStatusManager _statusManager;
 
-        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer)
+        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer, IStatusManager  statusManager)
         {
             _battleStateMachine = battleStateMachine;
             _battleUnitContainer = battleUnitContainer;
+            _statusManager = statusManager;
         }
         
         public void Enter(Battlefield batlfield)
@@ -26,6 +29,10 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
             if (unitSource != null)
             {
+                _statusManager.Update();
+                _statusManager.RemoveInactive();
+                Debug.LogError("Update States");
+
                 _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
                     new UnitActionPayload
                     (
