@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
-using Abilities.MV;
 using Effects;
 using Factories;
 using Services;
@@ -92,7 +90,7 @@ namespace Abilities
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
-            effects.Select(s => new EffectInfo(s.Type, s.Value, s.TargetType)).ToList();
+            effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type)).ToList();
 
         private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit target) =>
             setups.Select(s => _statusFactory.Create(s, target, _effectResolver)).ToList();
@@ -102,11 +100,8 @@ namespace Abilities
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
-            foreach (var effectInfo in effects)
-            {
+            foreach (var effectInfo in effects) 
                 _effectResolver.ApplyEffect(target, effectInfo);
-                // target.ReceiveDamage(effectInfo);
-            }
         }
     }
 }

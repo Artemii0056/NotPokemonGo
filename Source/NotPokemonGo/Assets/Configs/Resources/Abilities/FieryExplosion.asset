@@ -30,7 +30,7 @@ MonoBehaviour:
     CastamentSetup:
       <Statuses>k__BackingField:
       - EffectSetup:
-          Type: 1
+          Type: 0
           TargetType: 1
           Value: 0
         Type: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
       <EffectInfo>k__BackingField:
       - Type: 1
         TargetType: 1
-        Value: 30
+        Value: 100
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 2
     <PhaseType>k__BackingField: 3

@@ -2,6 +2,7 @@
 {
     public enum EffectType
     {
-        ModifyStat = 1,
+        Damage,
+        Heal
     }
 }

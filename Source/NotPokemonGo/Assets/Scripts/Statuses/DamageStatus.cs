@@ -22,11 +22,8 @@ namespace Statuses
 
         public override void OnTick()
         {
-            EffectInfo damageInfo = new EffectInfo(EffectType.ModifyStat, Setup.EffectSetup.Value, StatType.Damage);
-
-            float value = _effectResolver.CalculateFinalValue(Target, damageInfo);
-
-            Target.ChangeStatValue(StatType.Health, value);
+            EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage);
+            _effectResolver.ApplyEffect(Target, damageInfo);
         }
     }
 }

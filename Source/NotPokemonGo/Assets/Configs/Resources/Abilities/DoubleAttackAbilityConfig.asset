@@ -27,10 +27,7 @@ MonoBehaviour:
       <MoveSpeed>k__BackingField: 0
     CastamentSetup:
       <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField:
-      - Type: 1
-        TargetType: 0
-        Value: 50
+      <EffectInfo>k__BackingField: []
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
     <PhaseType>k__BackingField: 1
@@ -60,9 +57,9 @@ MonoBehaviour:
     CastamentSetup:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
-      - Type: 1
+      - Type: 0
         TargetType: 1
-        Value: 50
+        Value: 30
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 0
     <PhaseType>k__BackingField: 0
