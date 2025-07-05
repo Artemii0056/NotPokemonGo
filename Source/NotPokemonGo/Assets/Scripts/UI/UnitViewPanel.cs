@@ -26,6 +26,7 @@ namespace UI
             _unit.StatusRemoved += OnStatusRemoved;
             _unit.AgilityChanged += OnAgilityChanged;
             _unit.HealthChanged += OnHealthChanged;
+            _unit.Ticked += OnTicked;
         }
 
         private void OnDestroy()
@@ -41,7 +42,14 @@ namespace UI
         {
             _staticDataLoadService = staticDataLoadService;
         }
-
+        
+        private void OnTicked()
+        {
+            foreach (StatusView statusView in _statusViews)
+            {
+                statusView.Tick();
+            }
+        }
 
         private void OnHealthChanged(float currentHealth, float maxHealth)
         {
@@ -69,7 +77,6 @@ namespace UI
         {
             if (TrySearch(status.Setup.Type, out StatusView statusView))
             {
-                statusView.Initialize(status, _staticDataLoadService.GetStatusIcon(status.Setup.Type));
                 statusView.Dispose();
             }
         }

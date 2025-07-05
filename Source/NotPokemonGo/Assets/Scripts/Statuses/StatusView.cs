@@ -18,40 +18,27 @@ namespace Statuses
         public void Initialize(Status status, Sprite icon = null)
         {
             _status = status;
-            
-            if (icon != null)
-                _icon.sprite = icon;
+            _icon.sprite = icon;
+            _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
 
             transform.gameObject.SetActive(true);
         }
 
         public void Dispose()
         {
-            _icon.sprite = null;
             transform.gameObject.SetActive(false);
         }
 
-        // private void Update()
-        // {
-        //     if (_status == null)
-        //     {
-        //         _icon.gameObject.SetActive(false);
-        //         return;
-        //     }
-        //
-        //     if (_status.TargetTime <= 0f)
-        //     {
-        //         _icon.fillAmount = 0f;
-        //         _icon.gameObject.SetActive(false);
-        //         return;
-        //     }
-        //     
-        //     _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
-        //
-        //     float ratio = Mathf.Clamp01(1f - (_status.СurrentTimer / _status.TargetTime));
-        //     _icon.fillAmount = ratio;
-        //
-        //     _icon.gameObject.SetActive(ratio > 0f);
-        // }
+        public void Tick()
+        {
+            if (_status == null)
+            {
+                return;
+            }
+
+            Debug.Log($"_status.TickCount во вью = {_status.TickCount}");
+            
+            _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
+        }
     }
 }

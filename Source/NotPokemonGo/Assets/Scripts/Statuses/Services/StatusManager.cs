@@ -19,17 +19,16 @@ namespace Statuses.Services
             status.OnExpire();
         }
 
-        public void Update()
+        public void Tick()
         {
             if (_statusEffects.Count <= 0)
                 return;
             
             foreach (var status in _statusEffects)
             {
-                status.UpdateTimer();
+                // status.UpdateTimer();
 
-                if (status.IsReady)
-                    status.Tick();
+                status.Tick();
             }
         }
 

@@ -35,7 +35,7 @@ MonoBehaviour:
           Value: 0
         Type: 1
         TargetTime: 1
-        TickCount: 3
+        TickCount: 5
         IsPermanent: 0
         IsRefreshed: 1
       <EffectInfo>k__BackingField:

@@ -15,7 +15,7 @@ namespace Statuses
             Target = target;
             _effectResolver = effectResolver;
 
-            TargetTime = setup.TargetTime;
+            // TargetTime = setup.TargetTime;
             IsRefreshed = setup.IsRefreshed;
             IsPermanent = setup.IsPermanent;
         }

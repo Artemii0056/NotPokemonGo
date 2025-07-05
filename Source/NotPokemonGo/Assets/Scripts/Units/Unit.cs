@@ -34,6 +34,8 @@ namespace Units
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
+        public event Action Ticked;
+
         public event Action<Status> StatusAdded;
         public event Action<Status> StatusRemoved;
 
@@ -139,6 +141,8 @@ namespace Units
             TickAbilities();
 
             TickAgility();
+            
+            Ticked?.Invoke();
         }
 
         private void TickAbilities()

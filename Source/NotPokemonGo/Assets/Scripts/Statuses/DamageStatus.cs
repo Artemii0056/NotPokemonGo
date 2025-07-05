@@ -1,6 +1,7 @@
 ﻿using Effects;
 using Stats;
 using Units;
+using UnityEngine;
 
 namespace Statuses
 {
@@ -15,7 +16,7 @@ namespace Statuses
             Target = target;
             _effectResolver = effectResolver;
 
-            TargetTime = setup.TargetTime;
+            // TargetTime = setup.TargetTime;
             IsRefreshed = setup.IsRefreshed;
             IsPermanent = setup.IsPermanent;
         }
@@ -24,6 +25,8 @@ namespace Statuses
         {
             EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage);
             _effectResolver.ApplyEffect(Target, damageInfo);
+            Debug.Log($"TickCount у статуса = {TickCount}");
+
         }
     }
 }

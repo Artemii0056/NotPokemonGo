@@ -29,10 +29,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
             if (unitSource != null)
             {
-                _statusManager.Update();
-                _statusManager.RemoveInactive();
-                Debug.LogError("Update States");
-
                 _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
                     new UnitActionPayload
                     (

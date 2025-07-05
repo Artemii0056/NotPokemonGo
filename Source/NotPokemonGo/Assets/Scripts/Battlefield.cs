@@ -54,6 +54,9 @@ public class Battlefield
 
     public void Tick()
     {
+        _statusManager.Tick();
+        _statusManager.RemoveInactive();
+        
         EnemyPlatoon.Tick();
         Heroes.Tick();
     }

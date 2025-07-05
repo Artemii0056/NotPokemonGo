@@ -7,8 +7,8 @@ namespace Statuses
     {
         public string Name { get; protected set; }
 
-        public float СurrentTimer { get; protected set; }
-        public float TargetTime { get; protected set; }
+        // public float СurrentTimer { get; protected set; }
+        // public float TargetTime { get; protected set; }
 
         public float TickCount { get; protected set; }
         public StatusSetup Setup { get; protected set; }
@@ -17,9 +17,7 @@ namespace Statuses
         public bool IsPermanent { get; protected set; }
         public bool IsRefreshed { get; protected set; }
 
-        public bool IsReady => СurrentTimer >= TargetTime;
-
-        public bool IsEnded { get; protected set; }
+        public bool IsEnded => TickCount <= 0;
 
         public virtual void OnApply()
         {
@@ -35,26 +33,21 @@ namespace Statuses
 
         public void Tick()
         {
-            СurrentTimer = 0;
-
-            TickCount--;
             OnTick();
-
-            if (TickCount <= 0) 
-                IsEnded = true;
+            TickCount--;
         }
 
-        public void UpdateTimer() => 
-            СurrentTimer++;
+        // public void UpdateTimer() => 
+        //     СurrentTimer++;
 
         public void IncreaseTickCount(float tickCount) => 
             TickCount += tickCount;
 
         public void Refresh(Status status)
         {
-            СurrentTimer = 0;
+            // СurrentTimer = 0;
             TickCount = status.TickCount;
-            TargetTime = status.TargetTime;
+            // TargetTime = status.TargetTime;
         }
     }
 }
