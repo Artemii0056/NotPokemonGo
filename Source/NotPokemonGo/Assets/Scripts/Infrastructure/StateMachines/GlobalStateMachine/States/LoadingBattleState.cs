@@ -22,7 +22,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
 
-        public void Enter(SpawnPositionType spawnPositionType)
+        public void Enter(SpawnPositionType spawnPositionType) 
         {
             SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
             SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);

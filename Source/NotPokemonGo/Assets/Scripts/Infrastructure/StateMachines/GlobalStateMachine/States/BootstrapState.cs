@@ -16,11 +16,11 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         public void Enter()
         {
-            _sceneLoader.Load(Constants.AssetPath.InitialSceneName, EnterMainMenuState);
+            _sceneLoader.Load(Constants.AssetPath.CharacterSelectionSceneName, EnterMainMenuState);
         }
 
         private void EnterMainMenuState() => 
-            _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.AssetPath.MainMenuSceneName);
+            _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.AssetPath.MainMenuSceneName); //TODO Начинается все тут
 
         public void Exit()
         { }

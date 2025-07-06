@@ -8,6 +8,7 @@ namespace Infrastructure
         {
             public const string InitialSceneName = "Initial";
             public const string MainMenuSceneName = "MainMenu";
+            public const string CharacterSelectionSceneName = "CharacterSelection";
 
             public const string CharacterSkinItemName = "Canvases/CharacterSkinItem";
             public const string CharacterSelectionCanvasName = "Canvases/CharacterSelectionScreen_Canvas";
