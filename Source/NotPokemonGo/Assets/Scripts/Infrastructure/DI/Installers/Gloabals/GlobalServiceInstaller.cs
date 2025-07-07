@@ -19,6 +19,7 @@ using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using Statuses.Services;
 using UI.Ability;
+using UI.BattleUpgrages;
 using UI.Factory;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace Infrastructure.DI.Installers.Gloabals
          [SerializeField] private GameScopeInitializer _gameScopeInitializer;
          [SerializeField] private InputReader _inputReader;
          [SerializeField] private AbilitiesPanel _abilitiesPanel;
+         [SerializeField] private BattleUpgradePanel _battleUpgradePanel;
+         
         public override void Install(IContainerBuilder builder)
         {
             RegisterUserInterface(builder);
@@ -39,6 +42,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
             builder.RegisterComponent(_inputReader).AsImplementedInterfaces();
+            builder.RegisterComponent(_battleUpgradePanel).AsImplementedInterfaces();
             
             RegisterStates(builder);
             RegisterServices(builder);
