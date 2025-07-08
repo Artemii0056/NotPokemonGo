@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Characters.Configs;
@@ -12,5 +13,6 @@ namespace Services.StaticDataServices
         AbilityConfig GetAbilityConfig(AbilityType abilityType);
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
+        List<AbilityConfig> GetAllAbilityConfigs();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Abilities;
 using Abilities.MV;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
@@ -61,7 +62,7 @@ namespace Battlefields
         {
             foreach (AbilityModel abilityModel in _source.AbilityModels)
             {
-                if (abilityModel.IsReady())
+                if (abilityModel.IsReady() && abilityModel.AbilityType == AbilityType.CastSpell)
                 {
                     _source.Step.SetAbilityModel(abilityModel, _source, GetRandomTarget(targets));
                     

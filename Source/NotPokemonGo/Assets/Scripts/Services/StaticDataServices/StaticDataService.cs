@@ -35,6 +35,9 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
+        
+        public List<AbilityConfig> GetAllAbilityConfigs() => 
+            _abilityConfigs.Values.ToList();
 
         public Sprite GetStatusIcon(StatusType statusType)
         {

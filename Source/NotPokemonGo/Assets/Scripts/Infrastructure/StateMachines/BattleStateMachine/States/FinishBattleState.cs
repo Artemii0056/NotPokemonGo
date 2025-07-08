@@ -19,7 +19,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(UnitActionPayload unitActionPayload)
         {
             _unitActionPayload = unitActionPayload;
-            _battleUpgradePanelPresenter.Enable();
+            _battleUpgradePanelPresenter.Enable(unitActionPayload.UnitSorce.UnitType);
 
             _battleUpgradePanelPresenter.UpgradeSelected += OnUpgradeSelected;
         }
