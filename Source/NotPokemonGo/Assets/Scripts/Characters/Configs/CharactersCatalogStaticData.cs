@@ -8,9 +8,9 @@ namespace Characters.Configs
     [CreateAssetMenu(fileName = "Catalog", menuName = "StaticData/Catalog")]
     public class CharactersCatalogStaticData : ScriptableObject
     {
-        [SerializeField] private List<CharacterItemConfig> _characterItemConfigs;
+        [SerializeField] private List<UnitItemConfig> _characterItemConfigs;
 
-        public IEnumerable<CharacterItemConfig> CharacterItemConfigs => _characterItemConfigs;
+        public IEnumerable<UnitItemConfig> CharacterItemConfigs => _characterItemConfigs;
 
         public void OnValidate()
         {

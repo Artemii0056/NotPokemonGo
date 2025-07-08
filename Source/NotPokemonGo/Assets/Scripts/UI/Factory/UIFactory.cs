@@ -25,7 +25,20 @@ namespace UI.Factory
                 _resourceLoader.Load<CharacterSelectionScreenPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
             
             CharacterSelectionScreenPanel characterSelectionScreenPanel = Object.Instantiate(shop);
-            // _objectResolver.Inject(characterSelectionScreenPanel);
+            
+            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
+            
+            UnitSkinItemView iconPrefab =
+                Resources.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
+            
+            foreach (UnitItemConfig characterItemConfig in config.CharacterItemConfigs)
+            {
+                UnitSkinItemView icon = Object.Instantiate(iconPrefab);
+                icon.InitImage(characterItemConfig);
+                characterSelectionScreenPanel.UnitContainerPanel.AddItem(icon);
+                characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(
+                    CreateCharacteristicItemView());
+            }
             
             return characterSelectionScreenPanel;
         }
@@ -34,30 +47,30 @@ namespace UI.Factory
         {
             MainMenuUI menu = _resourceLoader.Load<MainMenuUI>(Constants.AssetPath.MainMenuCanvasPath);
             
-            // _objectResolver.Inject(menu);
-            
             return Object.Instantiate(menu);
         }
 
         public CharacterSelectionScreenPanel CreateCharacterSelectionPanel()
         {
-            // CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
-            //
-            // CharacterSkinItemView iconPrefab =
-            //     Resources.Load<CharacterSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
-            //
-            // CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel();
-            //
-            // foreach (CharacterItemConfig characterItemConfig in config.CharacterItemConfigs)
-            // {
-            //     CharacterSkinItemView icon = Object.Instantiate(iconPrefab);
-            //     icon.InitImage(characterItemConfig);
-            //     characterSelectionScreenPanel.CharacterSelectionPanel.AddItem(icon);
-            //     characterSelectionScreenPanel.CharacterInfoPanel.SetCharacteristicItemView(
-            //         CreateCharacteristicItemView());
-            // }
+            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
-            return default;
+            Debug.Log(config == null);
+            
+            UnitSkinItemView iconPrefab =
+                Resources.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
+            
+            CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel();
+            
+            foreach (UnitItemConfig characterItemConfig in config.CharacterItemConfigs)
+            {
+                UnitSkinItemView icon = Object.Instantiate(iconPrefab);
+                icon.InitImage(characterItemConfig);
+                characterSelectionScreenPanel.UnitContainerPanel.AddItem(icon);
+                characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(
+                    CreateCharacteristicItemView());
+            }
+            
+            return characterSelectionScreenPanel;
         }
 
         private CharacteristicItemView CreateCharacteristicItemView()

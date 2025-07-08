@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Characters
 {
-    public class CharacterSkinItemView : MonoBehaviour, IPointerClickHandler
+    public class UnitSkinItemView : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private TMP_Text _priceText;
 
@@ -19,19 +19,22 @@ namespace Characters
 
         [SerializeField] private Image _selectionText;
 
-        public CharacterItemConfig CharacterItemConfig { get; private set; }
-    
+        public UnitItemConfig UnitItemConfig { get; private set; }
+
         private Image _backgroundImage;
 
         public bool IsLock { get; private set; }
-    
-        public event Action<CharacterSkinItemView> OnClicked;
 
-        private void Awake() => 
+        public event Action<UnitSkinItemView> OnClicked;
+
+        private void Awake()
+        {
             _backgroundImage = _contentImage.GetComponent<Image>();
+            Unlock();
+        }
 
         public void OnPointerClick(PointerEventData eventData) => OnClicked?.Invoke(this);
-    
+
         public void Lock()
         {
             IsLock = true;
@@ -49,21 +52,19 @@ namespace Characters
         public void Select() =>
             _selectionText.gameObject.SetActive(true);
 
-        public void Deselect() => 
+        public void Deselect() =>
             _selectionText.gameObject.SetActive(false);
-    
+
         public void Highlight() =>
             _backgroundImage.sprite = _highlightBackground;
-    
+
         public void UnHighlight() =>
             _backgroundImage.sprite = _standardBackground;
 
-        public void InitImage(CharacterItemConfig config) 
+        public void InitImage(UnitItemConfig config)
         {
             _contentImage.sprite = config.ContentImage;
-            CharacterItemConfig = config;
+            UnitItemConfig = config;
         }
-
-
     }
 }

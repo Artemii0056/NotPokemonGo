@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace UI
 {
-    public class CharacterSelectionPanel : MonoBehaviour
+    public class UnitContainerPanel : MonoBehaviour
     {
         [SerializeField] private Transform _gridLayoutGroupTransform;
 
-        private List<CharacterSkinItemView> _characterSkinItemViews = new List<CharacterSkinItemView>();
+        private List<UnitSkinItemView> _characterSkinItemViews = new List<UnitSkinItemView>();
         
-        public event Action<CharacterSkinItemView> Clicked;
+        public event Action<UnitSkinItemView> Clicked;
 
-        public void AddItem(CharacterSkinItemView skinItemView)
+        public void AddItem(UnitSkinItemView skinItemView)
         {
             _characterSkinItemViews.Add(skinItemView);
             skinItemView.transform.SetParent(_gridLayoutGroupTransform, false);
@@ -29,7 +29,7 @@ namespace UI
             }
         }
 
-        private void OnSkinClicked(CharacterSkinItemView itemView) => 
+        private void OnSkinClicked(UnitSkinItemView itemView) => 
             Clicked?.Invoke(itemView);
     }
 }

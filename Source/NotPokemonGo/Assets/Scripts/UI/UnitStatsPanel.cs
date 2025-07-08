@@ -3,11 +3,12 @@ using System.Globalization;
 using System.Linq;
 using Characters;
 using Characters.Configs;
+using Stats;
 using UnityEngine;
 
 namespace UI
 {
-    public class CharacterInfoPanel : MonoBehaviour
+    public class UnitStatsPanel : MonoBehaviour
     {
         [SerializeField] private Transform _gridLayoutGroupTransform;
         [SerializeField] private List<StatUIInfo> _statsUIInfos = new List<StatUIInfo>();
@@ -18,19 +19,23 @@ namespace UI
         public void SetCharacteristicItemView(CharacteristicItemView characterItemView) => 
             _characterInfoPanel = characterItemView;
 
-        public void CreateItemViews(CharacterItemConfig characterItemConfig)
+        public void CreateItemViews(UnitItemConfig unitItemConfig)
         {
             ClearItemViews();
 
-            foreach (var stat in characterItemConfig.UnitConfig.Stats)
+            var conf = unitItemConfig.UnitConfig.Stats;
+
+            foreach (var statsUIInfo in _statsUIInfos)
             {
                 CharacteristicItemView itemView = Instantiate(_characterInfoPanel, _gridLayoutGroupTransform, false);
-
-                StatUIInfo statUIInfo = _statsUIInfos.FirstOrDefault(x => x.StatsType == stat.StatsType);
+                
+                StatConfig statConfig = conf.FirstOrDefault(x => x.StatsType == statsUIInfo.StatsType);
+                
+                StatUIInfo statUIInfo = _statsUIInfos.FirstOrDefault(x => x.StatsType == statConfig.StatsType);
                 Sprite sprite = statUIInfo?.Image;
-
-                itemView.Initialize(sprite, stat.Value.ToString(CultureInfo.InvariantCulture));
-
+                
+                itemView.Initialize(sprite, statConfig.Value.ToString(CultureInfo.InvariantCulture), statConfig.StatsType.ToString(CultureInfo.InvariantCulture));
+                
                 _characteristicSkinItemViews.Add(itemView);
             }
         }

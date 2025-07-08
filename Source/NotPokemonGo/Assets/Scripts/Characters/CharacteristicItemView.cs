@@ -7,12 +7,14 @@ namespace Characters
     public class CharacteristicItemView : MonoBehaviour
     {
         [SerializeField] private Image _icon;
-        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private TextMeshProUGUI _textValue;
+        [SerializeField] private TextMeshProUGUI _textType;
 
-        public void Initialize(Sprite icon, string text)
+        public void Initialize(Sprite icon, string value, string type)
         {
             _icon.sprite = icon;
-            _text.text = text;
+            _textValue.text = value;
+            _textType.text = type;
         }
     }
 }

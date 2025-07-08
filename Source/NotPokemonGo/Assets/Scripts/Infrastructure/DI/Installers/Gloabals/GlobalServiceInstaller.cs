@@ -116,6 +116,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<BattleLoopState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+                
+                builder.Register<LoadingCharacterSelectionState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
             }
 
             void RegisterBattleStates(IContainerBuilder builder)

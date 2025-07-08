@@ -12,5 +12,6 @@ namespace Services.StaticDataServices
         AbilityConfig GetAbilityConfig(AbilityType abilityType);
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
+        CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
     }
 }

@@ -24,10 +24,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         public void Enter()
         {
             CharacterSelectionScreenPanel characterScreenPanel = _uiFactory.CreateCharacterSelectionScreenPanel();
-            
-           // characterScreenPanel.Initialize();
-            
-            //_gameStateMachine.Enter<>();
+            characterScreenPanel.Show();
+
         }
 
         public void Exit()

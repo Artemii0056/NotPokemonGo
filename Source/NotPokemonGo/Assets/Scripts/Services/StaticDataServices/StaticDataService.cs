@@ -66,7 +66,7 @@ namespace Services.StaticDataServices
                 .ToDictionary(x => x.Type, x => x);
         }
 
-        private CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
+        public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
             _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
 
         private void LoadAbilityConfigs()

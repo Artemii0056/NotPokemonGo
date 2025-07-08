@@ -20,7 +20,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         }
 
         private void EnterMainMenuState() => 
-            _gameStateMachine.Enter<LoadMainMenuState, string>(Constants.AssetPath.MainMenuSceneName); //TODO Начинается все тут
+            _gameStateMachine.Enter<LoadingCharacterSelectionState>(); //TODO Начинается все тут
 
         public void Exit()
         { }

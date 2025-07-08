@@ -1,7 +1,6 @@
 using Characters;
-using Characters.Configs;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
-using Infrastructure.StateMachines.States;
+using Services.StaticDataServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,53 +9,38 @@ namespace UI
     public class CharacterSelectionScreenPanel : MonoBehaviour
     {
         [field: SerializeField] public CharacterPreviewPanel CharacterPreviewPanel { get; private set; }
-        [field: SerializeField] public CharacterSelectionPanel CharacterSelectionPanel { get; private set; }
-        [field: SerializeField] public CharacterInfoPanel CharacterInfoPanel { get; private set; }
+        [field: SerializeField] public UnitContainerPanel UnitContainerPanel { get; private set; }
+        [field: SerializeField] public UnitStatsPanel UnitStatsPanel { get; private set; }
 
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _startGameButton;
+        
+        private IStaticDataService _staticDataService;
     
-        private UnitType _unitType;
         private LoadMainMenuState _loadMainMenuState;
 
         private void OnEnable()
         {
-            _showButton.onClick.AddListener(OnShowButtonClicked);
-            CharacterSelectionPanel.Clicked += OnCharacterSelectionPanelClicked;
-            _startGameButton.onClick.AddListener(OnStartGameButtonClicked);
+            UnitContainerPanel.Clicked += OnUnitContainerPanelClicked;
         }
     
         private void OnDisable()
         {
-            _showButton.onClick.RemoveListener(OnShowButtonClicked);
-            CharacterSelectionPanel.Clicked -= OnCharacterSelectionPanelClicked;
-            _startGameButton.onClick.RemoveListener(OnStartGameButtonClicked);
+            UnitContainerPanel.Clicked -= OnUnitContainerPanelClicked;
         }
 
-        public void Initialize(LoadMainMenuState loadMainMenuState) => 
-            _loadMainMenuState = loadMainMenuState;
-
-        private void OnCharacterSelectionPanelClicked(CharacterSkinItemView itemView)
+        private void OnUnitContainerPanelClicked(UnitSkinItemView itemView)
         {
-            GameObject characterPreviewPanel = Instantiate(itemView.CharacterItemConfig.CharacterModel);
+            GameObject characterPreviewPanel = Instantiate(itemView.UnitItemConfig.CharacterModel);
             characterPreviewPanel.transform.rotation = new Quaternion(0, 180, 0, 0);
             CharacterPreviewPanel.Setup(characterPreviewPanel);
         
-            CharacterInfoPanel.CreateItemViews(itemView.CharacterItemConfig);
+            UnitStatsPanel.CreateItemViews(itemView.UnitItemConfig);
         
             _startGameButton.gameObject.SetActive(true);
-            _unitType = itemView.CharacterItemConfig.UnitConfig.Type;
         }
     
-        private void OnStartGameButtonClicked()
-        {
-        
-        }
-
-        private void OnShowButtonClicked() => 
-            Show();
-
-        private void Show() => 
-            CharacterSelectionPanel.Show();
+        public void Show() => 
+            UnitContainerPanel.Show();
     }
 }
