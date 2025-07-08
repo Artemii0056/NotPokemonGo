@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace InputServices
 {
-    public class Raycaster : IRaycaster
+    public class RaycasterServiceService : IRaycasterService
     {
         private IInputReader _inputReader;
 
-        public Raycaster(IInputReader inputReader)
+        public RaycasterServiceService(IInputReader inputReader)
         {
             _inputReader = inputReader;
             _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 

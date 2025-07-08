@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Abilities.MV;
 using Infrastructure.MVP.Implementation;
+using VContainer.Unity;
 
 namespace UI.Ability
 {
@@ -11,9 +12,8 @@ namespace UI.Ability
         public AbilityPanelPresenter(AbilitiesPanel abilitiesPanel)
         {
             _abilitiesPanel = abilitiesPanel;
-            Disable();
         }
-        
+
         public void Enable()
         {
             _abilitiesPanel.gameObject.SetActive(true);

@@ -20,9 +20,9 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _statusManager = statusManager;
         }
         
-        public void Enter(Battlefield batlfield)
+        public void Enter(Battlefield unitActionPayload)
         {
-            foreach (Unit unit in batlfield.Units) 
+            foreach (Unit unit in unitActionPayload.Units) 
                 _battleUnitContainer.Add(unit);
 
             Unit unitSource = _battleUnitContainer.Give();
@@ -33,14 +33,14 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     new UnitActionPayload
                     (
                         unitSource,
-                        batlfield)
+                        unitActionPayload)
                 );
                 
-                batlfield.Units.Clear();
+                unitActionPayload.Units.Clear();
             }
             else
             {
-                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(batlfield);
+                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(unitActionPayload);
             }
         }
 

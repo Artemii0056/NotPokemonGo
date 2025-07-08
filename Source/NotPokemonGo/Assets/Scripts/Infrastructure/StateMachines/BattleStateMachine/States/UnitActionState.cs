@@ -2,6 +2,7 @@ using System;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
+using InputServices;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -11,22 +12,30 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         private readonly IObjectResolver _objectResolver;
 
         private UnitActionStrategy _unitActionStrategy;
+        private IInputReader _inputReader;
+        private IBattleStateMachine _battleStateMachine;
+        private UnitActionPayload _payload;
 
-        public UnitActionState(IObjectResolver objectResolver)
+        public UnitActionState(IObjectResolver objectResolver, IInputReader inputReader, IBattleStateMachine battleStateMachine)
         {
+            _battleStateMachine = battleStateMachine;
+            _inputReader = inputReader;
             _objectResolver = objectResolver;
         }
-        
-        public void Enter(UnitActionPayload payload)
+
+        public void Enter(UnitActionPayload unitActionPayload)
         {
-            switch (payload.UnitSorce.PlatoonType)
+            _payload = unitActionPayload;
+            _inputReader.SpacePressed += SetFinishBattleState;
+
+            switch (unitActionPayload.UnitSorce.PlatoonType)
             {
                 case PlatoonType.Friends:
-                    _unitActionStrategy = new FriendUnitActionStrategy(payload.Battlefield, payload.UnitSorce);
+                    _unitActionStrategy = new FriendUnitActionStrategy(unitActionPayload.Battlefield, unitActionPayload.UnitSorce);
                     break;
 
                 case PlatoonType.Enemies:
-                    _unitActionStrategy = new EnemyUnitActionStrategy(payload.Battlefield, payload.UnitSorce);
+                    _unitActionStrategy = new EnemyUnitActionStrategy(unitActionPayload.Battlefield, unitActionPayload.UnitSorce);
                     break;
 
                 default:
@@ -40,7 +49,13 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Exit()
         {
+            _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
+        }
+
+        private void SetFinishBattleState()
+        {
+            _battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
         }
     }
 }

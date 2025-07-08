@@ -3,7 +3,7 @@ using Units;
 
 namespace InputServices
 {
-    public interface IRaycaster
+    public interface IRaycasterService
     {
         event Action<Unit> UnitSearched;
         void OnLeftMouseButtonPressed();

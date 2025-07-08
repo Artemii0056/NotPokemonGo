@@ -22,10 +22,10 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
 
-        public void Enter(SpawnPositionType spawnPositionType)
+        public void Enter(SpawnPositionType unitActionPayload)
         {
-            SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
-            SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetSpawnPositionConfig(spawnPositionType);
+            SpawnPositionConfig spawnPositionConfigFirstCommand = _staticDataService.GetSpawnPositionConfig(unitActionPayload);
+            SpawnPositionConfig spawnPositionConfigSecondCommand = _staticDataService.GetSpawnPositionConfig(unitActionPayload);
 
             Battlefield battlefield = _battlefieldFactory.Create(spawnPositionConfigFirstCommand, spawnPositionConfigSecondCommand);
             

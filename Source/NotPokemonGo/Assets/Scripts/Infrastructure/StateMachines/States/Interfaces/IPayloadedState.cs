@@ -2,6 +2,6 @@ namespace Infrastructure.StateMachines.States.Interfaces
 {
     public interface IPayloadedState<IPayload>: IExitableState
     {
-        void Enter(IPayload payload);
+        void Enter(IPayload unitActionPayload);
     }
 }

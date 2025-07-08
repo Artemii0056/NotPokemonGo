@@ -37,13 +37,12 @@ namespace Infrastructure.DI.Installers.Gloabals
          
         public override void Install(IContainerBuilder builder)
         {
-            RegisterUserInterface(builder);
             RegisterGameStateMachines(builder);
             
             builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
             builder.RegisterComponent(_inputReader).AsImplementedInterfaces();
-            builder.RegisterComponent(_battleUpgradePanel).AsImplementedInterfaces();
             
+            RegisterUserInterface(builder);
             RegisterStates(builder);
             RegisterServices(builder);
             RegisterFactories(builder);
@@ -52,8 +51,12 @@ namespace Infrastructure.DI.Installers.Gloabals
         private void RegisterUserInterface(IContainerBuilder builder)
         {
             builder.RegisterComponent(_abilitiesPanel).AsImplementedInterfaces();
-
             builder.Register<AbilityPanelPresenter>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
+                .AsSelf();
+            
+            builder.RegisterComponent(_battleUpgradePanel).AsImplementedInterfaces();
+            builder.Register<BattleUpgradePanelPresenter>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
         }
@@ -78,7 +81,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
-            builder.Register<IRaycaster, Raycaster>(Lifetime.Singleton);
+            builder.Register<IRaycasterService, RaycasterServiceService>(Lifetime.Singleton);
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
             
@@ -133,6 +136,14 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsSelf();
 
                 builder.Register<SelectReadyUnitState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+
+                builder.Register<BattleUpgradeSelectionState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+
+                builder.Register<FinishBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }
