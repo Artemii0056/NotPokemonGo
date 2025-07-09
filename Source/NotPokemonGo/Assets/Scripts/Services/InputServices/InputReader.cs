@@ -1,7 +1,8 @@
 ﻿using System;
+using InputServices;
 using UnityEngine;
 
-namespace InputServices
+namespace Services.InputServices
 {
     public class InputReader : MonoBehaviour, IInputReader
     {

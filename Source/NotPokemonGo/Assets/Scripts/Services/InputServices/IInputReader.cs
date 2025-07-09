@@ -1,6 +1,6 @@
 using System;
 
-namespace InputServices
+namespace Services.InputServices
 {
     public interface IInputReader
     {

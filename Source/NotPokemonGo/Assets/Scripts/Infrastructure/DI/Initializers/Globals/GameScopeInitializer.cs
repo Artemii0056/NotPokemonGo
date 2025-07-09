@@ -4,6 +4,7 @@ using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States;
 using InputServices;
 using Services;
+using Services.InputServices;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

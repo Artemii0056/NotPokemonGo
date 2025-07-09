@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1474167153944019294}
   - component: {fileID: 7293549184348589901}
   - component: {fileID: 599879259054730057}
-  - component: {fileID: 5932473925741187953}
+  - component: {fileID: 8491245413026243748}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentReference:
     TypeName: 
-  autoRun: 1
+  autoRun: 0
   autoInjectGameObjects: []
   _injectableServicesInstallers: []
   _defaultServicesInstallers:
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameScopeInitializer: {fileID: 599879259054730057}
-  _inputReader: {fileID: 5932473925741187953}
+  _inputReader: {fileID: 8491245413026243748}
   _abilitiesPanel: {fileID: 5021681746254418454}
   _battleUpgradePanel: {fileID: 8601748616846814497}
 --- !u!114 &599879259054730057
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f30fbb8e939435eacd6f2c6ff60a0bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5932473925741187953
+--- !u!114 &8491245413026243748
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
