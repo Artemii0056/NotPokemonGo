@@ -29,6 +29,15 @@ namespace UI
             }
         }
 
+        public void Hide()
+        {
+            foreach (var characterSkin in _characterSkinItemViews)
+            {
+                characterSkin.gameObject.SetActive(false);
+                characterSkin.OnClicked -= OnSkinClicked;
+            }
+        }
+
         private void OnSkinClicked(UnitSkinItemView itemView) => 
             Clicked?.Invoke(itemView);
     }

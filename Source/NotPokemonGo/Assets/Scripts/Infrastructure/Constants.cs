@@ -11,6 +11,8 @@ namespace Infrastructure
             public const string CharacterSelectionSceneName = "CharacterSelection";
 
             public const string CharacterSkinItemName = "Canvases/CharacterSkinItem";
+            public const string StartScreenCanvasName = "Canvases/StartScreen_Canvas";
+            public const string ChooseMapCanvasName = "Canvases/ChooseMapContainer_Canvas";
             public const string CharacterSelectionCanvasName = "Canvases/CharacterSelectionScreen_Canvas";
             public const string MainMenuCanvasPath = "Canvases/MainMenu_Canvas";
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
@@ -20,7 +22,7 @@ namespace Infrastructure
 
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
             public const string SpawnPositionConfigsPath = "SpawnPositions";
-            public const string CharacterConfigsPath = "Characters";
+            public const string CharacterConfigsPath = "LevelConfig";
             public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
         }
 

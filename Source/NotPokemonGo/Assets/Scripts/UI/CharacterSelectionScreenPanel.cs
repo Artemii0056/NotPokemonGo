@@ -11,6 +11,7 @@ namespace UI
         [field: SerializeField] public CharacterPreviewPanel CharacterPreviewPanel { get; private set; }
         [field: SerializeField] public UnitContainerPanel UnitContainerPanel { get; private set; }
         [field: SerializeField] public UnitStatsPanel UnitStatsPanel { get; private set; }
+        [field: SerializeField] public Button ExitButton { get; private set; }
 
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _startGameButton;
@@ -42,5 +43,8 @@ namespace UI
     
         public void Show() => 
             UnitContainerPanel.Show();
+
+        public void Hide() =>
+            UnitContainerPanel.Hide();
     }
 }

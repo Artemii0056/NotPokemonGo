@@ -4,6 +4,7 @@ using Abilities;
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using LevelSetting;
 using Services.AssetManagement;
 using Statuses;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
+        private List<LevelConfig> _levelConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -26,6 +28,12 @@ namespace Services.StaticDataServices
             LoadStatusTypeIcons();
             LoadSpawnPositionConfigs();
             LoadUnitConfigs();
+            LoadLevelConfigs();
+        }
+
+        public List<LevelConfig> GetLevelConfigs()
+        {
+            return _levelConfigs.ToList();
         }
 
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
@@ -51,13 +59,18 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
         }
-        
+
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
             if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
                 return characterConfig;
 
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
+        }
+
+        private void LoadLevelConfigs()
+        {
+            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.CharacterConfigsPath).ToList();
         }
 
         private void LoadUnitConfigs()

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Characters.Configs;
+using LevelSetting;
 using Statuses;
 using UnityEngine;
 
@@ -13,5 +15,6 @@ namespace Services.StaticDataServices
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
+        List< LevelConfig> GetLevelConfigs();
     }
 }
