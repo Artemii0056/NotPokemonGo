@@ -26,31 +26,16 @@ public class ChooseMapUI : MonoBehaviour
         }
     }
 
-    // public void SetLevelConfig(List<LevelConfig> levelConfigs)
-    // {
-    //     _levelConfig = levelConfigs;
-    //
-    //     foreach (var map in _mapLevels)
-    //     {
-    //         var type = map.LevelType;
-    //
-    //         foreach (var UPPER in COLLECTION)
-    //         {
-    //             
-    //         }
-    //     }
-    // }
-
     private void OnEnable()
     {
         _firstButton.onClick.AddListener(OnFirstButtonClicked);
-        _secondButton.onClick.AddListener(OnSecondButtonClicked);
+      //  _secondButton.onClick.AddListener(OnSecondButtonClicked);
     }
 
     public void OnDisable()
     {
         _firstButton.onClick.RemoveListener(OnFirstButtonClicked);
-        _secondButton.onClick.RemoveListener(OnSecondButtonClicked);
+        //_secondButton.onClick.RemoveListener(OnSecondButtonClicked);
     }
 
     private void OnFirstButtonClicked()
@@ -59,9 +44,9 @@ public class ChooseMapUI : MonoBehaviour
         _mapLevels[0].gameObject.SetActive(true);
     }
 
-    private void OnSecondButtonClicked()
-    {
-        gameObject.SetActive(false);
-        _mapLevels[1].gameObject.SetActive(true);
-    }
+    // private void OnSecondButtonClicked()
+    // {
+    //     gameObject.SetActive(false);
+    //     _mapLevels[1].gameObject.SetActive(true);
+    // }
 }

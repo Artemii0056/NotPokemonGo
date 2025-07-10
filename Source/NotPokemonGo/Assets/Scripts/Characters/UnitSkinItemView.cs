@@ -1,69 +1,53 @@
 using System;
 using Characters.Configs;
-using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Characters
 {
     public class UnitSkinItemView : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private TMP_Text _priceText;
-
-        [SerializeField] private Sprite _standardBackground;
-        [SerializeField] private Sprite _highlightBackground;
-
-        [SerializeField] private Image _contentImage;
-        [SerializeField] private Image _lockImage;
-
-        [SerializeField] private Image _selectionText;
+        [SerializeField] private UnitSelectionPanel _selectedPanel;
+        [SerializeField] private UnitSelectionPanel _unselectedPanel;
 
         public UnitItemConfig UnitItemConfig { get; private set; }
 
-        private Image _backgroundImage;
-
-        public bool IsLock { get; private set; }
+        public bool IsFree { get; private set; } = true;
 
         public event Action<UnitSkinItemView> OnClicked;
 
         private void Awake()
         {
-            _backgroundImage = _contentImage.GetComponent<Image>();
-            Unlock();
+            SetFree(); //Не тут это должно быть
         }
 
-        public void OnPointerClick(PointerEventData eventData) => OnClicked?.Invoke(this);
-
-        public void Lock()
+        public void OnPointerClick(PointerEventData eventData)
         {
-            IsLock = true;
-            _lockImage.gameObject.SetActive(IsLock);
-            _priceText.gameObject.SetActive(true);
+            if (IsFree) 
+                OnClicked?.Invoke(this);
         }
 
-        public void Unlock()
+        public void SetBusy()
         {
-            IsLock = false;
-            _lockImage.gameObject.SetActive(IsLock);
-            _priceText.gameObject.SetActive(IsLock);
+            IsFree = false;
+
+            _selectedPanel.gameObject.SetActive(true);
+            _unselectedPanel.gameObject.SetActive(false);
         }
 
-        public void Select() =>
-            _selectionText.gameObject.SetActive(true);
+        public void SetFree()
+        {
+            IsFree = true;
 
-        public void Deselect() =>
-            _selectionText.gameObject.SetActive(false);
-
-        public void Highlight() =>
-            _backgroundImage.sprite = _highlightBackground;
-
-        public void UnHighlight() =>
-            _backgroundImage.sprite = _standardBackground;
+            _selectedPanel.gameObject.SetActive(false);
+            _unselectedPanel.gameObject.SetActive(true);
+        }
 
         public void InitImage(UnitItemConfig config)
         {
-            _contentImage.sprite = config.ContentImage;
+            _selectedPanel.SetIcon(config.ContentImage);
+            _unselectedPanel.SetIcon(config.ContentImage);
             UnitItemConfig = config;
         }
     }

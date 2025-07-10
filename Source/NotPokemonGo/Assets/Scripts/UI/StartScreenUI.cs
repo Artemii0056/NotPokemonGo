@@ -19,7 +19,6 @@ namespace UI
         {
             _characterSelectionScreenPanel = characterSelectionScreenPanel;
             _chooseMapUI = chooseMapUI;
-           // _chooseMapUI.SetLevelConfig(_levelConfigs);
             
             _choosePlatoonButton.onClick.AddListener(OnChoosePlatoonButtonClicked);
             _showHeroesButton.onClick.AddListener(OnShowHeroesButtonClicked);

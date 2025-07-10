@@ -15,16 +15,16 @@ namespace UI
 
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _startGameButton;
-        
+
         private IStaticDataService _staticDataService;
-    
+
         private LoadMainMenuState _loadMainMenuState;
 
         private void OnEnable()
         {
             UnitContainerPanel.Clicked += OnUnitContainerPanelClicked;
         }
-    
+
         private void OnDisable()
         {
             UnitContainerPanel.Clicked -= OnUnitContainerPanelClicked;
@@ -35,14 +35,17 @@ namespace UI
             GameObject characterPreviewPanel = Instantiate(itemView.UnitItemConfig.CharacterModel);
             characterPreviewPanel.transform.rotation = new Quaternion(0, 180, 0, 0);
             CharacterPreviewPanel.Setup(characterPreviewPanel);
-        
+
             UnitStatsPanel.CreateItemViews(itemView.UnitItemConfig);
-        
+
             _startGameButton.gameObject.SetActive(true);
         }
-    
-        public void Show() => 
+
+        public void Show()
+        {
+            Debug.Log("Show");
             UnitContainerPanel.Show();
+        }
 
         public void Hide() =>
             UnitContainerPanel.Hide();

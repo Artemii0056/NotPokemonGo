@@ -4,9 +4,9 @@ namespace UI.Factory
 {
     public interface IUIFactory
     {
-        CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel();
+        CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel(out ChooseUnitsForBattle chooseUnitsForBattle);
         StartScreenUI CreateStartScreen();
         MainMenuUI CreateMainMenu();
-        CharacterSelectionScreenPanel CreateCharacterSelectionPanel();
+       // CharacterSelectionScreenPanel CreateCharacterSelectionPanel();
     }
 }
