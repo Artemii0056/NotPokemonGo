@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class ChooseUnitsForBattle : MonoBehaviour //TODO Работаю тут
+    public class UnitSelectionController : MonoBehaviour
     {
         [SerializeField] private UnitContainerUI _unitContainerUI;
         [field: SerializeField] public UnitContainerPanel UnitContainerPanel { get; private set; }
@@ -19,7 +19,6 @@ namespace UI
             UnitContainerPanel.Show();
             _unitContainerUI.Show();
             
-            //_unitContainerUI.
             UnitContainerPanel.Clicked += OnUnitClicked;
             _startButton.onClick.AddListener(OnStartButtonClicked);
             
@@ -45,7 +44,6 @@ namespace UI
         public void ReleaseButtonByType(UnitType unitType)
         {
             UnitContainerPanel.Release(unitType);
-            //_unitContainerUI.Re
         }
 
         private void OnUnitClicked(UnitSkinItemView unitSkinItemView)

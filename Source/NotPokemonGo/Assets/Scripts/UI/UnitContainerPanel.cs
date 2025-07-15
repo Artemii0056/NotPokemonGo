@@ -14,6 +14,16 @@ namespace UI
 
         public event Action<UnitSkinItemView> Clicked;
 
+        public void AddItems(List<UnitSkinItemView> characterSkinItemViews)
+        {
+            foreach (var skin in characterSkinItemViews)
+            {
+                _characterSkinItemViews.Add(skin);
+                skin.transform.SetParent(_gridLayoutGroupTransform, false);
+                skin.gameObject.SetActive(false);
+            }
+        }
+
         public void AddItem(UnitSkinItemView skinItemView)
         {
             _characterSkinItemViews.Add(skinItemView);

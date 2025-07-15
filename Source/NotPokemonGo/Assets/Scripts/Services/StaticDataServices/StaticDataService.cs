@@ -7,6 +7,7 @@ using Infrastructure;
 using LevelSetting;
 using Services.AssetManagement;
 using Statuses;
+using UI;
 using UnityEngine;
 
 namespace Services.StaticDataServices
@@ -21,6 +22,9 @@ namespace Services.StaticDataServices
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private List<LevelConfig> _levelConfigs;
 
+        public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
+        public CharacterSelectionScreenPanel CharacterSelectionScreenPanel { get; private set; }
+
         public StaticDataService(IResourceLoader resourceLoader)
         {
             _resourceLoader = resourceLoader;
@@ -29,6 +33,8 @@ namespace Services.StaticDataServices
             LoadSpawnPositionConfigs();
             LoadUnitConfigs();
             LoadLevelConfigs();
+            LoadUnitSkinItemView();
+            LoadCharacterSelectionScreenPanel();
         }
 
         public List<LevelConfig> GetLevelConfigs()
@@ -68,19 +74,21 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
-        private void LoadLevelConfigs()
-        {
-            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.CharacterConfigsPath).ToList();
-        }
-
-        private void LoadUnitConfigs()
-        {
-            _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
-                .ToDictionary(x => x.Type, x => x);
-        }
+        public void LoadUnitSkinItemView() => 
+            UnitSkinItemViewPrefab = _resourceLoader.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
             _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
+        
+       private void LoadCharacterSelectionScreenPanel() =>
+           CharacterSelectionScreenPanel = _resourceLoader.Load<CharacterSelectionScreenPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
+
+        private void LoadUnitConfigs() =>
+            _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
+                .ToDictionary(x => x.Type, x => x);
+
+        private void LoadLevelConfigs() => 
+            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.CharacterConfigsPath).ToList();
 
         private void LoadAbilityConfigs()
         {

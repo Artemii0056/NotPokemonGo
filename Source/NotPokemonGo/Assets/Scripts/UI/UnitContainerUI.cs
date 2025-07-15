@@ -12,11 +12,11 @@ namespace UI
         [SerializeField] private Transform _gridLayoutGroupTransform;
         [SerializeField] private List<UnitSkinItemViewForChoose> _unitSkinItemViews = new List<UnitSkinItemViewForChoose>();
         
-        private ChooseUnitsForBattle _chooseUnitsForBattle;
+        private UnitSelectionController _unitSelectionController;
 
-        public void Initialize(ChooseUnitsForBattle chooseUnitsForBattle)
+        public void Initialize(UnitSelectionController unitSelectionController)
         {
-            _chooseUnitsForBattle = chooseUnitsForBattle;
+            _unitSelectionController = unitSelectionController;
         }
         
         public void Show()
@@ -63,7 +63,7 @@ namespace UI
         
         private void OnUnitTypeChanged(UnitType type)
         {
-            _chooseUnitsForBattle.ReleaseButtonByType(type);
+            _unitSelectionController.ReleaseButtonByType(type);
 
             foreach (var skinItem in _unitSkinItemViews)
             {

@@ -17,7 +17,7 @@ namespace UI
         private Dictionary<LevelType, LevelConfig> _configs = new Dictionary<LevelType, LevelConfig>();
         private LevelConfig _currentLevelConfig;
         
-       private ChooseUnitsForBattle _chooseUnitsForBattle;
+       private UnitSelectionController _unitSelectionController;
 
         public void Initialize(List<LevelConfig> levelConfigs)
         {
@@ -60,14 +60,14 @@ namespace UI
 
         private void PlayButtonClick()
         {
-            _chooseUnitsForBattle.gameObject.SetActive(true);
+            _unitSelectionController.gameObject.SetActive(true);
             //Переход с стейт боя? 
         }
 
-        public void Set(ChooseUnitsForBattle chooseUnitsForBattle)
+        public void Set(UnitSelectionController unitSelectionController)
         {
-            _chooseUnitsForBattle = chooseUnitsForBattle;
-            _chooseUnitsForBattle.gameObject.SetActive(false);
+            _unitSelectionController = unitSelectionController;
+            _unitSelectionController.gameObject.SetActive(false);
         }
     }
 }

@@ -4,6 +4,7 @@ using Characters;
 using Characters.Configs;
 using LevelSetting;
 using Statuses;
+using UI;
 using UnityEngine;
 
 namespace Services.StaticDataServices
@@ -16,5 +17,7 @@ namespace Services.StaticDataServices
         UnitConfig GetUnitConfig(UnitType unitType);
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
         List< LevelConfig> GetLevelConfigs();
+        UnitSkinItemView UnitSkinItemViewPrefab { get; }
+        CharacterSelectionScreenPanel CharacterSelectionScreenPanel { get; }
     }
 }
