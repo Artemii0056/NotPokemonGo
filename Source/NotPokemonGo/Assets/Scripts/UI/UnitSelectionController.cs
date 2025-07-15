@@ -1,6 +1,5 @@
 ﻿using Characters;
 using Characters.Configs;
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 

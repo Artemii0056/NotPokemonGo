@@ -24,13 +24,6 @@ namespace UI
             }
         }
 
-        public void AddItem(UnitSkinItemView skinItemView)
-        {
-            _characterSkinItemViews.Add(skinItemView);
-            skinItemView.transform.SetParent(_gridLayoutGroupTransform, false);
-            skinItemView.gameObject.SetActive(false);
-        }
-
         public void Show()
         {
             foreach (var characterSkin in _characterSkinItemViews)

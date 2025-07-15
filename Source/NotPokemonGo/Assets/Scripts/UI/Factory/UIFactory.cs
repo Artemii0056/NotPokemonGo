@@ -27,14 +27,8 @@ namespace UI.Factory
 
             UnitSelectionController unitSelectionController = Object.Instantiate(unitForBattlePrefab);
 
-            foreach (var config in configCharacterItemConfigs)
-            {
-                UnitSkinItemView unitSkinItemView2 = CreateUnitSkinItemView();
-                unitSkinItemView2.InitImage(config);
-                unitSelectionController.UnitContainerPanel.AddItem(unitSkinItemView2);
-            }
-            
-            
+            unitSelectionController.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(configCharacterItemConfigs));
+
             return unitSelectionController;
         }
 
@@ -52,40 +46,20 @@ namespace UI.Factory
             return unitSkinItemViews;
         }
 
-        public UnitSkinItemView CreateUnitSkinItemView() => 
+        public UnitSkinItemView CreateUnitSkinItemView() =>
             Object.Instantiate(_staticDataService.UnitSkinItemViewPrefab);
 
-        public CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel(out UnitSelectionController unitSelectionController)
+        public CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel()
         {
-            CharacterSelectionScreenPanel characterSelectionScreenPanel = Object.Instantiate( _staticDataService.CharacterSelectionScreenPanel);
-            
+            CharacterSelectionScreenPanel characterSelectionScreenPanel =
+                Object.Instantiate(_staticDataService.CharacterSelectionScreenPanel);
+
             CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
 
-            UnitSelectionController selectionController = CreateUnitSelectionController(config.CharacterItemConfigs);
-            
-            //List<UnitSkinItemView> unitSkinItemViews = new List<UnitSkinItemView>();
+            characterSelectionScreenPanel.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(config.CharacterItemConfigs));
 
-            foreach (UnitItemConfig characterItemConfig in config.CharacterItemConfigs) //TODO НУЖНО ЭТО ПЕРЕПРОКИНУТЬ В CHOOSE
-            {
-                UnitSkinItemView unitSkinItemView = CreateUnitSkinItemView();
-                unitSkinItemView.InitImage(characterItemConfig);
-                
-                characterSelectionScreenPanel.UnitContainerPanel.AddItem(unitSkinItemView);
-                
-                UnitSkinItemView unitSkinItemView2 = CreateUnitSkinItemView();
-                unitSkinItemView2.InitImage(characterItemConfig);
-                selectionController.UnitContainerPanel.AddItem(unitSkinItemView2);
-               unitSkinItemViews.Add(unitSkinItemView2);
-                
-                characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(
-                    CreateCharacteristicItemView()); //А оно надо? 
-            }
+            characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(CreateCharacteristicItemView()); 
 
-            // foreach (var skin in unitSkinItemViews) 
-            //     selectionController.UnitContainerPanel.AddItem(skin);
-            
-            unitSelectionController = selectionController;
-            
             return characterSelectionScreenPanel;
         }
 
@@ -100,60 +74,42 @@ namespace UI.Factory
         {
             StartScreenUI startScreenPrefab =
                 _resourceLoader.Load<StartScreenUI>(Constants.AssetPath.StartScreenCanvasName);
-            
+
             ChooseMapUI chooseMapUIPrefab = _resourceLoader.Load<ChooseMapUI>(Constants.AssetPath.ChooseMapCanvasName);
 
             StartScreenUI startScreen = Object.Instantiate(startScreenPrefab);
             ChooseMapUI chooseMapUI = Object.Instantiate(chooseMapUIPrefab);
 
             MapLevel[] mapsResources = Resources.LoadAll<MapLevel>("Maps");
-            
+
             List<MapLevel> mapLevels = new List<MapLevel>();
 
             foreach (var map in mapsResources)
             {
                 MapLevel mapLevel = Object.Instantiate(map);
-                
+
                 mapLevels.Add(mapLevel);
                 mapLevel.gameObject.SetActive(false);
             }
-            
-            chooseMapUI.Initialize(mapLevels, _staticDataService); //TODO Вот тут нужно проинициализировать мапы
 
-            CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel(out UnitSelectionController chooseUnitsForBattle);
+            chooseMapUI.Initialize(mapLevels, _staticDataService); 
+
+            CharacterSelectionScreenPanel characterSelectionScreenPanel =
+                CreateCharacterSelectionScreenPanel();
             
+            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
+            
+            UnitSelectionController selectionController = CreateUnitSelectionController(config.CharacterItemConfigs);
+
             foreach (var map in mapLevels)
             {
-                map.Set(chooseUnitsForBattle);
+                map.Set(selectionController);
             }
 
             startScreen.Initialize(characterSelectionScreenPanel, chooseMapUI);
 
             return startScreen;
         }
-
-        // public CharacterSelectionScreenPanel CreateCharacterSelectionPanel()
-        // {
-        //     CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
-        //
-        //     Debug.Log(config == null);
-        //
-        //     UnitSkinItemView iconPrefab =
-        //         Resources.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
-        //
-        //     CharacterSelectionScreenPanel characterSelectionScreenPanel = CreateCharacterSelectionScreenPanel();
-        //
-        //     foreach (UnitItemConfig characterItemConfig in config.CharacterItemConfigs)
-        //     {
-        //         UnitSkinItemView icon = Object.Instantiate(iconPrefab);
-        //         icon.InitImage(characterItemConfig);
-        //         characterSelectionScreenPanel.UnitContainerPanel.AddItem(icon);
-        //         characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(
-        //             CreateCharacteristicItemView());
-        //     }
-        //
-        //     return characterSelectionScreenPanel;
-        // }
 
         private CharacteristicItemView CreateCharacteristicItemView()
         {
