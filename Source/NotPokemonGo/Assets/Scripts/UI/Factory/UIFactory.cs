@@ -92,7 +92,6 @@ namespace UI.Factory
                 mapLevel.gameObject.SetActive(false);
             }
 
-            chooseMapUI.Initialize(mapLevels, _staticDataService); 
 
             CharacterSelectionScreenPanel characterSelectionScreenPanel =
                 CreateCharacterSelectionScreenPanel();
@@ -100,6 +99,7 @@ namespace UI.Factory
             CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
             UnitSelectionController selectionController = CreateUnitSelectionController(config.CharacterItemConfigs);
+            chooseMapUI.Initialize(mapLevels, _staticDataService, selectionController); 
 
             foreach (var map in mapLevels)
             {

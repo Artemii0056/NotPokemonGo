@@ -1,5 +1,7 @@
 ﻿using Infrastructure.StateMachines.States.Interfaces;
 using Services.SceneServices;
+using UI;
+using UI.Factory;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -7,11 +9,13 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;
+        private IUIFactory _uiFactory;
 
-        public BootstrapState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader)
+        public BootstrapState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IUIFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
+            _uiFactory = uiFactory;
         }
 
         public void Enter()
@@ -19,10 +23,16 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _sceneLoader.Load(Constants.AssetPath.CharacterSelectionSceneName, EnterMainMenuState);
         }
 
-        private void EnterMainMenuState() => 
-            _gameStateMachine.Enter<LoadingCharacterSelectionState>(); //TODO Начинается все тут
+        private void EnterMainMenuState()
+        {
+            StartScreenUI screenUI = _uiFactory.CreateStartScreen();
+            
+            StartMenuPayload payload = new StartMenuPayload(screenUI);
+            _gameStateMachine.Enter<LoadingCharacterSelectionState, StartMenuPayload>(payload); 
+        }
 
         public void Exit()
-        { }
+        {
+        }
     }
 }

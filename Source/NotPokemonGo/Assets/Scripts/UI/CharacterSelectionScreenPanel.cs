@@ -1,6 +1,8 @@
+using System;
 using Characters;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Services.StaticDataServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,21 +18,15 @@ namespace UI
         [SerializeField] private Button _showButton;
         [SerializeField] private Button _startGameButton;
 
-        private IStaticDataService _staticDataService;
+        public Action ExitClicked;
 
-        private LoadMainMenuState _loadMainMenuState;
+        private void OnEnable() => 
+            UnitContainerPanel.Clicked += OnUnitSelected;
 
-        private void OnEnable()
-        {
-            UnitContainerPanel.Clicked += OnUnitContainerPanelClicked;
-        }
+        private void OnDisable() => 
+            UnitContainerPanel.Clicked -= OnUnitSelected;
 
-        private void OnDisable()
-        {
-            UnitContainerPanel.Clicked -= OnUnitContainerPanelClicked;
-        }
-
-        private void OnUnitContainerPanelClicked(UnitSkinItemView itemView)
+        private void OnUnitSelected(UnitSkinItemView itemView)
         {
             GameObject characterPreviewPanel = Instantiate(itemView.UnitItemConfig.CharacterModel);
             characterPreviewPanel.transform.rotation = new Quaternion(0, 180, 0, 0);
@@ -43,11 +39,17 @@ namespace UI
 
         public void Show()
         {
-            Debug.Log("Show");
+            gameObject.SetActive(true);
             UnitContainerPanel.Show();
+            ExitButton.onClick.AddListener(Hide);
         }
 
-        public void Hide() =>
+        public void Hide()
+        {
+            ExitButton.onClick.RemoveListener(Hide);
             UnitContainerPanel.Hide();
+            gameObject.SetActive(false);
+            ExitClicked?.Invoke();
+        }
     }
 }

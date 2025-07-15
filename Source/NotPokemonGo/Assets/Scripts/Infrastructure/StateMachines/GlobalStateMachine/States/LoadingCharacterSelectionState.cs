@@ -1,36 +1,21 @@
 ﻿using Infrastructure.StateMachines.States.Interfaces;
-using Services.SceneServices;
-using Services.StaticDataServices;
 using UI;
-using UI.Factory;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
-    public class LoadingCharacterSelectionState : IState
+    public class LoadingCharacterSelectionState : IPayloadedState<StartMenuPayload>
     {
-        private IStaticDataService _staticDataService;
-        private IGameStateMachine _gameStateMachine;
-        private ISceneLoader _sceneLoader;
-        private IUIFactory _uiFactory;
-
-        public LoadingCharacterSelectionState(IStaticDataService staticDataService, IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IUIFactory uiFactory)
+        private StartScreenUI _startScreenUI;
+        
+        public void Enter(StartMenuPayload payload)
         {
-            _staticDataService = staticDataService;
-            _gameStateMachine = gameStateMachine;
-            _sceneLoader = sceneLoader;
-            _uiFactory = uiFactory;
-        }
+            _startScreenUI = payload.UI;
 
-        public void Enter()
-        {
-            StartScreenUI screenUI = _uiFactory.CreateStartScreen();
-            // CharacterSelectionScreenPanel characterScreenPanel = _uiFactory.CreateCharacterSelectionScreenPanel();
-            // characterScreenPanel.Show();
+            StartMenuUIController startMenuUIController = new StartMenuUIController(payload.UI, payload.UI._characterSelectionScreenPanel, payload.UI._chooseMapUI);
         }
 
         public void Exit()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
