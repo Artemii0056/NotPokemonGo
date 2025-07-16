@@ -1,15 +1,16 @@
 ﻿using System;
+using Map;
 using UnityEngine;
 
 namespace LevelSetting
 {
     public class LevelButton : MonoBehaviour
     {
-        [field: SerializeField] public  LevelType LevelType { get; private set; }
+        [field: SerializeField] public  MapType MapType { get; private set; }
         
-        public event Action<LevelType> OnClick;
+        public event Action<MapType> OnClick;
 
         private void OnMouseUpAsButton() => 
-            OnClick?.Invoke(LevelType);
+            OnClick?.Invoke(MapType);
     }
 }

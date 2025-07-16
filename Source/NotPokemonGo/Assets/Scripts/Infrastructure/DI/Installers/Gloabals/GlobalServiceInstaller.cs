@@ -99,6 +99,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             RegisterGlobalStates(builder);
             RegisterBattleStates(builder);
+            RegisterUIStates(builder);
             void RegisterGlobalStates(IContainerBuilder builder)
             {
                 builder.Register<BootstrapState>(Lifetime.Singleton)
@@ -116,8 +117,27 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<BattleLoopState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+            }
+
+            void RegisterUIStates(IContainerBuilder builder)
+            {
+                builder.Register<StartScreenState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
                 
-                builder.Register<LoadingCharacterSelectionState>(Lifetime.Singleton)
+                builder.Register<ShowHeroState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<ChooseMapState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<ChooseUnitToFightState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<ChooseUnitToUpdateState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }

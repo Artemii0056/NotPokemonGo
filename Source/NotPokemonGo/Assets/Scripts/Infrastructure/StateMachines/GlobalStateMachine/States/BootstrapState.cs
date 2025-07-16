@@ -9,7 +9,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;
-        private IUIFactory _uiFactory;
+        private readonly IUIFactory _uiFactory;
 
         public BootstrapState(IGameStateMachine gameStateMachine, ISceneLoader sceneLoader, IUIFactory uiFactory)
         {
@@ -28,7 +28,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             StartScreenUI screenUI = _uiFactory.CreateStartScreen();
             
             StartMenuPayload payload = new StartMenuPayload(screenUI);
-            _gameStateMachine.Enter<LoadingCharacterSelectionState, StartMenuPayload>(payload); 
+            _gameStateMachine.Enter<StartScreenState, StartMenuPayload>(payload); 
         }
 
         public void Exit()

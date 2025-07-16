@@ -1,61 +1,50 @@
 using System;
 using System.Collections.Generic;
 using LevelSetting;
+using Map;
 using Services.StaticDataServices;
 using UI;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ChooseMapUI : MonoBehaviour
+public class ChooseMapUI : MonoBehaviour 
 {
-    [SerializeField] private Button _firstButton;
-    [SerializeField] private Button _secondButton;
+    [SerializeField] private List<MapButton> _mapButtons;
 
-    private List<MapLevel> _mapLevels;
+    public UnitSelectionController UnitSelectionController { get; private set; }
+
+    public List<MapLevel> MapLevels { get; private set; }
     private IStaticDataService _staticDataService;
 
-    public event Action MapExitRequested; 
+    public event Action<MapType> MapChoosed;
 
-    public void Initialize(List<MapLevel> mapLevels, IStaticDataService staticDataService, UnitSelectionController unitSelectionController)
+    public void Initialize(List<MapLevel> mapLevels, IStaticDataService staticDataService,
+        UnitSelectionController unitSelectionController)
     {
-        _mapLevels = mapLevels;
+        UnitSelectionController = unitSelectionController;
+        MapLevels = mapLevels;
+
         _staticDataService = staticDataService;
 
         List<LevelConfig> levelConfigs = _staticDataService.GetLevelConfigs();
 
-        for (int i = 0; i < _mapLevels.Count; i++)
+        for (int i = 0; i < MapLevels.Count; i++)
         {
-            _mapLevels[i].Initialize(levelConfigs);
-            _mapLevels[i].Set(unitSelectionController);
-            _mapLevels[i].ExitButtonClicked += OnMapExitClicked; 
+            MapLevels[i].Initialize(levelConfigs);
         }
     }
 
     private void OnEnable()
     {
-        _firstButton.onClick.AddListener(OnFirstButtonClicked);
+        foreach (var button in _mapButtons)
+            button.OnClick += OnButtonClick;
     }
+
+    private void OnButtonClick(MapType type) => 
+        MapChoosed?.Invoke(type);
 
     private void OnDisable()
     {
-        _firstButton.onClick.RemoveListener(OnFirstButtonClicked);
-
-        foreach (var level in _mapLevels)
-            level.ExitButtonClicked -= OnMapExitClicked;
-    }
-
-    private void OnFirstButtonClicked()
-    {
-        gameObject.SetActive(false);
-        _mapLevels[0].gameObject.SetActive(true);
-    }
-
-    private void OnMapExitClicked()
-    {
-        foreach (var level in _mapLevels)
-            level.gameObject.SetActive(false);
-
-        gameObject.SetActive(true);
-        MapExitRequested?.Invoke(); 
+        foreach (var button in _mapButtons)
+            button.OnClick -= OnButtonClick;
     }
 }

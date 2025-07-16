@@ -17,8 +17,6 @@ public class StartMenuUIController
 
         _startScreenUI.ShowHeroesClicked += ShowCharacterPanel;
         _startScreenUI.ChoosePlatoonClicked += ShowChooseMap;
-        //_characterSelectionScreenPanel.ExitClicked += ShowStartScreen;
-        _chooseMapUI.MapExitRequested += ShowStartScreen;
     }
 
     private void ShowCharacterPanel()
@@ -47,6 +45,5 @@ public class StartMenuUIController
         _startScreenUI.ShowHeroesClicked -= ShowCharacterPanel;
         _startScreenUI.ChoosePlatoonClicked -= ShowChooseMap;
         _characterSelectionScreenPanel.ExitClicked -= ShowStartScreen;
-        _chooseMapUI.MapExitRequested -= ShowStartScreen;
     }
 }

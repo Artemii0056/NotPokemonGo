@@ -593,7 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _exitButton: {fileID: 3158791236258410773}
   _playButton: {fileID: 4300496525582626932}
-  <LevelType>k__BackingField: 0
+  <MapType>k__BackingField: 0
   _buttons:
   - {fileID: 6911884853376088766}
   - {fileID: 5123443553251404468}
@@ -798,6 +798,10 @@ PrefabInstance:
       value: LevelPoint
       objectReference: {fileID: 0}
     - target: {fileID: 5457154920271979458, guid: bde7b8adebaf3cc4a9b8295082f29ed3, type: 3}
+      propertyPath: <MapType>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5457154920271979458, guid: bde7b8adebaf3cc4a9b8295082f29ed3, type: 3}
       propertyPath: <LevelType>k__BackingField
       value: 1
       objectReference: {fileID: 0}
@@ -962,6 +966,10 @@ PrefabInstance:
     - target: {fileID: 4652824028386273215, guid: bde7b8adebaf3cc4a9b8295082f29ed3, type: 3}
       propertyPath: m_Name
       value: LevelPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 5457154920271979458, guid: bde7b8adebaf3cc4a9b8295082f29ed3, type: 3}
+      propertyPath: <MapType>k__BackingField
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5457154920271979458, guid: bde7b8adebaf3cc4a9b8295082f29ed3, type: 3}
       propertyPath: <LevelType>k__BackingField

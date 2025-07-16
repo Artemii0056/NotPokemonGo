@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UnitSelectionController : MonoBehaviour
+    public class UnitSelectionController : MonoBehaviour //Разделить логику. Чтобы этим объектом управляли 
     {
         [SerializeField] private UnitContainerUI _unitContainerUI;
         [field: SerializeField] public UnitContainerPanel UnitContainerPanel { get; private set; }
