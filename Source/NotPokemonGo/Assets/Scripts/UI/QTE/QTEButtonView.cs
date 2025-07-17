@@ -7,28 +7,43 @@ namespace UI.QTE
 {
     public class QTEButtonView : MonoBehaviour
     {
-        [SerializeField] private Button _button;
-        [SerializeField] private Image _image;
-        [SerializeField] private TextMeshProUGUI _text;
+        private float _targetTime;
+        private float _offset;
+        private Button _button;
+        private Image TargetImage;
+        private Image Halo;
+        private float CurrentTime;
 
-        public void Initialize(string text, Sprite sprite)
+        private float _speed = 2f;
+        
+        public event Action<bool> IsSuccessed;
+        
+        private bool IsSuccess => CurrentTime <= _targetTime + _offset && CurrentTime >= _targetTime - _offset;
+
+        public void Initialize(float offset, float targetTime, Vector2 position)
         {
-            _text.text = text;
-            _image.sprite = sprite;
+            _offset = offset;
+            _targetTime = targetTime;
+            _button.onClick.AddListener(Clicked);
+            CurrentTime = 0;
         }
         
-        private void OnEnable()
-        {
-            _button.onClick.AddListener(Clicked);
-        }
-
         private void OnDisable()
         {
             _button.onClick.RemoveListener(Clicked);
         }
 
-        private void Clicked()
+        private void Update()
         {
+            CurrentTime +=  Time.deltaTime * _speed;
+
+            if (IsSuccess)
+                TargetImage.color = Color.green;
+            else
+                TargetImage.color = Color.red;
         }
+
+        private void Clicked() => 
+            IsSuccessed?.Invoke(IsSuccess);
     }
 }

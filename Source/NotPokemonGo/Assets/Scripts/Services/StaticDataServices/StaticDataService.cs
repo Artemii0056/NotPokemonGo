@@ -4,7 +4,9 @@ using Abilities;
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using QTESystem;
 using Services.AssetManagement;
+using Services.QTEServices;
 using Statuses;
 using UnityEngine;
 
@@ -18,6 +20,7 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
+        private Dictionary<QTEMode, QTEConfig> _qteConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -38,6 +41,14 @@ namespace Services.StaticDataServices
         
         public List<AbilityConfig> GetAllAbilityConfigs() => 
             _abilityConfigs.Values.ToList();
+
+        public QTEConfig GetQTEConfig(QTEMode qteMode)
+        {
+            if (_qteConfigs.TryGetValue(qteMode, out QTEConfig qteConfig))
+                return qteConfig;
+
+            throw new KeyNotFoundException($"No qte config found for mode {qteMode}");
+        }
 
         public Sprite GetStatusIcon(StatusType statusType)
         {

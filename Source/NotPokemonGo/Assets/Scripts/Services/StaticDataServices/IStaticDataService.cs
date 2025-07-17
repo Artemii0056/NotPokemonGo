@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Characters.Configs;
+using QTESystem;
+using Services.QTEServices;
 using Statuses;
 using UnityEngine;
 
@@ -14,5 +16,6 @@ namespace Services.StaticDataServices
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
         List<AbilityConfig> GetAllAbilityConfigs();
+        QTEConfig GetQTEConfig(QTEMode single);
     }
 }
