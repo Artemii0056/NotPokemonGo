@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Infrastructure.StateMachines.States.Interfaces;
+using LevelSetting;
 using Map;
 using UI;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
     public class ChooseMapState : IPayloadedState<ChoosePlatoonPayload>
     {
         private ChooseMapUI _characterSelectionScreen; 
-        private UnitSelectionController _unitSelectionController;
+        private ChooseUnitToFightPanel _chooseUnitToFightPanel;
         private IGameStateMachine _gameStateMachine;
         private List<MapLevel> _maps;
         
@@ -19,16 +20,16 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         {
             _characterSelectionScreen = payload.ChooseMapUI;
             _gameStateMachine = payload.GameStateMachine;
-            _unitSelectionController = _characterSelectionScreen.UnitSelectionController;
+            _chooseUnitToFightPanel = _characterSelectionScreen.ChooseUnitToFightPanel;
             
             _characterSelectionScreen.gameObject.SetActive(true);
 
-            _characterSelectionScreen.MapChoosed += OnMapChoosed;
+            _characterSelectionScreen.MapSelected += OnMapSelected;
 
             _maps = _characterSelectionScreen.MapLevels;
         }
 
-        private void OnMapChoosed(MapType type)
+        private void OnMapSelected(MapType type)
         {
             foreach (var map in _maps)
             {
@@ -50,9 +51,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private void OnPlayButtonClicked() 
         {
-            Debug.Log("OnPlayButtonClicked");
-            _unitSelectionController.gameObject.SetActive(true); //перенести в стейт
-            _gameStateMachine.Enter<ChooseUnitToFightState>();
+            _chooseUnitToFightPanel.gameObject.SetActive(true);
+            
+            LevelConfig config = _currentMap.CurrentLevelConfig;
+            ChooseUnitToFightPayload chooseUnitToFightPayload = new ChooseUnitToFightPayload(_chooseUnitToFightPanel, config);
+            
+            _gameStateMachine.Enter<ChooseUnitToFightState, ChooseUnitToFightPayload>(chooseUnitToFightPayload); 
         }
 
         public void Exit()

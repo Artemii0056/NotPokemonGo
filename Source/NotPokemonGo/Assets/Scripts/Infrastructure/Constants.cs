@@ -23,7 +23,9 @@ namespace Infrastructure
 
             public const string StatusTypePath = "Statuses/StatusTypesConfig";
             public const string SpawnPositionConfigsPath = "SpawnPositions";
-            public const string CharacterConfigsPath = "LevelConfig";
+            public const string PlatoonContainersPath = "BattlefieldPrefabs/SpawnPositions";
+            public const string CharacterConfigsPath = "Characters";
+            public const string LevelConfigsPath = "LevelConfig";
             public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
         }
 

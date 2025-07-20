@@ -39,7 +39,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private void OnShowHeroesClicked()
         {
-            ShowHeroPayload payload = new ShowHeroPayload(_startScreenUI.CharacterSelectionScreenPanel, _gameStateMachine);
+            ShowHeroPayload payload = new ShowHeroPayload(_startScreenUI.CharacterSelectionScreenContainer);
             
             _gameStateMachine.Enter<ShowHeroState, ShowHeroPayload>(payload);
         }

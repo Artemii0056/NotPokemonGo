@@ -8,20 +8,17 @@ namespace Infrastructure.DI.Initializers.Scenes
 {
     public class MainMenuInitializer : MonoBehaviour, IInitializable
     {
-        private SpawnPositionPresenter _spawnPositionPresenter;
         private ICameraProvider _cameraProvider;
 
         [Inject]
-        public void Construct(SpawnPositionPresenter spawnPositionPresenter, ICameraProvider cameraProvider)
+        public void Construct(ICameraProvider cameraProvider)
         {
             _cameraProvider = cameraProvider;
-            _spawnPositionPresenter = spawnPositionPresenter;
         }
         
         public void Initialize()
         {
             _cameraProvider.Camera = Camera.main;
-            _spawnPositionPresenter.Enable();
         }
     }
 }

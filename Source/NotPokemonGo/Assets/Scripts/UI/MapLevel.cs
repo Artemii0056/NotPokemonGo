@@ -17,9 +17,9 @@ namespace UI
         [SerializeField] private List<LevelButton> _buttons;
 
         private Dictionary<MapType, LevelConfig> _configs = new Dictionary<MapType, LevelConfig>();
-        private LevelConfig _currentLevelConfig;
+        public LevelConfig CurrentLevelConfig { get; private set; }
 
-        private UnitSelectionController _unitSelectionController;
+        private ChooseUnitToFightPanel _chooseUnitToFightPanel;
 
         public event Action OnPlayButtonClicked;
         
@@ -60,7 +60,7 @@ namespace UI
         private void OnButtonClick(MapType mapType)
         {
             LevelConfig info = _configs[mapType];
-            _currentLevelConfig = info;
+            CurrentLevelConfig = info;
 
             _playButton.gameObject.SetActive(true);
         }
@@ -68,15 +68,12 @@ namespace UI
         private void PlayButtonClick()
         {
             OnPlayButtonClicked?.Invoke();
-            
-          //  _unitSelectionController.gameObject.SetActive(true);
-            //Переход с стейт боя? 
         }
 
-        public void Set(UnitSelectionController unitSelectionController)
+        public void Set(ChooseUnitToFightPanel chooseUnitToFightPanel) //Удалить?
         {
-            _unitSelectionController = unitSelectionController;
-            _unitSelectionController.gameObject.SetActive(false);
+            _chooseUnitToFightPanel = chooseUnitToFightPanel;
+            _chooseUnitToFightPanel.gameObject.SetActive(false);
         }
     }
 }

@@ -5,6 +5,7 @@ using Characters.Configs;
 using LevelSetting;
 using Statuses;
 using UI;
+using UI.SpawnPositions;
 using UnityEngine;
 
 namespace Services.StaticDataServices
@@ -18,6 +19,7 @@ namespace Services.StaticDataServices
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
         List< LevelConfig> GetLevelConfigs();
         UnitSkinItemView UnitSkinItemViewPrefab { get; }
-        CharacterSelectionScreenPanel CharacterSelectionScreenPanel { get; }
+        CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
+        PlatoonSpawnContainer GetSpawnPositionContainer(int count);
     }
 }

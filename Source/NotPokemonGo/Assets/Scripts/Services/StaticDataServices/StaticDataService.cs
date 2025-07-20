@@ -8,6 +8,7 @@ using LevelSetting;
 using Services.AssetManagement;
 using Statuses;
 using UI;
+using UI.SpawnPositions;
 using UnityEngine;
 
 namespace Services.StaticDataServices
@@ -21,9 +22,10 @@ namespace Services.StaticDataServices
         private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private List<LevelConfig> _levelConfigs;
+        private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
-        public CharacterSelectionScreenPanel CharacterSelectionScreenPanel { get; private set; }
+        public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -35,12 +37,11 @@ namespace Services.StaticDataServices
             LoadLevelConfigs();
             LoadUnitSkinItemView();
             LoadCharacterSelectionScreenPanel();
+            LoadPlatoonPositionContainer();
         }
 
-        public List<LevelConfig> GetLevelConfigs()
-        {
-            return _levelConfigs.ToList();
-        }
+        public List<LevelConfig> GetLevelConfigs() => 
+            _levelConfigs.ToList();
 
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
         {
@@ -65,6 +66,14 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
         }
+        
+        public PlatoonSpawnContainer GetSpawnPositionContainer(int count)
+        {
+            if (_spawnPositionContainer.TryGetValue(count, out PlatoonSpawnContainer platoonSpawnContainer))
+                return platoonSpawnContainer;
+
+            throw new KeyNotFoundException($"No ability config found for mode {platoonSpawnContainer}");
+        }
 
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
@@ -81,14 +90,14 @@ namespace Services.StaticDataServices
             _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
         
        private void LoadCharacterSelectionScreenPanel() =>
-           CharacterSelectionScreenPanel = _resourceLoader.Load<CharacterSelectionScreenPanel>(Constants.AssetPath.CharacterSelectionCanvasName);
+           CharacterSelectionScreenContainer = _resourceLoader.Load<CharacterSelectionScreenContainer>(Constants.AssetPath.CharacterSelectionCanvasName);
 
         private void LoadUnitConfigs() =>
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
 
         private void LoadLevelConfigs() => 
-            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.CharacterConfigsPath).ToList();
+            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
 
         private void LoadAbilityConfigs()
         {
@@ -106,6 +115,11 @@ namespace Services.StaticDataServices
         {
             _spawnPositionConfigs = Resources.LoadAll<SpawnPositionConfig>(Constants.AssetPath.SpawnPositionConfigsPath)
                 .ToDictionary(x => x.SpawnPositionType, x => x);
+        }
+        private void LoadPlatoonPositionContainer()
+        {
+            _spawnPositionContainer = Resources.LoadAll<PlatoonSpawnContainer>(Constants.AssetPath.PlatoonContainersPath)
+                .ToDictionary(x => x.Count, x => x);
         }
     }
 }

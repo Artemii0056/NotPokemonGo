@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class UnitContainerPanel : MonoBehaviour //левая
+    public class UnitContainerPanel : MonoBehaviour
     {
         [SerializeField] private Transform _gridLayoutGroupTransform;
 
@@ -42,20 +42,15 @@ namespace UI
             }
         }
 
-        private void OnSkinClicked(UnitSkinItemView itemView)
-        {
+        private void OnSkinClicked(UnitSkinItemView itemView) => 
             Clicked?.Invoke(itemView);
-            itemView.SetBusy();
-        }
 
         public void Release(UnitType unitType)
         {
             foreach (var itemView in _characterSkinItemViews)
             {
-                if (itemView.UnitItemConfig.Type == unitType)
-                {
+                if (itemView.UnitItemConfig.Type == unitType) 
                     itemView.SetFree();
-                }
             }
         }
     }

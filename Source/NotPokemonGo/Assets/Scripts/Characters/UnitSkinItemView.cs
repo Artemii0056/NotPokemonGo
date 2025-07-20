@@ -12,15 +12,12 @@ namespace Characters
         [SerializeField] private UnitSelectionPanel _unselectedPanel;
 
         public UnitItemConfig UnitItemConfig { get; private set; }
+        //энам
+        //вью
 
         public bool IsFree { get; private set; } = true;
 
         public event Action<UnitSkinItemView> OnClicked;
-
-        private void Awake()
-        {
-            SetFree(); //Не тут это должно быть
-        }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -33,7 +30,7 @@ namespace Characters
             IsFree = false;
 
             _selectedPanel.gameObject.SetActive(true);
-            _unselectedPanel.gameObject.SetActive(false);
+            _unselectedPanel.gameObject.SetActive(IsFree);
         }
 
         public void SetFree()
@@ -41,7 +38,7 @@ namespace Characters
             IsFree = true;
 
             _selectedPanel.gameObject.SetActive(false);
-            _unselectedPanel.gameObject.SetActive(true);
+            _unselectedPanel.gameObject.SetActive(IsFree);
         }
 
         public void InitImage(UnitItemConfig config)

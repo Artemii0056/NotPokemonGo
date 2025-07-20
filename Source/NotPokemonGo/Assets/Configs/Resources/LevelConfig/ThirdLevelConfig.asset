@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55388ecd78d64313b4fa78fdd09d3805, type: 3}
   m_Name: ThirdLevelConfig
   m_EditorClassIdentifier: 
-  <LevelType>k__BackingField: 2
+  <MapType>k__BackingField: 2
   _levelParts:
   - _units:
     - {fileID: 11400000, guid: 974f95c441ac9b84fb432595d794a57a, type: 2}

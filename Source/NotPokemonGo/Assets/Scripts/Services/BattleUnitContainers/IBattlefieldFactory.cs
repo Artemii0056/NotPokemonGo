@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using Characters;
+using Characters.Configs;
+using LevelSetting;
 
 namespace Services.BattleUnitContainers
 {
     public interface IBattlefieldFactory
     {
-        Battlefield Create(SpawnPositionConfig spawnPositionConfigFirstCommand, SpawnPositionConfig spawnPositionConfigSecondCommand);
+        Battlefield Create(List<UnitType> units, LevelConfig levelConfig);
     }
 }

@@ -2,7 +2,5 @@ using UnityEngine;
 
 namespace Characters
 {
-    public class SpawnPoint : MonoBehaviour
-    {
-    }
+    public class SpawnPoint : MonoBehaviour { }
 }

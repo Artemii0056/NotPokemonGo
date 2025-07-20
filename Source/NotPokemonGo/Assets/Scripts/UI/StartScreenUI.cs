@@ -9,18 +9,18 @@ namespace UI
         [SerializeField] private Button _choosePlatoonButton;
         [SerializeField] private Button _showHeroesButton;
         
-        public CharacterSelectionScreenPanel CharacterSelectionScreenPanel{ get; private set; }
+        public CharacterSelectionScreenContainer CharacterSelectionScreenContainer{ get; private set; }
         public ChooseMapUI ChooseMapUI { get; private set; }
 
         public event Action ShowHeroesClicked;
         public event Action ChoosePlatoonClicked;
 
-        public void Initialize(CharacterSelectionScreenPanel characterSelectionScreenPanel, ChooseMapUI chooseMapUI)
+        public void Initialize(CharacterSelectionScreenContainer characterSelectionScreenContainer, ChooseMapUI chooseMapUI)
         {
-            CharacterSelectionScreenPanel = characterSelectionScreenPanel;
+            CharacterSelectionScreenContainer = characterSelectionScreenContainer;
             ChooseMapUI = chooseMapUI;
             
-            CharacterSelectionScreenPanel.gameObject.SetActive(false);
+            CharacterSelectionScreenContainer.gameObject.SetActive(false);
         }
 
         private void OnEnable()

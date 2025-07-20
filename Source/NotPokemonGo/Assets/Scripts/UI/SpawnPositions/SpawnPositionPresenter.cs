@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UI.SpawnPositions
 {
-    public class SpawnPositionPresenter : IPresenter
+    public class SpawnPositionPresenter : IPresenter //TODO Делитать?
     {
         private readonly SpawnPositionView _spawnPositionView;
         private readonly IGameStateMachine _stateMachine;
@@ -33,7 +33,7 @@ namespace UI.SpawnPositions
 
         private void OnSpawnPositionChanged(SpawnPositionType spawnPositionType)
         {
-            _stateMachine.Enter<LoadingBattleState, SpawnPositionType>(spawnPositionType);
+            //_stateMachine.Enter<LoadingBattleState, SpawnPositionType>(spawnPositionType);
             Disable();
         }
     }

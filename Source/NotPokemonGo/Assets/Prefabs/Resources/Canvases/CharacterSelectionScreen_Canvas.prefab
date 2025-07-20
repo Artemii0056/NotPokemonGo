@@ -1412,9 +1412,7 @@ MonoBehaviour:
   <CharacterPreviewPanel>k__BackingField: {fileID: 7529245500925770894}
   <UnitContainerPanel>k__BackingField: {fileID: 3279718132341403974}
   <UnitStatsPanel>k__BackingField: {fileID: 5735695909625095474}
-  <ExitButton>k__BackingField: {fileID: 114891829003148810}
-  _showButton: {fileID: 0}
-  _startGameButton: {fileID: 0}
+  _exitButton: {fileID: 114891829003148810}
 --- !u!1 &8627609442050006322
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Factories;
+using UI.SpawnPositions;
 using Units;
 using UnityEngine;
 
@@ -55,6 +56,60 @@ namespace Platoons
             }
 
             return new Platoon(units, platoonType);
+        }
+        
+        public Platoon Create2(
+            PlatoonSpawnContainer container,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            UnitConfig[] unitConfig)
+        {
+            List<Unit> units = new List<Unit>();
+            
+            FillUnits2(units, platoonPosition, platoonType, container, unitConfig);
+
+            // switch (spawnPositionConfig.SpawnPositionType)
+            // {
+            //     case SpawnPositionType.One:
+            //         FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 1);
+            //         break;
+            //
+            //     case SpawnPositionType.Two:
+            //         FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 2);
+            //         break;
+            //
+            //     case SpawnPositionType.Three:
+            //         FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 3);
+            //         break;
+            //
+            //     case SpawnPositionType.Four:
+            //         FillUnits(units, platoonPosition, platoonType, spawnPositionConfig, unitConfig, 4);
+            //         break;
+            //
+            //     case SpawnPositionType.None:
+            //     default:
+            //         throw new ArgumentOutOfRangeException();
+            // }
+
+            return new Platoon(units, platoonType);
+        }
+        
+        private void FillUnits2(
+            List<Unit> units,
+            Transform platoonPosition,
+            PlatoonType platoonType,
+            PlatoonSpawnContainer container,
+            UnitConfig[] unitConfig)
+        {
+            SpawnPoint[] unitPosition = container.SpawnPoints.ToArray();
+            
+            for (int i = 0; i < unitPosition.Length; i++)
+            {
+                if (i < unitPosition.Length)
+                {
+                    units.Add(_unitFactory.Create(unitPosition[i].transform.position, platoonPosition, unitConfig[i], platoonType));
+                }
+            }
         }
 
         private void FillUnits(

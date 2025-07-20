@@ -10,27 +10,25 @@ public class ChooseMapUI : MonoBehaviour
 {
     [SerializeField] private List<MapButton> _mapButtons;
 
-    public UnitSelectionController UnitSelectionController { get; private set; }
+    public ChooseUnitToFightPanel ChooseUnitToFightPanel { get; private set; }
 
     public List<MapLevel> MapLevels { get; private set; }
     private IStaticDataService _staticDataService;
 
-    public event Action<MapType> MapChoosed;
+    public event Action<MapType> MapSelected;
 
     public void Initialize(List<MapLevel> mapLevels, IStaticDataService staticDataService,
-        UnitSelectionController unitSelectionController)
+        ChooseUnitToFightPanel chooseUnitToFightPanel)
     {
-        UnitSelectionController = unitSelectionController;
+        ChooseUnitToFightPanel = chooseUnitToFightPanel;
         MapLevels = mapLevels;
 
         _staticDataService = staticDataService;
 
         List<LevelConfig> levelConfigs = _staticDataService.GetLevelConfigs();
 
-        for (int i = 0; i < MapLevels.Count; i++)
-        {
+        for (int i = 0; i < MapLevels.Count; i++) 
             MapLevels[i].Initialize(levelConfigs);
-        }
     }
 
     private void OnEnable()
@@ -40,7 +38,7 @@ public class ChooseMapUI : MonoBehaviour
     }
 
     private void OnButtonClick(MapType type) => 
-        MapChoosed?.Invoke(type);
+        MapSelected?.Invoke(type);
 
     private void OnDisable()
     {

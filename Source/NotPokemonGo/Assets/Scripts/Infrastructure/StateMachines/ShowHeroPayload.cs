@@ -5,14 +5,9 @@ namespace Infrastructure.StateMachines
 {
     public class ShowHeroPayload
     {
-        public readonly CharacterSelectionScreenPanel CharacterSelectionScreenPanel;
-        public readonly IGameStateMachine GameStateMachine;
+        public readonly CharacterSelectionScreenContainer CharacterSelectionScreenContainer;
 
-        public ShowHeroPayload(CharacterSelectionScreenPanel characterSelectionScreenPanel,
-            IGameStateMachine gameStateMachine)
-        {
-            CharacterSelectionScreenPanel = characterSelectionScreenPanel;
-            GameStateMachine = gameStateMachine;
-        }
+        public ShowHeroPayload(CharacterSelectionScreenContainer characterSelectionScreenContainer) => 
+            CharacterSelectionScreenContainer = characterSelectionScreenContainer;
     }
 }

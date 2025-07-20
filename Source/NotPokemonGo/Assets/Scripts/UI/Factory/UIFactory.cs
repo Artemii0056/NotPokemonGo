@@ -20,16 +20,16 @@ namespace UI.Factory
             _staticDataService = staticDataService;
         }
 
-        public UnitSelectionController CreateUnitSelectionController(IEnumerable<UnitItemConfig> configCharacterItemConfigs)
+        public ChooseUnitToFightPanel CreateUnitSelectionController(IEnumerable<UnitItemConfig> configCharacterItemConfigs)
         {
-            UnitSelectionController unitForBattlePrefab =
-                _resourceLoader.Load<UnitSelectionController>(Constants.AssetPath.ChooseUnitsCanvasName);
+            ChooseUnitToFightPanel chooseUnitForBattlePrefab =
+                _resourceLoader.Load<ChooseUnitToFightPanel>(Constants.AssetPath.ChooseUnitsCanvasName);
 
-            UnitSelectionController unitSelectionController = Object.Instantiate(unitForBattlePrefab);
+            ChooseUnitToFightPanel chooseUnitToFightPanel = Object.Instantiate(chooseUnitForBattlePrefab);
 
-            unitSelectionController.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(configCharacterItemConfigs));
+            chooseUnitToFightPanel.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(configCharacterItemConfigs));
 
-            return unitSelectionController;
+            return chooseUnitToFightPanel;
         }
 
         public List<UnitSkinItemView> CreateUnitSkinItemViews(IEnumerable<UnitItemConfig> configCharacterItemConfigs)
@@ -49,18 +49,18 @@ namespace UI.Factory
         public UnitSkinItemView CreateUnitSkinItemView() =>
             Object.Instantiate(_staticDataService.UnitSkinItemViewPrefab);
 
-        public CharacterSelectionScreenPanel CreateCharacterSelectionScreenPanel()
+        public CharacterSelectionScreenContainer CreateCharacterSelectionScreenPanel()
         {
-            CharacterSelectionScreenPanel characterSelectionScreenPanel =
-                Object.Instantiate(_staticDataService.CharacterSelectionScreenPanel);
+            CharacterSelectionScreenContainer characterSelectionScreenContainer =
+                Object.Instantiate(_staticDataService.CharacterSelectionScreenContainer);
 
             CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
 
-            characterSelectionScreenPanel.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(config.CharacterItemConfigs));
+            characterSelectionScreenContainer.UnitContainerPanel.AddItems(CreateUnitSkinItemViews(config.CharacterItemConfigs));
 
-            characterSelectionScreenPanel.UnitStatsPanel.SetCharacteristicItemView(CreateCharacteristicItemView()); 
+            characterSelectionScreenContainer.UnitStatsPanel.SetCharacteristicItemView(CreateCharacteristicItemView()); 
 
-            return characterSelectionScreenPanel;
+            return characterSelectionScreenContainer;
         }
 
         public MainMenuUI CreateMainMenu()
@@ -93,20 +93,20 @@ namespace UI.Factory
             }
 
 
-            CharacterSelectionScreenPanel characterSelectionScreenPanel =
+            CharacterSelectionScreenContainer characterSelectionScreenContainer =
                 CreateCharacterSelectionScreenPanel();
             
             CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
-            UnitSelectionController selectionController = CreateUnitSelectionController(config.CharacterItemConfigs);
-            chooseMapUI.Initialize(mapLevels, _staticDataService, selectionController); 
+            ChooseUnitToFightPanel toFightPanel = CreateUnitSelectionController(config.CharacterItemConfigs);
+            chooseMapUI.Initialize(mapLevels, _staticDataService, toFightPanel); 
 
             foreach (var map in mapLevels)
             {
-                map.Set(selectionController);
+                map.Set(toFightPanel);
             }
 
-            startScreen.Initialize(characterSelectionScreenPanel, chooseMapUI);
+            startScreen.Initialize(characterSelectionScreenContainer, chooseMapUI);
 
             return startScreen;
         }

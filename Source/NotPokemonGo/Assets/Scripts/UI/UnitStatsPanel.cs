@@ -42,10 +42,8 @@ namespace UI
 
         private void ClearItemViews()
         {
-            foreach (var view in _characteristicSkinItemViews)
-            {
+            foreach (var view in _characteristicSkinItemViews) 
                 Destroy(view.gameObject);
-            }
 
             _characteristicSkinItemViews.Clear();
         }
