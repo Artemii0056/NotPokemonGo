@@ -3,7 +3,6 @@ using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Map;
 using UI;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {

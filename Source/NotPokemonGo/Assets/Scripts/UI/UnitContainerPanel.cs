@@ -42,9 +42,6 @@ namespace UI
             }
         }
 
-        private void OnSkinClicked(UnitSkinItemView itemView) => 
-            Clicked?.Invoke(itemView);
-
         public void Release(UnitType unitType)
         {
             foreach (var itemView in _characterSkinItemViews)
@@ -53,5 +50,8 @@ namespace UI
                     itemView.SetFree();
             }
         }
+        
+        private void OnSkinClicked(UnitSkinItemView itemView) => 
+            Clicked?.Invoke(itemView);
     }
 }

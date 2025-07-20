@@ -6,7 +6,6 @@ using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Services.SceneServices;
 using UI;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -78,9 +77,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                     unitTypes.Add(unitSkinItemView.UnitType);
             }
 
-            foreach (var type in unitTypes)
-                Debug.Log(type);
-            
             LoadingBattleStatePayload payload = new LoadingBattleStatePayload(unitTypes, _levelConfig);
             
             _sceneLoader.Load(Constants.AssetPath.MainMenuSceneName, () => _gameStateMachine.Enter<LoadingBattleState, LoadingBattleStatePayload>(payload));
@@ -92,10 +88,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
             foreach (var skinItem in _unitSkinItemViews)
             {
-                if (skinItem.UnitType == type)
-                {
+                if (skinItem.UnitType == type) 
                     skinItem.BeFree();
-                }
             }
         }
         

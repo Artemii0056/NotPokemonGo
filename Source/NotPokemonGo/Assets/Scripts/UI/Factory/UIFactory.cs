@@ -82,7 +82,7 @@ namespace UI.Factory
 
             MapLevel[] mapsResources = Resources.LoadAll<MapLevel>("Maps");
 
-            List<MapLevel> mapLevels = new List<MapLevel>();
+           List<MapLevel> mapLevels = new List<MapLevel>();
 
             foreach (var map in mapsResources)
             {
@@ -96,15 +96,15 @@ namespace UI.Factory
             CharacterSelectionScreenContainer characterSelectionScreenContainer =
                 CreateCharacterSelectionScreenPanel();
             
-            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
+           CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
             ChooseUnitToFightPanel toFightPanel = CreateUnitSelectionController(config.CharacterItemConfigs);
             chooseMapUI.Initialize(mapLevels, _staticDataService, toFightPanel); 
-
-            foreach (var map in mapLevels)
-            {
-                map.Set(toFightPanel);
-            }
+            
+            // foreach (var map in mapLevels)
+            // {
+            //     map.Set(toFightPanel);
+            // }
 
             startScreen.Initialize(characterSelectionScreenContainer, chooseMapUI);
 

@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class ChooseUnitToFightPanel : MonoBehaviour 
+    public class ChooseUnitToFightPanel : MonoBehaviour
     {
-        [FormerlySerializedAs("_unitContainerUI")] [field: SerializeField]  public UnitSelectionPanelContainer UnitSelectionPanelContainer;
+        [field: SerializeField] public UnitSelectionPanelContainer UnitSelectionPanelContainer;
         [field: SerializeField] public UnitContainerPanel UnitContainerPanel { get; private set; }
 
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _exitButton;
-        
+
         public event Action StartButtonClicked;
         public event Action ExitButtonClicked;
 

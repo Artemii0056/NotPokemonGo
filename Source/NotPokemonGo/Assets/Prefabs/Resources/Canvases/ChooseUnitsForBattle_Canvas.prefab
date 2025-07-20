@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20f9991210541249be82cc7f031d34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitContainerUI: {fileID: 7829507646437712476}
+  UnitSelectionPanelContainer: {fileID: 7829507646437712476}
   <UnitContainerPanel>k__BackingField: {fileID: 7929119785813821324}
   _startButton: {fileID: 5600924266759928005}
   _exitButton: {fileID: 3617887746713849590}

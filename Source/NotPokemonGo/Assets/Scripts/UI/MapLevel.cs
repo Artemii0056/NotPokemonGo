@@ -40,6 +40,7 @@ namespace UI
 
             _playButton.onClick.AddListener(PlayButtonClick);
             _exitButton.onClick.AddListener(ExitButtonClick);
+            
             _playButton.gameObject.SetActive(false);
         }
 
@@ -52,10 +53,8 @@ namespace UI
             _exitButton.onClick.RemoveListener(ExitButtonClick);
         }
 
-        private void ExitButtonClick()
-        {
+        private void ExitButtonClick() => 
             ExitButtonClicked?.Invoke();
-        }
 
         private void OnButtonClick(MapType mapType)
         {
@@ -65,15 +64,7 @@ namespace UI
             _playButton.gameObject.SetActive(true);
         }
 
-        private void PlayButtonClick()
-        {
+        private void PlayButtonClick() => 
             OnPlayButtonClicked?.Invoke();
-        }
-
-        public void Set(ChooseUnitToFightPanel chooseUnitToFightPanel) //Удалить?
-        {
-            _chooseUnitToFightPanel = chooseUnitToFightPanel;
-            _chooseUnitToFightPanel.gameObject.SetActive(false);
-        }
     }
 }

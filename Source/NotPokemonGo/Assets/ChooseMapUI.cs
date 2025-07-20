@@ -17,10 +17,12 @@ public class ChooseMapUI : MonoBehaviour
 
     public event Action<MapType> MapSelected;
 
-    public void Initialize(List<MapLevel> mapLevels, IStaticDataService staticDataService,
+    public void Initialize(List<MapLevel> mapLevels, 
+        IStaticDataService staticDataService,
         ChooseUnitToFightPanel chooseUnitToFightPanel)
     {
         ChooseUnitToFightPanel = chooseUnitToFightPanel;
+        chooseUnitToFightPanel.gameObject.SetActive(false); 
         MapLevels = mapLevels;
 
         _staticDataService = staticDataService;
