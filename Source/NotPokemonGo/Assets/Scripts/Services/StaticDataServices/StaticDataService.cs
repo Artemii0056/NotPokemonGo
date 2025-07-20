@@ -20,7 +20,7 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
-        private Dictionary<QTEMode, QTEConfig> _qteConfigs;
+        private Dictionary<QTEType, QTEConfig> _qteConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -29,6 +29,7 @@ namespace Services.StaticDataServices
             LoadStatusTypeIcons();
             LoadSpawnPositionConfigs();
             LoadUnitConfigs();
+            LoadQTEConfigs();
         }
 
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
@@ -38,11 +39,11 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
-        
+
         public List<AbilityConfig> GetAllAbilityConfigs() => 
             _abilityConfigs.Values.ToList();
 
-        public QTEConfig GetQTEConfig(QTEMode qteMode)
+        public QTEConfig GetQTEConfig(QTEType qteMode)
         {
             if (_qteConfigs.TryGetValue(qteMode, out QTEConfig qteConfig))
                 return qteConfig;
@@ -65,13 +66,19 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
         }
-        
+
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
             if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
                 return characterConfig;
 
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
+        }
+
+        private void LoadQTEConfigs()
+        {
+            _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
+                .ToDictionary(x => x.QTEType, x => x);
         }
 
         private void LoadUnitConfigs()

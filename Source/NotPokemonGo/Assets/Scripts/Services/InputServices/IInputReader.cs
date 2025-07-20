@@ -6,5 +6,6 @@ namespace Services.InputServices
     {
         event Action LeftMouseButtonPressed;
         event Action SpacePressed;
+        event Action EButtonPressed;
     }
 }

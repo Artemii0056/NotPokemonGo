@@ -11,13 +11,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
     {
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IBattleUnitContainer _battleUnitContainer;
-        private readonly IStatusManager _statusManager;
 
-        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer, IStatusManager  statusManager)
+        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer)
         {
             _battleStateMachine = battleStateMachine;
             _battleUnitContainer = battleUnitContainer;
-            _statusManager = statusManager;
         }
         
         public void Enter(Battlefield unitActionPayload)

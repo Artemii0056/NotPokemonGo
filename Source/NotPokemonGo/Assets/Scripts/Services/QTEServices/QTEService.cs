@@ -1,7 +1,7 @@
-﻿using QTESystem;
+﻿using System;
+using QTESystem;
 using Services.StaticDataServices;
 using UI.QTE;
-using UnityEngine;
 
 namespace Services.QTEServices
 {
@@ -9,33 +9,34 @@ namespace Services.QTEServices
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly QTEPresenter _qtePresenter;
 
+        public event Action <bool> Completed; 
+        
         public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
+            _qtePresenter = new QTEPresenter();
         }
         
-        public void Start(Battlefield unitActionPayload)
+        public void Start()
         {
-            QTEConfig qteConfig = _staticDataService.GetQTEConfig(QTEMode.Single);
-            // перенести камеру
-            // включить UI с кнопками
-            // QTEPresenter qtePresenter = new QTEPresenter(qteConfig.QteSetup,  _coroutineRunner);
+            QTEConfig qteConfig = _staticDataService.GetQTEConfig(QTEType.UI);
+            // перенести камеру в презенторе или в другом классе
             
-            QTESpawner qteSpawner = new QTESpawner();
+            _qtePresenter.Enable(qteConfig, _coroutineRunner);
 
-            _coroutineRunner.StartCoroutine(qteSpawner.Spawn(qteConfig.QteSetup, default));
+            _qtePresenter.Completed += OnCompleted;
         }
 
-        private void OnCompleted()
+        private void OnCompleted(bool success)
         {
-            
-        }
-        
-        private void OnFailed()
-        {
-            
+            _qtePresenter.Completed -= OnCompleted;
+
+            _qtePresenter.Disable();
+
+            Completed?.Invoke(success);
         }
     }
 }

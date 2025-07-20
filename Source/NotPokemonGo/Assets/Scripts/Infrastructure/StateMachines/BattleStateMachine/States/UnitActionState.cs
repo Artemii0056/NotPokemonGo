@@ -4,6 +4,7 @@ using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using InputServices;
 using Services.InputServices;
+using UnityEngine;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -29,6 +30,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _payload = unitActionPayload;
             _inputReader.SpacePressed += SetFinishBattleState;
 
+            _inputReader.EButtonPressed += SetQTEState;
+
             switch (unitActionPayload.UnitSorce.PlatoonType)
             {
                 case PlatoonType.Friends:
@@ -48,8 +51,16 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _unitActionStrategy.Enable();        
         }
 
+        private void SetQTEState()
+        {
+            Debug.Log("QTEBattleState");
+            _battleStateMachine.Enter<QTEBattleState>();
+        }
+
         public void Exit()
         {
+            _inputReader.EButtonPressed -= SetQTEState;
+
             _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
         }

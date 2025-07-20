@@ -16,6 +16,6 @@ namespace Services.StaticDataServices
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
         List<AbilityConfig> GetAllAbilityConfigs();
-        QTEConfig GetQTEConfig(QTEMode single);
+        QTEConfig GetQTEConfig(QTEType qteMode);
     }
 }

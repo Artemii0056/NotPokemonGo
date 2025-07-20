@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UI.QTE;
 using UnityEngine;
 
 namespace QTESystem
@@ -8,11 +9,6 @@ namespace QTESystem
     {
         public QTEType QTEType;
         public List<QTESetup> QteSetup;
-    }
-
-    public enum QTEType
-    {
-        Unit = 1,
-        UI = 2
+        public QTECanvas QteCanvas;
     }
 }

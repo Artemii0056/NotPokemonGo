@@ -1,27 +1,39 @@
 using Infrastructure.StateMachines.States.Interfaces;
 using Services.QTEServices;
+using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class QTEBattleState : IPayloadedState<Battlefield>
+    public class QTEBattleState : IState
     {
-        private readonly IBattleStateMachine _battleStateMachine;
         private readonly IQTEService _qteService;
 
-        public QTEBattleState(IBattleStateMachine battleStateMachine, IQTEService qteService)
+        public QTEBattleState(IQTEService qteService)
         {
-            _battleStateMachine = battleStateMachine;
             _qteService = qteService;
         }
         
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter()
         {
-            _qteService.Start(unitActionPayload);
+            _qteService.Start();
+            _qteService.Completed += OnCompleted;
         }
 
         public void Exit()
         {
-            
+            _qteService.Completed -= OnCompleted;
+        }
+
+        private void OnCompleted(bool isSuccess)
+        {
+            if (isSuccess)
+            {
+                Debug.Log("QTEBattleState::OnCompleted");
+            }
+            else
+            {
+                Debug.Log("QTEBattleState::OnFailed");
+            }
         }
     }
 }

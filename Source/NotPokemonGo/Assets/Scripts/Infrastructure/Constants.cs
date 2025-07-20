@@ -21,6 +21,7 @@ namespace Infrastructure
             public const string SpawnPositionConfigsPath = "SpawnPositions";
             public const string CharacterConfigsPath = "Characters";
             public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
+            public const string QTEConfigs = "QTE";
         }
 
         public class Positions

@@ -13,7 +13,7 @@ namespace QTESystem
         public float Speed;
         public QTEButtonView QTEButtonView;
         public Image Overlay;
-        
+
         public float TargetTime;
         public float Offset;
         public float TimeToNextTarget;

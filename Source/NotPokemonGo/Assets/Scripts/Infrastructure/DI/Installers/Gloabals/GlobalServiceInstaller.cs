@@ -150,6 +150,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<FinishBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+
+                builder.Register<QTEBattleState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
             }
         }
     }
