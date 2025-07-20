@@ -16,7 +16,7 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IRaycaster _raycaster;
+        private IRaycasterService _raycasterService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
@@ -31,7 +31,7 @@ namespace Battlefields
 
         [Inject]
         public void Initialize(
-            IRaycaster raycaster,
+            IRaycasterService raycasterService,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
@@ -41,7 +41,7 @@ namespace Battlefields
         {
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
-            _raycaster = raycaster;
+            _raycasterService = raycasterService;
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
@@ -53,7 +53,7 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _raycaster.UnitSearched += OnUnitSearched;
+            _raycasterService.UnitSearched += OnUnitSearched;
             _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
@@ -62,7 +62,7 @@ namespace Battlefields
             base.Disable();
 
             _source.Step.ActionEnded -= OnAnimationActionEnded;
-            _raycaster.UnitSearched -= OnUnitSearched;
+            _raycasterService.UnitSearched -= OnUnitSearched;
             _sourceProvider.Discard();
         }
 

@@ -16,17 +16,15 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _coroutineRunner = coroutineRunner;
         }
         
-        public void Enter(Battlefield battlefield)
+        public void Enter(Battlefield unitActionPayload)
         {
-            battlefield.Tick();
-            _coroutineRunner.StartCoroutine(Delay(battlefield));
+            unitActionPayload.Tick();
+            _coroutineRunner.StartCoroutine(Delay(unitActionPayload));
         }
 
         private IEnumerator Delay(Battlefield battlefield)
         {
-            Debug.LogWarning("Before Tick");
             yield return new WaitForSeconds(0.1f);
-            Debug.LogWarning("After Tick");
             _battleStateMachine.Enter<SelectReadyUnitState, Battlefield>(battlefield);
         }
 

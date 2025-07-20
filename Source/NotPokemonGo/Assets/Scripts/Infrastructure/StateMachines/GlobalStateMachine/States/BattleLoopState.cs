@@ -28,11 +28,11 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _abilityPanelPresenter = abilityPanelPresenter;
         }
 
-        public void Enter(Battlefield battlefield)
+        public void Enter(Battlefield unitActionPayload)
         {
             _abilityPanelPresenter.Disable();
             _battleUnitContainer.Reset();
-            _battlefield = battlefield;
+            _battlefield = unitActionPayload;
             _battlefield.Enable();
 
             _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Heroes);

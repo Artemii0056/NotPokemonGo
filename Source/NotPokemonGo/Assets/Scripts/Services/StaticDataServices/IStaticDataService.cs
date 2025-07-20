@@ -1,8 +1,9 @@
-using System.Collections.Generic;
 using Abilities;
 using Characters;
 using Characters.Configs;
 using LevelSetting;
+using QTESystem;
+using Services.QTEServices;
 using Statuses;
 using UI;
 using UI.SpawnPositions;
@@ -16,6 +17,8 @@ namespace Services.StaticDataServices
         AbilityConfig GetAbilityConfig(AbilityType abilityType);
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
+        List<AbilityConfig> GetAllAbilityConfigs();
+        QTEConfig GetQTEConfig(QTEType qteMode);
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
         List< LevelConfig> GetLevelConfigs();
         UnitSkinItemView UnitSkinItemViewPrefab { get; }

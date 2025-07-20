@@ -11,18 +11,16 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
     {
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IBattleUnitContainer _battleUnitContainer;
-        private readonly IStatusManager _statusManager;
 
-        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer, IStatusManager  statusManager)
+        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer)
         {
             _battleStateMachine = battleStateMachine;
             _battleUnitContainer = battleUnitContainer;
-            _statusManager = statusManager;
         }
         
-        public void Enter(Battlefield batlfield)
+        public void Enter(Battlefield unitActionPayload)
         {
-            foreach (Unit unit in batlfield.Units) 
+            foreach (Unit unit in unitActionPayload.Units) 
                 _battleUnitContainer.Add(unit);
 
             Unit unitSource = _battleUnitContainer.Give();
@@ -33,14 +31,14 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     new UnitActionPayload
                     (
                         unitSource,
-                        batlfield)
+                        unitActionPayload)
                 );
                 
-                batlfield.Units.Clear();
+                unitActionPayload.Units.Clear();
             }
             else
             {
-                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(batlfield);
+                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(unitActionPayload);
             }
         }
 

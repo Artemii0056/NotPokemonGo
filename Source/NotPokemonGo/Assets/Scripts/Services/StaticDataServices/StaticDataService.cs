@@ -5,7 +5,9 @@ using Characters;
 using Characters.Configs;
 using Infrastructure;
 using LevelSetting;
+using QTESystem;
 using Services.AssetManagement;
+using Services.QTEServices;
 using Statuses;
 using UI;
 using UI.SpawnPositions;
@@ -26,6 +28,7 @@ namespace Services.StaticDataServices
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
+        private Dictionary<QTEType, QTEConfig> _qteConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
@@ -38,6 +41,7 @@ namespace Services.StaticDataServices
             LoadUnitSkinItemView();
             LoadCharacterSelectionScreenPanel();
             LoadPlatoonPositionContainer();
+            LoadQTEConfigs();
         }
 
         public List<LevelConfig> GetLevelConfigs() => 
@@ -75,6 +79,7 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {platoonSpawnContainer}");
         }
 
+
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
             if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
@@ -83,21 +88,31 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
+        private void LoadQTEConfigs()
+        {
+            _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
+                .ToDictionary(x => x.QTEType, x => x);
+        }
+
+        private void LoadUnitConfigs()
+        {
+        
+        }
+        
         public void LoadUnitSkinItemView() => 
             UnitSkinItemViewPrefab = _resourceLoader.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
             _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
         
-       private void LoadCharacterSelectionScreenPanel() =>
-           CharacterSelectionScreenContainer = _resourceLoader.Load<CharacterSelectionScreenContainer>(Constants.AssetPath.CharacterSelectionCanvasName);
+        private void LoadCharacterSelectionScreenPanel() =>
+            CharacterSelectionScreenContainer = _resourceLoader.Load<CharacterSelectionScreenContainer>(Constants.AssetPath.CharacterSelectionCanvasName);
 
         private void LoadUnitConfigs() =>
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
-
-        private void LoadLevelConfigs() => 
-            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
+        private CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
+            _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
 
         private void LoadAbilityConfigs()
         {
