@@ -4,17 +4,21 @@ using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class QTEBattleState : IState
+    public class QTEBattleState : IPayloadedState<Battlefield>
     {
         private readonly IQTEService _qteService;
+        private readonly IBattleStateMachine _battleStateMachine;
+        private Battlefield _battlefield;
 
-        public QTEBattleState(IQTEService qteService)
+        public QTEBattleState(IQTEService qteService, IBattleStateMachine battleStateMachine)
         {
             _qteService = qteService;
+            _battleStateMachine = battleStateMachine;
         }
-        
-        public void Enter()
+
+        public void Enter(Battlefield battlefield)
         {
+            _battlefield = battlefield;
             _qteService.Start();
             _qteService.Completed += OnCompleted;
         }
@@ -34,6 +38,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             {
                 Debug.Log("QTEBattleState::OnFailed");
             }
+            
+            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }
 }

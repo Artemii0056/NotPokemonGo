@@ -9,11 +9,6 @@ namespace Infrastructure.DI.Scopes
 	{
 		[SerializeField] private List<MonoInstaller> _injectableServicesInstallers;
 		[SerializeField] private List<MonoInstaller> _defaultServicesInstallers;
-		protected override void Awake()
-		{
-			base.Awake();
-			DontDestroyOnLoad(this);
-		}
 
 		[Inject]
 		private void Construct(IObjectResolver objectResolver)

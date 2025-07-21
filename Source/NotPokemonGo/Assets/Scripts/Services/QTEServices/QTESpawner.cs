@@ -16,6 +16,7 @@ namespace UI.QTE
         private readonly QTEPresenter _qtePresenter;
         
         private Coroutine _spawnCoroutine;
+        
         public event Action Finished;
         
         public QTESpawner(ICoroutineRunner coroutineRunner, QTEConfig qteConfig, QTEPresenter qtePresenter)
@@ -31,13 +32,18 @@ namespace UI.QTE
 
             _qtePool = new ObjectPool<QTEButtonView>
             (
-                () =>  GameObject.Instantiate(firstQTESetup.QTEButtonView, qteCanvas.transform),
-                     ActionOnGet,
-                     (qteButton) =>  qteButton.gameObject.SetActive(false),
-                     (qteButton) => GameObject.Destroy(qteButton)
-            );
+                () => GameObject.Instantiate(firstQTESetup.QTEButtonView, qteCanvas.transform),
+                ActionOnGet,
+                (qteButton) => qteButton.gameObject.SetActive(false),
+                (qteButton) => GameObject.Destroy(qteCanvas.gameObject)
+                );
 
             _coroutineRunner = coroutineRunner;
+        }
+
+        public void Spawn()
+        {
+            _spawnCoroutine = _coroutineRunner.StartCoroutine(StartSpawn());
         }
         
         private void ActionOnGet(QTEButtonView qteButton)
@@ -50,11 +56,6 @@ namespace UI.QTE
         {
             qteButton.Released -= ReleaseQTEButton;
             _qtePool.Release(qteButton);
-        }
-
-        public void Spawn()
-        {
-            _spawnCoroutine = _coroutineRunner.StartCoroutine(StartSpawn());
         }
         
         private IEnumerator StartSpawn()
@@ -69,10 +70,14 @@ namespace UI.QTE
                 
                 _qtePresenter.AddView(qteButtonView);
                 
+                if (i == _allQteCount - 1)
+                {
+                    Finished?.Invoke();
+                    break;
+                }
+                
                 yield return new WaitForSeconds(_qteConfig.QteSetup[i].TimeToNextTarget);
             }
-            
-            Finished?.Invoke();
         }
 
         public void StopSpawn()

@@ -18,13 +18,14 @@ namespace Services.StaticDataServices
     public class StaticDataService : IStaticDataService
     {
         private readonly IResourceLoader _resourceLoader;
-
+ 
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
-        private List<LevelConfig> _levelConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
         private Dictionary<QTEType, QTEConfig> _qteConfigs;
+        
+        private List<LevelConfig> _levelConfigs;
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
@@ -39,6 +40,7 @@ namespace Services.StaticDataServices
             LoadCharacterSelectionScreenPanel();
             LoadPlatoonPositionContainer();
             LoadQTEConfigs();
+            LoadLevelConfigs();
         }
 
         public List<LevelConfig> GetLevelConfigs() => 
@@ -59,7 +61,7 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {statusType}");
         }
-        
+
         public PlatoonSpawnContainer GetSpawnPositionContainer(int count)
         {
             if (_spawnPositionContainer.TryGetValue(count, out PlatoonSpawnContainer platoonSpawnContainer))
@@ -85,6 +87,11 @@ namespace Services.StaticDataServices
                 return getQteConfig;
 
             throw new KeyNotFoundException($"No qte config found for mode {qteMode}");
+        }
+
+        private void LoadLevelConfigs()
+        {
+            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
         }
 
         private void LoadQTEConfigs()

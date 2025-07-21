@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using QTESystem;
 using Services;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UI.QTE
 {
@@ -13,20 +14,22 @@ namespace UI.QTE
 
         private Queue<QTEButtonView> _qteButtonViews = new Queue<QTEButtonView>();
         private QTEBacgroundPanel _panel;
+        private bool _isSpawnFinished;
 
         public void Enable(QTEConfig qteConfig, ICoroutineRunner coroutineRunner)
         {
             _qteSpawner = new QTESpawner(coroutineRunner, qteConfig, this);
             _qteSpawner.Spawn();
             _qteSpawner.Finished += SpawnFinished;
+            _isSpawnFinished = false;
         }
 
         public void Disable()
         {
             _qteButtonViews.Clear();
+            _qteSpawner.StopSpawn();
             _panel.Clicked -= StopQte;
             _qteSpawner.Finished -= SpawnFinished;
-            GameObject.Destroy(_panel);
         }
 
         public void AddView(QTEButtonView qteButtonView)
@@ -42,8 +45,10 @@ namespace UI.QTE
             _panel.Clicked += StopQte;
         }
 
-        private void SpawnFinished() => 
-            Completed?.Invoke(true);
+        private void SpawnFinished()
+        {
+            _isSpawnFinished = true;
+        }
 
         private void OnInvalided(QTEButtonView qteButtonView)
         {
@@ -55,10 +60,21 @@ namespace UI.QTE
         {
             qteButtonView.Successed -= OnSuccessed;
 
-            if (qteButtonView != _qteButtonViews.Dequeue())
+            QTEButtonView buttonView = _qteButtonViews.Dequeue();
+
+            if (qteButtonView != buttonView)
+            {
                 StopQte();
-            else
+            }
+            else if (_isSpawnFinished && _qteButtonViews.Count == 0)
+            {
+                Completed?.Invoke(true);
                 qteButtonView.ReleaseToPool();
+            }
+            else
+            {
+                qteButtonView.ReleaseToPool();
+            }
         }
 
         private void StopQte()
@@ -66,7 +82,6 @@ namespace UI.QTE
             foreach (QTEButtonView buttonView in _qteButtonViews) 
                 buttonView.ReleaseToPool();
 
-            _qteSpawner.StopSpawn();
             Completed?.Invoke(false);
         }
     }

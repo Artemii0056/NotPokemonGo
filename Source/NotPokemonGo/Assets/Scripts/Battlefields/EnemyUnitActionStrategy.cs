@@ -62,7 +62,7 @@ namespace Battlefields
         {
             foreach (AbilityModel abilityModel in _source.AbilityModels)
             {
-                if (abilityModel.IsReady() && abilityModel.AbilityType == AbilityType.CastSpell)
+                if (abilityModel.IsReady())
                 {
                     _source.Step.SetAbilityModel(abilityModel, _source, GetRandomTarget(targets));
                     

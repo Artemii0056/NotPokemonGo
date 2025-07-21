@@ -53,8 +53,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         private void SetQTEState()
         {
-            Debug.Log("QTEBattleState");
-            _battleStateMachine.Enter<QTEBattleState>();
+            _battleStateMachine.Enter<QTEBattleState, Battlefield>(_payload.Battlefield);
         }
 
         public void Exit()
