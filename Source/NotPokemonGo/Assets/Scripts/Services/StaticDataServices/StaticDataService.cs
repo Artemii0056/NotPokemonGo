@@ -21,21 +21,19 @@ namespace Services.StaticDataServices
 
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
-        private Dictionary<SpawnPositionType, SpawnPositionConfig> _spawnPositionConfigs;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private List<LevelConfig> _levelConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
+        private Dictionary<QTEType, QTEConfig> _qteConfigs;
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
-        private Dictionary<QTEType, QTEConfig> _qteConfigs;
 
         public StaticDataService(IResourceLoader resourceLoader)
         {
             _resourceLoader = resourceLoader;
             LoadAbilityConfigs();
             LoadStatusTypeIcons();
-            LoadSpawnPositionConfigs();
             LoadUnitConfigs();
             LoadUnitSkinItemView();
             LoadCharacterSelectionScreenPanel();
@@ -61,14 +59,6 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {statusType}");
         }
-
-        public SpawnPositionConfig GetSpawnPositionConfig(SpawnPositionType spawnPositionType)
-        {
-            if (_spawnPositionConfigs.TryGetValue(spawnPositionType, out SpawnPositionConfig spawnPositionConfig))
-                return spawnPositionConfig;
-
-            throw new KeyNotFoundException($"No ability config found for mode {spawnPositionType}");
-        }
         
         public PlatoonSpawnContainer GetSpawnPositionContainer(int count)
         {
@@ -78,7 +68,6 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {platoonSpawnContainer}");
         }
 
-
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
             if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
@@ -87,14 +76,15 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
-        public List<AbilityConfig> GetAllAbilityConfigs()
-        {
-            throw new System.NotImplementedException();
-        }
+        public List<AbilityConfig> GetAllAbilityConfigs() => 
+            _abilityConfigs.Values.ToList();
 
         public QTEConfig GetQTEConfig(QTEType qteMode)
         {
-            throw new System.NotImplementedException();
+            if (_qteConfigs.TryGetValue(qteMode, out QTEConfig getQteConfig))
+                return getQteConfig;
+
+            throw new KeyNotFoundException($"No qte config found for mode {qteMode}");
         }
 
         private void LoadQTEConfigs()
@@ -128,11 +118,6 @@ namespace Services.StaticDataServices
                 .ToDictionary(x => x.Type, x => x);
         }
 
-        private void LoadSpawnPositionConfigs()
-        {
-            _spawnPositionConfigs = Resources.LoadAll<SpawnPositionConfig>(Constants.AssetPath.SpawnPositionConfigsPath)
-                .ToDictionary(x => x.SpawnPositionType, x => x);
-        }
         private void LoadPlatoonPositionContainer()
         {
             _spawnPositionContainer = Resources.LoadAll<PlatoonSpawnContainer>(Constants.AssetPath.PlatoonContainersPath)
