@@ -37,7 +37,6 @@ namespace Services.StaticDataServices
             LoadStatusTypeIcons();
             LoadSpawnPositionConfigs();
             LoadUnitConfigs();
-            LoadLevelConfigs();
             LoadUnitSkinItemView();
             LoadCharacterSelectionScreenPanel();
             LoadPlatoonPositionContainer();
@@ -88,15 +87,20 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
+        public List<AbilityConfig> GetAllAbilityConfigs()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public QTEConfig GetQTEConfig(QTEType qteMode)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void LoadQTEConfigs()
         {
             _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
                 .ToDictionary(x => x.QTEType, x => x);
-        }
-
-        private void LoadUnitConfigs()
-        {
-        
         }
         
         public void LoadUnitSkinItemView() => 
@@ -111,8 +115,6 @@ namespace Services.StaticDataServices
         private void LoadUnitConfigs() =>
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
-        private CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
-            _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
 
         private void LoadAbilityConfigs()
         {
