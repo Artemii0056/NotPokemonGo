@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace KevinIglesias {
+namespace Assets.Kevin_Iglesias.Caster_Mage_Animations.Scripts {
 
     public class AddCastEffect : StateMachineBehaviour {
 

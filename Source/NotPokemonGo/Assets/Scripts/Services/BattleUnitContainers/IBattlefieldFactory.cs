@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Characters;
 using Characters.Configs;
 using LevelSetting;
 

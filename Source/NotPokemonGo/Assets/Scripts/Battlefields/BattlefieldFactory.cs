@@ -36,10 +36,10 @@ namespace Battlefields
         {
             GameObject battlefieldPosition = new GameObject("Battlefield");
             
-            GameObject platoonPosition1 = new GameObject("plattonPosition1");
+            GameObject platoonPosition1 = new GameObject("EnemiesPlatoon");
             platoonPosition1.transform.position = Constants.Positions.Platoon1Position;
             
-            GameObject platoonPosition2 = new GameObject("plattonPosition2");
+            GameObject platoonPosition2 = new GameObject("FriendsPlatoon");
             platoonPosition2.transform.position = Constants.Positions.Platoon2Position;
             
             platoonPosition1.transform.Rotate(Vector3.up, 180); 
@@ -54,8 +54,8 @@ namespace Battlefields
             
             PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelConfig.LevelParts[0].Units.Count);
             
-            Platoon platoon1 = _platoonFactory.Create2(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
-            Platoon platoon2 = _platoonFactory.Create2(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends, unitConfigFirst);
+            Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
+            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends, unitConfigFirst);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager, _coroutineRunner);
 

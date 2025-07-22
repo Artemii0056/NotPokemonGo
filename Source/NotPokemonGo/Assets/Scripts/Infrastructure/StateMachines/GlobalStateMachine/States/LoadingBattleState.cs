@@ -3,7 +3,6 @@ using Characters.Configs;
 using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Services.BattleUnitContainers;
-using Services.SceneServices;
 using Services.StaticDataServices;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States

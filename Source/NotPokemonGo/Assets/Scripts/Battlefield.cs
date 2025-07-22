@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Infrastructure.StateMachines.BattleStateMachine.States;
+﻿using System.Collections.Generic;
 using Platoons;
 using Services;
 using Statuses.Services;
 using Units;
-using UnityEngine;
 
 public class Battlefield
 {

@@ -13,11 +13,9 @@
 // GameObject called 'Retargeters', see character dummies hierarchy from the demo 
 // scene as example. More information at Documentation PDF file.
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace KevinIglesias {
+namespace Assets.Kevin_Iglesias.Archer_Animations.Scripts {
 	public class BowLoadScript : MonoBehaviour
 	{
 	   
