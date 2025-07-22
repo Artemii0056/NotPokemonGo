@@ -89,7 +89,7 @@ namespace Battlefields
 
         private IEnumerator Delay()
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }

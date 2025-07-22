@@ -43,7 +43,9 @@ namespace Units
         public event Action<Unit> Prepared; 
 
         public event Action<float, float> AgilityChanged;
-        public event Action<float, float> HealthChanged;
+       public event Action<float, float> HealthChanged;
+
+       public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
 
         public void Construct(
             List<StatConfig> statConfig,
@@ -56,32 +58,21 @@ namespace Units
 
             Step = step; 
 
-            foreach (var statSetup in statConfig)
-            {
+            foreach (var statSetup in statConfig) 
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
-            }
 
-            foreach (StatSetup stat in _stats.Values)
-            {
+            foreach (StatSetup stat in _stats.Values) 
                 stat.CurrentValueChanged += StatChanged;
-            }
             
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
         }
 
         private void OnDestroy()
         {
-            foreach (StatSetup stat in _stats.Values)
-            {
+            foreach (StatSetup stat in _stats.Values) 
                 stat.CurrentValueChanged -= StatChanged;
-            }
         }
-
-        private void Update()
-        {
-            HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
-        }
-
+        
         private void StatChanged(float current, StatType statType)
         {
             switch (statType)

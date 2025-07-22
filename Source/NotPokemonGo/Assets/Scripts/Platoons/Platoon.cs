@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
-using Abilities.MV;
-using Unity.VisualScripting;
-using Unit = Units.Unit;
+using Units;
 
 namespace Platoons
 {
@@ -20,6 +17,8 @@ namespace Platoons
             PlatoonType = platoonType;
         }
 
+        public bool IsAlive => _units.Any(unit => unit.IsAlive);
+
         public PlatoonType PlatoonType { get; private set; }
 
         public List<Unit> Units => _units.ToList();
@@ -27,7 +26,9 @@ namespace Platoons
         public void Enable()
         {
             foreach (Unit unit in _units)
+            {
                 unit.Prepared += OnUnitPrepared;
+            }
         }
 
         public void Disable()
@@ -35,13 +36,13 @@ namespace Platoons
             foreach (Unit unit in _units)
                 unit.Prepared -= OnUnitPrepared;
         }
-        
+
         public void Tick()
         {
-            foreach (Unit unit in _units) 
+            foreach (Unit unit in _units)
                 unit.Tick();
         }
-        
+
         private void OnUnitPrepared(Unit unit) =>
             UnitPrepared?.Invoke(unit);
     }
