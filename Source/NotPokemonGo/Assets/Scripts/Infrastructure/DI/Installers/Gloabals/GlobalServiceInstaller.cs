@@ -13,12 +13,10 @@ using Platoons;
 using Services.AssetManagement;
 using Services.BattleUnitContainers;
 using Services.Cameras;
-using Services.DeathServices;
 using Services.InputServices;
 using Services.QTEServices;
 using Services.SceneServices;
 using Services.StatesServices;
-using Services.StaticDataServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using Statuses.Services;
@@ -87,7 +85,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
             builder.Register<IRaycasterService, RaycasterServiceService>(Lifetime.Singleton);
             builder.Register<IQTEService, QTEService>(Lifetime.Singleton);
-            builder.Register<IDeathService, DeathService>(Lifetime.Singleton);
             
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
