@@ -1,25 +1,20 @@
 ﻿using System.Collections.Generic;
 using Platoons;
-using Services;
 using Statuses.Services;
 using Units;
 
 public class Battlefield
 {
     private readonly IStatusManager _statusManager;
-    private readonly ICoroutineRunner _coroutineRunner;
 
     public readonly List<Unit> Units = new List<Unit>();
 
     public Battlefield(
         Platoon enemyPlatoon,
         Platoon heroes,
-        IStatusManager statusManager,
-        ICoroutineRunner coroutineRunner
-        )
+        IStatusManager statusManager)
     {
         _statusManager = statusManager;
-        _coroutineRunner = coroutineRunner;
         EnemyPlatoon = enemyPlatoon;
         Heroes = heroes;
     }

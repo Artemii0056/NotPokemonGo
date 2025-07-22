@@ -39,6 +39,7 @@ namespace Infrastructure
         public static class BaseAnimations
         {
             public static int Idle = Animator.StringToHash(nameof(Idle));
+            public static int Death = Animator.StringToHash(nameof(Death));
         }
     }
 }

@@ -25,7 +25,6 @@ namespace Units
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
-        private IEffectResolver _effectResolver;
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         
@@ -41,19 +40,14 @@ namespace Units
         public event Action<Status> StatusRemoved;
 
         public event Action<Unit> Prepared; 
-
         public event Action<float, float> AgilityChanged;
-       public event Action<float, float> HealthChanged;
-
-       public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
+        public event Action<float, float> HealthChanged;
 
         public void Construct(
             List<StatConfig> statConfig,
-            IEffectResolver effectResolver,
             UnitStep step,
             PlatoonType platoonType)
         {
-            _effectResolver = effectResolver;
             PlatoonType = platoonType;
 
             Step = step; 
@@ -78,7 +72,18 @@ namespace Units
             switch (statType)
             {
                 case StatType.Health:
-                    HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
+                    float currentHealth = GetStat(StatType.Health);
+
+                    if (currentHealth <= 0)
+                    {
+                        // Шото там с анимациями и слайдерами
+                    }
+                    else
+                    {
+                        var maxHealth = GetStat(StatType.MaxHealth);
+                        HealthChanged?.Invoke(currentHealth, maxHealth);
+                    }
+
                     break;
                 case StatType.Mana:
                     break;

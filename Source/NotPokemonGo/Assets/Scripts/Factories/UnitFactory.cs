@@ -16,7 +16,6 @@ namespace Factories
 {
     public class UnitFactory : IUnitFactory
     {
-        private readonly IEffectResolver _effectResolver;
         private readonly IObjectResolver _objectResolver;
         private readonly IParticleSystemFactory _particleSystemFactory;
         private readonly IAbilityProvider _abilityProvider;
@@ -26,7 +25,6 @@ namespace Factories
         private readonly ICoroutineRunner _coroutineRunner;
 
         public UnitFactory(
-            IEffectResolver effectResolver,
             IObjectResolver objectResolver,
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
@@ -35,7 +33,6 @@ namespace Factories
             ITargetSelector targetSelector,
             ICoroutineRunner coroutineRunner)
         {
-            _effectResolver = effectResolver;
             _objectResolver = objectResolver;
             _particleSystemFactory = particleSystemFactory;
             _abilityProvider = abilityProvider;
@@ -66,7 +63,7 @@ namespace Factories
 
             UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
 
-            unit.Construct(config.Stats, _effectResolver, unitStep, platoonType);
+            unit.Construct(config.Stats, unitStep, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

@@ -17,8 +17,6 @@ namespace Platoons
             PlatoonType = platoonType;
         }
 
-        public bool IsAlive => _units.Any(unit => unit.IsAlive);
-
         public PlatoonType PlatoonType { get; private set; }
 
         public List<Unit> Units => _units.ToList();

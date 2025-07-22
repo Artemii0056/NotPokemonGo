@@ -4,7 +4,6 @@ using Characters.Configs;
 using Infrastructure;
 using LevelSetting;
 using Platoons;
-using Services;
 using Services.BattleUnitContainers;
 using Services.StaticDataServices;
 using Statuses.Services;
@@ -18,16 +17,13 @@ namespace Battlefields
         private readonly IPlatoonFactory _platoonFactory;
         private readonly IStaticDataService _staticDataService;
         private readonly IStatusManager _statusManager;
-        private readonly ICoroutineRunner _coroutineRunner;
 
         public BattlefieldFactory(
             IPlatoonFactory platoonFactory,
             IStaticDataService  staticDataService,
-            IStatusManager statusManager,
-            ICoroutineRunner coroutineRunner)
+            IStatusManager statusManager)
         {
             _statusManager = statusManager;
-            _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
             _platoonFactory = platoonFactory;
         }
@@ -57,7 +53,7 @@ namespace Battlefields
             Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
             Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends, unitConfigFirst);
 
-            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager, _coroutineRunner);
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
 
             return battlefield;
         }
