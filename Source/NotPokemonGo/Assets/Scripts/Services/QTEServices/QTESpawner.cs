@@ -13,22 +13,22 @@ namespace UI.QTE
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly int _allQteCount;
         private readonly QTEConfig _qteConfig;
-        private readonly QTEPresenter _qtePresenter;
+        private readonly QTEPresenter1 _qtePresenter1;
         
         private Coroutine _spawnCoroutine;
         
         public event Action Finished;
         
-        public QTESpawner(ICoroutineRunner coroutineRunner, QTEConfig qteConfig, QTEPresenter qtePresenter)
+        public QTESpawner(ICoroutineRunner coroutineRunner, QTEConfig qteConfig, QTEPresenter1 qtePresenter1)
         {
             _qteConfig = qteConfig;
-            _qtePresenter = qtePresenter;
+            _qtePresenter1 = qtePresenter1;
             _allQteCount = qteConfig.QteSetup.Count;
             
             QTESetup firstQTESetup  = _qteConfig.QteSetup[0] ?? throw new ArgumentNullException(nameof(qteConfig.QteSetup));
 
             QTECanvas qteCanvas = GameObject.Instantiate(qteConfig.QteCanvas);
-            _qtePresenter.AddPanel(qteCanvas.QTEBacgroundPanelPrefab);
+            _qtePresenter1.AddPanel(qteCanvas.QTEBacgroundPanelPrefab);
 
             _qtePool = new ObjectPool<QTEButtonView>
             (
@@ -68,7 +68,7 @@ namespace UI.QTE
                 
                 qteButtonView.Initialize(_qteConfig.QteSetup[i].Offset, _qteConfig.QteSetup[i].TargetTime, position);
                 
-                _qtePresenter.AddView(qteButtonView);
+                _qtePresenter1.AddView(qteButtonView);
                 
                 if (i == _allQteCount - 1)
                 {

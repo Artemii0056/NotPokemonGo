@@ -9,21 +9,34 @@ namespace Services.QTEServices
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly QTEPresenter _qtePresenter;
 
         public event Action <bool> Completed; 
         
+        private QTEPresenter _qtePresenter;
         public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
-            _qtePresenter = new QTEPresenter();
         }
         
         public void Start()
         {
             QTEConfig qteConfig = _staticDataService.GetQTEConfig(QTEType.UI);
             // перенести камеру в презенторе или в другом классе
+
+            switch (qteConfig.QTEType)
+            {
+                case QTEType.Sequential:
+                    _qtePresenter = new QTEPresenter1();
+                    break;
+                
+                case QTEType.Random:
+                    _qtePresenter = new QTEPresenter2();
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException("QTEType not found");
+            }
             
             _qtePresenter.Enable(qteConfig, _coroutineRunner);
 
