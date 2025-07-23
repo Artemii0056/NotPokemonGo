@@ -20,9 +20,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         public ShowHeroState(IGameStateMachine gameStateMachine) => 
             _gameStateMachine = gameStateMachine;
 
-        public void Enter(ShowHeroPayload payload)
+        public void Enter(ShowHeroPayload levelData)
         {
-            _characterSelectionScreenContainer = payload.CharacterSelectionScreenContainer;
+            _characterSelectionScreenContainer = levelData.CharacterSelectionScreenContainer;
             _characterPreviewPanel = _characterSelectionScreenContainer.CharacterPreviewPanel;
             _unitContainerPanel = _characterSelectionScreenContainer.UnitContainerPanel;
             _unitStatsPanel = _characterSelectionScreenContainer.UnitStatsPanel;

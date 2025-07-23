@@ -4,12 +4,14 @@ using Effects;
 using Factories;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
+using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using InputServices;
 using Platoons;
+using Services;
 using Services.AssetManagement;
 using Services.BattleUnitContainers;
 using Services.Cameras;
@@ -96,6 +98,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
             builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
+            
+            builder.Register<ILevelProgressService, LevelProgressService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
@@ -172,6 +176,18 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsSelf();
 
                 builder.Register<QTEBattleState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<WaveProgressionState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<CheckBattleEndState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<LoosePanelState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }

@@ -16,10 +16,10 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _battleUpgradePanelPresenter = battleUpgradePanelPresenter;
         }
         
-        public void Enter(UnitActionPayload unitActionPayload)
+        public void Enter(UnitActionPayload levelData)
         {
-            _unitActionPayload = unitActionPayload;
-            _battleUpgradePanelPresenter.Enable(unitActionPayload.UnitSorce.UnitType);
+            _unitActionPayload = levelData;
+            _battleUpgradePanelPresenter.Enable(levelData.UnitSorce.UnitType);
 
             _battleUpgradePanelPresenter.UpgradeSelected += OnUpgradeSelected;
         }

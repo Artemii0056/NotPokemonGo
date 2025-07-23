@@ -3,6 +3,7 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using UI.Ability;
+using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -28,14 +29,16 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _abilityPanelPresenter = abilityPanelPresenter;
         }
 
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter(Battlefield levelData)
         {
+            Debug.Log("BattleLoopState");
+            
             _abilityPanelPresenter.Disable();
             _battleUnitContainer.Reset();
-            _battlefield = unitActionPayload;
+            _battlefield = levelData;
             _battlefield.Enable();
 
-            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Heroes);
+            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.HeroesPlatoon);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
 

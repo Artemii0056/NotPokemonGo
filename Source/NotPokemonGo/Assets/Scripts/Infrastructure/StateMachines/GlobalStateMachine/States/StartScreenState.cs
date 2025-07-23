@@ -13,9 +13,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
         
-        public void Enter(StartMenuPayload payload)
+        public void Enter(StartMenuPayload levelData)
         {
-            _startScreenUI = payload.UI;
+            _startScreenUI = levelData.UI;
             _startScreenUI.gameObject.SetActive(true);
             
             _startScreenUI.ShowHeroesClicked += OnShowHeroesClicked;

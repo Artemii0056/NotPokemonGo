@@ -11,22 +11,22 @@ namespace Platoons
 
         public event Action<Unit> UnitPrepared;
 
-        public Platoon(List<Unit> units, PlatoonType platoonType)
+        public Platoon(List<Unit> units, PlatoonType type)
         {
             _units = units;
-            PlatoonType = platoonType;
+            Type = type;
         }
 
-        public PlatoonType PlatoonType { get; private set; }
+        public PlatoonType Type { get; private set; }
 
-        public List<Unit> Units => _units.ToList();
+        public List<Unit> AliveUnits => _units.Where(unit => unit.IsAlive).ToList();
+        
+        public bool HaveUnits => _units.Any(x => x.IsAlive);
 
         public void Enable()
         {
-            foreach (Unit unit in _units)
-            {
+            foreach (Unit unit in _units) 
                 unit.Prepared += OnUnitPrepared;
-            }
         }
 
         public void Disable()
@@ -37,7 +37,7 @@ namespace Platoons
 
         public void Tick()
         {
-            foreach (Unit unit in _units)
+            foreach (Unit unit in AliveUnits)
                 unit.Tick();
         }
 

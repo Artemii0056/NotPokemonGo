@@ -16,9 +16,9 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _battleStateMachine = battleStateMachine;
         }
 
-        public void Enter(Battlefield battlefield)
+        public void Enter(Battlefield levelData)
         {
-            _battlefield = battlefield;
+            _battlefield = levelData;
             _qteService.Start();
             _qteService.Completed += OnCompleted;
         }

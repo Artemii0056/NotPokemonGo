@@ -15,10 +15,10 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         private MapLevel _currentMap;
 
-        public void Enter(ChoosePlatoonPayload payload)
+        public void Enter(ChoosePlatoonPayload levelData)
         {
-            _characterSelectionScreen = payload.ChooseMapUI;
-            _gameStateMachine = payload.GameStateMachine;
+            _characterSelectionScreen = levelData.ChooseMapUI;
+            _gameStateMachine = levelData.GameStateMachine;
             _chooseUnitToFightPanel = _characterSelectionScreen.ChooseUnitToFightPanel;
             
             _characterSelectionScreen.gameObject.SetActive(true);

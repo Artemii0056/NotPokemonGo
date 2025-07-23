@@ -32,16 +32,16 @@ MonoBehaviour:
       - EffectSetup:
           Type: 0
           TargetType: 1
-          Value: 0
+          Value: 10
         Type: 1
         TargetTime: 1
         TickCount: 5
         IsPermanent: 0
         IsRefreshed: 1
       <EffectInfo>k__BackingField:
-      - Type: 1
+      - Type: 0
         TargetType: 1
-        Value: 100
+        Value: 30
       <ParticleSystem>k__BackingField: {fileID: 0}
     TargetMode: 2
     <PhaseType>k__BackingField: 3

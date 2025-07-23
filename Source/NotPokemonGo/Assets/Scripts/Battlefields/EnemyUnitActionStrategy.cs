@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Abilities.MV;
+using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services;
@@ -46,7 +48,7 @@ namespace Battlefields
         public override void Enable()
         {
             base.Enable();
-            Attack(_battlefield.Heroes.Units);
+            Attack(_battlefield.HeroesPlatoon.AliveUnits);
             _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
@@ -90,7 +92,8 @@ namespace Battlefields
         private IEnumerator Delay()
         {
             yield return new WaitForSeconds(0.5f);
-            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
+            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+            //_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }
 }

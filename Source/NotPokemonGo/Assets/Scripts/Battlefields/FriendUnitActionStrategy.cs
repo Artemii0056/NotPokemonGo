@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Abilities.MV;
+using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using InputServices;
@@ -105,7 +106,8 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
+            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+            //_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }
 }

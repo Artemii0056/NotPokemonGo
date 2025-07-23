@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure;
 using Stats;
 using Units;
 
@@ -8,32 +9,37 @@ namespace Effects
     {
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
-            float finalValue = CalculateStatModification(target, effect.TargetType,effect.Type, effect.Value);
+            float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value);
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
-        public float CalculateStatModification(Unit target, StatType targetStat,EffectType effectType, float baseValue)
+        private float CalculateStatModification(Unit target, StatType targetStat, EffectType effectType,
+            float baseValue)
         {
             float finalValue = baseValue;
-            
+
             switch (targetStat)
             {
                 case StatType.Health:
-
                     switch (effectType)
                     {
                         case EffectType.Damage:
-                            finalValue = -finalValue;
+                            if (target.IsAlive)
+                            {
+                                finalValue = -finalValue;
+                                target.UnitAnimatorController.Play(Constants.BaseAnimations.TakeDamage);
+                            }
+
                             break;
-                        
+
                         case EffectType.Heal:
                             break;
-                        
+
                         default:
                             throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
                     }
-                    
-                    
+
+
                     // if (baseValue < 0)
                     // {
                     //     // Damage: учитывать броню

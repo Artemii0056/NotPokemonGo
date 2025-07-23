@@ -70,6 +70,13 @@ namespace UI.Factory
             return Object.Instantiate(menu);
         }
 
+        public LoosePanel CreateLoosePanel()
+        {
+            LoosePanel loosePanel = _resourceLoader.Load<LoosePanel>(Constants.AssetPath.LoosePanelPath);
+           // loosePanel.gameObject.SetActive(false);
+            return Object.Instantiate(loosePanel);
+        }
+
         public StartScreenUI CreateStartScreen()
         {
             StartScreenUI startScreenPrefab =

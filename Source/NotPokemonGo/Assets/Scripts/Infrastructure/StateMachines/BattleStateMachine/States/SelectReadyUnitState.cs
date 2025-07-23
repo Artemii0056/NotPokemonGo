@@ -18,9 +18,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _battleUnitContainer = battleUnitContainer;
         }
         
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter(Battlefield levelData)
         {
-            foreach (Unit unit in unitActionPayload.Units) 
+            Debug.Log("SelectReadyUnitState");
+            
+            foreach (Unit unit in levelData.Units) 
                 _battleUnitContainer.Add(unit);
 
             Unit unitSource = _battleUnitContainer.Give();
@@ -31,14 +33,15 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     new UnitActionPayload
                     (
                         unitSource,
-                        unitActionPayload)
+                        levelData)
                 );
                 
-                unitActionPayload.Units.Clear();
+                levelData.Units.Clear();
             }
             else
             {
-                _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(unitActionPayload);
+                _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(levelData);
+               // _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(levelData);
             }
         }
 

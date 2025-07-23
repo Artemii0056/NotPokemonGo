@@ -28,10 +28,10 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter(ChooseUnitToFightPayload payload)
+        public void Enter(ChooseUnitToFightPayload levelData)
         {
-            _chooseUnitToFightPanel = payload.ChooseUnitToFightPanel;
-            _levelConfig = payload.Config;
+            _chooseUnitToFightPanel = levelData.ChooseUnitToFightPanel;
+            _levelConfig = levelData.Config;
 
             _unitSkinItemViews = _chooseUnitToFightPanel.UnitSelectionPanelContainer.GetPanels();
             _unitContainerPanel = _chooseUnitToFightPanel.UnitContainerPanel;

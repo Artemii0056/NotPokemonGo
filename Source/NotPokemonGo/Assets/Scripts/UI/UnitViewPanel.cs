@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Characters;
 using Services.StaticDataServices;
 using Statuses;
 using UI.Sliders;
@@ -27,14 +25,16 @@ namespace UI
             _unit.AgilityChanged += OnAgilityChanged;
             _unit.HealthChanged += OnHealthChanged;
             _unit.Ticked += OnTicked;
+            _unit.Death += OnUnitDead;
         }
 
         private void OnDestroy()
         {
-            _unit.StatusAdded -= OnStatusAdded;
-            _unit.StatusRemoved -= OnStatusRemoved;
-            _unit.AgilityChanged -= OnAgilityChanged;
             _unit.HealthChanged -= OnHealthChanged;
+            _unit.StatusRemoved -= OnStatusRemoved;
+            _unit.StatusAdded -= OnStatusAdded;
+            _unit.AgilityChanged -= OnAgilityChanged;
+            _unit.Death += OnUnitDead;
         }
 
         [Inject]
@@ -85,6 +85,9 @@ namespace UI
         {
             return _statusViews.FirstOrDefault(view => !view.HasStatus);
         }
+
+        private void OnUnitDead(Unit unit) => 
+            gameObject.SetActive(false);
 
         private bool TrySearch(StatusType searchType, out StatusView status)
         {
