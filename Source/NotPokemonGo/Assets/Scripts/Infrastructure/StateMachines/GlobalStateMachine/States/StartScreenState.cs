@@ -32,9 +32,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private void OnChoosePlatoonClicked()
         {
-            ChoosePlatoonPayload payload = new ChoosePlatoonPayload(_startScreenUI.ChooseMapUI, _gameStateMachine);
-            
-            _gameStateMachine.Enter<ChooseMapState, ChoosePlatoonPayload>(payload);
+            _gameStateMachine.Enter<ChooseMapState, ChooseMapUI>(_startScreenUI.ChooseMapUI);
         }
 
         private void OnShowHeroesClicked()

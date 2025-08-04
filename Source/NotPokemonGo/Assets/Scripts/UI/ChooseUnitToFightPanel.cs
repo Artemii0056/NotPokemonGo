@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -16,16 +15,20 @@ namespace UI
         public event Action StartButtonClicked;
         public event Action ExitButtonClicked;
 
-        private void OnEnable()
+        public void Show()
         {
+            gameObject.SetActive(true);
+            
             _startButton.onClick.AddListener(() => StartButtonClicked?.Invoke());
             _exitButton.onClick.AddListener(() => ExitButtonClicked?.Invoke());
         }
-
-        private void OnDisable()
+        
+        public void Hide()
         {
             _startButton.onClick.RemoveAllListeners();
             _exitButton.onClick.RemoveAllListeners();
+            
+            gameObject.SetActive(false);
         }
     }
 }

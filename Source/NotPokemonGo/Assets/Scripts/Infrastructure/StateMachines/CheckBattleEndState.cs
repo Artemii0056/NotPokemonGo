@@ -9,27 +9,27 @@ using UnityEngine;
 
 namespace Infrastructure.StateMachines
 {
-    public class CheckBattleEndState : IPayloadedState<Battlefield> //тут передать панельку 
+    public class CheckBattleEndState : IPayloadedState<Battlefield> //Это Батя. Который закончит игру, если все пройдено 
     {
         private IGameStateMachine _gameStateMachine;
         private IBattleStateMachine _battleStateMachine;
-        private ILevelProgressService _levelProgressService;
         private IUIFactory _uiFactory;
+        private Battlefield _battlefield;
 
-        public CheckBattleEndState(IGameStateMachine gameStateMachine,
-            IBattleStateMachine battleStateMachine,
-            ILevelProgressService levelProgressService, IUIFactory uiFactory)
+        public CheckBattleEndState(
+            IGameStateMachine gameStateMachine,
+            IBattleStateMachine battleStateMachine, 
+            IUIFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _battleStateMachine = battleStateMachine;
-            _levelProgressService = levelProgressService;
             _uiFactory = uiFactory;
         }
 
         public void Enter(Battlefield battlefield)
         {
-            LevelRuntimeDataPayload levelData = _levelProgressService.LevelData;
-
+            _battlefield = battlefield;
+            
             if (battlefield.EnemyPlatoon.HaveUnits == false && battlefield.HeroesPlatoon.HaveUnits == false)
             {
                 Debug.Log("Сделать авто проигрыш");
@@ -50,20 +50,7 @@ namespace Infrastructure.StateMachines
                 return;
             }
 
-_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(battlefield);
-            //_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(battlefield);
-
-            // if (battlefield.HeroesPlatoon.HaveUnits == false)
-            // {
-            //     //логика проигрыша
-            //     return;
-            // }
-            //
-            // if (battlefield.EnemyPlatoon.HaveUnits == false)
-            // {
-            //     //переход в новый стейт
-            //     return;
-            // }
+            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(battlefield);
         }
 
         public void Exit()

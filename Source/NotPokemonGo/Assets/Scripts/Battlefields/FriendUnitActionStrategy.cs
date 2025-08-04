@@ -81,10 +81,9 @@ namespace Battlefields
                     Debug.Log("Выбрали союзника");
                     break;
 
-                case PlatoonType.Enemies: //Вот по ходу атсюдава дернуть
+                case PlatoonType.Enemies:
                     _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
-                    //_animationProcessingService.PlayAnimation(_sourceProvider.Source, _abilityProvider.AbilityModel.AbilityType);
-                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); // запоминаем цель
+                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
                     _abilityPanelPresenter.Disable();
                     break;
 
@@ -107,7 +106,6 @@ namespace Battlefields
         private void OnAnimationActionEnded()
         {
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-            //_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }
 }

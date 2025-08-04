@@ -10,9 +10,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
     {
         private readonly IBattlefieldFactory _battlefieldFactory;
         private readonly IGameStateMachine _gameStateMachine;
-        private ILevelProgressService _levelProgressService;
+        private readonly ILevelProgressService _levelProgressService;
 
-        public WaveProgressionState(IBattlefieldFactory battlefieldFactory, IGameStateMachine gameStateMachine, ILevelProgressService levelProgressService)
+        public WaveProgressionState(
+            IBattlefieldFactory battlefieldFactory, 
+            IGameStateMachine gameStateMachine, 
+            ILevelProgressService levelProgressService)
         {
             _battlefieldFactory = battlefieldFactory;
             _gameStateMachine = gameStateMachine;
@@ -21,6 +24,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         public void Enter() 
         {
+            Debug.Log("Entering WaveProgressionState");
+            
             var levelData = _levelProgressService.LevelData;
             
             if (levelData.HasNextWave == false)

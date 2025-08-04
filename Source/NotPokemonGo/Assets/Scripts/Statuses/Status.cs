@@ -21,14 +21,14 @@ namespace Statuses
 
         public virtual void OnApply()
         {
-            Debug.Log($"{GetType().Name} Activate Status");
+          //  Debug.Log($"{GetType().Name} Activate Status");
         }
 
         public virtual void OnTick() { }
 
         public virtual void OnExpire()
         {
-            Debug.Log($"{GetType().Name} Deativate Status");
+           // Debug.Log($"{GetType().Name} Deativate Status");
         }
 
         public void Tick()

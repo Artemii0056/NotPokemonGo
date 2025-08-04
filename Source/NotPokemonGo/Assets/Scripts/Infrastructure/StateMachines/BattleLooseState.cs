@@ -2,7 +2,7 @@
 
 namespace Infrastructure.StateMachines
 {
-    public class BattleLooseState : IState
+    public class BattleLooseState : IState //TODO Не используется
     {
         public void Exit()
         {

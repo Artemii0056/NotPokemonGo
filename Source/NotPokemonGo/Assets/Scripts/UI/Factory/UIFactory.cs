@@ -73,8 +73,13 @@ namespace UI.Factory
         public LoosePanel CreateLoosePanel()
         {
             LoosePanel loosePanel = _resourceLoader.Load<LoosePanel>(Constants.AssetPath.LoosePanelPath);
-           // loosePanel.gameObject.SetActive(false);
             return Object.Instantiate(loosePanel);
+        }
+
+        public BattleInfoUI CreateBattleUIInfo()
+        {
+            BattleInfoUI battleInfoUI = _resourceLoader.Load<BattleInfoUI>(Constants.AssetPath.BattleInfoUIPath);
+            return Object.Instantiate(battleInfoUI);
         }
 
         public StartScreenUI CreateStartScreen()
@@ -99,7 +104,6 @@ namespace UI.Factory
                 mapLevel.gameObject.SetActive(false);
             }
 
-
             CharacterSelectionScreenContainer characterSelectionScreenContainer =
                 CreateCharacterSelectionScreenPanel();
             
@@ -107,11 +111,7 @@ namespace UI.Factory
             
             ChooseUnitToFightPanel toFightPanel = CreateUnitSelectionController(config.CharacterItemConfigs);
             chooseMapUI.Initialize(mapLevels, _staticDataService, toFightPanel); 
-            
-            // foreach (var map in mapLevels)
-            // {
-            //     map.Set(toFightPanel);
-            // }
+            toFightPanel.Hide();
 
             startScreen.Initialize(characterSelectionScreenContainer, chooseMapUI);
 

@@ -151,6 +151,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<ChooseUnitToFightState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+                
+                builder.Register<GlobalBattleState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
             }
 
             void RegisterBattleStates(IContainerBuilder builder)

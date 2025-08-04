@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public class LevelProgressService : ILevelProgressService
+    public class LevelProgressService : ILevelProgressService //TODO А вот это наверное не нужно
     {
         public LevelRuntimeDataPayload LevelData { get; private set; }
 

@@ -20,8 +20,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         
         public void Enter(Battlefield levelData)
         {
-            Debug.Log("SelectReadyUnitState");
-            
             foreach (Unit unit in levelData.Units) 
                 _battleUnitContainer.Add(unit);
 
@@ -41,7 +39,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             else
             {
                 _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(levelData);
-               // _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(levelData);
             }
         }
 

@@ -4,7 +4,7 @@ using UI.Factory;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
-    public class MainMenuState : IState
+    public class MainMenuState : IState //TODO Не используется
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;

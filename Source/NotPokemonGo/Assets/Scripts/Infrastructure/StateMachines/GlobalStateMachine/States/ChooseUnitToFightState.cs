@@ -6,6 +6,7 @@ using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Services.SceneServices;
 using UI;
+using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -21,7 +22,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         private LevelConfig _levelConfig;
 
         public ChooseUnitToFightState(
-            IGameStateMachine gameStateMachine, 
+            IGameStateMachine gameStateMachine,
             ISceneLoader sceneLoader)
         {
             _gameStateMachine = gameStateMachine;
@@ -31,6 +32,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         public void Enter(ChooseUnitToFightPayload levelData)
         {
             _chooseUnitToFightPanel = levelData.ChooseUnitToFightPanel;
+            
+            _chooseUnitToFightPanel.Show();
             _levelConfig = levelData.Config;
 
             _unitSkinItemViews = _chooseUnitToFightPanel.UnitSelectionPanelContainer.GetPanels();
@@ -46,25 +49,33 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             foreach (var unitSkin in _unitSkinItemViews) 
                 unitSkin.OnUnitTypeChanged += OnUnitTypeChanged;
         }
-        
+
         public void Exit()
         {
             _chooseUnitToFightPanel.StartButtonClicked -= OnStartButtonClicked;
             _chooseUnitToFightPanel.ExitButtonClicked -= OnExitButtonClicked;
+            
+            _chooseUnitToFightPanel.Hide();
+
+            _unitContainerPanel.Hide();
+
             _unitContainerPanel.Clicked -= OnUnitContainerPanel;
 
             foreach (var unitSkin in _unitSkinItemViews)
+            {
+                unitSkin.BeFree();
                 unitSkin.OnUnitTypeChanged -= OnUnitTypeChanged;
+            }
         }
 
-        private void OnUnitContainerPanel(UnitSkinItemView view) 
+        private void OnUnitContainerPanel(UnitSkinItemView view)
         {
             view.SetBusy();
-            
+
             SearchFreeView().Initialize(view.UnitItemConfig.Type, view.UnitItemConfig.ContentImage);
         }
 
-        private void OnExitButtonClicked() => 
+        private void OnExitButtonClicked() =>
             _gameStateMachine.Enter<StartScreenState>();
 
         private void OnStartButtonClicked()
@@ -73,13 +84,13 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
             foreach (var unitSkinItemView in _unitSkinItemViews)
             {
-                if (unitSkinItemView.IsFree == false) 
+                if (unitSkinItemView.IsFree == false)
                     unitTypes.Add(unitSkinItemView.UnitType);
             }
 
             LoadingBattleStatePayload payload = new LoadingBattleStatePayload(unitTypes, _levelConfig);
-            
-            _sceneLoader.Load(Constants.AssetPath.MainMenuSceneName, () => _gameStateMachine.Enter<LoadingBattleState, LoadingBattleStatePayload>(payload));
+
+            _gameStateMachine.Enter<LoadingBattleState, LoadingBattleStatePayload>(payload);
         }
 
         private void OnUnitTypeChanged(UnitType type)
@@ -88,12 +99,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
             foreach (var skinItem in _unitSkinItemViews)
             {
-                if (skinItem.UnitType == type) 
+                if (skinItem.UnitType == type)
                     skinItem.BeFree();
             }
         }
-        
-        private UnitSkinItemViewForChoose SearchFreeView() => 
+
+        private UnitSkinItemViewForChoose SearchFreeView() =>
             _unitSkinItemViews.FirstOrDefault(x => x.IsFree);
     }
 }

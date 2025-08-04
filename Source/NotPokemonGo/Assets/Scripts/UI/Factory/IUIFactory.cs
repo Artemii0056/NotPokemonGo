@@ -8,5 +8,6 @@ namespace UI.Factory
         StartScreenUI CreateStartScreen();
         MainMenuUI CreateMainMenu();
         LoosePanel CreateLoosePanel();
+        BattleInfoUI CreateBattleUIInfo();
     }
 }

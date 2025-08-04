@@ -8,11 +8,13 @@ namespace Infrastructure.StateMachines
     {
         private readonly LevelConfig _levelConfig;
         public List<UnitType> Units { get; private set; }
+        public BattleInfoUI BattleInfoUI { get; private set; }
         private int _currentWaveIndex;
 
-        public LevelRuntimeDataPayload(LevelConfig levelConfig, List<UnitType> units)
+        public LevelRuntimeDataPayload(LevelConfig levelConfig, List<UnitType> units, BattleInfoUI battleInfoUI)
         {
             _levelConfig = levelConfig;
+            BattleInfoUI = battleInfoUI;
             Units = units;
             _currentWaveIndex = -1;
         }

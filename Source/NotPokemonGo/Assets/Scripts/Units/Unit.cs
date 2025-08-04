@@ -89,7 +89,7 @@ namespace Units
                     float maxHealth = GetStat(StatType.MaxHealth);
                     HealthChanged?.Invoke(currentHealth, maxHealth);
 
-                    Debug.Log(GetStat(StatType.Health) + " " + PlatoonType.ToString());
+                   // Debug.Log(GetStat(StatType.Health) + " " + PlatoonType.ToString());
 
                     if (GetStat(StatType.Health) <= 0)
                     {
