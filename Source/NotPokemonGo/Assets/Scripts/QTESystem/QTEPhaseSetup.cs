@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Services.QTEServices;
 using UI.QTE;
 using UnityEngine.UI;
@@ -7,9 +6,9 @@ using UnityEngine.UI;
 namespace QTESystem
 {
     [Serializable]
-    public class QTESetup
+    public class QTEPhaseSetup
     {
-        public QTEMode qteMode;
+        public QTEPhaseType QTEPhaseType;
         public float Speed;
         public QTEButtonView QTEButtonView;
         public Image Overlay;

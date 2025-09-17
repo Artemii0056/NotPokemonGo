@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using QTESystem;
 using UnityEngine;
 
 namespace Abilities

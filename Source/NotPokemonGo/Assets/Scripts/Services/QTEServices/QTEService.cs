@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
+using Abilities;
 using QTESystem;
 using Services.StaticDataServices;
 using UI.QTE;
+using UnityEngine;
 
 namespace Services.QTEServices
 {
@@ -12,44 +15,34 @@ namespace Services.QTEServices
 
         public event Action <bool> Completed; 
         
-        private QTEPresenter _qtePresenter;
         public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
         }
         
-        public void Start()
+        public void Start(AbilityType abilityType)
         {
-            QTEConfig qteConfig = _staticDataService.GetQTEConfig(QTEType.UI);
-            // перенести камеру в презенторе или в другом классе
+            QTEConfig qteConfig = _staticDataService.GetQTEConfig(abilityType);
 
-            switch (qteConfig.QTEType)
-            {
-                case QTEType.Sequential:
-                    _qtePresenter = new QTEPresenter1();
-                    break;
-                
-                case QTEType.Random:
-                    _qtePresenter = new QTEPresenter2();
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException("QTEType not found");
-            }
-            
-            _qtePresenter.Enable(qteConfig, _coroutineRunner);
-
-            _qtePresenter.Completed += OnCompleted;
+            _coroutineRunner.StartCoroutine(StartQTE(qteConfig));
         }
 
-        private void OnCompleted(bool success)
+        private IEnumerator StartQTE(QTEConfig qteConfig)
         {
-            _qtePresenter.Completed -= OnCompleted;
+            foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
+            {
+                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup);
+                yield return new WaitUntil(qtePhasePresenter.IsProceeded);
 
-            _qtePresenter.Disable();
-
-            Completed?.Invoke(success);
+                if (qtePhasePresenter.IsProceeded() == false)
+                {
+                    Completed?.Invoke(false);
+                    yield break;
+                }
+            }
+            
+            Completed?.Invoke(true);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
-        private Dictionary<QTEType, QTEConfig> _qteConfigs;
+        private Dictionary<AbilityType, QTEConfig> _qteConfigs;
         
         private List<LevelConfig> _levelConfigs;
 
@@ -81,12 +81,12 @@ namespace Services.StaticDataServices
         public List<AbilityConfig> GetAllAbilityConfigs() => 
             _abilityConfigs.Values.ToList();
 
-        public QTEConfig GetQTEConfig(QTEType qteMode)
+        public QTEConfig GetQTEConfig(AbilityType abilityType)
         {
-            if (_qteConfigs.TryGetValue(qteMode, out QTEConfig getQteConfig))
+            if (_qteConfigs.TryGetValue(abilityType, out QTEConfig getQteConfig))
                 return getQteConfig;
 
-            throw new KeyNotFoundException($"No qte config found for mode {qteMode}");
+            throw new KeyNotFoundException($"No qte config found for mode {abilityType}");
         }
 
         private void LoadLevelConfigs()
@@ -97,7 +97,7 @@ namespace Services.StaticDataServices
         private void LoadQTEConfigs()
         {
             _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
-                .ToDictionary(x => x.QTEType, x => x);
+                .ToDictionary(x => x.AbilityType, x => x);
         }
         
         public void LoadUnitSkinItemView() => 

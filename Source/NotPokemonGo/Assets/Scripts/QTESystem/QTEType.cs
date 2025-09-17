@@ -5,6 +5,6 @@ namespace QTESystem
         Unit = 1,
         UI = 2,
         Sequential = 3,
-        Random = 4
+        Random = 4,
     }
 }
