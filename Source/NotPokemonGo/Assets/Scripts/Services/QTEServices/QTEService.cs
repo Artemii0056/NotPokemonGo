@@ -35,7 +35,7 @@ namespace Services.QTEServices
                 QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup);
                 yield return new WaitUntil(qtePhasePresenter.IsProceeded);
 
-                if (qtePhasePresenter.IsProceeded() == false)
+                if (qtePhasePresenter.IsSuccess == false)
                 {
                     Completed?.Invoke(false);
                     yield break;
