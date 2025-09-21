@@ -1,12 +1,10 @@
 using Services.Cameras;
-using UI.SpawnPositions;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace Infrastructure.DI.Initializers.Scenes
 {
-    public class MainMenuInitializer : MonoBehaviour, IInitializable
+    public class MainMenuInitializer : MonoBehaviour
     {
         private ICameraProvider _cameraProvider;
 
@@ -14,10 +12,6 @@ namespace Infrastructure.DI.Initializers.Scenes
         public void Construct(ICameraProvider cameraProvider)
         {
             _cameraProvider = cameraProvider;
-        }
-        
-        public void Initialize()
-        {
             _cameraProvider.Camera = Camera.main;
         }
     }

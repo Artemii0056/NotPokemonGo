@@ -13,7 +13,6 @@ namespace Infrastructure.DI.Initializers.Globals
     public class GameScopeInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
     {
         private IGameStateMachine _gameStateMachine;
-        private IInputReader _inputReader;
 
         [Inject]
         public void Construct(IGameStateMachine gameStateMachine)

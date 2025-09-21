@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.QTE
 {
@@ -8,5 +7,8 @@ namespace UI.QTE
     {
         public abstract event Action<QTEButtonView> Successed;
         public abstract event Action<QTEButtonView> Invalided;
+
+        public virtual void Initialize(QTEPhasePresenter qtePhasePresenter)
+        { }
     }
 }

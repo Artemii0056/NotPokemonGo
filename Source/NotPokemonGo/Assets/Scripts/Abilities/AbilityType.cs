@@ -8,6 +8,7 @@
         AlcoholBall, 
         CastSpell,
         DoubleAttack,
-        BaseAbility
+        BaseAbility,
+        EngineeringSeries
     }
 }

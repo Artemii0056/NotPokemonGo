@@ -13,6 +13,7 @@ namespace UI.QTE
     private IRaycastService _raycastService;
     private ITargetSelector _targetSelector;
     private IInputReader _inputReader;
+    private QTEPhasePresenter _qtePhasePresenter;
 
     public override event Action<QTEButtonView> Successed;
     public override event Action<QTEButtonView> Invalided;
@@ -20,10 +21,16 @@ namespace UI.QTE
     [Inject]
     public void Construct(IInputReader inputReader, IRaycastService raycastService, ITargetSelector targetSelector)
     {
-      _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonClicked;
       _inputReader = inputReader;
       _targetSelector = targetSelector;
       _raycastService = raycastService;
+      _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonClicked;
+    }
+
+    public override void Initialize(QTEPhasePresenter qtePhasePresenter)
+    {
+      base.Initialize(qtePhasePresenter);
+      _qtePhasePresenter = qtePhasePresenter;
     }
 
     private void OnLeftMouseButtonClicked()
@@ -33,17 +40,22 @@ namespace UI.QTE
 
       List<Unit> units = _targetSelector.GetTargets(TargetMode.Single);
 
-      foreach (Unit unitInList in units)
+      for (int i = 0; i < _qtePhasePresenter.QtePhaseSetup.ClickCount; i++)
       {
-        if (unitInList == unit)
+        foreach (Unit unitInList in units)
         {
-          Successed?.Invoke(this);
-          break;
+          if (unitInList == unit)
+          {
+            Successed?.Invoke(this);
+            return;
+          }
         }
       }
+      
+      throw new Exception("No units found");
     }
 
     private void OnDestroy() =>
-      _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonClicked;
+      _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonClicked;
   }
 }

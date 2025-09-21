@@ -1,40 +1,33 @@
 ﻿using System;
 using QTESystem;
+using VContainer;
+using VContainer.Unity;
 
 namespace UI.QTE
 {
   public class QTEPhasePresenter
   {
+    private readonly IObjectResolver _objectResolver;
+    private readonly QTEButtonView _qteButtonView;
     private bool _isProceeded;
-    private QTEButtonView _qteButtonView;
+
+    public QTEPhasePresenter(QTEPhaseSetup qtePhaseSetup, QTEButtonView qteButtonView)
+    {
+      _qteButtonView = qteButtonView;
+      QtePhaseSetup = qtePhaseSetup;
+    }
+
+    public QTEPhaseSetup QtePhaseSetup { get; }
 
     public bool IsSuccess { get; private set; }
 
-    public void Enable(QTEPhaseSetup qtePhaseSetup)
+    public void Enable()
     {
       _isProceeded = true;
 
-      QTESpawer qteSpawer = new QTESpawer();
-
-      switch (qtePhaseSetup.QTEPhaseType)
-      {
-        case QTEPhaseType.ТапатьПоВрагу:
-          _qteButtonView = qteSpawer.Spawn(qtePhaseSetup.QTEButtonView);
-          Subscribe();
-          break;
-
-        case QTEPhaseType.ТапатьПоUI:
-          Subscribe();
-          break;
-
-        case QTEPhaseType.ПереместитьЦельПоКанвасу:
-          _qteButtonView = qteSpawer.Spawn(qtePhaseSetup.QTEButtonView);
-          Subscribe();
-          break;
-
-        default:
-          throw new ArgumentOutOfRangeException();
-      }
+      _qteButtonView.Initialize(this);
+      _qteButtonView.Successed += OnSuccessed;
+      _qteButtonView.Invalided += OnInvalided;
     }
 
     public void Disable()
@@ -52,13 +45,7 @@ namespace UI.QTE
       _isProceeded = false;
       IsSuccess = false;
     }
-
-    private void Subscribe()
-    {
-      _qteButtonView.Successed += OnSuccessed;
-      _qteButtonView.Invalided += OnInvalided;
-    }
-
+    
     private void OnSuccessed(QTEButtonView qteButtonView)
     {
       qteButtonView.Successed -= OnSuccessed;

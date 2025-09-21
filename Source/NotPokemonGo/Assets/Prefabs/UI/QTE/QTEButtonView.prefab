@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 3125991645997012688}
   - component: {fileID: 3903189447086069960}
   - component: {fileID: 5933986056207512675}
-  - component: {fileID: 3765088144692650734}
+  - component: {fileID: 3207526570922747335}
   m_Layer: 5
   m_Name: QTEButtonView
   m_TagString: Untagged
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3765088144692650734
+--- !u!114 &3207526570922747335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,15 +282,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4891731784925739445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98ea13fe6b91423aa30be16f91779397, type: 3}
+  m_Script: {fileID: 11500000, guid: 91d208330d4a4887a78ebb10fcacca79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectTransform: {fileID: 4703813892847108533}
-  TargetTime: 4
-  Offset: 2
-  Button: {fileID: 5933986056207512675}
-  TargetImage: {fileID: 3903189447086069960}
-  Halo: {fileID: 567353420690865994}
-  End: {fileID: 6492904864502977059}
+  rectTransform: {fileID: 0}
+  TargetTime: 0
+  Offset: 0
+  Button: {fileID: 0}
+  TargetImage: {fileID: 0}
+  Halo: {fileID: 0}
+  End: {fileID: 0}
   CurrentTime: 0
-  Speed: 2
+  Speed: 0

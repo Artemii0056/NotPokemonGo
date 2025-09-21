@@ -295,7 +295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 824462040}
   - component: {fileID: 824462039}
-  - component: {fileID: 824462041}
   - component: {fileID: 824462042}
   m_Layer: 0
   m_Name: SceneScope
@@ -319,10 +318,10 @@ MonoBehaviour:
   parentReference:
     TypeName: 
   autoRun: 1
-  autoInjectGameObjects: []
+  autoInjectGameObjects:
+  - {fileID: 824462038}
   _injectableServicesInstallers: []
-  _defaultServicesInstallers:
-  - {fileID: 824462041}
+  _defaultServicesInstallers: []
 --- !u!4 &824462040
 Transform:
   m_ObjectHideFlags: 0
@@ -338,19 +337,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &824462041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824462038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f498bd2e109b4234baa3abb728d1b836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainMenuInitializer: {fileID: 824462042}
 --- !u!114 &824462042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6b51669a046dd9115c7cb38d61963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _qteButtonView: {fileID: 7324599458194817551, guid: 661719ca2c3a9b54a8e34818e5e2cf8d, type: 3}
+  _qteButtonView2: {fileID: 7324599458194817551, guid: 661719ca2c3a9b54a8e34818e5e2cf8d, type: 3}
 --- !u!1 &1344050769
 GameObject:
   m_ObjectHideFlags: 0

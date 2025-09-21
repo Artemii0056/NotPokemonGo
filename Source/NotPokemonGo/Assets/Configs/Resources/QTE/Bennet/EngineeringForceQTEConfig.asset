@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7aa6918ff28f43b8aa87ac8236c58a53, type: 3}
-  m_Name: QTEConfig
+  m_Name: EngineeringForceQTEConfig
   m_EditorClassIdentifier: 
-  QTEType: 2
-  QteSetup:
-  - qteMode: 0
-    Speed: 2
-    QTEButtonView: {fileID: 3765088144692650734, guid: 13021fbee17369d4cbb99a9934d02eac, type: 3}
+  AbilityType: 5
+  QtePhaseSetups:
+  - QTEPhaseType: 0
+    ClickCount: 5
+    Speed: 0
+    QTEButtonView: {fileID: 7324599458194817551, guid: 661719ca2c3a9b54a8e34818e5e2cf8d, type: 3}
     Overlay: {fileID: 0}
-    TargetTime: 4
-    Offset: 2
-    TimeToNextTarget: 1
-  - qteMode: 0
-    Speed: 2
-    QTEButtonView: {fileID: 3765088144692650734, guid: 13021fbee17369d4cbb99a9934d02eac, type: 3}
+    TargetTime: 0
+    Offset: 0
+    TimeToNextTarget: 0
+  - QTEPhaseType: 2
+    ClickCount: 1
+    Speed: 0
+    QTEButtonView: {fileID: 4902071773104475954, guid: dc60cdb071bbb2f45a62d615be71adbd, type: 3}
     Overlay: {fileID: 0}
-    TargetTime: 4
-    Offset: 2
-    TimeToNextTarget: 1
+    TargetTime: 0
+    Offset: 0
+    TimeToNextTarget: 0
   QteCanvas: {fileID: 8198002933347961941, guid: 47d21c52685d7b74c899d4d7e1c0fdc2, type: 3}

@@ -9,6 +9,7 @@ namespace QTESystem
     public class QTEPhaseSetup
     {
         public QTEPhaseType QTEPhaseType;
+        public int ClickCount;
         public float Speed;
         public QTEButtonView QTEButtonView;
         public Image Overlay;

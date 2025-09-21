@@ -5,6 +5,8 @@ using QTESystem;
 using Services.StaticDataServices;
 using UI.QTE;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Services.QTEServices
 {
@@ -12,13 +14,15 @@ namespace Services.QTEServices
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IObjectResolver _objectResolver;
 
         public event Action <bool> Completed; 
         
-        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
+        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
+            _objectResolver = objectResolver;
         }
         
         public void Start(AbilityType abilityType)
@@ -30,13 +34,18 @@ namespace Services.QTEServices
 
         private IEnumerator StartQTE(QTEConfig qteConfig)
         {
-            QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter();
+            //QTESpawer qteSpawer = new QTESpawer(_objectResolver);
 
             foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
-                qtePhasePresenter.Enable(qtePhaseSetup);
+                QTEButtonView qteButtonView = _objectResolver.Instantiate(qtePhaseSetup.QTEButtonView);
+                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, qteButtonView);
+
+                qtePhasePresenter.Enable();
                 
-                yield return new WaitUntil(qtePhasePresenter.IsProceeded);
+                yield return new WaitWhile(qtePhasePresenter.IsProceeded);
+
+                qtePhasePresenter.Disable();
 
                 if (qtePhasePresenter.IsSuccess == false)
                 {
@@ -45,7 +54,7 @@ namespace Services.QTEServices
                 }
             }
             
-            qtePhasePresenter.Disable();
+            Debug.Log("Stop foreach QTE");
             Completed?.Invoke(true);
         }
     }
