@@ -17,7 +17,7 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IRaycasterService _raycasterService;
+        private IRaycastService<Unit> _raycastService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
@@ -32,7 +32,7 @@ namespace Battlefields
 
         [Inject]
         public void Initialize(
-            IRaycasterService raycasterService,
+            IRaycastService<Unit> raycastService,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
@@ -42,7 +42,7 @@ namespace Battlefields
         {
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
-            _raycasterService = raycasterService;
+            _raycastService = raycastService;
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
@@ -54,7 +54,7 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _raycasterService.UnitSearched += OnUnitSearched;
+            _raycastService.Raycasted += OnRaycasted;
             _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
@@ -63,11 +63,11 @@ namespace Battlefields
             base.Disable();
 
             _source.Step.ActionEnded -= OnAnimationActionEnded;
-            _raycasterService.UnitSearched -= OnUnitSearched;
+            _raycastService.Raycasted -= OnRaycasted;
             _sourceProvider.Discard();
         }
 
-        private void OnUnitSearched(Unit unit)
+        private void OnRaycasted(Unit unit)
         {
             if (_abilityProvider.AbilityModel == null)
                 return;
@@ -83,7 +83,7 @@ namespace Battlefields
 
                 case PlatoonType.Enemies: 
                     _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
-                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode); 
+                    _targetSelector.Remember(unit); 
                     _abilityPanelPresenter.Disable();
                     
                     _battleStateMachine.Enter<QTEBattleState, AbilityType>(_abilityProvider.AbilityModel.AbilityType);
