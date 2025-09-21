@@ -6,6 +6,7 @@ namespace Services.InputServices
     public class InputReader : MonoBehaviour, IInputReader
     {
         public event Action LeftMouseButtonPressed; 
+        public event Action LeftMouseButtonClamped; 
         public event Action SpacePressed;
         public event Action EButtonPressed;
 
@@ -15,7 +16,12 @@ namespace Services.InputServices
             {
                 LeftMouseButtonPressed?.Invoke();
             }
-            
+
+            if (Input.GetMouseButton(0))
+            {
+                LeftMouseButtonPressed?.Invoke();
+            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SpacePressed?.Invoke();

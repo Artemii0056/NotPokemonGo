@@ -30,9 +30,12 @@ namespace Services.QTEServices
 
         private IEnumerator StartQTE(QTEConfig qteConfig)
         {
+            QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter();
+
             foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
-                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup);
+                qtePhasePresenter.Enable(qtePhaseSetup);
+                
                 yield return new WaitUntil(qtePhasePresenter.IsProceeded);
 
                 if (qtePhasePresenter.IsSuccess == false)
@@ -42,6 +45,7 @@ namespace Services.QTEServices
                 }
             }
             
+            qtePhasePresenter.Disable();
             Completed?.Invoke(true);
         }
     }
