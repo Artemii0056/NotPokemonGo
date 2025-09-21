@@ -1,11 +1,9 @@
-﻿using System;
+﻿using UnityEngine;
 
-namespace InputServices
+namespace Services.RaycastServices
 {
-    public interface IRaycastService<T>
+    public interface IRaycastService
     {
-        event Action<T> Raycasted;
-        event Action NotCollided;
-        event Action NotFinded;
+        bool Raycast<T>(out T component) where T : MonoBehaviour;
     }
 }

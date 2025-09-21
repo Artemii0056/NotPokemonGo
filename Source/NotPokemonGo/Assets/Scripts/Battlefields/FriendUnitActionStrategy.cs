@@ -4,7 +4,8 @@ using Abilities;
 using Abilities.MV;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
-using InputServices;
+using Services.InputServices;
+using Services.RaycastServices;
 using UI.Ability;
 using Units;
 using UnityEngine;
@@ -17,12 +18,13 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IRaycastService<Unit> _raycastService;
+        private IRaycastService _raycastService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
+        private IInputReader _inputReader;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -32,14 +34,16 @@ namespace Battlefields
 
         [Inject]
         public void Initialize(
-            IRaycastService<Unit> raycastService,
+            IRaycastService raycastService,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
-            AbilityPanelPresenter abilityPanelPresenter
+            AbilityPanelPresenter abilityPanelPresenter,
+            IInputReader inputReader
             )
         {
+            _inputReader = inputReader;
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
             _raycastService = raycastService;
@@ -54,7 +58,7 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _raycastService.Raycasted += OnRaycasted;
+            _inputReader.LeftMouseButtonPressed += LeftMouseButtonClicked;
             _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
@@ -62,13 +66,16 @@ namespace Battlefields
         {
             base.Disable();
 
+            _inputReader.LeftMouseButtonPressed -= LeftMouseButtonClicked;
             _source.Step.ActionEnded -= OnAnimationActionEnded;
-            _raycastService.Raycasted -= OnRaycasted;
             _sourceProvider.Discard();
         }
 
-        private void OnRaycasted(Unit unit)
+        private void LeftMouseButtonClicked()
         {
+            if (_raycastService.Raycast(out Unit unit) == false)
+                return;
+
             if (_abilityProvider.AbilityModel == null)
                 return;
 

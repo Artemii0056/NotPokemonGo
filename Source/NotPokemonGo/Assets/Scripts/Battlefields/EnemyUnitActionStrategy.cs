@@ -67,7 +67,7 @@ namespace Battlefields
                     
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
-                    _targetSelector.Remember(GetRandomTarget(targets), _abilityProvider.AbilityModel.TargetMode);
+                    _targetSelector.Remember(GetRandomTarget(targets));
                     
                     abilityModel.DiscardCurrentTime();
 

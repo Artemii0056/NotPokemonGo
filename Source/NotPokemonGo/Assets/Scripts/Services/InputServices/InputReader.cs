@@ -1,5 +1,4 @@
 ﻿using System;
-using InputServices;
 using UnityEngine;
 
 namespace Services.InputServices

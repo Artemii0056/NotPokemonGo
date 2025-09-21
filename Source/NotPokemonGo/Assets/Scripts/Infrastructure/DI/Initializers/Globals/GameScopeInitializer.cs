@@ -2,7 +2,6 @@
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States;
-using InputServices;
 using Services;
 using Services.InputServices;
 using UnityEngine;
