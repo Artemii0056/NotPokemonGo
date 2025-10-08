@@ -34,8 +34,6 @@ namespace Services.QTEServices
 
         private IEnumerator StartQTE(QTEConfig qteConfig)
         {
-            //QTESpawer qteSpawer = new QTESpawer(_objectResolver);
-
             foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
                 QTEButtonView qteButtonView = _objectResolver.Instantiate(qtePhaseSetup.QTEButtonView);
@@ -43,7 +41,7 @@ namespace Services.QTEServices
 
                 qtePhasePresenter.Enable();
                 
-                yield return new WaitWhile(qtePhasePresenter.IsProceeded);
+                yield return new WaitWhile(qtePhasePresenter.IsActive);
 
                 qtePhasePresenter.Disable();
 

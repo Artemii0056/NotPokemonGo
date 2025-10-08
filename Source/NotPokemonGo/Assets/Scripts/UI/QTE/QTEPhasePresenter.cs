@@ -1,7 +1,5 @@
-﻿using System;
-using QTESystem;
+﻿using QTESystem;
 using VContainer;
-using VContainer.Unity;
 
 namespace UI.QTE
 {
@@ -9,7 +7,7 @@ namespace UI.QTE
   {
     private readonly IObjectResolver _objectResolver;
     private readonly QTEButtonView _qteButtonView;
-    private bool _isProceeded;
+    private bool _isActive;
 
     public QTEPhasePresenter(QTEPhaseSetup qtePhaseSetup, QTEButtonView qteButtonView)
     {
@@ -23,7 +21,7 @@ namespace UI.QTE
 
     public void Enable()
     {
-      _isProceeded = true;
+      _isActive = true;
 
       _qteButtonView.Initialize(this);
       _qteButtonView.Successed += OnSuccessed;
@@ -36,20 +34,20 @@ namespace UI.QTE
       _qteButtonView.Invalided -= OnInvalided;
     }
 
-    public bool IsProceeded() =>
-      _isProceeded;
+    public bool IsActive() =>
+      _isActive;
 
     private void OnInvalided(QTEButtonView qteButtonView)
     {
       qteButtonView.Invalided -= OnInvalided;
-      _isProceeded = false;
+      _isActive = false;
       IsSuccess = false;
     }
     
     private void OnSuccessed(QTEButtonView qteButtonView)
     {
       qteButtonView.Successed -= OnSuccessed;
-      _isProceeded = false;
+      _isActive = false;
       IsSuccess = true;
     }
   }
