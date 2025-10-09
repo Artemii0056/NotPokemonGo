@@ -17,8 +17,8 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _uiFactory = uiFactory;
         }
 
-        public void Enter(string levelData) => 
-            _sceneLoader.Load(levelData, OnLoadMainMenuState);
+        public void Enter(string battlefield) => 
+            _sceneLoader.Load(battlefield, OnLoadMainMenuState);
 
         public void Exit()
         {

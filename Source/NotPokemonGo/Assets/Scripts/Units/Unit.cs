@@ -24,7 +24,6 @@ namespace Units
 
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
-
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
 
@@ -49,6 +48,8 @@ namespace Units
         public event Action<float, float> HealthChanged;
 
         public event Action<Unit> Death;
+        
+        public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
         private void Awake()
         {
@@ -66,6 +67,23 @@ namespace Units
 
             foreach (var statSetup in statConfig)
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
+
+            foreach (StatSetup stat in _stats.Values)
+                stat.CurrentValueChanged += StatChanged;
+
+            HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
+        }
+        
+        public void Construct(
+            Dictionary<StatType, StatSetup> stats,
+            UnitStep step,
+            PlatoonType platoonType)
+        {
+            _stats = stats;
+            
+            PlatoonType = platoonType;
+
+            Step = step;
 
             foreach (StatSetup stat in _stats.Values)
                 stat.CurrentValueChanged += StatChanged;

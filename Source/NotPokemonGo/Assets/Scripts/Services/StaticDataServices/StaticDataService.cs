@@ -67,7 +67,7 @@ namespace Services.StaticDataServices
             if (_spawnPositionContainer.TryGetValue(count, out PlatoonSpawnContainer platoonSpawnContainer))
                 return platoonSpawnContainer;
 
-            throw new KeyNotFoundException($"No ability config found for mode {platoonSpawnContainer}");
+            throw new KeyNotFoundException($"No ability config found for mode {count}");
         }
 
         public UnitConfig GetUnitConfig(UnitType unitType)

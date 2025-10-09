@@ -4,7 +4,7 @@ using Units;
 
 namespace Services.BattleUnitContainers
 {
-    public class BattleUnitContainer : IBattleUnitContainer
+    public class BattleUnitContainer : IBattleUnitContainer //TODO Удалить 
     {
         private List<Unit> _units = new List<Unit>();
 

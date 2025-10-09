@@ -9,19 +9,19 @@ namespace Infrastructure.StateMachines
         private readonly LevelConfig _levelConfig;
         public List<UnitType> Units { get; private set; }
         public BattleInfoUI BattleInfoUI { get; private set; }
-        private int _currentWaveIndex;
+        public int CurrentWaveIndex { get; private set; }
 
         public LevelRuntimeDataPayload(LevelConfig levelConfig, List<UnitType> units, BattleInfoUI battleInfoUI)
         {
             _levelConfig = levelConfig;
             BattleInfoUI = battleInfoUI;
             Units = units;
-            _currentWaveIndex = -1;
+            CurrentWaveIndex = -1;
         }
 
-        public bool HasNextWave => _currentWaveIndex + 1 < _levelConfig.LevelParts.Count;
+        public bool HasNextWave => CurrentWaveIndex + 1 < _levelConfig.LevelParts.Count;
 
         public LevelPartSetup NextWave() =>
-            _levelConfig.LevelParts[++_currentWaveIndex];
+            _levelConfig.LevelParts[++CurrentWaveIndex];
     }
 }

@@ -3,46 +3,66 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
-using Services;
+using Platoons;
+using Services.BattleSessionService;
 using UI.Factory;
 using UnityEngine;
 
 namespace Infrastructure.StateMachines
 {
-    public class CheckBattleEndState : IPayloadedState<Battlefield> //Это Батя. Который закончит игру, если все пройдено 
+    public class
+        CheckBattleEndState : IPayloadedState<Battlefield>
     {
         private IGameStateMachine _gameStateMachine;
         private IBattleStateMachine _battleStateMachine;
         private IUIFactory _uiFactory;
-        private Battlefield _battlefield;
+        private IBattlefieldSessionService _battlefieldSessionService;
 
         public CheckBattleEndState(
             IGameStateMachine gameStateMachine,
-            IBattleStateMachine battleStateMachine, 
-            IUIFactory uiFactory)
+            IBattleStateMachine battleStateMachine,
+            IUIFactory uiFactory,
+            IBattlefieldSessionService battlefieldSessionService)
         {
             _gameStateMachine = gameStateMachine;
             _battleStateMachine = battleStateMachine;
             _uiFactory = uiFactory;
+            _battlefieldSessionService = battlefieldSessionService;
         }
 
         public void Enter(Battlefield battlefield)
         {
-            _battlefield = battlefield;
-            
-            if (battlefield.EnemyPlatoon.HaveUnits == false && battlefield.HeroesPlatoon.HaveUnits == false)
+            bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
+            bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
+
+            if (heroesDead && enemiesDead)
             {
                 Debug.Log("Сделать авто проигрыш");
             }
 
-            if (battlefield.EnemyPlatoon.HaveUnits == false)
+            if (enemiesDead) //Вот тут добавить логику у WaveProgressionState с новым Входом, принимающим список текущих бойцов
             {
-                _gameStateMachine.Enter<WaveProgressionState>();
+               // var survivor = 
+                
+                // Platoon platoon = new Platoon(_battlefield.HeroesPlatoon.AliveUnits, _battlefield.HeroesPlatoon.Type);
+                // battlefield.Disable();
+                // battlefield.DiscardAll();
+                //
+                // Debug.Log(platoon.AliveUnits.Count);
+                //
+                // _gameStateMachine.Enter<WaveProgressionState, Platoon>(platoon);
                 Debug.Log("Enter new wave");
+                
+                var survivors = battlefield.HeroesPlatoon.AliveUnits;
+                _battlefieldSessionService.Cleanup();
+
+                Platoon platoon = new Platoon(survivors, battlefield.HeroesPlatoon.Type);
+
+                _gameStateMachine.Enter<WaveProgressionState, Platoon>(platoon);
                 return;
             }
 
-            if (battlefield.HeroesPlatoon.HaveUnits == false)
+            if (heroesDead)
             {
                 LoosePanel loosePanel = _uiFactory.CreateLoosePanel();
                 _battleStateMachine.Enter<LoosePanelState, LoosePanel>(loosePanel); //Чет тут херня

@@ -29,12 +29,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter(ChooseUnitToFightPayload levelData)
+        public void Enter(ChooseUnitToFightPayload battlefield)
         {
-            _chooseUnitToFightPanel = levelData.ChooseUnitToFightPanel;
+            _chooseUnitToFightPanel = battlefield.ChooseUnitToFightPanel;
             
             _chooseUnitToFightPanel.Show();
-            _levelConfig = levelData.Config;
+            _levelConfig = battlefield.Config;
 
             _unitSkinItemViews = _chooseUnitToFightPanel.UnitSelectionPanelContainer.GetPanels();
             _unitContainerPanel = _chooseUnitToFightPanel.UnitContainerPanel;

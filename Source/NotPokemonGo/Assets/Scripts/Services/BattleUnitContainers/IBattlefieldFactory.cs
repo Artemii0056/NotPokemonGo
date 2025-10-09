@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using Characters.Configs;
-using Infrastructure.StateMachines;
-using Infrastructure.StateMachines.GlobalStateMachine;
 using LevelSetting;
+using Platoons;
+using UnityEngine;
 
 namespace Services.BattleUnitContainers
 {
     public interface IBattlefieldFactory
     {
-        Battlefield Create(List<UnitType> units, LevelPartSetup levelPartSetup);
+        Battlefield Create(List<UnitType> units, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject);
+        Battlefield Create(List<UnitType> units, Platoon friendPlatoon, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject);
     }
 }

@@ -13,6 +13,7 @@ using InputServices;
 using Platoons;
 using Services;
 using Services.AssetManagement;
+using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.InputServices;
@@ -100,6 +101,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
             
             builder.Register<ILevelProgressService, LevelProgressService>(Lifetime.Singleton);
+            
+            builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
+            
+            builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

@@ -1,45 +1,67 @@
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
-using Statuses.Services;
+using Services.BattleSessionService;
 using Units;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class SelectReadyUnitState : IPayloadedState<Battlefield>
     {
         private readonly IBattleStateMachine _battleStateMachine;
-        private readonly IBattleUnitContainer _battleUnitContainer;
+        
+        private readonly IUnitReadyService _unitReadyService;
 
-        public SelectReadyUnitState(IBattleStateMachine battleStateMachine, IBattleUnitContainer battleUnitContainer)
+        public SelectReadyUnitState(
+            IBattleStateMachine battleStateMachine, 
+            IUnitReadyService unitReadyService)
         {
             _battleStateMachine = battleStateMachine;
-            _battleUnitContainer = battleUnitContainer;
+            _unitReadyService = unitReadyService;
         }
         
-        public void Enter(Battlefield levelData)
+        public void Enter(Battlefield battlefield) //Вот тут нужно использовать ReadyService? 
         {
-            foreach (Unit unit in levelData.Units) 
-                _battleUnitContainer.Add(unit);
-
-            Unit unitSource = _battleUnitContainer.Give();
-
-            if (unitSource != null)
+            if (_unitReadyService.HasUnits)
             {
+                Unit unitSource = _unitReadyService.GiveReadyUnit();
+                
                 _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
                     new UnitActionPayload
                     (
                         unitSource,
-                        levelData)
+                        battlefield)
                 );
                 
-                levelData.Units.Clear();
+                battlefield.Units.Clear();
             }
             else
             {
-                _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(levelData);
+                _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(battlefield);
             }
+            
+            // Debug.Log(battlefield.GetHashCode() + "SelectReadyUnitState");
+            //
+            // foreach (Unit unit in battlefield.Units) 
+            //     _battleUnitContainer.Add(unit);
+            //
+            // Unit unitSource = _battleUnitContainer.Give();
+            //
+            // if (unitSource != null)
+            // {
+            //     _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
+            //         new UnitActionPayload
+            //         (
+            //             unitSource,
+            //             battlefield)
+            //     );
+            //     
+            //     battlefield.Units.Clear();
+            // }
+            // else
+            // {
+            //     _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(battlefield);
+            // }
         }
 
         public void Exit()

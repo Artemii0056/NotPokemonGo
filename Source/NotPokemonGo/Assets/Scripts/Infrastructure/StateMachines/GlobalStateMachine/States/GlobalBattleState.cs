@@ -14,12 +14,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battleStateMachine = battleStateMachine;
         }
         
-        public void Enter(LevelRuntimeDataPayload payload)
+        public void Enter(LevelRuntimeDataPayload battlefield)
         {
-            _battleInfoUI = payload.BattleInfoUI;
+            _battleInfoUI = battlefield.BattleInfoUI;
             _battleInfoUI.gameObject.SetActive(true);
             
-            _battleInfoUI.SetValue(1);
+            _battleInfoUI.SetValue(battlefield.CurrentWaveIndex);
             
             _battleStateMachine.Enter<WaveProgressionState>();
         }

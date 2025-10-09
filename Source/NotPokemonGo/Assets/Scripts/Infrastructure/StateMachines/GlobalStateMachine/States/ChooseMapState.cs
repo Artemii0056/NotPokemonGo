@@ -19,9 +19,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         public ChooseMapState(IGameStateMachine gameStateMachine) => 
             _gameStateMachine = gameStateMachine;
 
-        public void Enter(ChooseMapUI chooseMapUI)
+        public void Enter(ChooseMapUI battlefield)
         {
-            _characterSelectionScreen = chooseMapUI;
+            _characterSelectionScreen = battlefield;
             _chooseUnitToFightPanel = _characterSelectionScreen.ChooseUnitToFightPanel;
             
             _characterSelectionScreen.gameObject.SetActive(true);

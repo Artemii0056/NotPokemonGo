@@ -1,24 +1,17 @@
 using System.Collections.Generic;
 using Characters.Configs;
-using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services;
-using Services.BattleUnitContainers;
 using Services.SceneServices;
-using Services.StaticDataServices;
 using UI.Factory;
 using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
-    public class LoadingBattleState : IPayloadedState<LoadingBattleStatePayload>, IState //Сюда передать UI и менять его значение в WavePross
-    //После загрузки нужно в Баттл стейт перейти 
+    public class LoadingBattleState : IPayloadedState<LoadingBattleStatePayload>, IState 
     {
-        private readonly IGameStateMachine _gameStateMachine;
-        private readonly IStaticDataService _staticDataService;
-        private readonly IBattlefieldFactory _battlefieldFactory;
         private readonly ILevelProgressService _levelProgressService;
-        private readonly IBattleStateMachine _battleStateMachine;
+        private readonly IGameStateMachine _gameStateMachine;
         private readonly IUIFactory _uiFactory;
         
         private LoadingBattleStatePayload _payload;
@@ -26,32 +19,26 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         public LoadingBattleState(
             IGameStateMachine gameStateMachine,
-            IStaticDataService staticDataService,
-            IBattlefieldFactory battlefieldFactory, 
-            ILevelProgressService levelProgressService, ISceneLoader sceneLoader, 
-            IBattleStateMachine battleStateMachine, IUIFactory uiFactory)
+            ILevelProgressService levelProgressService, 
+            ISceneLoader sceneLoader, 
+            IUIFactory uiFactory)
         {
-            _battlefieldFactory = battlefieldFactory;
             _levelProgressService = levelProgressService;
             _sceneLoader = sceneLoader;
-            _battleStateMachine = battleStateMachine;
             _uiFactory = uiFactory;
-            _staticDataService = staticDataService;
             _gameStateMachine = gameStateMachine;
         }
 
-        public void Enter(LoadingBattleStatePayload levelData)
+        public void Enter(LoadingBattleStatePayload battlefield)
         {
             BattleInfoUI battleUIInfo = _uiFactory.CreateBattleUIInfo();
             
-            Debug.Log("LoadingBattleState");
-            
-            _payload = levelData;
+            _payload = battlefield;
              
-             List<UnitType> units = levelData.UnitTypes;
+             List<UnitType> units = battlefield.UnitTypes;
             
             LevelRuntimeDataPayload levelRuntimeDataPayload = 
-                new LevelRuntimeDataPayload(levelData.LevelConfig, units, battleUIInfo);
+                new LevelRuntimeDataPayload(battlefield.LevelConfig, units, battleUIInfo);
             
             _levelProgressService.Set(levelRuntimeDataPayload); //Надо дропнуть _levelProgressService
             
@@ -72,12 +59,10 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _gameStateMachine.Enter<GlobalBattleState, LevelRuntimeDataPayload>(levelRuntimeDataPayload);
         }
 
-        public void Enter()
+        public void Enter() 
         {
             BattleInfoUI battleInfoUI = Object.FindObjectOfType<BattleInfoUI>(); 
             battleInfoUI.SetValue(0);
-            
-            Debug.Log("Simple LoadingBattleState");
             
             List<UnitType> units = _payload.UnitTypes;
             
@@ -85,7 +70,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             
             _levelProgressService.Set(levelRuntimeDataPayload);
             
-            _gameStateMachine.Enter<WaveProgressionState>();
+            //_gameStateMachine.Enter<WaveProgressionState>();
         }
         
         public void Exit()

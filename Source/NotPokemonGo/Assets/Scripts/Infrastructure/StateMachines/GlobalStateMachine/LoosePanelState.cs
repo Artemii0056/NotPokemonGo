@@ -13,9 +13,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine
             _gameStateMachine = gameStateMachine;
         }
         
-        public void Enter(LoosePanel loosePanel)
+        public void Enter(LoosePanel battlefield)
         {
-            _loosePanel = loosePanel;
+            _loosePanel = battlefield;
             _loosePanel.gameObject.SetActive(true);
             
             _loosePanel.OnRestartButtonPressed += OnRestartButtonPressed;
