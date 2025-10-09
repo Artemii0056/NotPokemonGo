@@ -25,7 +25,7 @@ namespace Statuses
         {
             EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage);
             _effectResolver.ApplyEffect(Target, damageInfo);
-            Debug.Log($"TickCount у статуса = {TickCount}");
+          //  Debug.Log($"TickCount у статуса = {TickCount}");
 
         }
     }

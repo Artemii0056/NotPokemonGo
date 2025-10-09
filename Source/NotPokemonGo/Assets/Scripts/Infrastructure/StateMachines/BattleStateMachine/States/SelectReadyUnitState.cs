@@ -20,7 +20,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _unitReadyService = unitReadyService;
         }
         
-        public void Enter(Battlefield battlefield) //Вот тут нужно использовать ReadyService? 
+        public void Enter(Battlefield battlefield) 
         {
             if (_unitReadyService.HasUnits)
             {
@@ -33,7 +33,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                         battlefield)
                 );
                 
-                battlefield.Units.Clear();
+              //  battlefield.Units.Clear();
             }
             else
             {

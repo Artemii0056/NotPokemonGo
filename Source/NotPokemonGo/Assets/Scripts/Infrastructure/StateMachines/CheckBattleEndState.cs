@@ -5,7 +5,9 @@ using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.BattleSessionService;
+using Stats;
 using UI.Factory;
+using Units;
 using UnityEngine;
 
 namespace Infrastructure.StateMachines
@@ -34,13 +36,16 @@ namespace Infrastructure.StateMachines
         {
             bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
             bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
+            
+            Debug.Log(heroesDead + " Heroes dead");
+            Debug.Log(enemiesDead + " Enemies dead");
 
             if (heroesDead && enemiesDead)
             {
                 Debug.Log("Сделать авто проигрыш");
             }
 
-            if (enemiesDead) //Вот тут добавить логику у WaveProgressionState с новым Входом, принимающим список текущих бойцов
+            if (enemiesDead) 
             {
                // var survivor = 
                 

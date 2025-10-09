@@ -82,8 +82,6 @@ namespace Battlefields
             PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelPartSetup.Units.Count);
             PlatoonSpawnContainer friendPlatoonContainer = _staticDataService.GetSpawnPositionContainer(friendPlatoon.AliveUnits.Count);
             
-            Debug.Log(friendPlatoon.AliveUnits.Count + " " + " Unit count");
-            
             Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
             Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends,unitConfigFirst, friendPlatoon.AliveUnits);
 

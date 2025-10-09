@@ -2,6 +2,7 @@
 using Infrastructure;
 using Stats;
 using Units;
+using UnityEngine;
 
 namespace Effects
 {
@@ -10,6 +11,7 @@ namespace Effects
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
             float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value);
+            Debug.Log(finalValue + " на это число изменится жизнь");
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
@@ -28,6 +30,10 @@ namespace Effects
                             {
                                 finalValue = -finalValue;
                                 target.UnitAnimatorController.Play(Constants.BaseAnimations.TakeDamage);
+                            }
+                            else
+                            {
+                                finalValue = 0; //Так ли? 
                             }
 
                             break;

@@ -42,8 +42,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             
             LevelPartSetup levelPartSetup = levelData.NextWave();
             
-            Debug.Log(levelData.Units.Count + " левел дата каунт");
-            
             Battlefield battlefield =
                 _battlefieldSessionService.StartNewBattle(levelData,levelPartSetup, platoon);
             
