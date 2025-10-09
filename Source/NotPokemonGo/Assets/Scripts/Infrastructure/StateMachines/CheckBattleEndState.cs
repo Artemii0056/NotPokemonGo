@@ -15,10 +15,10 @@ namespace Infrastructure.StateMachines
     public class
         CheckBattleEndState : IPayloadedState<Battlefield>
     {
-        private IGameStateMachine _gameStateMachine;
-        private IBattleStateMachine _battleStateMachine;
-        private IUIFactory _uiFactory;
-        private IBattlefieldSessionService _battlefieldSessionService;
+        private readonly IGameStateMachine _gameStateMachine;
+        private readonly IBattleStateMachine _battleStateMachine;
+        private readonly IUIFactory _uiFactory;
+        private readonly IBattlefieldSessionService _battlefieldSessionService;
 
         public CheckBattleEndState(
             IGameStateMachine gameStateMachine,
@@ -37,8 +37,6 @@ namespace Infrastructure.StateMachines
             bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
             bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
             
-            Debug.Log(heroesDead + " Heroes dead");
-            Debug.Log(enemiesDead + " Enemies dead");
 
             if (heroesDead && enemiesDead)
             {
@@ -47,15 +45,6 @@ namespace Infrastructure.StateMachines
 
             if (enemiesDead) 
             {
-               // var survivor = 
-                
-                // Platoon platoon = new Platoon(_battlefield.HeroesPlatoon.AliveUnits, _battlefield.HeroesPlatoon.Type);
-                // battlefield.Disable();
-                // battlefield.DiscardAll();
-                //
-                // Debug.Log(platoon.AliveUnits.Count);
-                //
-                // _gameStateMachine.Enter<WaveProgressionState, Platoon>(platoon);
                 Debug.Log("Enter new wave");
                 
                 var survivors = battlefield.HeroesPlatoon.AliveUnits;

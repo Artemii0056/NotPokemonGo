@@ -29,8 +29,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         
         public void Enter(Platoon platoon) 
         {
-            Debug.Log("Entering Platoon WaveProgressionState");
-            
             var levelData = _levelProgressService.LevelData;
             
             if (levelData.HasNextWave == false)
@@ -57,8 +55,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
                 Debug.Log("Финиш");
                 return;
             }
-            
-            //LevelPartSetup levelPartSetup = levelData.NextWave();
             
             Battlefield battlefield =
                 _battlefieldSessionService.StartNewBattle(levelData, levelData.NextWave());

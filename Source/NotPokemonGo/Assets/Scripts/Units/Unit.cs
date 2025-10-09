@@ -107,8 +107,6 @@ namespace Units
                     float maxHealth = GetStat(StatType.MaxHealth);
                     HealthChanged?.Invoke(currentHealth, maxHealth);
 
-                   // Debug.Log(GetStat(StatType.Health) + " " + PlatoonType.ToString());
-
                     if (GetStat(StatType.Health) <= 0)
                     {
                         Death?.Invoke(this);
@@ -191,7 +189,6 @@ namespace Units
             if (GetStat(StatType.CurrentAgility) >= GetStat(StatType.MaxAgility))
             {
                 _stats[StatType.CurrentAgility].Set(GetStat(StatType.MaxAgility)); 
-                //TODO нужен сервис, который будет чекать всех живых и добавлять их список готовых
                 Prepared?.Invoke(this);
             }
         }

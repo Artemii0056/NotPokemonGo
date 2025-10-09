@@ -33,7 +33,7 @@ namespace Effects
                             }
                             else
                             {
-                                finalValue = 0; //Так ли? 
+                                finalValue = 0; 
                             }
 
                             break;

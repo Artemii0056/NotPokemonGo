@@ -3,7 +3,6 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using UI.Ability;
-using UnityEngine;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -31,8 +30,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         public void Enter(Battlefield battlefield)
         {
-            Debug.Log("Entering BattleLoopState");
-            
             _abilityPanelPresenter.Disable();
             _battleUnitContainer.Reset();
             _battlefield = battlefield;
@@ -43,7 +40,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         public void Exit()
         {
-            //_battlefield.Disable();
         }
     }
 }
