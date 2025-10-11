@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using Characters.Configs;
+using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services;
 using Services.SceneServices;
 using UI.Factory;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class LoadingBattleState : IPayloadedState<LoadingBattleStatePayload>, IState 
     {

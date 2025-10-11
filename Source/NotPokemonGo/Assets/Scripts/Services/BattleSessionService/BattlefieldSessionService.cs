@@ -1,5 +1,6 @@
 ﻿using System;
 using Infrastructure.StateMachines;
+using Infrastructure.StateMachines.BattleStateMachine.States;
 using LevelSetting;
 using Platoons;
 using Services.BattleUnitContainers;
@@ -36,7 +37,7 @@ namespace Services.BattleSessionService
                 ? _battlefieldFactory.Create(levelData.Units, wave, out _battlefieldRoot)
                 : _battlefieldFactory.Create(levelData.Units, survivors, wave, out _battlefieldRoot);
             
-            _unitReadyService.SetPlatoons( battlefield.HeroesPlatoon, battlefield.EnemyPlatoon);  // передавать юнитов
+            _unitReadyService.SetPlatoons( battlefield.HeroesPlatoon.AliveUnits, battlefield.EnemyPlatoon.AliveUnits);
 
             _currentBattlefield = battlefield;
 

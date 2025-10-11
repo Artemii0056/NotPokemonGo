@@ -1,4 +1,5 @@
 ﻿using Infrastructure.StateMachines.BattleStateMachine;
+using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States

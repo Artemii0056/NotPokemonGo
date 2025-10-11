@@ -1,10 +1,8 @@
 using Battlefields;
-using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using UI.Ability;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class BattleLoopState : IPayloadedState<Battlefield>
     {

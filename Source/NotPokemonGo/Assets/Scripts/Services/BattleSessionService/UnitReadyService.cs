@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Platoons;
 using Unit = Units.Unit;
 
 namespace Services.BattleSessionService
@@ -8,25 +7,32 @@ namespace Services.BattleSessionService
     public class UnitReadyService : IUnitReadyService
     {
         private List<Unit> _units;
-        private Platoon _friendsPlatoon;
-        private Platoon _enemiesPlatoon;
+        private List<Unit>  _friendsUnits;
+        private List<Unit>  _enemiesUnits;
 
-        public UnitReadyService() => 
+        public UnitReadyService() =>
             _units = new List<Unit>();
 
         public bool HasUnits => _units.Count > 0;
 
-        public void SetPlatoons(Platoon friends, Platoon enemies)
+        public void SetPlatoons(List<Unit> friends, List<Unit>  enemies)
         {
-            _friendsPlatoon = friends; // удалять мертвых
-            _enemiesPlatoon = enemies;
-            
-            foreach (var unit in friends.AliveUnits) 
+            _friendsUnits = friends;
+            _enemiesUnits = enemies;
+
+            foreach (var unit in friends)
+            {
                 unit.Prepared += OnUnitPrepared;
-            
-            foreach (var unit in enemies.AliveUnits) 
+                unit.Death += OnUnitDead;
+            }
+
+            foreach (var unit in enemies)
+            {
                 unit.Prepared += OnUnitPrepared;
+                unit.Death += OnUnitDead;
+            }
         }
+
 
         public Unit GiveReadyUnit()
         {
@@ -34,27 +40,37 @@ namespace Services.BattleSessionService
                 throw new Exception("No unit selected");
 
             var unit = _units[0];
-            _units.Remove(unit); 
+            _units.Remove(unit);
             return unit;
         }
 
-        public void Discard() 
+        public void Discard()
         {
-            if (_friendsPlatoon == null) //TODO Перенести логику
+            if (_friendsUnits == null) //TODO Перенести логику
                 return;
-            
-            foreach (var unit in _friendsPlatoon.AliveUnits) 
+
+            foreach (var unit in _friendsUnits)
+            {
                 unit.Prepared -= OnUnitPrepared;
-            
-            foreach (var unit in _enemiesPlatoon.AliveUnits) 
+                unit.Death -= OnUnitDead;
+            }
+
+            foreach (var unit in _enemiesUnits)
+            {
                 unit.Prepared -= OnUnitPrepared;
-            
+                unit.Death -= OnUnitDead;
+            }
+
             _units.Clear();
         }
 
-        private void OnUnitPrepared(Unit unit)
-        {
+        private void OnUnitPrepared(Unit unit) =>
             _units.Add(unit);
+
+        private void OnUnitDead(Unit unit)
+        {
+            unit.Death -= OnUnitDead;
+            _units.Remove(unit);
         }
     }
 }

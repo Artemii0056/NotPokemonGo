@@ -1,16 +1,11 @@
-﻿using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
-using Infrastructure.StateMachines.GlobalStateMachine;
-using Infrastructure.StateMachines.GlobalStateMachine.States;
+﻿using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.BattleSessionService;
-using Stats;
 using UI.Factory;
-using Units;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class
         CheckBattleEndState : IPayloadedState<Battlefield>

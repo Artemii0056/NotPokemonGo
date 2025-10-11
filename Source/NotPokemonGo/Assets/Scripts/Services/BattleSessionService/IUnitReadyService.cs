@@ -1,4 +1,4 @@
-using Platoons;
+using System.Collections.Generic;
 using Units;
 
 namespace Services.BattleSessionService
@@ -6,7 +6,7 @@ namespace Services.BattleSessionService
     public interface IUnitReadyService
     {
         bool HasUnits { get; }
-        void SetPlatoons(Platoon friends, Platoon enemies);
+        void SetPlatoons(List<Unit> friends, List<Unit> enemies);
         Unit GiveReadyUnit();
         void Discard();
     }

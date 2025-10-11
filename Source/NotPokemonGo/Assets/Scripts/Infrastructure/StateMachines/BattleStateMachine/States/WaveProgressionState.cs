@@ -1,27 +1,24 @@
-﻿using Infrastructure.StateMachines.States.Interfaces;
+﻿using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Platoons;
 using Services;
 using Services.BattleSessionService;
-using Services.BattleUnitContainers;
 using UnityEngine;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class WaveProgressionState : IPayloadedState<Platoon>, IState
     {
-        private readonly IBattlefieldFactory _battlefieldFactory;
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBattlefieldSessionService _battlefieldSessionService;
 
         public WaveProgressionState(
-            IBattlefieldFactory battlefieldFactory, 
             IGameStateMachine gameStateMachine, 
             ILevelProgressService levelProgressService, 
             IBattlefieldSessionService battlefieldSessionService)
         {
-            _battlefieldFactory = battlefieldFactory;
             _gameStateMachine = gameStateMachine;
             _levelProgressService = levelProgressService;
             _battlefieldSessionService = battlefieldSessionService;

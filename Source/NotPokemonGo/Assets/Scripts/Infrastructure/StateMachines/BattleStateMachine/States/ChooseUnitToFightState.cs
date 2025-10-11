@@ -2,13 +2,14 @@
 using System.Linq;
 using Characters;
 using Characters.Configs;
+using Infrastructure.StateMachines.GlobalStateMachine;
+using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Services.SceneServices;
 using UI;
-using UnityEngine;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class ChooseUnitToFightState : IPayloadedState<ChooseUnitToFightPayload>
     {

@@ -2,7 +2,7 @@
 using Characters.Configs;
 using LevelSetting;
 
-namespace Infrastructure.StateMachines
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class LevelRuntimeDataPayload
     {
