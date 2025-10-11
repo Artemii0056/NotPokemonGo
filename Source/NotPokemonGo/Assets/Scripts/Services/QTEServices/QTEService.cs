@@ -45,7 +45,7 @@ namespace Services.QTEServices
                 qtePhasePresenter.Enable();
                 
                 yield return new WaitWhile(qtePhasePresenter.IsActive);
-                Object.Destroy(view);
+                Object.Destroy(view.gameObject);
                 qtePhasePresenter.Disable();
 
                 if (qtePhasePresenter.IsSuccess == false)
