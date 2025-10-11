@@ -7,6 +7,7 @@ using UI.QTE;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 namespace Services.QTEServices
 {
@@ -15,6 +16,7 @@ namespace Services.QTEServices
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IObjectResolver _objectResolver;
+        private AbilityType _abilityType;
 
         public event Action <bool> Completed; 
         
@@ -27,6 +29,7 @@ namespace Services.QTEServices
         
         public void Start(AbilityType abilityType)
         {
+            _abilityType = abilityType;
             QTEConfig qteConfig = _staticDataService.GetQTEConfig(abilityType);
 
             _coroutineRunner.StartCoroutine(StartQTE(qteConfig));
@@ -36,13 +39,13 @@ namespace Services.QTEServices
         {
             foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
-                QTEButtonView qteButtonView = _objectResolver.Instantiate(qtePhaseSetup.QTEButtonView);
-                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, qteButtonView);
-
+                QTEButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
+                _objectResolver.Inject(view);
+                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, view, _abilityType);
                 qtePhasePresenter.Enable();
                 
                 yield return new WaitWhile(qtePhasePresenter.IsActive);
-
+                Object.Destroy(view);
                 qtePhasePresenter.Disable();
 
                 if (qtePhasePresenter.IsSuccess == false)

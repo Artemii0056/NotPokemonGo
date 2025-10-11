@@ -23,6 +23,7 @@ using Statuses.Services;
 using UI.Ability;
 using UI.BattleUpgrages;
 using UI.Factory;
+using UI.QTE;
 using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
@@ -87,7 +88,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IQTEService, QTEService>(Lifetime.Singleton);
             
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
-            
             
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);

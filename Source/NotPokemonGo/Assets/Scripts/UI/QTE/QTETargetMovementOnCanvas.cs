@@ -6,7 +6,7 @@ namespace UI.QTE
 {
   public class QTETargetMovementOnCanvas : QTEButtonView
   {
- private const float StartThreshold = 0.05f;
+    private const float StartThreshold = 0.05f;
     private const float CompletionThreshold = 0.98f;
 
     [SerializeField] private Slider _slider;
@@ -35,6 +35,7 @@ namespace UI.QTE
 
     private void OnEnable()
     {
+      Debug.Log("asdasdsd");
       ResetInternalState();
     }
 

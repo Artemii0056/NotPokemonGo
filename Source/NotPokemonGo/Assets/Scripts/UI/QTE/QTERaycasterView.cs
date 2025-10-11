@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities;
 using Services.InputServices;
 using Services.RaycastServices;
+using Services.StaticDataServices;
 using Units;
 using UnityEngine;
 using VContainer;
@@ -18,19 +18,27 @@ namespace UI.QTE
     private QTEPhasePresenter _qtePhasePresenter;
     private List<Unit> _units;
     private int _clickCount;
+    private IStaticDataService _staticDataService;
 
     public override event Action<QTEButtonView> Successed;
     public override event Action<QTEButtonView> Invalided;
     
     [Inject]
-    public void Construct(IInputReader inputReader, IRaycastService raycastService, ITargetSelector targetSelector)
+    public void Construct(IInputReader inputReader, IRaycastService raycastService, ITargetSelector targetSelector, IStaticDataService staticDataService)
     {
+      _staticDataService = staticDataService;
       _inputReader = inputReader;
       _targetSelector = targetSelector;
       _raycastService = raycastService;
       _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonClicked;
+    }
+
+    public override void Initialize(QTEPhasePresenter qtePhasePresenter)
+    {
+      base.Initialize(qtePhasePresenter);
+      _qtePhasePresenter = qtePhasePresenter;
       
-      _units = _targetSelector.GetTargets(TargetMode.Single).Where(x => x != null).ToList();
+      _units = _targetSelector.GetTargets(_staticDataService.GetTargetMode(qtePhasePresenter.AbilityType)).Where(x => x != null).ToList();
 
       foreach (var unit in _units)
       {
@@ -43,12 +51,6 @@ namespace UI.QTE
       }
     }
 
-    public override void Initialize(QTEPhasePresenter qtePhasePresenter)
-    {
-      base.Initialize(qtePhasePresenter);
-      _qtePhasePresenter = qtePhasePresenter;
-    }
-
     private void Update()
     {
       CurrentTime += Time.deltaTime * _qtePhasePresenter.QtePhaseSetup.Speed;
@@ -56,7 +58,6 @@ namespace UI.QTE
       if (CurrentTime >= _qtePhasePresenter.QtePhaseSetup.TargetTime)
       {
         Invalided?.Invoke(this);
-        Debug.LogWarning("прошло время QTERaycasterView");
       }
     }
 
@@ -65,62 +66,35 @@ namespace UI.QTE
       if (_raycastService.Raycast(out Unit unit) == false)
       {
         Invalided?.Invoke(this);
-
-        Debug.LogWarning("не попал в юнита QTERaycasterView");
         return;
       }
-
-      for (int i = 0; i < _qtePhasePresenter.QtePhaseSetup.ClickCount; i++)
+      
+      Debug.Log("OnLeftMouseButtonClicked - clickCount = " + _clickCount);
+      Debug.LogWarning(_units.Count);
+      
+      for (int i = 0; i < _units.Count; i++)
       {
-        for (int j = _units.Count; j >= 0; j--)
-        {
-          _units[j].GetComponent<ColorGradient>().MarkProcess();
+        _units[i].GetComponent<ColorGradient>().MarkProcess();
 
-          if (_units[j] == unit)
-          {
-            _clickCount++;
-            _units[j].GetComponent<ColorGradient>().MarkInterract();
-          }
-          else
-          {
-            Debug.LogWarning("не попал в юнита в for QTERaycasterView");
-            Invalided?.Invoke(this);
-          }
+        if (_units[i] == unit)
+        {
+          Debug.LogWarning(_units[i].name);
+          _clickCount++;
+          _units[i].GetComponent<ColorGradient>().MarkInterract();
+        }
+        else
+        {
+          Invalided?.Invoke(this);
         }
       }
 
-      if (_clickCount == _qtePhasePresenter.QtePhaseSetup.ClickCount) 
+      if (_clickCount == _qtePhasePresenter.QtePhaseSetup.ClickCount)
+      {
         Successed?.Invoke(this);
+      }
     }
 
     private void OnDestroy() =>
       _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonClicked;
-  }
-
-  public class ColorGradient : MonoBehaviour
-  {
-    private Renderer _renderer;
-    private Color _defaultColor;
-
-    private void Awake()
-    {
-      _renderer = GetComponent<Renderer>();
-      _defaultColor = _renderer.material.color;
-    }
-
-    public void MarkProcess()
-    {
-      _renderer.material.SetColor("_Color", Color.red);
-    }
-    
-    public void MarkInterract()
-    {
-      _renderer.material.SetColor("_Color", Color.yellow);
-    }
-
-    public void FinalizeProcess()
-    {
-      _renderer.material.color = _defaultColor;
-    }
   }
 }
