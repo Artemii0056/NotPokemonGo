@@ -36,7 +36,7 @@ namespace Services.BattleSessionService
                 ? _battlefieldFactory.Create(levelData.Units, wave, out _battlefieldRoot)
                 : _battlefieldFactory.Create(levelData.Units, survivors, wave, out _battlefieldRoot);
             
-            _unitReadyService.SetPlatoons( battlefield.HeroesPlatoon, battlefield.EnemyPlatoon);
+            _unitReadyService.SetPlatoons( battlefield.HeroesPlatoon, battlefield.EnemyPlatoon);  // передавать юнитов
 
             _currentBattlefield = battlefield;
 

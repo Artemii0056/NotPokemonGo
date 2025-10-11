@@ -18,7 +18,7 @@ namespace Services.BattleSessionService
 
         public void SetPlatoons(Platoon friends, Platoon enemies)
         {
-            _friendsPlatoon = friends;
+            _friendsPlatoon = friends; // удалять мертвых
             _enemiesPlatoon = enemies;
             
             foreach (var unit in friends.AliveUnits) 
@@ -34,7 +34,7 @@ namespace Services.BattleSessionService
                 throw new Exception("No unit selected");
 
             var unit = _units[0];
-            _units.Remove(unit);
+            _units.Remove(unit); 
             return unit;
         }
 

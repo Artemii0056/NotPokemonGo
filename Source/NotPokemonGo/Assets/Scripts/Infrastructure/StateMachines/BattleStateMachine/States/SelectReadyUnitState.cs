@@ -25,7 +25,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             if (_unitReadyService.HasUnits)
             {
                 Unit unitSource = _unitReadyService.GiveReadyUnit();
-                
+
                 _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
                     new UnitActionPayload
                     (
