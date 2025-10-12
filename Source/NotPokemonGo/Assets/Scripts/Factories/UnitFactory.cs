@@ -1,9 +1,11 @@
-﻿using Abilities;
+﻿using System.Collections.Generic;
+using Abilities;
 using Abilities.MV;
 using Characters;
 using Effects;
 using Services;
 using Services.StaticDataServices;
+using Stats;
 using UI;
 using UI.Sliders;
 using Units;
@@ -64,6 +66,39 @@ namespace Factories
             UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
 
             unit.Construct(config.Stats, unitStep, platoonType);
+
+            for (int i = 0; i < config.AbilityConfigs.Count; i++)
+            {
+                unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
+            }
+
+            InitializeView(unit);
+
+            return unit;
+        }
+        
+        public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config,  PlatoonType platoonType, Dictionary<StatType, StatSetup> stats)
+        {
+            Vector3 posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
+
+            Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
+
+            unit.transform.SetParent(parentPosition, false);
+            
+            UnitAnimatorController controller = unit.UnitAnimatorController;
+
+            UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
+                unit,
+                _staticDataService,
+                _abilityProvider,
+                controller,
+                _particleSystemFactory,
+                _abilityApplicatorService,
+                _targetSelector);
+
+            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
+
+            unit.Construct(stats, unitStep, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

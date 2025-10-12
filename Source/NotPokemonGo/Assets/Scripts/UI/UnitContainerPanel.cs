@@ -38,6 +38,7 @@ namespace UI
             foreach (var characterSkin in _characterSkinItemViews)
             {
                 characterSkin.gameObject.SetActive(false);
+                characterSkin.SetFree();
                 characterSkin.OnClicked -= OnSkinClicked;
             }
         }

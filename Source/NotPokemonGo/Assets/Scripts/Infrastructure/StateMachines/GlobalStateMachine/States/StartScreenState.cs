@@ -13,9 +13,9 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
         
-        public void Enter(StartMenuPayload payload)
+        public void Enter(StartMenuPayload battlefield)
         {
-            _startScreenUI = payload.UI;
+            _startScreenUI = battlefield.UI;
             _startScreenUI.gameObject.SetActive(true);
             
             _startScreenUI.ShowHeroesClicked += OnShowHeroesClicked;
@@ -32,9 +32,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
 
         private void OnChoosePlatoonClicked()
         {
-            ChoosePlatoonPayload payload = new ChoosePlatoonPayload(_startScreenUI.ChooseMapUI, _gameStateMachine);
-            
-            _gameStateMachine.Enter<ChooseMapState, ChoosePlatoonPayload>(payload);
+            _gameStateMachine.Enter<ChooseMapState, ChooseMapUI>(_startScreenUI.ChooseMapUI);
         }
 
         private void OnShowHeroesClicked()

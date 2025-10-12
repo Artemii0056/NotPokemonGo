@@ -251,8 +251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f1fba4b75558d44946844cc687c3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstButton: {fileID: 2813352758079183031}
-  _secondButton: {fileID: 7186470684591364948}
   _mapButtons:
   - {fileID: 1329713516985303759}
   - {fileID: 8793991501315651980}

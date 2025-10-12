@@ -23,7 +23,7 @@ public class TargetSelector : ITargetSelector
     {
         Platoon targetPlatoon;
 
-        if (_platoons[0].PlatoonType == _target.PlatoonType)
+        if (_platoons[0].Type == _target.PlatoonType)
             targetPlatoon = _platoons[0];
         else
             targetPlatoon = _platoons[1];
@@ -41,7 +41,7 @@ public class TargetSelector : ITargetSelector
                 break;
             
             case TargetMode.All:
-                targets.AddRange(targetPlatoon.Units);
+                targets.AddRange(targetPlatoon.AliveUnits);
                 break;
             
             default:

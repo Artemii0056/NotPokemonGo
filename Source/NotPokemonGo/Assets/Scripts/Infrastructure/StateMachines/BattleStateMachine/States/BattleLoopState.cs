@@ -1,10 +1,8 @@
 using Battlefields;
-using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using UI.Ability;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class BattleLoopState : IPayloadedState<Battlefield>
     {
@@ -28,20 +26,18 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _abilityPanelPresenter = abilityPanelPresenter;
         }
 
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter(Battlefield battlefield)
         {
             _abilityPanelPresenter.Disable();
             _battleUnitContainer.Reset();
-            _battlefield = unitActionPayload;
-            _battlefield.Enable();
+            _battlefield = battlefield;
 
-            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.Heroes);
+            _targetSelector.SetPlatoons(_battlefield.EnemyPlatoon, _battlefield.HeroesPlatoon);
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
 
         public void Exit()
         {
-            _battlefield.Disable();
         }
     }
 }

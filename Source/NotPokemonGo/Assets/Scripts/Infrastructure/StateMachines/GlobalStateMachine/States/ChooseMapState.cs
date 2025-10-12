@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using LevelSetting;
 using Map;
@@ -6,19 +7,22 @@ using UI;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
-    public class ChooseMapState : IPayloadedState<ChoosePlatoonPayload>
+    public class ChooseMapState : IPayloadedState<ChooseMapUI>
     {
+        private readonly IGameStateMachine _gameStateMachine;
+        
         private ChooseMapUI _characterSelectionScreen; 
         private ChooseUnitToFightPanel _chooseUnitToFightPanel;
-        private IGameStateMachine _gameStateMachine;
         private List<MapLevel> _maps;
         
         private MapLevel _currentMap;
 
-        public void Enter(ChoosePlatoonPayload payload)
+        public ChooseMapState(IGameStateMachine gameStateMachine) => 
+            _gameStateMachine = gameStateMachine;
+
+        public void Enter(ChooseMapUI battlefield)
         {
-            _characterSelectionScreen = payload.ChooseMapUI;
-            _gameStateMachine = payload.GameStateMachine;
+            _characterSelectionScreen = battlefield;
             _chooseUnitToFightPanel = _characterSelectionScreen.ChooseUnitToFightPanel;
             
             _characterSelectionScreen.gameObject.SetActive(true);
@@ -26,6 +30,19 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _characterSelectionScreen.MapSelected += OnMapSelected;
 
             _maps = _characterSelectionScreen.MapLevels;
+        }
+        
+        public void Exit()
+        {
+            _currentMap.OnPlayButtonClicked -= OnPlayButtonClicked;
+            _currentMap.ExitButtonClicked -= OnExitButtonClicked;
+            _currentMap.gameObject.SetActive(false);
+            _currentMap = null;
+            _maps = null;
+            
+            _characterSelectionScreen.MapSelected -= OnMapSelected;
+            
+            _characterSelectionScreen.gameObject.SetActive(false);
         }
 
         private void OnMapSelected(MapType type)
@@ -48,20 +65,12 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
         private void OnExitButtonClicked() => 
             _gameStateMachine.Enter<StartScreenState>();
 
-        private void OnPlayButtonClicked() 
+        private void OnPlayButtonClicked()
         {
-            _chooseUnitToFightPanel.gameObject.SetActive(true);
-            
             LevelConfig config = _currentMap.CurrentLevelConfig;
             ChooseUnitToFightPayload chooseUnitToFightPayload = new ChooseUnitToFightPayload(_chooseUnitToFightPanel, config);
             
             _gameStateMachine.Enter<ChooseUnitToFightState, ChooseUnitToFightPayload>(chooseUnitToFightPayload); 
-        }
-
-        public void Exit()
-        {
-            _currentMap.OnPlayButtonClicked -= OnPlayButtonClicked;
-            _currentMap.ExitButtonClicked -= OnExitButtonClicked;
         }
     }
 }

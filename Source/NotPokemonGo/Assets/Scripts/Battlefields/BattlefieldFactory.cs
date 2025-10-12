@@ -8,6 +8,7 @@ using Services.BattleUnitContainers;
 using Services.StaticDataServices;
 using Statuses.Services;
 using UI.SpawnPositions;
+using Units;
 using UnityEngine;
 
 namespace Battlefields
@@ -28,7 +29,7 @@ namespace Battlefields
             _platoonFactory = platoonFactory;
         }
         
-        public Battlefield Create(List<UnitType> units, LevelConfig levelConfig)
+        public Battlefield Create(List<UnitType> units, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject)
         {
             GameObject battlefieldPosition = new GameObject("Battlefield");
             
@@ -44,16 +45,49 @@ namespace Battlefields
             platoonPosition2.transform.SetParent(battlefieldPosition.transform);
 
             UnitConfig[] unitConfigFirst = Create(units).ToArray();
-            UnitConfig[] unitConfigSecond = levelConfig.LevelParts[0].Units.ToArray();
+            UnitConfig[] enemiesConfig = levelPartSetup.Units.ToArray();
             
             PlatoonSpawnContainer friendPlatoonContainer = _staticDataService.GetSpawnPositionContainer(units.Count);
             
-            PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelConfig.LevelParts[0].Units.Count);
+            PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelPartSetup.Units.Count);
             
-            Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
+            Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, enemiesConfig);
             Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends, unitConfigFirst);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
+            
+            battlefieldGameObject = battlefieldPosition;
+
+            return battlefield;
+        }
+
+        public Battlefield Create(List<UnitType> units, Platoon friendPlatoon, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject)
+        {
+            GameObject battlefieldPosition = new GameObject("Battlefield");
+            
+            GameObject platoonPosition1 = new GameObject("EnemiesPlatoon");
+            platoonPosition1.transform.position = Constants.Positions.Platoon1Position;
+            
+           GameObject platoonPosition2 = new GameObject("FriendsPlatoon");
+            platoonPosition2.transform.position = Constants.Positions.Platoon2Position;
+            
+            platoonPosition1.transform.Rotate(Vector3.up, 180); 
+
+            platoonPosition1.transform.SetParent(battlefieldPosition.transform);
+            platoonPosition2.transform.SetParent(battlefieldPosition.transform);
+
+            UnitConfig[] unitConfigFirst = Create(units).ToArray();
+            UnitConfig[] unitConfigSecond = levelPartSetup.Units.ToArray();
+            
+            PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelPartSetup.Units.Count);
+            PlatoonSpawnContainer friendPlatoonContainer = _staticDataService.GetSpawnPositionContainer(friendPlatoon.AliveUnits.Count);
+            
+            Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
+            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends,unitConfigFirst, friendPlatoon.AliveUnits);
+
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
+
+            battlefieldGameObject = battlefieldPosition;
 
             return battlefield;
         }

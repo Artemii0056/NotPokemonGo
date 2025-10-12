@@ -16,10 +16,12 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _coroutineRunner = coroutineRunner;
         }
         
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter(Battlefield battlefield)
         {
-            unitActionPayload.Tick();
-            _coroutineRunner.StartCoroutine(Delay(unitActionPayload));
+            //Debug.Log("UpdateBattleTickState");
+            
+            battlefield.Tick();
+            _coroutineRunner.StartCoroutine(Delay(battlefield));
         }
 
         private IEnumerator Delay(Battlefield battlefield)

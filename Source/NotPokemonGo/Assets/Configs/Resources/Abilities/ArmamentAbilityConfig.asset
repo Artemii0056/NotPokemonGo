@@ -23,9 +23,9 @@ MonoBehaviour:
     ArmamentSetup:
       <Statuses>k__BackingField: []
       <EffectInfo>k__BackingField:
-      - Type: 1
+      - Type: 0
         TargetType: 1
-        Value: 20
+        Value: 100
       <ParticleSystem>k__BackingField: {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
       <ArmamentView>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
       <MoveSpeed>k__BackingField: 3

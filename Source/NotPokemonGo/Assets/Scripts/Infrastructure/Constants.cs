@@ -17,6 +17,8 @@ namespace Infrastructure
             public const string ChooseUnitsCanvasName = "Canvases/ChooseUnitsForBattle_Canvas";
             public const string MainMenuCanvasPath = "Canvases/MainMenu_Canvas";
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
+            public const string LoosePanelPath = "Canvases/LoosePanel_Canvas";
+            public const string BattleInfoUIPath = "Canvases/BattleInfo_Canvas";
 
             public const string CatalogPath = "Catalog/Catalog";
             public const string AbilityConfigPath = "Abilities";
@@ -40,6 +42,8 @@ namespace Infrastructure
         {
             public static int Idle = Animator.StringToHash(nameof(Idle));
             public static int Death = Animator.StringToHash(nameof(Death));
+            public static int Dodge = Animator.StringToHash(nameof(Dodge));
+            public static int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
         }
     }
 }

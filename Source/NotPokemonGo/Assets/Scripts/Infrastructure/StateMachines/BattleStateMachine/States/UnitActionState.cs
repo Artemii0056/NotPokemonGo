@@ -24,21 +24,21 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _objectResolver = objectResolver;
         }
 
-        public void Enter(UnitActionPayload unitActionPayload)
+        public void Enter(UnitActionPayload battlefield)
         {
-            _payload = unitActionPayload;
+            _payload = battlefield;
             _inputReader.SpacePressed += SetFinishBattleState;
 
             _inputReader.EButtonPressed += SetQTEState;
 
-            switch (unitActionPayload.UnitSorce.PlatoonType)
+            switch (battlefield.UnitSorce.PlatoonType)
             {
                 case PlatoonType.Friends:
-                    _unitActionStrategy = new FriendUnitActionStrategy(unitActionPayload.Battlefield, unitActionPayload.UnitSorce);
+                    _unitActionStrategy = new FriendUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce);
                     break;
 
                 case PlatoonType.Enemies:
-                    _unitActionStrategy = new EnemyUnitActionStrategy(unitActionPayload.Battlefield, unitActionPayload.UnitSorce);
+                    _unitActionStrategy = new EnemyUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce);
                     break;
 
                 default:

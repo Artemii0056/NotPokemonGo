@@ -7,5 +7,7 @@ namespace UI.Factory
         CharacterSelectionScreenContainer CreateCharacterSelectionScreenPanel();
         StartScreenUI CreateStartScreen();
         MainMenuUI CreateMainMenu();
+        LoosePanel CreateLoosePanel();
+        BattleInfoUI CreateBattleUIInfo();
     }
 }

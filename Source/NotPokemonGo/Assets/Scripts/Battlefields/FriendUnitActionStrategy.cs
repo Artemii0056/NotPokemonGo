@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Abilities.MV;
+using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services.InputServices;
@@ -17,13 +18,13 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IRaycastService _raycastService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
         private IInputReader _inputReader;
+        private IRaycastService _raycastService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -42,10 +43,10 @@ namespace Battlefields
             IInputReader inputReader
             )
         {
+            _raycastService = raycastService;
             _inputReader = inputReader;
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
-            _raycastService = raycastService;
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
@@ -57,24 +58,27 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _inputReader.LeftMouseButtonPressed += LeftMouseButtonClicked;
             _source.Step.ActionEnded += OnAnimationActionEnded;
+            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
+        }
+
+        private void OnLeftMouseButtonPressed()
+        {
+            if (_raycastService.Raycast(out Unit unit)) 
+                OnUnitSearched(unit);
         }
 
         public override void Disable()
         {
             base.Disable();
 
-            _inputReader.LeftMouseButtonPressed -= LeftMouseButtonClicked;
             _source.Step.ActionEnded -= OnAnimationActionEnded;
+            _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
             _sourceProvider.Discard();
         }
 
-        private void LeftMouseButtonClicked()
+        private void OnUnitSearched(Unit unit)
         {
-            if (_raycastService.Raycast(out Unit unit) == false)
-                return;
-
             if (_abilityProvider.AbilityModel == null)
                 return;
 

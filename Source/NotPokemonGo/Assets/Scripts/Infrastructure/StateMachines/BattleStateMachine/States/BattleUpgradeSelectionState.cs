@@ -11,7 +11,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _battleStateMachine = battleStateMachine;
         }
         
-        public void Enter(Battlefield unitActionPayload)
+        public void Enter(Battlefield battlefield)
         {
         }
 

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Characters
 {
-    public class UnitSkinItemView : MonoBehaviour, IPointerClickHandler
+    public class UnitSkinItemView : MonoBehaviour, IPointerClickHandler // TODO Нужно оставить один. UnitSkinItemViewForChoose удалить? 
     {
         [SerializeField] private UnitSelectionPanel _selectedPanel;
         [SerializeField] private UnitSelectionPanel _unselectedPanel;
