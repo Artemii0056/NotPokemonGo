@@ -33,7 +33,6 @@ namespace Effects
                             {
                                 finalValue = 0; 
                             }
-
                             break;
 
                         case EffectType.Heal:

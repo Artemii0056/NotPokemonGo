@@ -40,6 +40,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             Battlefield battlefield =
                 _battlefieldSessionService.StartNewBattle(levelData,levelPartSetup, platoon);
             
+            levelData.BattleInfoUI.SetValue(_levelProgressService.LevelData.CurrentWaveIndex + 1);
+            
             _gameStateMachine.Enter<BattleLoopState, Battlefield>(battlefield);
         }
 
@@ -55,6 +57,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             
             Battlefield battlefield =
                 _battlefieldSessionService.StartNewBattle(levelData, levelData.NextWave());
+            
+            levelData.BattleInfoUI.SetValue(_levelProgressService.LevelData.CurrentWaveIndex + 1);
             
             _gameStateMachine.Enter<BattleLoopState, Battlefield>(battlefield);
         }

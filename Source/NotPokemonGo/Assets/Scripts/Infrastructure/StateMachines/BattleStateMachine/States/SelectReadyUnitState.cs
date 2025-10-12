@@ -1,4 +1,3 @@
-using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services.BattleSessionService;
@@ -32,36 +31,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                         unitSource,
                         battlefield)
                 );
-                
-              //  battlefield.Units.Clear();
             }
             else
             {
                 _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(battlefield);
             }
-            
-            // Debug.Log(battlefield.GetHashCode() + "SelectReadyUnitState");
-            //
-            // foreach (Unit unit in battlefield.Units) 
-            //     _battleUnitContainer.Add(unit);
-            //
-            // Unit unitSource = _battleUnitContainer.Give();
-            //
-            // if (unitSource != null)
-            // {
-            //     _battleStateMachine.Enter<UnitActionState, UnitActionPayload>(
-            //         new UnitActionPayload
-            //         (
-            //             unitSource,
-            //             battlefield)
-            //     );
-            //     
-            //     battlefield.Units.Clear();
-            // }
-            // else
-            // {
-            //     _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(battlefield);
-            // }
         }
 
         public void Exit()

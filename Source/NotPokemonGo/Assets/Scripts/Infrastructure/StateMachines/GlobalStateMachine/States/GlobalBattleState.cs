@@ -20,8 +20,6 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battleInfoUI = battlefield.BattleInfoUI;
             _battleInfoUI.gameObject.SetActive(true);
             
-            _battleInfoUI.SetValue(battlefield.CurrentWaveIndex);
-            
             _battleStateMachine.Enter<WaveProgressionState>();
         }
 
