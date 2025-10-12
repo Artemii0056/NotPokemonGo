@@ -6,6 +6,7 @@ using Assets;
 using Characters;
 using Characters.Configs;
 using Effects;
+using Infrastructure;
 using Stats;
 using Statuses;
 using Units.AnimationControllers;
@@ -18,9 +19,9 @@ namespace Units
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
 
         private CapsuleCollider _capsuleCollider;
-
+        public Transform abilityPos;
         [field: SerializeField] public UnitType UnitType { get; private set; }
-        
+        [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
         private List<Status> _imposedStatuses = new List<Status>();
