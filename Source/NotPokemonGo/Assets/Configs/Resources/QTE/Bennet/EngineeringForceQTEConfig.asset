@@ -25,7 +25,7 @@ MonoBehaviour:
   - QTEPhaseType: 2
     ClickCount: 1
     Speed: 0
-    QTEButtonView: {fileID: 6498083488727671442, guid: dc60cdb071bbb2f45a62d615be71adbd, type: 3}
+    QTEButtonView: {fileID: 4633704308159486797, guid: dc60cdb071bbb2f45a62d615be71adbd, type: 3}
     Overlay: {fileID: 0}
     TargetTime: 3
     Offset: 0

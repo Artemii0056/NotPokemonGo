@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Abilities;
 using Abilities.MV;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
@@ -92,8 +91,8 @@ namespace Battlefields
                     _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
                     _targetSelector.Remember(unit); 
                     _abilityPanelPresenter.Disable();
-                    
-                    _battleStateMachine.Enter<QTEBattleState, AbilityType>(_abilityProvider.AbilityModel.AbilityType);
+                    QTEPayload qtePayload = new QTEPayload() { Battlefield = _battlefield , AbilityType = _abilityProvider.AbilityModel.AbilityType};
+                    _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
                     break;
 
                 default:

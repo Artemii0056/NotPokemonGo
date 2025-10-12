@@ -1,11 +1,12 @@
 using Abilities;
+using Battlefields;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services.QTEServices;
 using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class QTEBattleState : IPayloadedState<AbilityType>
+    public class QTEBattleState : IPayloadedState<QTEPayload>
     {
         private readonly IQTEService _qteService;
         private readonly IBattleStateMachine _battleStateMachine;
@@ -17,10 +18,10 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             _battleStateMachine = battleStateMachine;
         }
 
-        public void Enter(AbilityType abilityType)
+        public void Enter(QTEPayload qtePayload)
         {
-            //_battlefield = battlefield;
-            _qteService.Start(abilityType);
+            _battlefield = qtePayload.Battlefield;
+            _qteService.Start(qtePayload.AbilityType);
             _qteService.Completed += OnCompleted;
         }
 
@@ -42,5 +43,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
+    }
+    
+    public class QTEPayload
+    {
+        public Battlefield Battlefield { get; set; }
+        public AbilityType AbilityType { get; set; }
     }
 }

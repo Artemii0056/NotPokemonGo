@@ -1,53 +1,54 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.QTE
 {
   public class QTETargetMovementOnCanvas : QTEButtonView
   {
-   private const float StartThreshold = 0.05f;       
-    private const float CompletionThreshold = 0.98f;  
+   private const float StartThreshold = 0.05f;       // старт из первых 5% длины трека
+    private const float CompletionThreshold = 0.98f;  // успех при достижении 98%
 
-    [Header("Geometry")]
-    [SerializeField] private RectTransform _trackRect;   
-    [SerializeField] private RectTransform _handleRect;  
+    [Header("Sprites (world-space)")]
+    [SerializeField] private SpriteRenderer _track;   // длинный прямоугольник
+    [SerializeField] private SpriteRenderer _handle;  // перетаскиваемый спрайт
+
+    [Header("Camera")]
+    [SerializeField] private Camera _camera;          // если пусто, возьмём Camera.main
 
     [Header("Timing")]
-    [SerializeField] private float _timer = 5f;          
-    [SerializeField] private float _speed = 1f;          
+    [SerializeField] private float _timer = 5f;       // лимит (сек), 0 — без лимита
+    [SerializeField] private float _speed = 1f;       // множитель таймера
 
-    [Header("Tolerance")]
+    [Header("Tolerance (relative to track height)")]
     [SerializeField, Range(0f, 0.5f)]
-    private float _tolerance = 0.05f;                    
+    private float _tolerance = 0.05f;                 // допуск к половине высоты трека
 
-    private Canvas _canvas;
-    private Camera _uiCamera;
+    // внешняя конфигурация через фазу (если есть)
     private QTEPhasePresenter _phasePresenter;
 
+    // вычисляемые параметры
     private float _timeLimit;
     private float _timeScale;
     private bool _isDragging;
     private bool _isCompleted;
     private bool _isFailed;
 
+    private float _baseY;               // линия коридора по Y
+    private float _minX, _maxX;         // рабочие границы по X (учитывают размер ручки)
+    private float _handleZScreen;       // Z в экранных координатах для корректного ScreenToWorldPoint
+
     public override event Action<QTEButtonView> Successed;
     public override event Action<QTEButtonView> Invalided;
 
     private void Awake()
     {
-      CacheReferences();
+      if (_camera == null) _camera = Camera.main;
       EnsureBindings();
     }
 
     private void OnEnable()
     {
-      if (!EnsureBindings())
-      {
-        enabled = false; 
-        return;
-      }
-      
+      if (!EnsureBindings()) { enabled = false; return; }
       ResetInternalState();
     }
 
@@ -60,25 +61,21 @@ namespace UI.QTE
 
     private void Update()
     {
-      if (_isCompleted || _isFailed)
-        return;
+      if (_isCompleted || _isFailed) return;
 
       TickTimer();
-      if (_isCompleted || _isFailed)
-        return;
+      if (_isCompleted || _isFailed) return;
 
-      HandleInput();
+      HandlePointer();
     }
 
-    #region Time
+    // ───────────── Time ─────────────
+
     private void TickTimer()
     {
       CurrentTime += Time.deltaTime * _timeScale;
-
       if (_timeLimit > 0f && CurrentTime >= _timeLimit)
-      {
         Fail();
-      }
     }
 
     private float ResolveTimeLimit()
@@ -100,137 +97,180 @@ namespace UI.QTE
       }
       return Mathf.Max(_speed, 0.0001f);
     }
-    #endregion
 
-    #region Input
-    private void HandleInput()
+    // ───────────── Input ─────────────
+
+    private void HandlePointer()
     {
-      if (Input.GetMouseButtonDown(0))
-        TryStartDrag(Input.mousePosition);
-
-      if (_isDragging && Input.GetMouseButton(0))
-        ContinueDrag(Input.mousePosition);
-
-      if (_isDragging && Input.GetMouseButtonUp(0))
+      Vector2 pos;
+      if (GetPointerDown(out pos)) TryStartDrag(pos);
+      if (_isDragging && GetPointer(out pos)) ContinueDrag(pos);
+      if (_isDragging && GetPointerUp(out pos))
       {
-        if (_isCompleted == false)
-          Fail();
+        if (!_isCompleted) Fail();
         _isDragging = false;
-      }
-
-      if (Input.touchCount > 0)
-      {
-        Touch t = Input.GetTouch(0);
-        switch (t.phase)
-        {
-          case TouchPhase.Began:
-            TryStartDrag(t.position);
-            break;
-          case TouchPhase.Moved:
-          case TouchPhase.Stationary:
-            if (_isDragging) ContinueDrag(t.position);
-            break;
-          case TouchPhase.Canceled:
-          case TouchPhase.Ended:
-            if (_isDragging)
-            {
-              if (_isCompleted == false)
-                Fail();
-              _isDragging = false;
-            }
-            break;
-        }
       }
     }
 
-    private void TryStartDrag(Vector2 screenPosition)
+    private bool GetPointerDown(out Vector2 pos)
     {
-      if (!ScreenToLocalOnTrack(screenPosition, out Vector2 local)) return;
-      if (!IsWithinBounds(local)) return;
+      if (Input.GetMouseButtonDown(0)) { pos = Input.mousePosition; return true; }
+      if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) { pos = Input.GetTouch(0).position; return true; }
+      pos = default; return false;
+    }
+    private bool GetPointer(out Vector2 pos)
+    {
+      if (Input.GetMouseButton(0)) { pos = Input.mousePosition; return true; }
+      if (Input.touchCount > 0) { pos = Input.GetTouch(0).position; return true; }
+      pos = default; return false;
+    }
+    private bool GetPointerUp(out Vector2 pos)
+    {
+      if (Input.GetMouseButtonUp(0)) { pos = Input.mousePosition; return true; }
+      if (Input.touchCount > 0)
+      {
+        var t = Input.GetTouch(0).phase;
+        if (t == TouchPhase.Canceled || t == TouchPhase.Ended) { pos = Input.GetTouch(0).position; return true; }
+      }
+      pos = default; return false;
+    }
 
-      float normalized = LocalToProgress(local.x);
-      if (normalized > StartThreshold) 
+    // ───────────── Drag logic ─────────────
+
+    private void TryStartDrag(Vector2 screenPos)
+    {
+      Vector3 world = ScreenToWorldOnTrackPlane(screenPos);
+      if (!IsWithinCorridor(world))
+        return;
+
+      bool clickedHandle = _handle.bounds.Contains(world);
+      float normalized = Mathf.InverseLerp(_minX, _maxX, world.x);
+
+      if (!clickedHandle && normalized > StartThreshold)
         return;
 
       _isDragging = true;
-      SetHandleByProgress(0f);
+
+      float startProgress = Mathf.InverseLerp(_minX, _maxX, Mathf.Clamp(world.x, _minX, _maxX));
+      startProgress = Mathf.Max(GetCurrentProgress(), startProgress); // анти-откат
+      SetHandleByProgress(startProgress);
+
+      // Debug
+      // Debug.Log($"[QTE] Start drag: clickedHandle={clickedHandle}, norm={normalized:F3}, world=({world.x:F2},{world.y:F2},{world.z:F2})");
     }
 
-    private void ContinueDrag(Vector2 screenPosition)
-    {
-      if (!ScreenToLocalOnTrack(screenPosition, out Vector2 local)) return;
 
-      if (!IsWithinBounds(local))
+    private void ContinueDrag(Vector2 screenPos)
+    {
+      Vector3 world = ScreenToWorldOnTrackPlane(screenPos);
+
+      if (!IsWithinCorridor(world))
       {
+        // Debug.Log("[QTE] Out of corridor -> Fail");
         Fail();
         return;
       }
 
-      Rect rect = _trackRect.rect;
-      float clampedX = Mathf.Clamp(local.x, rect.xMin, rect.xMax);
-
-      float newProgress = Mathf.InverseLerp(rect.xMin, rect.xMax, clampedX);
-      newProgress = Mathf.Max(GetCurrentProgress(), newProgress);
+      float clampedX = Mathf.Clamp(world.x, _minX, _maxX);
+      float candidate = Mathf.InverseLerp(_minX, _maxX, clampedX);
+      float newProgress = Mathf.Max(GetCurrentProgress(), candidate); // анти-откат
 
       SetHandleByProgress(newProgress);
 
       if (newProgress >= CompletionThreshold)
         Complete();
     }
-    #endregion
 
-    #region Geometry helpers
-    private bool ScreenToLocalOnTrack(Vector2 screenPosition, out Vector2 local)
+    // ───────────── Geometry helpers ─────────────
+
+    private bool EnsureBindings()
     {
-      CacheReferences();
-      return RectTransformUtility.ScreenPointToLocalPointInRectangle(_trackRect, screenPosition, _uiCamera, out local);
+      if (_track == null || _handle == null)
+      {
+        Debug.LogError("[QTE] Assign SpriteRenderers: _track and _handle.");
+        return false;
+      }
+      if (_camera == null)
+      {
+        _camera = Camera.main;
+        if (_camera == null)
+        {
+          Debug.LogError("[QTE] No Camera assigned and Camera.main is null.");
+          return false;
+        }
+      }
+      return true;
     }
 
-    private float LocalToProgress(float localX)
+    private void RecomputeBounds()
     {
-      Rect rect = _trackRect.rect;
-      return Mathf.InverseLerp(rect.xMin, rect.xMax, localX);
+      Bounds tb = _track.bounds;
+      Bounds hb = _handle.bounds;
+
+      float handleHalfW = hb.extents.x;
+
+      float trackLeft  = tb.min.x;
+      float trackRight = tb.max.x;
+
+      _minX = trackLeft  + handleHalfW;
+      _maxX = trackRight - handleHalfW;
+
+      // Базовая линия по Y — центр трека (или оставь hb.center.y, если ручка не по центру)
+      _baseY = tb.center.y;
+    }
+
+    private Vector3 ScreenToTrackPlane(Vector2 screen)
+    {
+      // Корректный z, чтобы ScreenToWorldPoint попал в плоскость ручки
+      var sp = new Vector3(screen.x, screen.y, _handleZScreen);
+      return _camera.ScreenToWorldPoint(sp);
+    }
+
+    private bool IsWithinCorridor(Vector3 world)
+    {
+      if (world.x < _minX || world.x > _maxX) return false;
+
+      // Допуск по вертикали относительно высоты трека
+      float halfTrackH = _track.bounds.extents.y;
+      float allowed = halfTrackH + _track.bounds.size.y * _tolerance;
+      return Mathf.Abs(world.y - _baseY) <= allowed;
     }
 
     private float GetCurrentProgress()
     {
-      Rect rect = _trackRect.rect;
-      float x = _handleRect.anchoredPosition.x;
-      return Mathf.InverseLerp(rect.xMin, rect.xMax, x);
+      float x = _handle.transform.position.x;
+      return Mathf.InverseLerp(_minX, _maxX, x);
     }
 
-    private void SetHandleByProgress(float progress)
+    private void SetHandleByProgress(float progress01)
     {
-      Rect rect = _trackRect.rect;
-      float x = Mathf.Lerp(rect.xMin, rect.xMax, progress);
-      Vector2 position = _handleRect.anchoredPosition;
-      position.x = x;
-      position.y = 0f;
-      _handleRect.anchoredPosition = position;
+      progress01 = Mathf.Clamp01(progress01);
+      float x = Mathf.Lerp(_minX, _maxX, progress01);
+      var p = _handle.transform.position;
+      _handle.transform.position = new Vector3(x, _baseY, p.z);
     }
 
-    private bool IsWithinBounds(Vector2 localPoint)
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
     {
-      Rect rect = _trackRect.rect;
+      if (_track == null || _handle == null) return;
+      RecomputeBounds();
+      // Нарисуем коридор
+      var b = _track.bounds;
+      float halfTrackH = b.extents.y;
+      float allowed = halfTrackH + _track.bounds.size.y * _tolerance;
 
-      // Жестко по горизонтали — вне трека сразу фейл
-      if (localPoint.x < rect.xMin || localPoint.x > rect.xMax)
-        return false;
-
-      // Вертикальный коридор: половина высоты + допуск от высоты
-      float halfHeight = rect.height * 0.5f;
-      float allowedVertical = halfHeight + rect.height * _tolerance;
-      float verticalDistance = Mathf.Abs(localPoint.y);
-
-      return verticalDistance <= allowedVertical;
+      Gizmos.color = new Color(0,1,0,0.15f);
+      Gizmos.DrawCube(new Vector3(b.center.x, _baseY, b.center.z),
+        new Vector3(_maxX - _minX + _handle.bounds.size.x, allowed*2f, b.size.z+0.001f));
     }
-    #endregion
+#endif
 
-    #region End states
+    // ───────────── End states ─────────────
+
     private void Complete()
     {
       if (_isCompleted || _isFailed) return;
-
       _isCompleted = true;
       _isDragging = false;
       SetHandleByProgress(1f);
@@ -240,85 +280,39 @@ namespace UI.QTE
     private void Fail()
     {
       if (_isFailed || _isCompleted) return;
-
       _isFailed = true;
       _isDragging = false;
       Invalided?.Invoke(this);
     }
-    #endregion
 
-    #region Init / Reset
-    private void CacheReferences()
-    {
-      if (_canvas == null)
-        _canvas = GetComponentInParent<Canvas>();
-
-      if (_canvas != null && _canvas.renderMode != RenderMode.ScreenSpaceOverlay)
-        _uiCamera = _canvas.worldCamera;
-      else
-        _uiCamera = null;
-    }
+    // ───────────── Init/Reset ─────────────
 
     private void ResetInternalState()
     {
-      CacheReferences();
-
-      if (!EnsureBindings())
-      {
-        enabled = false; 
-        return;
-      }
-
       _timeLimit = ResolveTimeLimit();
       _timeScale = ResolveTimeScale();
 
       _isDragging = _isCompleted = _isFailed = false;
       CurrentTime = 0f;
 
-      SetHandleByProgress(0f);
+      RecomputeBounds();
+      // Если нужно сбрасывать ручку строго в начало пути:
+      // SetHandleByProgress(0f);
+      // Иначе оставим где стоит — progress посчитается от актуальной позиции.
     }
     
-    private bool EnsureBindings()
+    private Vector3 ScreenToWorldOnTrackPlane(Vector2 screen)
     {
-      // Если не задан трек – берём RectTransform объекта со скриптом
-      if (_trackRect == null)
-        _trackRect = GetComponent<RectTransform>();
+      // Наша QTE лежит в плоскости XY. Берём плоскость z = zTrack (или zHandle – чаще одинаковы).
+      float planeZ = _track.transform.position.z;
+      var plane = new Plane(Vector3.forward, new Vector3(0f, 0f, planeZ));
 
-      // Если не задан хэндл – ищем ребёнка с RectTransform по имени "Handle" или любого первого
-      if (_handleRect == null && _trackRect != null)
-      {
-        // Попробуем по имени
-        var t = _trackRect.Find("Handle") as RectTransform;
-        if (t != null) _handleRect = t;
-        else
-        {
-          // Любой первый дочерний RectTransform
-          for (int i = 0; i < _trackRect.childCount; i++)
-          {
-            var child = _trackRect.GetChild(i) as RectTransform;
-            if (child != null) { _handleRect = child; break; }
-          }
-        }
-      }
+      Ray ray = _camera.ScreenPointToRay(screen);
+      if (plane.Raycast(ray, out float enter))
+        return ray.GetPoint(enter);
 
-      if (_trackRect == null || _handleRect == null)
-      {
-        Debug.LogError("[QTETargetMovementOnCanvas] Bindings missing. " +
-                       "Assign _trackRect and _handleRect in inspector. " +
-                       "Hint: Handle should be a child of Track.");
-        return false;
-      }
-
-      // гарантируем, что хэндл действительно под треком
-      if (_handleRect.parent != _trackRect)
-      {
-        _handleRect.SetParent(_trackRect, worldPositionStays: false);
-      }
-
-      return true;
+      // На всякий случай — fallback (почти не должен сработать)
+      return _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, Mathf.Abs(_camera.transform.position.z - planeZ)));
     }
-
-    
-    #endregion
   }
 }

@@ -6,7 +6,6 @@ using Services.StaticDataServices;
 using UI.QTE;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 using Object = UnityEngine.Object;
 
 namespace Services.QTEServices
