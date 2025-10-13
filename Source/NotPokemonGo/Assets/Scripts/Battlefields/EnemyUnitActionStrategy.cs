@@ -65,11 +65,12 @@ namespace Battlefields
             {
                 if (abilityModel.IsReady())
                 {
-                    _source.Step.SetAbilityModel(abilityModel, _source, GetRandomTarget(targets));
+                    Unit randomTarget = GetRandomTarget(targets);
+                    _source.Step.SetAbilityModel(abilityModel, _source, randomTarget);
                     
                     _sourceProvider.Remember(_source);
                     _abilityProvider.Remember(abilityModel);
-                    _targetSelector.Remember(GetRandomTarget(targets));
+                    _targetSelector.Remember(randomTarget);
                     
                     abilityModel.DiscardCurrentTime();
 

@@ -95,8 +95,6 @@ namespace Battlefields
                     _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
                     _targetSelector.Remember(unit); 
                     _abilityPanelPresenter.Disable();
-                    QTEPayload qtePayload = new QTEPayload() { Battlefield = _battlefield , AbilityType = _abilityProvider.AbilityModel.AbilityType};
-                    _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
                     break;
 
                 default:
@@ -117,7 +115,7 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
+            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }
 }

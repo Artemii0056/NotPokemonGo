@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class
-        CheckBattleEndState : IPayloadedState<Battlefield>
+    public class CheckBattleEndState : IPayloadedState<Battlefield>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IBattleStateMachine _battleStateMachine;

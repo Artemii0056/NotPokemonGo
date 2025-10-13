@@ -52,6 +52,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         private void SetQTEState()
         {
+            // QTEPayload qtePayload = new QTEPayload() { Battlefield = _battlefield , AbilityType = _abilityProvider.AbilityModel.AbilityType};
+            // _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
         }
 
         public void Exit()
