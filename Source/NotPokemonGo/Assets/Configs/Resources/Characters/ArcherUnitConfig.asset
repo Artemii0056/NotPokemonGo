@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5844dfbe42fcbb14ab254d4cb1be3339, type: 3}
+  m_Name: ArcherUnitConfig
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 3
+  <Prefab>k__BackingField: {fileID: 4125321173221040046, guid: a2043a8d66c7f034aafabaf1f8327a91, type: 3}
+  _stats:
+  - <StatsType>k__BackingField: 1
+    Value: 1
+  - <StatsType>k__BackingField: 2
+    Value: 60
+  - <StatsType>k__BackingField: 3
+    Value: 0
+  - <StatsType>k__BackingField: 4
+    Value: 0
+  - <StatsType>k__BackingField: 5
+    Value: 3
+  - <StatsType>k__BackingField: 6
+    Value: 5
+  - <StatsType>k__BackingField: 7
+    Value: 2
+  - <StatsType>k__BackingField: 20
+    Value: 0
+  - <StatsType>k__BackingField: 21
+    Value: 8
+  - <StatsType>k__BackingField: 22
+    Value: 1
+  _abilityConfigs:
+  - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}

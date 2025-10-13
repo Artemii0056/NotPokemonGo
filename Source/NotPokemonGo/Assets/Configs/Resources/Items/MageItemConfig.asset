@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67c646b13dd40cbbed84dab89173f34, type: 3}
+  m_Name: MageItemConfig
+  m_EditorClassIdentifier: 
+  <UnitConfig>k__BackingField: {fileID: 11400000, guid: 46c3932ca20a464488a8d02041ba7eeb, type: 2}
+  <CharacterModel>k__BackingField: {fileID: 7220116993718660003, guid: 56505a10030fb9648b61f0496c2caa6b, type: 3}
+  <Price>k__BackingField: 0
+  <ContentImage>k__BackingField: {fileID: 21300000, guid: 32f2de1c6e9f62540bc6081d461126ad, type: 3}
+  <Type>k__BackingField: 1

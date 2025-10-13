@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa6918ff28f43b8aa87ac8236c58a53, type: 3}
+  m_Name: QTEConfig
+  m_EditorClassIdentifier: 
+  QTEType: 2
+  QteSetup:
+  - qteMode: 0
+    Speed: 2
+    QTEButtonView: {fileID: 3765088144692650734, guid: 13021fbee17369d4cbb99a9934d02eac, type: 3}
+    Overlay: {fileID: 0}
+    TargetTime: 4
+    Offset: 2
+    TimeToNextTarget: 1
+  - qteMode: 0
+    Speed: 2
+    QTEButtonView: {fileID: 3765088144692650734, guid: 13021fbee17369d4cbb99a9934d02eac, type: 3}
+    Overlay: {fileID: 0}
+    TargetTime: 4
+    Offset: 2
+    TimeToNextTarget: 1
+  QteCanvas: {fileID: 8198002933347961941, guid: 47d21c52685d7b74c899d4d7e1c0fdc2, type: 3}
