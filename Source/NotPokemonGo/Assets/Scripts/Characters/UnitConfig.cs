@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Abilities;
 using Characters.Configs;
+using QTESystem;
 using Stats;
 using Units;
 using UnityEngine;
@@ -12,7 +13,6 @@ namespace Characters
     {
         [field: SerializeField] public UnitType Type { get; private set; }
         [field: SerializeField] public Unit Prefab { get; private set; }
-
 
         [SerializeField] private List<StatConfig> _stats = new List<StatConfig>();
         [SerializeField] private List<AbilityConfig> _abilityConfigs;

@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: QTEButtonView
       objectReference: {fileID: 0}
+    - target: {fileID: 5933986056207512675, guid: 13021fbee17369d4cbb99a9934d02eac, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

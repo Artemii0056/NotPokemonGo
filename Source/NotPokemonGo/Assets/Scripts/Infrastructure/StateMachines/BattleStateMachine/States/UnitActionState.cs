@@ -2,7 +2,6 @@ using System;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
-using InputServices;
 using Services.InputServices;
 using UnityEngine;
 using VContainer;
@@ -53,7 +52,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         private void SetQTEState()
         {
-            _battleStateMachine.Enter<QTEBattleState, Battlefield>(_payload.Battlefield);
         }
 
         public void Exit()

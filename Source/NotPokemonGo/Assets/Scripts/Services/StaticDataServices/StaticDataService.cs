@@ -23,7 +23,8 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
-        private Dictionary<QTEType, QTEConfig> _qteConfigs;
+        private Dictionary<AbilityType, QTEConfig> _qteConfigs;
+        private Dictionary<AbilityType, TargetMode> _targetModes;
         
         private List<LevelConfig> _levelConfigs;
 
@@ -41,6 +42,7 @@ namespace Services.StaticDataServices
             LoadPlatoonPositionContainer();
             LoadQTEConfigs();
             LoadLevelConfigs();
+            ConfigurateTargetModesForAbilities();
         }
 
         public List<LevelConfig> GetLevelConfigs() => 
@@ -54,6 +56,14 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
 
+        public TargetMode GetTargetMode(AbilityType abilityType)
+        {
+            if (_targetModes.TryGetValue(abilityType, out TargetMode abilityConfig))
+                return abilityConfig;
+
+            throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
+        }
+        
         public Sprite GetStatusIcon(StatusType statusType)
         {
             if (_statusTypeIcons.TryGetValue(statusType, out StatusTypeIcon statusTypeIcon))
@@ -81,12 +91,12 @@ namespace Services.StaticDataServices
         public List<AbilityConfig> GetAllAbilityConfigs() => 
             _abilityConfigs.Values.ToList();
 
-        public QTEConfig GetQTEConfig(QTEType qteMode)
+        public QTEConfig GetQTEConfig(AbilityType abilityType)
         {
-            if (_qteConfigs.TryGetValue(qteMode, out QTEConfig getQteConfig))
+            if (_qteConfigs.TryGetValue(abilityType, out QTEConfig getQteConfig))
                 return getQteConfig;
 
-            throw new KeyNotFoundException($"No qte config found for mode {qteMode}");
+            throw new KeyNotFoundException($"No qte config found for mode {abilityType}");
         }
 
         private void LoadLevelConfigs()
@@ -97,7 +107,7 @@ namespace Services.StaticDataServices
         private void LoadQTEConfigs()
         {
             _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
-                .ToDictionary(x => x.QTEType, x => x);
+                .ToDictionary(x => x.AbilityType, x => x);
         }
         
         public void LoadUnitSkinItemView() => 
@@ -119,6 +129,19 @@ namespace Services.StaticDataServices
                 .ToDictionary(x => x.AbilityType, x => x);
         }
 
+        private void ConfigurateTargetModesForAbilities()
+        {
+            _targetModes = new Dictionary<AbilityType, TargetMode>();
+            foreach (AbilityType abilityType in _abilityConfigs.Keys)
+            {
+                foreach (AbilityPhase abilityPhase in _abilityConfigs[abilityType].Phases)
+                {
+                    if (_targetModes.ContainsKey(abilityType) == false) 
+                        _targetModes[abilityType] = abilityPhase.TargetMode;
+                }
+            }
+        }
+        
         private void LoadStatusTypeIcons()
         {
             _statusTypeIcons = Resources.Load<StatusTypesConfig>(Constants.AssetPath.StatusTypePath).StatusTypes

@@ -4,7 +4,8 @@ using Abilities.MV;
 using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
-using InputServices;
+using Services.InputServices;
+using Services.RaycastServices;
 using UI.Ability;
 using Units;
 using UnityEngine;
@@ -17,12 +18,13 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IRaycasterService _raycasterService;
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IBattleStateMachine _battleStateMachine;
+        private IInputReader _inputReader;
+        private IRaycastService _raycastService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -32,17 +34,19 @@ namespace Battlefields
 
         [Inject]
         public void Initialize(
-            IRaycasterService raycasterService,
+            IRaycastService raycastService,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
-            AbilityPanelPresenter abilityPanelPresenter
+            AbilityPanelPresenter abilityPanelPresenter,
+            IInputReader inputReader
             )
         {
+            _raycastService = raycastService;
+            _inputReader = inputReader;
             _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
-            _raycasterService = raycasterService;
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
@@ -54,8 +58,14 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _raycasterService.UnitSearched += OnUnitSearched;
             _source.Step.ActionEnded += OnAnimationActionEnded;
+            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
+        }
+
+        private void OnLeftMouseButtonPressed()
+        {
+            if (_raycastService.Raycast(out Unit unit)) 
+                OnUnitSearched(unit);
         }
 
         public override void Disable()
@@ -63,7 +73,7 @@ namespace Battlefields
             base.Disable();
 
             _source.Step.ActionEnded -= OnAnimationActionEnded;
-            _raycasterService.UnitSearched -= OnUnitSearched;
+            _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
             _sourceProvider.Discard();
         }
 
@@ -81,10 +91,12 @@ namespace Battlefields
                     Debug.Log("Выбрали союзника");
                     break;
 
-                case PlatoonType.Enemies:
+                case PlatoonType.Enemies: 
                     _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
-                    _targetSelector.Remember(unit, _abilityProvider.AbilityModel.TargetMode);
+                    _targetSelector.Remember(unit); 
                     _abilityPanelPresenter.Disable();
+                    QTEPayload qtePayload = new QTEPayload() { Battlefield = _battlefield , AbilityType = _abilityProvider.AbilityModel.AbilityType};
+                    _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
                     break;
 
                 default:
@@ -105,7 +117,7 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+            _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
         }
     }
 }

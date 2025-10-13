@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections;
+using Abilities;
 using QTESystem;
 using Services.StaticDataServices;
 using UI.QTE;
+using UnityEngine;
+using VContainer;
+using Object = UnityEngine.Object;
 
 namespace Services.QTEServices
 {
@@ -9,34 +14,48 @@ namespace Services.QTEServices
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly QTEPresenter _qtePresenter;
+        private readonly IObjectResolver _objectResolver;
+        private AbilityType _abilityType;
 
         public event Action <bool> Completed; 
         
-        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
+        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
-            _qtePresenter = new QTEPresenter();
+            _objectResolver = objectResolver;
         }
         
-        public void Start()
+        public void Start(AbilityType abilityType)
         {
-            QTEConfig qteConfig = _staticDataService.GetQTEConfig(QTEType.UI);
-            // перенести камеру в презенторе или в другом классе
-            
-            _qtePresenter.Enable(qteConfig, _coroutineRunner);
+            _abilityType = abilityType;
+            QTEConfig qteConfig = _staticDataService.GetQTEConfig(abilityType);
 
-            _qtePresenter.Completed += OnCompleted;
+            _coroutineRunner.StartCoroutine(StartQTE(qteConfig));
         }
 
-        private void OnCompleted(bool success)
+        private IEnumerator StartQTE(QTEConfig qteConfig)
         {
-            _qtePresenter.Completed -= OnCompleted;
+            foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
+            {
+                QTEButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
+                _objectResolver.Inject(view);
+                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, view, _abilityType);
+                qtePhasePresenter.Enable();
+                
+                yield return new WaitWhile(qtePhasePresenter.IsActive);
+                Object.Destroy(view.gameObject);
+                qtePhasePresenter.Disable();
 
-            _qtePresenter.Disable();
-
-            Completed?.Invoke(success);
+                if (qtePhasePresenter.IsSuccess == false)
+                {
+                    Completed?.Invoke(false);
+                    yield break;
+                }
+            }
+            
+            Debug.Log("Stop foreach QTE");
+            Completed?.Invoke(true);
         }
     }
 }

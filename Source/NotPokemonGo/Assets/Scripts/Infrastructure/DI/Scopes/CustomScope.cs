@@ -13,7 +13,6 @@ namespace Infrastructure.DI.Scopes
 		[Inject]
 		private void Construct(IObjectResolver objectResolver)
 		{
-			Debug.Log("CustomScope.Construct");
 			_injectableServicesInstallers.ForEach(objectResolver.Inject);
 		}
 		

@@ -16,7 +16,7 @@ public class TargetSelector : ITargetSelector
         _platoons.Add(platoon2);
     }
 
-    public void Remember(Unit unit, TargetMode abilityModelTargetMode) => 
+    public void Remember(Unit unit) => 
         _target = unit;
 
     public List<Unit> GetTargets(TargetMode abilityModelTargetMode)

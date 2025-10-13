@@ -9,7 +9,6 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
-using InputServices;
 using Platoons;
 using Services;
 using Services.AssetManagement;
@@ -18,6 +17,7 @@ using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.InputServices;
 using Services.QTEServices;
+using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
@@ -26,6 +26,7 @@ using Statuses.Services;
 using UI.Ability;
 using UI.BattleUpgrages;
 using UI.Factory;
+using UI.QTE;
 using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
@@ -86,11 +87,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
-            builder.Register<IRaycasterService, RaycasterServiceService>(Lifetime.Singleton);
+            builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
             builder.Register<IQTEService, QTEService>(Lifetime.Singleton);
             
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
-            
             
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);

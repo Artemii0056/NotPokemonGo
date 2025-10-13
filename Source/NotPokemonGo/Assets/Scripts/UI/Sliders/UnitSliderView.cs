@@ -27,7 +27,7 @@ namespace UI.Sliders
         
         private void LateUpdate()
         {
-            if (_cameraProvider == null)
+            if (_cameraProvider.Camera == null)
                 return;
             
             //MoveCloserToCamera();
