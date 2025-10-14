@@ -48,7 +48,12 @@ namespace UI.QTE
 
     private void OnEnable()
     {
-      if (!EnsureBindings()) { enabled = false; return; }
+      if (!EnsureBindings())
+      {
+        enabled = false;
+        return;
+      }
+      
       ResetInternalState();
     }
 

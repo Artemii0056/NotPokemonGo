@@ -349,8 +349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa6b51669a046dd9115c7cb38d61963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _qteButtonView: {fileID: 7324599458194817551, guid: 661719ca2c3a9b54a8e34818e5e2cf8d, type: 3}
-  _qteButtonView2: {fileID: 7324599458194817551, guid: 661719ca2c3a9b54a8e34818e5e2cf8d, type: 3}
 --- !u!1 &1344050769
 GameObject:
   m_ObjectHideFlags: 0

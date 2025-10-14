@@ -100,6 +100,12 @@ namespace Battlefields
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            
+            QTEPayload qtePayload = new QTEPayload(); 
+            qtePayload.Battlefield = _battlefield;
+            qtePayload.AbilityType = _abilityProvider.AbilityModel.AbilityType;
+            
+            _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
 
             _abilityProvider.AbilityModel.DiscardCurrentTime();
 
@@ -115,7 +121,7 @@ namespace Battlefields
 
         private void OnAnimationActionEnded()
         {
-            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+           // _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }
 }
