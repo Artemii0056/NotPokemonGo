@@ -9,6 +9,7 @@ namespace Stats
         Accuracy = 5,
         ArmorChance = 6,
         Damage = 7,
+        QteDamageModifier = 8,
         
         CurrentAgility = 20,
         MaxAgility = 21,

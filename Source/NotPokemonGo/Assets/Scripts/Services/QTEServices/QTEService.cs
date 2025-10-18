@@ -15,15 +15,17 @@ namespace Services.QTEServices
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IObjectResolver _objectResolver;
+        private readonly ISourceProvider _sourceProvider;
         private AbilityType _abilityType;
 
         public event Action <bool> Completed; 
         
-        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver)
+        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver, ISourceProvider sourceProvider)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
             _objectResolver = objectResolver;
+            _sourceProvider = sourceProvider;
         }
         
         public void Start(AbilityType abilityType)
@@ -39,6 +41,8 @@ namespace Services.QTEServices
             foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
                 QTEButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
+                
+                view.Construct(_sourceProvider.Source);
                 _objectResolver.Inject(view);
                 QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, view, _abilityType);
                 qtePhasePresenter.Enable();

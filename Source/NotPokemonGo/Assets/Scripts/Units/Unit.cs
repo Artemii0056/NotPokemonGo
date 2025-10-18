@@ -24,6 +24,7 @@ namespace Units
         [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
+
         private List<Status> _imposedStatuses = new List<Status>();
 
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
@@ -142,6 +143,11 @@ namespace Units
         public void ChangeStatValue(StatType statType, float value)
         {
             _stats[statType].Modify(value);
+        }
+        
+        public void SetStatValue(StatType statType, float value)
+        {
+            _stats[statType].Set(value);
         }
 
         public void AddStatus(Status status)

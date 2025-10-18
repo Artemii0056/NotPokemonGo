@@ -32,7 +32,7 @@ namespace QTESystem.TestQTE
             if (_isFinished == false)
             {
                 _currentTime += Time.deltaTime;
-                Debug.Log(_currentTime + " текущее");
+              //  Debug.Log(_currentTime + " текущее");
             }
 
             if (_currentTime >= _targetTime)

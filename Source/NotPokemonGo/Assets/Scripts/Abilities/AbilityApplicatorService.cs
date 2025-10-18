@@ -22,7 +22,6 @@ namespace Abilities
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
         private readonly ISourceProvider _sourceProvider;
-        private readonly IAbilityProvider _abilityProvider;
 
         public AbilityApplicatorService(
             IArmamentViewFactory armamentViewFactory,
@@ -30,8 +29,7 @@ namespace Abilities
             IEffectResolver effectResolver,
             ICoroutineRunner coroutineRunner,
             IStatusResolver statusResolver,
-            ISourceProvider sourceProvider,
-            IAbilityProvider abilityProvider)
+            ISourceProvider sourceProvider)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
@@ -39,7 +37,6 @@ namespace Abilities
             _coroutineRunner = coroutineRunner;
             _statusResolver = statusResolver;
             _sourceProvider = sourceProvider;
-            _abilityProvider = abilityProvider;
         }
 
         public void Apply(CastamentSetup setup, params Unit[] targets)

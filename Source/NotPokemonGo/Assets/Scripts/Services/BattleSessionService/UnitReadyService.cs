@@ -33,7 +33,6 @@ namespace Services.BattleSessionService
             }
         }
 
-
         public Unit GiveReadyUnit()
         {
             if (HasUnits == false)

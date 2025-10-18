@@ -1,5 +1,7 @@
 ﻿using System;
+using Stats;
 using UI.QTE;
+using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +20,8 @@ namespace QTESystem.TestQTE
         
         private bool _isFulled = false;
         
+        private Unit _unit;
+        
         public override event Action<QTEButtonView> Successed;
         public override event Action<QTEButtonView> Invalided;
 
@@ -29,6 +33,11 @@ namespace QTESystem.TestQTE
         private void OnDisable()
         {
             _tapToButton.Click -= OnClick;
+
+            if (Unit != null)
+            {
+                Unit.SetStatValue(StatType.QteDamageModifier, 1); //Странно, что вызвалось в начале боя
+            }
         }
 
         private void Update()
@@ -38,6 +47,8 @@ namespace QTESystem.TestQTE
 
             if (_currentValue > 0)
                 _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * Time.deltaTime);
+            
+            Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
 
             _image.fillAmount = _currentValue / _maxValue;
         }
@@ -53,6 +64,9 @@ namespace QTESystem.TestQTE
             {
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
+                
+                Debug.Log(_currentValue + "currentValue");
+                Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
                 Successed?.Invoke(this);
                 _isFulled = true;
             }

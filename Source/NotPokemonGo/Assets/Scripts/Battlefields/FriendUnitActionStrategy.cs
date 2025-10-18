@@ -74,7 +74,9 @@ namespace Battlefields
 
             _source.Step.ActionEnded -= OnAnimationActionEnded;
             _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
-            _sourceProvider.Discard();
+           // _sourceProvider.Discard();
+            
+            Debug.Log("Disable Friend Unit Action");
         }
 
         private void OnUnitSearched(Unit unit)
@@ -100,7 +102,7 @@ namespace Battlefields
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             QTEPayload qtePayload = new QTEPayload(); 
             qtePayload.Battlefield = _battlefield;
             qtePayload.AbilityType = _abilityProvider.AbilityModel.AbilityType;

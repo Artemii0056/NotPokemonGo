@@ -12,7 +12,7 @@ namespace Stats
             BaseValue = statConfig.Value;
             CurrentValue = BaseValue;
         }
-        
+
         public StatType Type { get; private set; }
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
