@@ -17,11 +17,11 @@ namespace QTESystem.TestQTE
         private float _decaySpeed = 40;
 
         private float _currentValue = 0;
-        
+
         private bool _isFulled = false;
-        
+
         private Unit _unit;
-        
+
         public override event Action<QTEButtonView> Successed;
         public override event Action<QTEButtonView> Invalided;
 
@@ -47,8 +47,9 @@ namespace QTESystem.TestQTE
 
             if (_currentValue > 0)
                 _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * Time.deltaTime);
-            
-            Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
+
+            Unit.SetStatValue(StatType.QteDamageModifier, _currentValue / 100);
+            //Debug.Log("Update " + _currentValue / 100);
 
             _image.fillAmount = _currentValue / _maxValue;
         }
@@ -64,8 +65,8 @@ namespace QTESystem.TestQTE
             {
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
-                
-                Debug.Log(_currentValue + "currentValue");
+
+                Debug.Log(_currentValue + " currentValue");
                 Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
                 Successed?.Invoke(this);
                 _isFulled = true;

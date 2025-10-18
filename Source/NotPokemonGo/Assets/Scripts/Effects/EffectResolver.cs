@@ -29,16 +29,14 @@ namespace Effects
             float finalValue;
             Debug.Log($"Qte modificator: {qteModificator}");
 
-            if (qteModificator >= 1)
+            if (qteModificator > 0)
             {
-                finalValue = baseValue * qteModificator * 2;
+                finalValue = baseValue * (qteModificator + 1);
             }
             else
             {
                 finalValue = baseValue;
             }
-
-           // Debug.Log(finalValue + " final value");
 
             switch (targetStat)
             {
