@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace Services.QTEServices
 {
-    public class QTEService : IQTEService
+    public class QteService : IQteService
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -20,7 +20,7 @@ namespace Services.QTEServices
 
         public event Action <bool> Completed; 
         
-        public QTEService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver, ISourceProvider sourceProvider)
+        public QteService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver, ISourceProvider sourceProvider)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
@@ -28,23 +28,25 @@ namespace Services.QTEServices
             _sourceProvider = sourceProvider;
         }
         
-        public void Start(AbilityType abilityType)
+        public void Start(QteType qteType)
         {
-            _abilityType = abilityType;
-            QTEConfig qteConfig = _staticDataService.GetQTEConfig(abilityType);
+            Debug.Log("`QteService` Started");
+            
+           // _abilityType = abilityType;
+            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
-            _coroutineRunner.StartCoroutine(StartQTE(qteConfig));
+            _coroutineRunner.StartCoroutine(StartQte(qteConfig));
         }
 
-        private IEnumerator StartQTE(QTEConfig qteConfig)
+        private IEnumerator StartQte(QteConfig qteConfig)
         {
-            foreach (QTEPhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
+            foreach (QtePhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
-                QTEButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
+                QteButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
                 
                 view.Construct(_sourceProvider.Source);
                 _objectResolver.Inject(view);
-                QTEPhasePresenter qtePhasePresenter = new QTEPhasePresenter(qtePhaseSetup, view, _abilityType);
+                QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view, _abilityType);
                 qtePhasePresenter.Enable();
                 
                 yield return new WaitWhile(qtePhasePresenter.IsActive);

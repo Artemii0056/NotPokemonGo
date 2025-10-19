@@ -6,12 +6,12 @@ using UnityEngine.UI;
 namespace QTESystem
 {
     [Serializable]
-    public class QTEPhaseSetup
+    public class QtePhaseSetup
     {
-        public QTEPhaseType QTEPhaseType;
+        public QtePhaseType QTEPhaseType;
         public int ClickCount;
         public float Speed;
-        public QTEButtonView QTEButtonView;
+        public QteButtonView QTEButtonView;
         public Image Overlay;
 
         public float TargetTime;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa6918ff28f43b8aa87ac8236c58a53, type: 3}
   m_Name: EngineeringForceQTEConfig
   m_EditorClassIdentifier: 
-  AbilityType: 5
+  QteType: 5
   QtePhaseSetups:
   - QTEPhaseType: 0
     ClickCount: 5

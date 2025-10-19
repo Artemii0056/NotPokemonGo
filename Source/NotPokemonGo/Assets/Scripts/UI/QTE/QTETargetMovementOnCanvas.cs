@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UI.QTE
 {
-  public class QTETargetMovementOnCanvas : QTEButtonView
+  public class QTETargetMovementOnCanvas : QteButtonView
   {
    private const float StartThreshold = 0.05f;       // старт из первых 5% длины трека
     private const float CompletionThreshold = 0.98f;  // успех при достижении 98%
@@ -24,7 +24,7 @@ namespace UI.QTE
     private float _tolerance = 0.05f;                 // допуск к половине высоты трека
 
     // внешняя конфигурация через фазу (если есть)
-    private QTEPhasePresenter _phasePresenter;
+    private QtePhasePresenter _phasePresenter;
 
     // вычисляемые параметры
     private float _timeLimit;
@@ -37,8 +37,8 @@ namespace UI.QTE
     private float _minX, _maxX;         // рабочие границы по X (учитывают размер ручки)
     private float _handleZScreen;       // Z в экранных координатах для корректного ScreenToWorldPoint
 
-    public override event Action<QTEButtonView> Successed;
-    public override event Action<QTEButtonView> Invalided;
+    public override event Action<QteButtonView> Successed;
+    public override event Action<QteButtonView> Invalided;
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ namespace UI.QTE
       ResetInternalState();
     }
 
-    public override void Initialize(QTEPhasePresenter qtePhasePresenter)
+    public override void Initialize(QtePhasePresenter qtePhasePresenter)
     {
       base.Initialize(qtePhasePresenter);
       _phasePresenter = qtePhasePresenter;

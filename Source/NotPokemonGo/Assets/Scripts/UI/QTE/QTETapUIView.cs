@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI.QTE
 {
-  public class QTETapUIView : QTEButtonView
+  public class QTETapUIView : QteButtonView
   {
     public RectTransform rectTransform;
 
@@ -27,8 +27,8 @@ namespace UI.QTE
     private Vector2 _visualTargetSize;
     private Vector2 _visualEndSize;
 
-    public override event Action<QTEButtonView> Successed;
-    public override event Action<QTEButtonView> Invalided;
+    public override event Action<QteButtonView> Successed;
+    public override event Action<QteButtonView> Invalided;
 
 
     private bool _isSuccesTime => CurrentTime >= TargetTime - Offset && CurrentTime <= TargetTime;

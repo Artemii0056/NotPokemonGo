@@ -1,6 +1,6 @@
 ﻿namespace QTESystem
 {
-    public enum QTEPhaseType
+    public enum QtePhaseType
     {
         ТапатьПоВрагу,
         ТапатьПоUI,

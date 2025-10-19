@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
 {
-    public class SliderReader : QTEButtonView
+    public class SliderReader : QteButtonView
     {
         [SerializeField] private Slider _slider;
 
@@ -19,8 +19,8 @@ namespace QTESystem.TestQTE
 
         public event Action<bool> Ended;
         
-        public override event Action<QTEButtonView> Successed;
-        public override event Action<QTEButtonView> Invalided;
+        public override event Action<QteButtonView> Successed;
+        public override event Action<QteButtonView> Invalided;
 
         private void Start()
         {

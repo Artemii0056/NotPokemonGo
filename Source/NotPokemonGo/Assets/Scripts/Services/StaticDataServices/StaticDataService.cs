@@ -23,7 +23,7 @@ namespace Services.StaticDataServices
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
-        private Dictionary<AbilityType, QTEConfig> _qteConfigs;
+        private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
         
         private List<LevelConfig> _levelConfigs;
@@ -40,7 +40,7 @@ namespace Services.StaticDataServices
             LoadUnitSkinItemView();
             LoadCharacterSelectionScreenPanel();
             LoadPlatoonPositionContainer();
-            LoadQTEConfigs();
+            LoadQteConfigs();
             LoadLevelConfigs();
             ConfigurateTargetModesForAbilities();
         }
@@ -91,9 +91,9 @@ namespace Services.StaticDataServices
         public List<AbilityConfig> GetAllAbilityConfigs() => 
             _abilityConfigs.Values.ToList();
 
-        public QTEConfig GetQTEConfig(AbilityType abilityType)
+        public QteConfig GetQteConfig(QteType abilityType)
         {
-            if (_qteConfigs.TryGetValue(abilityType, out QTEConfig getQteConfig))
+            if (_qteConfigs.TryGetValue(abilityType, out QteConfig getQteConfig))
                 return getQteConfig;
 
             throw new KeyNotFoundException($"No qte config found for mode {abilityType}");
@@ -104,10 +104,10 @@ namespace Services.StaticDataServices
             _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
         }
 
-        private void LoadQTEConfigs()
+        private void LoadQteConfigs()
         {
-            _qteConfigs = Resources.LoadAll<QTEConfig>(Constants.AssetPath.QTEConfigs)
-                .ToDictionary(x => x.AbilityType, x => x);
+            _qteConfigs = Resources.LoadAll<QteConfig>(Constants.AssetPath.QteConfigs)
+                .ToDictionary(x => x.QteType, x => x);
         }
         
         public void LoadUnitSkinItemView() => 

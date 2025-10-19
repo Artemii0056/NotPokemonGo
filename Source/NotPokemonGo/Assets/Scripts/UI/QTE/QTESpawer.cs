@@ -12,9 +12,9 @@ namespace UI.QTE
             _objectResolver = objectResolver;
         }
 
-        public QTEButtonView Spawn(QTEButtonView prefabQteButtonView)
+        public QteButtonView Spawn(QteButtonView prefabQteButtonView)
         {
-            QTEButtonView qteButtonView = _objectResolver.Instantiate(prefabQteButtonView);
+            QteButtonView qteButtonView = _objectResolver.Instantiate(prefabQteButtonView);
             return qteButtonView;
         }
     }

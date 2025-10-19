@@ -24,10 +24,7 @@ namespace Effects
         {
             float qteModificator = _sourceProvider.Source.GetStat(StatType.QteDamageModifier);
 
-            //Нужен QTEDamageModifierService
-
             float finalValue;
-            Debug.Log($"Qte modificator: {qteModificator}");
 
             if (qteModificator > 0)
             {

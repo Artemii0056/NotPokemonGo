@@ -17,7 +17,7 @@ namespace Services.StaticDataServices
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
         List<AbilityConfig> GetAllAbilityConfigs();
-        QTEConfig GetQTEConfig(AbilityType abilityType);
+        QteConfig GetQteConfig(QteType qteType);
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
         List< LevelConfig> GetLevelConfigs();
         UnitSkinItemView UnitSkinItemViewPrefab { get; }

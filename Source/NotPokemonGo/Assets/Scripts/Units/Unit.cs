@@ -21,6 +21,7 @@ namespace Units
         private CapsuleCollider _capsuleCollider;
         public Transform abilityPos;
         [field: SerializeField] public UnitType UnitType { get; private set; }
+        public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
 
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
@@ -48,7 +49,7 @@ namespace Units
         public event Action<float, float> HealthChanged;
 
         public event Action<Unit> Death;
-        
+
         public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
         private void Awake()
@@ -73,14 +74,14 @@ namespace Units
 
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
         }
-        
+
         public void Construct(
             Dictionary<StatType, StatSetup> stats,
             UnitStep step,
             PlatoonType platoonType)
         {
             _stats = stats;
-            
+
             PlatoonType = platoonType;
 
             Step = step;
@@ -144,7 +145,7 @@ namespace Units
         {
             _stats[statType].Modify(value);
         }
-        
+
         public void SetStatValue(StatType statType, float value)
         {
             _stats[statType].Set(value);
@@ -193,9 +194,14 @@ namespace Units
 
             if (GetStat(StatType.CurrentAgility) >= GetStat(StatType.MaxAgility))
             {
-                _stats[StatType.CurrentAgility].Set(GetStat(StatType.MaxAgility)); 
+                _stats[StatType.CurrentAgility].Set(GetStat(StatType.MaxAgility));
                 Prepared?.Invoke(this);
             }
+        }
+
+        public void SetAnumationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
+        {
+            AnimatorTrigger = unitAnimatorTrigger;
         }
     }
 }

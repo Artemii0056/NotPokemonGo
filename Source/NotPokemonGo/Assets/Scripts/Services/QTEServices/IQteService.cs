@@ -1,11 +1,12 @@
 using System;
 using Abilities;
+using QTESystem;
 
 namespace Services.QTEServices
 {
-    public interface IQTEService
+    public interface IQteService
     {
-        void Start(AbilityType abilityType);
+        void Start(QteType qteType);
         event Action <bool> Completed;
     }
 }

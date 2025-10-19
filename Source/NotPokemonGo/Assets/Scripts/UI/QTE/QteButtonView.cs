@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace UI.QTE
 {
-    public abstract class QTEButtonView : MonoBehaviour
+    public abstract class QteButtonView : MonoBehaviour
     {
         public float CurrentTime { get; protected set; }
 
-        public abstract event Action<QTEButtonView> Successed;
-        public abstract event Action<QTEButtonView> Invalided;
+        public abstract event Action<QteButtonView> Successed;
+        public abstract event Action<QteButtonView> Invalided;
 
         protected Unit Unit;
 
-        public virtual void Initialize(QTEPhasePresenter qtePhasePresenter)
+        public virtual void Initialize(QtePhasePresenter qtePhasePresenter)
         { }
 
         public virtual void Construct(Unit unit)

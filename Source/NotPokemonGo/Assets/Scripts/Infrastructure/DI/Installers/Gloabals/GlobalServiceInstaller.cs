@@ -88,7 +88,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
             builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
-            builder.Register<IQTEService, QTEService>(Lifetime.Singleton);
+            builder.Register<IQteService, QteService>(Lifetime.Singleton);
             
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
@@ -105,6 +105,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
             
             builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
+            
+            builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
@@ -184,7 +186,7 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsImplementedInterfaces()
                     .AsSelf();
 
-                builder.Register<QTEBattleState>(Lifetime.Singleton)
+                builder.Register<QteBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
                 

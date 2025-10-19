@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
 {
-    public class TapToButtonManager : QTEButtonView
+    public class TapToButtonManager : QteButtonView
     {
         [SerializeField] private TapToButton _tapToButton;
         [SerializeField] private Image _image;
@@ -22,8 +22,8 @@ namespace QTESystem.TestQTE
 
         private Unit _unit;
 
-        public override event Action<QTEButtonView> Successed;
-        public override event Action<QTEButtonView> Invalided;
+        public override event Action<QteButtonView> Successed;
+        public override event Action<QteButtonView> Invalided;
 
         private void OnEnable()
         {
@@ -49,7 +49,6 @@ namespace QTESystem.TestQTE
                 _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * Time.deltaTime);
 
             Unit.SetStatValue(StatType.QteDamageModifier, _currentValue / 100);
-            //Debug.Log("Update " + _currentValue / 100);
 
             _image.fillAmount = _currentValue / _maxValue;
         }

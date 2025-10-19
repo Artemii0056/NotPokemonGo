@@ -10,18 +10,18 @@ using VContainer;
 
 namespace UI.QTE
 {
-  public class QTERaycasterView : QTEButtonView
+  public class QTERaycasterView : QteButtonView
   {
     private IRaycastService _raycastService;
     private ITargetSelector _targetSelector;
     private IInputReader _inputReader;
-    private QTEPhasePresenter _qtePhasePresenter;
+    private QtePhasePresenter _qtePhasePresenter;
     private List<Unit> _units;
     private int _clickCount;
     private IStaticDataService _staticDataService;
 
-    public override event Action<QTEButtonView> Successed;
-    public override event Action<QTEButtonView> Invalided;
+    public override event Action<QteButtonView> Successed;
+    public override event Action<QteButtonView> Invalided;
     
     [Inject]
     public void Construct(IInputReader inputReader, IRaycastService raycastService, ITargetSelector targetSelector, IStaticDataService staticDataService)
@@ -33,7 +33,7 @@ namespace UI.QTE
       _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonClicked;
     }
 
-    public override void Initialize(QTEPhasePresenter qtePhasePresenter)
+    public override void Initialize(QtePhasePresenter qtePhasePresenter)
     {
       base.Initialize(qtePhasePresenter);
       _qtePhasePresenter = qtePhasePresenter;

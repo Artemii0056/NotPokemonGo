@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-    public class QTEBattleState : IPayloadedState<QTEPayload>
+    public class QteBattleState : IPayloadedState<QTEPayload> //TODO DELETE
     {
-        private readonly IQTEService _qteService;
+        private readonly IQteService _qteService;
         private readonly IBattleStateMachine _battleStateMachine;
         private Battlefield _battlefield;
 
-        public QTEBattleState(IQTEService qteService, IBattleStateMachine battleStateMachine)
+        public QteBattleState(IQteService qteService, IBattleStateMachine battleStateMachine)
         {
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
@@ -21,7 +21,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(QTEPayload qtePayload)
         {
             _battlefield = qtePayload.Battlefield;
-            _qteService.Start(qtePayload.AbilityType);
+            //_qteService.Start(qtePayload.AbilityType);
             _qteService.Completed += OnCompleted;
         }
 

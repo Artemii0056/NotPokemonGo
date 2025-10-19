@@ -65,6 +65,8 @@ namespace Factories
 
             UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
 
+            unit.SetAnumationTrigger(unitAnimatorTrigger);
+
             unit.Construct(config.Stats, unitStep, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)

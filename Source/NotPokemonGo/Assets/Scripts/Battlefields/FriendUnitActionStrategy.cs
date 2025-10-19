@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Abilities;
 using Abilities.MV;
-using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services.InputServices;
@@ -25,6 +25,8 @@ namespace Battlefields
         private IBattleStateMachine _battleStateMachine;
         private IInputReader _inputReader;
         private IRaycastService _raycastService;
+        
+        private IAbilityService _abilityService;
 
         public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -40,7 +42,8 @@ namespace Battlefields
             ITargetSelector targetSelector,
             IBattleStateMachine battleStateMachine,
             AbilityPanelPresenter abilityPanelPresenter,
-            IInputReader inputReader
+            IInputReader inputReader,
+            IAbilityService abilityService
             )
         {
             _raycastService = raycastService;
@@ -50,6 +53,7 @@ namespace Battlefields
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
+            _abilityService = abilityService;
         }
 
         public override void Enable()
@@ -94,7 +98,14 @@ namespace Battlefields
                     break;
 
                 case PlatoonType.Enemies: 
-                    _source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
+                    //АбилитиСервис (управлятор всеми абилками) ->
+                    //Имеет дикшарь/свичКейс со всеми возможными абилками ->
+                    //выбирает по типу абилку(передает продюсера и таргета) ->
+                    //Говорит абилке(MultyAttack) плей(внутри что-то похожее на HandlePhase из UnitStep) ->
+                    //Multyattack полностью следит за завершением абилки и событие о завершении
+                    _abilityService.Handle(_source, unit, _battlefield);
+                    
+                    //_source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
                     _targetSelector.Remember(unit); 
                     _abilityPanelPresenter.Disable();
                     break;
@@ -102,12 +113,6 @@ namespace Battlefields
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            QTEPayload qtePayload = new QTEPayload(); 
-            qtePayload.Battlefield = _battlefield;
-            qtePayload.AbilityType = _abilityProvider.AbilityModel.AbilityType;
-            
-            _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
 
             _abilityProvider.AbilityModel.DiscardCurrentTime();
 

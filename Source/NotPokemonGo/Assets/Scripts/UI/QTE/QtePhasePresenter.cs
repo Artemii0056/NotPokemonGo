@@ -5,20 +5,21 @@ using VContainer;
 
 namespace UI.QTE
 {
-  public class QTEPhasePresenter
+  public class QtePhasePresenter
   {
     private readonly IObjectResolver _objectResolver;
-    private readonly QTEButtonView _qteButtonView;
+    private readonly QteButtonView _qteButtonView;
     private bool _isActive;
 
-    public QTEPhasePresenter(QTEPhaseSetup qtePhaseSetup, QTEButtonView qteButtonView, AbilityType abilityType)
+    public QtePhasePresenter(QtePhaseSetup qtePhaseSetup, QteButtonView qteButtonView, AbilityType abilityType)
     {
       _qteButtonView = qteButtonView;
       QtePhaseSetup = qtePhaseSetup;
-      AbilityType = abilityType;
+      //AbilityType = abilityType;
+      AbilityType = AbilityType.Defailt; //
     }
 
-    public QTEPhaseSetup QtePhaseSetup { get; }
+    public QtePhaseSetup QtePhaseSetup { get; }
     public AbilityType AbilityType { get; }
 
     public bool IsSuccess { get; private set; }
@@ -41,14 +42,14 @@ namespace UI.QTE
     public bool IsActive() =>
       _isActive;
 
-    private void OnInvalided(QTEButtonView qteButtonView)
+    private void OnInvalided(QteButtonView qteButtonView)
     {
       qteButtonView.Invalided -= OnInvalided;
       _isActive = false;
       IsSuccess = false;
     }
     
-    private void OnSuccessed(QTEButtonView qteButtonView)
+    private void OnSuccessed(QteButtonView qteButtonView)
     {
       qteButtonView.Successed -= OnSuccessed;
       Debug.Log("ура");
