@@ -42,6 +42,8 @@ namespace QTESystem.TestQTE
 
         private void Update()
         {
+            Debug.Log("Update");
+            
             if (_isFulled)
                 return;
 

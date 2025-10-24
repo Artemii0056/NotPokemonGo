@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace QTESystem
 {
     [Serializable]
-    public class QtePhaseSetup
+    public class QtePhaseSetup //Отрефакторить
     {
         public QtePhaseType QTEPhaseType;
         public int ClickCount;

@@ -9,5 +9,6 @@ namespace QTESystem
         Random = 4,
         
         TapToButton = 5,
+        SliderPingPong = 6,
     }
 }

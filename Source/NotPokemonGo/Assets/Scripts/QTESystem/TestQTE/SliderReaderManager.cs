@@ -10,19 +10,18 @@ namespace QTESystem.TestQTE
         [SerializeField] private SliderReader _secondQte;
         
         [SerializeField] private Slider _slider;
-        
-        [SerializeField] private Button _button;
 
         private void Start()
-        {
-            _button.onClick.AddListener(Play);
-        }
-
-        private void Play()
         {
             _firstQte.enabled = true;
             _firstQte.Ended += OnEnded;
         }
+
+        // public void Play()
+        // {
+        //     _firstQte.enabled = true;
+        //     _firstQte.Ended += OnEnded;
+        // }
 
         private void OnEnded(bool state)
         {

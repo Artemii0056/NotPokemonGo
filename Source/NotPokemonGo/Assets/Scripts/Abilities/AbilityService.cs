@@ -21,8 +21,11 @@ namespace Abilities
 
         private EngineeringSeriesAbility _ability;
 
-        public AbilityService(IAbilityProvider abilityProvider, ICoroutineRunner coroutineRunner,
-            IQteService qteService, IBattleStateMachine battleStateMachine)
+        public AbilityService(
+            IAbilityProvider abilityProvider, 
+            ICoroutineRunner coroutineRunner,
+            IQteService qteService, 
+            IBattleStateMachine battleStateMachine)
         {
             _abilityProvider = abilityProvider;
             _coroutineRunner = coroutineRunner;
@@ -55,7 +58,7 @@ namespace Abilities
                 case AbilityType.EngineeringSeries:
                     _ability = new EngineeringSeriesAbility(source, target, _abilityProvider, _coroutineRunner, _qteService);
                     _ability.Play();
-                    _ability.Finished +=  Continie;
+                    _ability.Finished +=  Continue;
                     break;
                 case AbilityType.Defailt:
                     break;
@@ -64,12 +67,10 @@ namespace Abilities
             }
         }
 
-        private void Continie()
+        private void Continue()
         {
-            Debug.Log(_battleStateMachine == null);
-            
             _battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
-            _ability.Finished -= Continie;
+            _ability.Finished -= Continue;
         }
     }
 }

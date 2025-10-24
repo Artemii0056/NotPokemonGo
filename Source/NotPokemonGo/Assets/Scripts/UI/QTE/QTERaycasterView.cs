@@ -38,7 +38,7 @@ namespace UI.QTE
       base.Initialize(qtePhasePresenter);
       _qtePhasePresenter = qtePhasePresenter;
       
-      _units = _targetSelector.GetTargets(_staticDataService.GetTargetMode(qtePhasePresenter.AbilityType)).Where(x => x != null).ToList();
+      //units = _targetSelector.GetTargets(_staticDataService.GetTargetMode(qtePhasePresenter.AbilityType)).Where(x => x != null).ToList();
 
       foreach (var unit in _units)
       {

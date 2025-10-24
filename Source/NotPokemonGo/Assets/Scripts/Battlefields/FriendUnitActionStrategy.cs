@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services.InputServices;
 using Services.RaycastServices;
 using UI.Ability;
@@ -22,7 +20,6 @@ namespace Battlefields
         private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
-        private IBattleStateMachine _battleStateMachine;
         private IInputReader _inputReader;
         private IRaycastService _raycastService;
         
@@ -40,7 +37,6 @@ namespace Battlefields
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
-            IBattleStateMachine battleStateMachine,
             AbilityPanelPresenter abilityPanelPresenter,
             IInputReader inputReader,
             IAbilityService abilityService
@@ -48,7 +44,6 @@ namespace Battlefields
         {
             _raycastService = raycastService;
             _inputReader = inputReader;
-            _battleStateMachine = battleStateMachine;
             _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
             _targetSelector = targetSelector;
@@ -62,7 +57,6 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _source.Step.ActionEnded += OnAnimationActionEnded;
             _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
         }
 
@@ -76,7 +70,6 @@ namespace Battlefields
         {
             base.Disable();
 
-            _source.Step.ActionEnded -= OnAnimationActionEnded;
             _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
            // _sourceProvider.Discard();
             
@@ -124,11 +117,6 @@ namespace Battlefields
         {
             _abilityPanelPresenter.Enable();
             _abilityPanelPresenter.FillAbilityView(abilityModels);
-        }
-
-        private void OnAnimationActionEnded()
-        {
-           // _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }
 }

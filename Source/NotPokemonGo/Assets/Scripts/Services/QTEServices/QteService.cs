@@ -20,7 +20,11 @@ namespace Services.QTEServices
 
         public event Action <bool> Completed; 
         
-        public QteService(IStaticDataService staticDataService, ICoroutineRunner coroutineRunner, IObjectResolver objectResolver, ISourceProvider sourceProvider)
+        public QteService(
+            IStaticDataService staticDataService, 
+            ICoroutineRunner coroutineRunner, 
+            IObjectResolver objectResolver, 
+            ISourceProvider sourceProvider)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
@@ -30,9 +34,6 @@ namespace Services.QTEServices
         
         public void Start(QteType qteType)
         {
-            Debug.Log("`QteService` Started");
-            
-           // _abilityType = abilityType;
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
             _coroutineRunner.StartCoroutine(StartQte(qteConfig));

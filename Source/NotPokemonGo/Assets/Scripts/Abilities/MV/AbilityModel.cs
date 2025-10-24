@@ -8,7 +8,7 @@ namespace Abilities.MV
         {
             AbilityType = config.AbilityType;
             
-            Phases = config.Phases;
+           Parts = config.Parts;
 
             _stats = new Dictionary<AbilityStatType, AbilityStatSetup>();
 
@@ -21,7 +21,9 @@ namespace Abilities.MV
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }
         
-        public List<AbilityPhase> Phases { get; private set; }
+        public List<AbilityPart> Parts { get; private set; }
+        
+       // public List<AbilityPhase> Phases { get; private set; }
         
         public float Cost => _stats[AbilityStatType.Cost].Value; 
 

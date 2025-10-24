@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7aa6918ff28f43b8aa87ac8236c58a53, type: 3}
-  m_Name: EngineeringForceQTEConfig
+  m_Name: Second
   m_EditorClassIdentifier: 
-  QteType: 5
+  QteType: 6
   QtePhaseSetups:
   - QTEPhaseType: 0
-    ClickCount: 5
+    ClickCount: 0
     Speed: 0
-    QTEButtonView: {fileID: 3919748202708329813, guid: 3190df85a54871b4eac6e7eae38ec099, type: 3}
+    QTEButtonView: {fileID: 8395745742862986506, guid: 0a3f97ed5def14947ac98b89288794f8, type: 3}
     Overlay: {fileID: 0}
-    TargetTime: 3
+    TargetTime: 0
     Offset: 0
     TimeToNextTarget: 0
-  QteCanvas: {fileID: 8198002933347961941, guid: 47d21c52685d7b74c899d4d7e1c0fdc2, type: 3}
+  QteCanvas: {fileID: 0}

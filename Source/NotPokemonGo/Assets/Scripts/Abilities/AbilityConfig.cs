@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using QTESystem;
 using UnityEngine;
 
 namespace Abilities
@@ -13,7 +12,7 @@ namespace Abilities
         [field: SerializeField] public List<ParticleSystem> StartAnimationParticles { get; private set; }
         [field: SerializeField] public List<ParticleSystem> MiddleAnimationParticles { get; private set; }
         [field: SerializeField] public List<ParticleSystem> EndAnimationParticles { get; private set; }
-        [field: SerializeField] public List<AbilityPhase> Phases { get; private set; }
+        [field: SerializeField] public List<AbilityPart> Parts { get; private set; }
         [field: SerializeField] public List<AbilityStatSetup> AbilityStatSetup { get; private set; }
     }
 }

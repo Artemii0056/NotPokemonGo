@@ -185,10 +185,6 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<FinishBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-
-                builder.Register<QteBattleState>(Lifetime.Singleton)
-                    .AsImplementedInterfaces()
-                    .AsSelf();
                 
                 builder.Register<WaveProgressionState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()

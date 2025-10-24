@@ -42,7 +42,16 @@ namespace Characters
             _source = source;
             _target = target;
 
-            _phases = abilityModel.Phases;
+
+            var parts = abilityModel.Parts;
+            
+            foreach (AbilityPart part in parts)
+            {
+                foreach (var phase in part.AbilityPhases)
+                {
+                    _phases.Add(phase);
+                }
+            }
 
             _startPosition = source.transform.position;
 
