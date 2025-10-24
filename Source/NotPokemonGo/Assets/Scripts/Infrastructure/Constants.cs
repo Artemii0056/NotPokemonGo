@@ -18,6 +18,7 @@ namespace Infrastructure
             public const string MainMenuCanvasPath = "Canvases/MainMenu_Canvas";
             public const string CharacteristicItemViewPath = "Canvases/CharacteristicItem";
             public const string LoosePanelPath = "Canvases/LoosePanel_Canvas";
+            public const string WinPanelPath = "Canvases/WinPanel_Canvas";
             public const string BattleInfoUIPath = "Canvases/BattleInfo_Canvas";
 
             public const string CatalogPath = "Catalog/Catalog";

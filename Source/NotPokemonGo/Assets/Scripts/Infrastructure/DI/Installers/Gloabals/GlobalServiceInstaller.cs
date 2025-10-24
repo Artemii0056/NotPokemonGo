@@ -9,13 +9,17 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
+using Map;
+using PersistentProgresses;
 using Platoons;
+using SaveLoadService;
 using Services;
 using Services.AssetManagement;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.InputServices;
+using Services.ObjectPools;
 using Services.QTEServices;
 using Services.RaycastServices;
 using Services.SceneServices;
@@ -105,6 +109,12 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
             
             builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
+
+            builder.Register<ICurrentMapTypeProvider, CurrentMapTypeProvider>(Lifetime.Singleton);
+            
+            builder.Register<PersistentProgressService>(Lifetime.Singleton).AsSelf();
+            
+            builder.Register<PlayerPrefsSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
@@ -180,7 +190,7 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsImplementedInterfaces()
                     .AsSelf();
 
-                builder.Register<FinishBattleState>(Lifetime.Singleton)
+                builder.Register<UpgradePlayerPlatoonState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
 
@@ -197,6 +207,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsSelf();
                 
                 builder.Register<LoosePanelState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<WinLevelState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }

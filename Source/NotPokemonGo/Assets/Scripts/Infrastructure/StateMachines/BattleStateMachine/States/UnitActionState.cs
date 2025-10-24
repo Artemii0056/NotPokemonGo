@@ -27,7 +27,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(UnitActionPayload battlefield)
         {
             _payload = battlefield;
-            _inputReader.SpacePressed += SetFinishBattleState;
 
             _inputReader.EButtonPressed += SetQTEState;
 
@@ -60,13 +59,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         {
             _inputReader.EButtonPressed -= SetQTEState;
 
-            _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
-        }
-
-        private void SetFinishBattleState()
-        {
-            _battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
         }
     }
 }

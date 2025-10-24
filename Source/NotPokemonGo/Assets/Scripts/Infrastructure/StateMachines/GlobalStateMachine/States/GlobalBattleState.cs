@@ -1,6 +1,7 @@
 ﻿using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
+using Platoons;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine.States
 {
@@ -20,7 +21,7 @@ namespace Infrastructure.StateMachines.GlobalStateMachine.States
             _battleInfoUI = battlefield.BattleInfoUI;
             _battleInfoUI.gameObject.SetActive(true);
             
-            _battleStateMachine.Enter<WaveProgressionState>();
+            _battleStateMachine.Enter<WaveProgressionState, Platoon>(null);
         }
 
         public void Exit()

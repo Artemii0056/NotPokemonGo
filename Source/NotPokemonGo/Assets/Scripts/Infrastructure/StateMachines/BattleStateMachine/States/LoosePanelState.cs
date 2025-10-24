@@ -1,8 +1,8 @@
-﻿using Infrastructure.StateMachines.BattleStateMachine.States;
+﻿using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 
-namespace Infrastructure.StateMachines.GlobalStateMachine
+namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
     public class LoosePanelState : IPayloadedState<LoosePanel>
     {
