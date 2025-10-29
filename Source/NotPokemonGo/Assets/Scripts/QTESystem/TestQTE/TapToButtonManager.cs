@@ -12,7 +12,7 @@ namespace QTESystem.TestQTE
         [SerializeField] private TapToButton _tapToButton;
         [SerializeField] private Image _image;
 
-        private int _valueToTap = 10;
+        private int _valueToTap = 50;
         private float _maxValue = 100;
         private float _decaySpeed = 40;
 
@@ -25,32 +25,23 @@ namespace QTESystem.TestQTE
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _tapToButton.Click += OnClick;
-        }
 
         private void OnDisable()
         {
             _tapToButton.Click -= OnClick;
 
-            if (Unit != null)
-            {
-                Unit.SetStatValue(StatType.QteDamageModifier, 1); //Странно, что вызвалось в начале боя
-            }
+            Unit.SetStatValue(StatType.QteDamageModifier, 1);
         }
 
         private void Update()
         {
-            Debug.Log("Update");
-            
             if (_isFulled)
                 return;
 
             if (_currentValue > 0)
                 _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * Time.deltaTime);
-
-            Unit.SetStatValue(StatType.QteDamageModifier, _currentValue / 100);
 
             _image.fillAmount = _currentValue / _maxValue;
         }
@@ -67,7 +58,7 @@ namespace QTESystem.TestQTE
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
 
-                Debug.Log(_currentValue + " currentValue");
+                //  Debug.Log(_currentValue + " currentValue");
                 Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
                 Successed?.Invoke(this);
                 _isFulled = true;

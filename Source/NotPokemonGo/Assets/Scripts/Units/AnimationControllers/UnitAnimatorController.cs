@@ -38,5 +38,12 @@ namespace Units.AnimationControllers
 
         public void FlagFinishAnimation() => 
             Finished?.Invoke();
+
+        public float GetAnimationLenght()
+        {
+            AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
+
+            return clipInfo[0].clip.length;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using UI.QTE;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
@@ -9,31 +10,29 @@ namespace QTESystem.TestQTE
     {
         [SerializeField] private Slider _slider;
 
-        [SerializeField] private float _currentValue;
-        [SerializeField] private float _targetValue; // Время анимации 
-        
-        [SerializeField] private float _currentTime; //А если реально попробовать сделать силу удара в зависимости от скорости перемещения от нуля до единицы? 
-        [SerializeField] private float _targetTime; 
-        
+        [SerializeField] private float _currentSliderValue = 0.5f;
+        [SerializeField] private float _targetSliderValue;
+
+        [SerializeField] private float _currentTime;
+
+        [SerializeField] private float _targetTime;
+
         private bool _isFinished;
 
-        public event Action<bool> Ended;
-        
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
 
         private void Start()
         {
-            _slider.value = _currentValue;
+            _slider.value = _currentSliderValue;
+
+            _targetTime = Unit.UnitAnimatorController.GetAnimationLenght();
         }
 
         private void Update()
         {
             if (_isFinished == false)
-            {
                 _currentTime += Time.deltaTime;
-              //  Debug.Log(_currentTime + " текущее");
-            }
 
             if (_currentTime >= _targetTime)
             {
@@ -44,12 +43,12 @@ namespace QTESystem.TestQTE
 
         private void ShowResult()
         {
-            if (Mathf.Abs(_targetValue - _slider.value) <= 0.1)
+            if (Mathf.Abs(_targetSliderValue - _slider.value) <= 0.1)
             {
                 Successed?.Invoke(this);
-                 return;
+                return;
             }
-            
+
             Invalided?.Invoke(this);
         }
     }

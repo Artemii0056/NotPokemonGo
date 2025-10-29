@@ -51,7 +51,7 @@ namespace Effects
                                 finalValue = 0;
                             }
 
-                            Debug.Log(finalValue);
+                           // Debug.Log(finalValue);
                             break;
 
                         case EffectType.Heal:

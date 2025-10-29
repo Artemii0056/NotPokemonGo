@@ -8,7 +8,6 @@ namespace QTESystem
     [Serializable]
     public class QtePhaseSetup //Отрефакторить
     {
-        public QtePhaseType QTEPhaseType;
         public int ClickCount;
         public float Speed;
         public QteButtonView QTEButtonView;

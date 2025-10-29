@@ -7,8 +7,8 @@ using Services;
 using Services.QTEServices;
 using Units;
 using Units.AnimationControllers;
-using Unity.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Abilities
 {
@@ -30,6 +30,10 @@ namespace Abilities
         private bool _animationPlaying;
 
         private Coroutine _coroutine;
+
+        private bool _tapCompleted;
+        private bool _backCompleted;
+        private bool _forwardCompleted;
 
         public event Action Finished;
 
@@ -72,14 +76,24 @@ namespace Abilities
                     if (abilityPhase.QteType == QteType.TapToButton)
                     {
                         _qteService.Completed += OnQteTapToButtonCompleted;
+                        _qteService.Start(abilityPhase.QteType);
                     }
-                    else if (abilityPhase.QteType == QteType.SliderPingPong)
+                    else if (abilityPhase.QteType == QteType.SliderBack)
                     {
-                        _qteService.Completed += OnQteSliderPingPongCompleted;
+                        if (_tapCompleted)
+                        {
+                            _qteService.Completed += OnQteSliderBackCompleted;
+                            _qteService.Start(abilityPhase.QteType);
+                        }
                     }
-
-                    _qteService.Start(abilityPhase.QteType);
-                    //_qteService.Completed += OnQteTapToButtonCompleted;
+                    else if (abilityPhase.QteType == QteType.SliderForward)
+                    {
+                        if (_backCompleted)
+                        {
+                            _qteService.Completed += OnQteSliderForwardCompleted;
+                            _qteService.Start(abilityPhase.QteType);
+                        }
+                    }
                 }
 
                 switch (abilityPhase.PhaseType)
@@ -115,21 +129,32 @@ namespace Abilities
             HandleEndPhase();
         }
 
-        private void OnQteSliderPingPongCompleted(bool state)
+        private void OnQteSliderBackCompleted(bool state)
         {
-            throw new NotImplementedException();
+            Debug.Log("OnQteSliderBackCompleted " + state);
+
+            _backCompleted = state;
+            _qteService.Completed -= OnQteSliderBackCompleted;
+        }
+
+        private void OnQteSliderForwardCompleted(bool state)
+        {
+            Debug.Log("OnQteSliderForwardCompleted " + state);
+
+            Debug.Log("ПРОЙДЕНО!");
+            _qteService.Completed -= OnQteSliderForwardCompleted;
         }
 
         private void OnQteTapToButtonCompleted(bool state)
         {
+            Debug.Log("OnQteTapToButtonCompleted " + state);
+
+            _tapCompleted = state;
+
             _qteService.Completed -= OnQteTapToButtonCompleted;
-            
-                Debug.Log("12321");
-                
-            if (state == false)
-                _currentPhaseIndex++;
-            
-                Debug.Log(state);
+
+            // if (state == false)
+            //     _currentPhaseIndex++;
         }
 
         private void HandleEndPhase()
@@ -144,9 +169,7 @@ namespace Abilities
             }
 
             if (_coroutine != null)
-            {
                 _coroutineRunner.StopCoroutine(_coroutine);
-            }
 
             _coroutine = _coroutineRunner.StartCoroutine(HandlePhase(_parts[_currentPhaseIndex].AbilityPhases));
         }
@@ -156,17 +179,24 @@ namespace Abilities
 
         private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
         {
-            const float Speed = 2f;
+            float stopDistance = 1.5f;
+            float liftDelay = 0.6f;
+            int jumpPower = 2;
+            var totalDuration = _unitAnimatorController.GetAnimationLenght();
 
-            while (Vector3.Distance(unit.transform.position, targetPosition) > offset)
-            {
-                unit.transform.position = Vector3.MoveTowards(
-                    unit.transform.position,
-                    targetPosition,
-                    Speed * Time.deltaTime);
+            Vector3 direction = (targetPosition - unit.transform.position).normalized;
+            Vector3 adjustedTarget = targetPosition - direction * stopDistance;
 
-                yield return null;
-            }
+            yield return new WaitForSeconds(liftDelay);
+
+            float moveDuration = totalDuration - liftDelay;
+            unit.transform.DOKill();
+
+            Tween jumpTween = unit.transform
+                .DOJump(adjustedTarget, jumpPower, 1, moveDuration)
+                .SetEase(Ease.InQuad);
+
+            yield return jumpTween.WaitForCompletion();
         }
     }
 }

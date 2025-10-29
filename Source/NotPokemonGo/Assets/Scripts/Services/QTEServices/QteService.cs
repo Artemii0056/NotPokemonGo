@@ -61,7 +61,6 @@ namespace Services.QTEServices
                 }
             }
             
-            Debug.Log("Stop foreach QTE");
             Completed?.Invoke(true);
         }
     }

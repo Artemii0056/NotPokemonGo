@@ -198,8 +198,6 @@ GameObject:
   - component: {fileID: 5270053404746152322}
   - component: {fileID: 2654787246796642044}
   - component: {fileID: 3574760131107328446}
-  - component: {fileID: 2501781372096861370}
-  - component: {fileID: 8395745742862986506}
   - component: {fileID: 2406574434842242592}
   m_Layer: 5
   m_Name: Canvas_Slider
@@ -291,38 +289,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2501781372096861370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001964555105598492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0e4b0c4417b4344ab0c783aebcae4c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firstQte: {fileID: 8395745742862986506}
-  _secondQte: {fileID: 2406574434842242592}
-  _slider: {fileID: 6978796440364740286}
---- !u!114 &8395745742862986506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3001964555105598492}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20345c0106fc46e0a4cc47a0cd409aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _slider: {fileID: 6978796440364740286}
-  _currentValue: 0.5
-  _targetValue: 0
-  _currentTime: 0
-  _targetTime: 1
 --- !u!114 &2406574434842242592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +296,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001964555105598492}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20345c0106fc46e0a4cc47a0cd409aeb, type: 3}
   m_Name: 

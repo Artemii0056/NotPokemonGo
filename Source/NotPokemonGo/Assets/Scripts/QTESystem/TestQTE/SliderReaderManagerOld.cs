@@ -4,17 +4,16 @@ using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
 {
-    public class SliderReaderManager : MonoBehaviour
+    public class SliderReaderManagerOld : MonoBehaviour //Delete?
     {
-        [SerializeField] private SliderReader _firstQte;
-        [SerializeField] private SliderReader _secondQte;
+         [SerializeField] private SliderReader _reader;
         
         [SerializeField] private Slider _slider;
 
         private void Start()
         {
-            _firstQte.enabled = true;
-            _firstQte.Ended += OnEnded;
+            _reader.enabled = true;
+            //_firstQte.Ended += OnEnded;
         }
 
         // public void Play()
@@ -27,9 +26,9 @@ namespace QTESystem.TestQTE
         {
             if (state)
             {
-                _firstQte.enabled = false;
-                _secondQte.enabled = true;
-                _secondQte.Ended += OnSecondEnded;
+                _reader.enabled = false;
+               // _secondQte.enabled = true;
+                //_secondQte.Ended += OnSecondEnded;
             }
             else
             {

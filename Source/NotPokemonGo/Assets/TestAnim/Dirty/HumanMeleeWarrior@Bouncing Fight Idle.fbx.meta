@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8d7ec903b7dcb724e96428fd24682e9c
+guid: 938da511008098c4599d32bee816f971
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Boxing
+      name: Bouncing Fight Idle
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 89
       wrapMode: 0
-      orientationOffsetY: -10
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0

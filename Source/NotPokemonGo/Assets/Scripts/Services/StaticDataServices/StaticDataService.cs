@@ -85,8 +85,8 @@ namespace Services.StaticDataServices
 
         public QteConfig GetQteConfig(QteType abilityType)
         {
-            if (_qteConfigs.TryGetValue(abilityType, out QteConfig getQteConfig))
-                return getQteConfig;
+            if (_qteConfigs.TryGetValue(abilityType, out QteConfig qteConfig))
+                return qteConfig;
 
             throw new KeyNotFoundException($"No qte config found for mode {abilityType}");
         }

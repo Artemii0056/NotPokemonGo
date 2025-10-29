@@ -19,7 +19,7 @@ MonoBehaviour:
   <EndAnimationParticles>k__BackingField: []
   <Parts>k__BackingField:
   - <AbilityPhases>k__BackingField:
-    - AnimationClip: {fileID: 7400000, guid: 340c607605a8ff74fb553547a12b23c0, type: 2}
+    - AnimationClip: {fileID: 7400000, guid: cc157d0dd4441f94bbc53e0b98f12428, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -33,6 +33,23 @@ MonoBehaviour:
       TargetMode: 0
       QteType: 0
       <PhaseType>k__BackingField: 1
+    - AnimationClip: {fileID: 7400000, guid: 743036273f06dba4999c634eff5346ce, type: 2}
+      ArmamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField: []
+        <ParticleSystem>k__BackingField: {fileID: 0}
+        <ArmamentView>k__BackingField: {fileID: 0}
+        <MoveSpeed>k__BackingField: 0
+      CastamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField:
+        - Type: 0
+          TargetType: 1
+          Value: 5
+        <ParticleSystem>k__BackingField: {fileID: 0}
+      TargetMode: 0
+      QteType: 0
+      <PhaseType>k__BackingField: 0
     - AnimationClip: {fileID: 7400000, guid: 81aa5bc23c62747479fea4b8e5326179, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
@@ -136,7 +153,7 @@ MonoBehaviour:
       QteType: 0
       <PhaseType>k__BackingField: 0
   - <AbilityPhases>k__BackingField:
-    - AnimationClip: {fileID: 7400000, guid: daf6680a1f635694c9300bc6b856da25, type: 2}
+    - AnimationClip: {fileID: 7400000, guid: bbd5a80fcd68f1243a260314896f6c17, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -149,6 +166,20 @@ MonoBehaviour:
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
       QteType: 6
+      <PhaseType>k__BackingField: 0
+    - AnimationClip: {fileID: 7400000, guid: eb0c37e467e522947b7cffad190ab98b, type: 2}
+      ArmamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField: []
+        <ParticleSystem>k__BackingField: {fileID: 0}
+        <ArmamentView>k__BackingField: {fileID: 0}
+        <MoveSpeed>k__BackingField: 0
+      CastamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField: []
+        <ParticleSystem>k__BackingField: {fileID: 0}
+      TargetMode: 0
+      QteType: 7
       <PhaseType>k__BackingField: 0
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 4d3d3482af9a61941bace981b70278af, type: 2}
