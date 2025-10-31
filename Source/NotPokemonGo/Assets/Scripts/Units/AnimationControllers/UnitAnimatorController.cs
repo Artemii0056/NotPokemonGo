@@ -15,13 +15,13 @@ namespace Units.AnimationControllers
 
         public event Action Finished;
 
-        private void Awake() => 
+        private void Awake() =>
             _animator = GetComponent<Animator>();
 
-        public void Play(int animationName) => 
+        public void Play(int animationName) =>
             _animator.Play(animationName);
 
-        public void FlagParticleSystem1() => 
+        public void FlagParticleSystem1() =>
             ParticleSystem1Started?.Invoke();
 
         public void FlagParticleSystem2() =>
@@ -32,18 +32,27 @@ namespace Units.AnimationControllers
 
         public void FlagAttack() =>
             Attack1Started?.Invoke();
-        
+
         public void FlagAttack2() =>
             Attack2Started?.Invoke();
 
-        public void FlagFinishAnimation() => 
+        public void FlagFinishAnimation() =>
             Finished?.Invoke();
 
-        public float GetAnimationLenght()
+        public float GetAnimationLength()
         {
-            AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
+            AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
 
-            return clipInfo[0].clip.length;
+            AnimatorClipInfo[] currentClips = _animator.GetCurrentAnimatorClipInfo(0);
+            AnimatorClipInfo[] nextClips = _animator.GetNextAnimatorClipInfo(0);
+
+            if (currentClips.Length > 0)
+                return currentClips[0].clip.length;
+
+            if (nextClips.Length > 0)
+                return nextClips[0].clip.length;
+
+            return currentState.length;
         }
     }
 }

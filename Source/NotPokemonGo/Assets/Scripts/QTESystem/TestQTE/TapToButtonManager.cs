@@ -11,10 +11,10 @@ namespace QTESystem.TestQTE
     {
         [SerializeField] private TapToButton _tapToButton;
         [SerializeField] private Image _image;
-
-        private int _valueToTap = 50;
+        
+        private int _valueToTap = 20;
         private float _maxValue = 100;
-        private float _decaySpeed = 40;
+        private float _decaySpeed = 10;
 
         private float _currentValue = 0;
 
@@ -40,8 +40,8 @@ namespace QTESystem.TestQTE
             if (_isFulled)
                 return;
 
-            if (_currentValue > 0)
-                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * Time.deltaTime);
+            if (_currentValue > 0) 
+                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.StandardTime);
 
             _image.fillAmount = _currentValue / _maxValue;
         }
@@ -58,7 +58,6 @@ namespace QTESystem.TestQTE
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
 
-                //  Debug.Log(_currentValue + " currentValue");
                 Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
                 Successed?.Invoke(this);
                 _isFulled = true;

@@ -23,6 +23,7 @@ using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using Statuses.Services;
+using TimeServices;
 using UI.Ability;
 using UI.BattleUpgrages;
 using UI.Factory;
@@ -107,6 +108,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
             
             builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
+            
+            builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

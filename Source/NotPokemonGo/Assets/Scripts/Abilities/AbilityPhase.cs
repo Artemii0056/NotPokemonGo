@@ -1,6 +1,7 @@
 ﻿using System;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
+using Cameras;
 using QTESystem;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Abilities
         public CastamentSetup CastamentSetup;
         public TargetMode TargetMode;
         public QteType QteType;
+        public CameraActionType CameraActionType;
         [field: SerializeField] public PhaseType PhaseType { get; set; }
         
         public int AnimationCashName => Animator.StringToHash(AnimationClip.name);

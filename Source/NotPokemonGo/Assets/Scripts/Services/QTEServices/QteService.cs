@@ -3,6 +3,7 @@ using System.Collections;
 using Abilities;
 using QTESystem;
 using Services.StaticDataServices;
+using TimeServices;
 using UI.QTE;
 using UnityEngine;
 using VContainer;
@@ -16,6 +17,7 @@ namespace Services.QTEServices
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IObjectResolver _objectResolver;
         private readonly ISourceProvider _sourceProvider;
+        private readonly ITimeService _timeService;
         private AbilityType _abilityType;
 
         public event Action <bool> Completed; 
@@ -24,12 +26,14 @@ namespace Services.QTEServices
             IStaticDataService staticDataService, 
             ICoroutineRunner coroutineRunner, 
             IObjectResolver objectResolver, 
-            ISourceProvider sourceProvider)
+            ISourceProvider sourceProvider, 
+            ITimeService timeService)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
             _objectResolver = objectResolver;
             _sourceProvider = sourceProvider;
+            _timeService = timeService;
         }
         
         public void Start(QteType qteType)
@@ -45,7 +49,7 @@ namespace Services.QTEServices
             {
                 QteButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
                 
-                view.Construct(_sourceProvider.Source);
+                view.Construct(_sourceProvider.Source, _timeService);
                 _objectResolver.Inject(view);
                 QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view, _abilityType);
                 qtePhasePresenter.Enable();

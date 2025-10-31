@@ -1,7 +1,6 @@
 ﻿using System;
 using UI.QTE;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
@@ -25,24 +24,31 @@ namespace QTESystem.TestQTE
         private void Start()
         {
             _slider.value = _currentSliderValue;
-
-            _targetTime = Unit.UnitAnimatorController.GetAnimationLenght();
+        
+            _targetTime = Unit.UnitAnimatorController.GetAnimationLength() ;  
         }
 
         private void Update()
         {
             if (_isFinished == false)
-                _currentTime += Time.deltaTime;
+                _currentTime += Time.deltaTime * Time.timeScale * 10; //Вот тут вопросики
 
             if (_currentTime >= _targetTime)
             {
                 _isFinished = true;
                 ShowResult();
             }
+            
+            if (Mathf.Abs(_targetSliderValue - _slider.value) <= 0.1)
+            {
+                Successed?.Invoke(this);
+            }
         }
 
         private void ShowResult()
         {
+            Debug.Log(Mathf.Abs(_targetSliderValue - _slider.value));
+            
             if (Mathf.Abs(_targetSliderValue - _slider.value) <= 0.1)
             {
                 Successed?.Invoke(this);

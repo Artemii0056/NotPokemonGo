@@ -42,7 +42,6 @@ namespace Characters
             _source = source;
             _target = target;
 
-
             var parts = abilityModel.Parts;
             
             foreach (AbilityPart part in parts)

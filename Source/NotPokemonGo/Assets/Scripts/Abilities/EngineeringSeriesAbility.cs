@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cameras;
 using Infrastructure;
 using QTESystem;
 using Services;
@@ -71,10 +72,14 @@ namespace Abilities
                 _unitAnimationTrigger.SetPhase(abilityPhase);
                 _unitAnimatorController.Play(abilityPhase.AnimationCashName);
 
+                if (abilityPhase.CameraActionType != CameraActionType.None)
+                    HandleCamera(_source, abilityPhase.CameraActionType);
+
                 if (abilityPhase.QteType != QteType.Unknown)
                 {
                     if (abilityPhase.QteType == QteType.TapToButton)
                     {
+                        Time.timeScale = 0.1f;
                         _qteService.Completed += OnQteTapToButtonCompleted;
                         _qteService.Start(abilityPhase.QteType);
                     }
@@ -82,6 +87,7 @@ namespace Abilities
                     {
                         if (_tapCompleted)
                         {
+                            Time.timeScale = 0.25f; // 
                             _qteService.Completed += OnQteSliderBackCompleted;
                             _qteService.Start(abilityPhase.QteType);
                         }
@@ -90,6 +96,7 @@ namespace Abilities
                     {
                         if (_backCompleted)
                         {
+                            Time.timeScale = 0.1f;
                             _qteService.Completed += OnQteSliderForwardCompleted;
                             _qteService.Start(abilityPhase.QteType);
                         }
@@ -107,7 +114,7 @@ namespace Abilities
                         _unitAnimatorController.Finished -= AnimationFinished;
                         break;
 
-                    case PhaseType.IsMovementPhase:
+                    case PhaseType.IsMovementPhase: 
                         yield return MoveUnit(_source, _target.transform.position, 1f);
                         break;
 
@@ -129,24 +136,35 @@ namespace Abilities
             HandleEndPhase();
         }
 
+        private void HandleCamera(Unit source, CameraActionType actionType)
+        {
+            if (actionType == CameraActionType.FocusOnSource)
+                source.virtualCamera.enabled = true;
+            else if (actionType == CameraActionType.MoveBack)
+                source.virtualCamera.enabled = false;
+        }
+
         private void OnQteSliderBackCompleted(bool state)
         {
             Debug.Log("OnQteSliderBackCompleted " + state);
 
+            Time.timeScale = 1f;
             _backCompleted = state;
             _qteService.Completed -= OnQteSliderBackCompleted;
         }
 
         private void OnQteSliderForwardCompleted(bool state)
         {
-            Debug.Log("OnQteSliderForwardCompleted " + state);
+            Time.timeScale = 1f;
 
+            _source.virtualCamera.enabled = false;
             Debug.Log("ПРОЙДЕНО!");
             _qteService.Completed -= OnQteSliderForwardCompleted;
         }
 
         private void OnQteTapToButtonCompleted(bool state)
         {
+            Time.timeScale = 1f;
             Debug.Log("OnQteTapToButtonCompleted " + state);
 
             _tapCompleted = state;
@@ -182,7 +200,7 @@ namespace Abilities
             float stopDistance = 1.5f;
             float liftDelay = 0.6f;
             int jumpPower = 2;
-            var totalDuration = _unitAnimatorController.GetAnimationLenght();
+            var totalDuration = _unitAnimatorController.GetAnimationLength();
 
             Vector3 direction = (targetPosition - unit.transform.position).normalized;
             Vector3 adjustedTarget = targetPosition - direction * stopDistance;

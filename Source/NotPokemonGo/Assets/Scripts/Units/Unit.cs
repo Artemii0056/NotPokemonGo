@@ -5,6 +5,7 @@ using Abilities.MV;
 using Assets;
 using Characters;
 using Characters.Configs;
+using Cinemachine;
 using Effects;
 using Infrastructure;
 using Stats;
@@ -20,6 +21,8 @@ namespace Units
 
         private CapsuleCollider _capsuleCollider;
         public Transform abilityPos;
+        
+        public CinemachineVirtualCamera virtualCamera;
         [field: SerializeField] public UnitType UnitType { get; private set; }
         public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
