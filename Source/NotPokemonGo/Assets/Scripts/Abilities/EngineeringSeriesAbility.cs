@@ -35,7 +35,7 @@ namespace Abilities
         private bool _tapCompleted;
         private bool _backCompleted;
         private bool _forwardCompleted;
-
+        
         public event Action Finished;
 
         public EngineeringSeriesAbility(
@@ -105,23 +105,24 @@ namespace Abilities
 
                 switch (abilityPhase.PhaseType)
                 {
-                    case PhaseType.IsMelee:
-                        _animationPlaying = true;
-                        _unitAnimatorController.Finished += AnimationFinished;
-
-                        yield return new WaitWhile(() => _animationPlaying);
-
-                        _unitAnimatorController.Finished -= AnimationFinished;
-                        break;
+                    
+                        // _animationPlaying = true;
+                        // _unitAnimatorController.Finished += AnimationFinished;
+                        //
+                        // yield return new WaitWhile(() => _animationPlaying);
+                        //
+                        // _unitAnimatorController.Finished -= AnimationFinished;
+                        // break;
 
                     case PhaseType.IsMovementPhase: 
-                        yield return MoveUnit(_source, _target.transform.position, 1f);
+                        yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));
                         break;
 
                     case PhaseType.IsReturnPhase:
                         yield return MoveUnit(_source, _startPosition);
                         break;
 
+                    case PhaseType.IsMelee:
                     case PhaseType.Default:
                         _animationPlaying = true;
                         _unitAnimatorController.Finished += AnimationFinished;
@@ -195,15 +196,11 @@ namespace Abilities
         private void AnimationFinished() =>
             _animationPlaying = false;
 
-        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
+        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition)
         {
-            float stopDistance = 1.5f;
             float liftDelay = 0.6f;
             int jumpPower = 2;
             var totalDuration = _unitAnimatorController.GetAnimationLength();
-
-            Vector3 direction = (targetPosition - unit.transform.position).normalized;
-            Vector3 adjustedTarget = targetPosition - direction * stopDistance;
 
             yield return new WaitForSeconds(liftDelay);
 
@@ -211,10 +208,19 @@ namespace Abilities
             unit.transform.DOKill();
 
             Tween jumpTween = unit.transform
-                .DOJump(adjustedTarget, jumpPower, 1, moveDuration)
+                .DOJump(targetPosition, jumpPower, 1, moveDuration)
                 .SetEase(Ease.InQuad);
 
             yield return jumpTween.WaitForCompletion();
+        }
+        
+        private Vector3 CalculateTargetPosition( Vector3 startPosition,Vector3 targetPosition)
+        {
+            float stopDistance = 1.5f;
+            
+            Vector3 direction = (targetPosition - startPosition).normalized;
+            
+            return targetPosition - direction * stopDistance;
         }
     }
 }
