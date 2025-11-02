@@ -192,7 +192,7 @@ MonoBehaviour:
       CameraActionType: 0
       <PhaseType>k__BackingField: 0
   - <AbilityPhases>k__BackingField:
-    - AnimationClip: {fileID: 7400000, guid: 4d3d3482af9a61941bace981b70278af, type: 2}
+    - AnimationClip: {fileID: 7400000, guid: cc157d0dd4441f94bbc53e0b98f12428, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
