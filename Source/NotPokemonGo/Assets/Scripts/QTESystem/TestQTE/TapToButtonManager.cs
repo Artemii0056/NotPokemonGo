@@ -11,7 +11,7 @@ namespace QTESystem.TestQTE
     {
         [SerializeField] private TapToButton _tapToButton;
         [SerializeField] private Image _image;
-        
+
         private int _valueToTap = 20;
         private float _maxValue = 100;
         private float _decaySpeed = 10;
@@ -20,6 +20,9 @@ namespace QTESystem.TestQTE
 
         private bool _isFulled = false;
 
+        private float _currentTime = 0;
+        private float _targetTime;
+
         private Unit _unit;
 
         public override event Action<QteButtonView> Successed;
@@ -27,6 +30,9 @@ namespace QTESystem.TestQTE
 
         private void OnEnable() => 
             _tapToButton.Click += OnClick;
+
+        private void Start() => 
+            _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
 
         private void OnDisable()
         {
@@ -37,10 +43,15 @@ namespace QTESystem.TestQTE
 
         private void Update()
         {
+            _currentTime += TimeService.StandardTime;
+
+            if (_currentTime >= _targetTime)
+                Invalided?.Invoke(this);
+
             if (_isFulled)
                 return;
 
-            if (_currentValue > 0) 
+            if (_currentValue > 0)
                 _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.StandardTime);
 
             _image.fillAmount = _currentValue / _maxValue;

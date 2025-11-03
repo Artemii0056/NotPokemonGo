@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UI.QTE
 {
-  public class QTETapUIView : QteButtonView
+  public class QTETapUIView : QteButtonView //TODO Это по ходу в минус?
   {
     public RectTransform rectTransform;
 

@@ -51,6 +51,7 @@ namespace Abilities
             _parts = abilityProvider.AbilityModel.Parts;
             _startPosition = source.transform.position;
             _cinemachineBrain = Object.FindObjectOfType<CinemachineBrain>(); //TODO Вот эту херню исправить 
+            //Исправить и добавить тайм сервис и с ним связанную логику.
         }
 
         public void Play()

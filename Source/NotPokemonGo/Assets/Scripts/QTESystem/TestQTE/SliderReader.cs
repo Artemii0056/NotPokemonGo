@@ -7,7 +7,7 @@ namespace QTESystem.TestQTE
 {
     public class SliderReader : QteButtonView
     {
-        [SerializeField] private Slider _slider;
+        [SerializeField] private Slider _slider; //Тут нужно еще добавить отображение времени qte
 
         [SerializeField] private float _currentSliderValue = 0.5f;
         [SerializeField] private float _targetSliderValue;
@@ -32,7 +32,7 @@ namespace QTESystem.TestQTE
         {
             if (_isFinished == false)
                 _currentTime += Time.deltaTime * Time.timeScale * 10; //Вот тут вопросики
-
+            
             if (_currentTime >= _targetTime)
             {
                 _isFinished = true;
