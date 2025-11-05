@@ -14,7 +14,7 @@ namespace QTESystem.TestQTE
 
         private int _valueToTap = 20;
         private float _maxValue = 100;
-        private float _decaySpeed = 10;
+        private float _decaySpeed = 20;
 
         private float _currentValue = 0;
 
@@ -28,11 +28,14 @@ namespace QTESystem.TestQTE
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
 
-        private void OnEnable() => 
+        private void OnEnable() =>
             _tapToButton.Click += OnClick;
 
-        private void Start() => 
+        private void Start()
+        {
             _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
+            Debug.Log(_targetTime);
+        }
 
         private void OnDisable()
         {
@@ -43,7 +46,7 @@ namespace QTESystem.TestQTE
 
         private void Update()
         {
-            _currentTime += TimeService.StandardTime;
+            _currentTime += TimeService.UnscaledDeltaTime;
 
             if (_currentTime >= _targetTime)
                 Invalided?.Invoke(this);
@@ -52,7 +55,7 @@ namespace QTESystem.TestQTE
                 return;
 
             if (_currentValue > 0)
-                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.StandardTime);
+                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.UnscaledDeltaTime);
 
             _image.fillAmount = _currentValue / _maxValue;
         }

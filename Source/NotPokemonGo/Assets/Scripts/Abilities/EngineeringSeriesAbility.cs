@@ -138,7 +138,7 @@ namespace Abilities
             Time.timeScale = type switch
             {
                 QteType.TapToButton => 0.1f,
-                QteType.SliderBack => 0.1f,
+                QteType.SliderBack => 0.05f,
                 QteType.SliderForward => 0.1f,
                 _ => 1f
             };

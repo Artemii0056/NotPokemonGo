@@ -2,7 +2,7 @@
 {
     public interface ITimeService
     {
-        float StandardTime { get; }
+        float UnscaledDeltaTime { get; }
         float HalfTime { get; }
         float QuarterTime { get; }
         float DeltaTime { get; }

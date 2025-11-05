@@ -31,7 +31,8 @@ namespace QTESystem.TestQTE
         private void Update()
         {
             if (_isFinished == false)
-                _currentTime += Time.deltaTime * Time.timeScale * 10; //Вот тут вопросики
+                _currentTime += TimeService.UnscaledDeltaTime;
+                //_currentTime += Time.deltaTime * Time.timeScale * 10; //Вот тут вопросики
             
             if (_currentTime >= _targetTime)
             {

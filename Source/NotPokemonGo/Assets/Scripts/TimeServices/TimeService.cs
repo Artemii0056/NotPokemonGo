@@ -6,7 +6,7 @@ namespace TimeServices
     {
         public float DeltaTime => Time.deltaTime;
         public float FixedDeltaTime => Time.fixedDeltaTime;
-        public float StandardTime => Time.unscaledTime;
+        public float UnscaledDeltaTime => Time.unscaledDeltaTime;
         public float HalfTime => Time.deltaTime / 2;
         public float QuarterTime => Time.deltaTime / 4;
     }
