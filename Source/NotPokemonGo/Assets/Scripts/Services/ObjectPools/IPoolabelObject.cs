@@ -2,5 +2,6 @@
 {
   public interface IPoolabelObject
   {
+    void PollableDispose();
   }
 }

@@ -2,14 +2,17 @@
 using Infrastructure;
 using Stats;
 using Units;
+using UnityEngine;
 
 namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
+        public event Action<EffectType, Unit, float> EffectOnTargetCompleted;
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
             float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value);
+            EffectOnTargetCompleted?.Invoke(effect.Type, target, finalValue);
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 

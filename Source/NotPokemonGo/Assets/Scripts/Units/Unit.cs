@@ -5,7 +5,6 @@ using Abilities.MV;
 using Assets;
 using Characters;
 using Characters.Configs;
-using Effects;
 using Infrastructure;
 using Stats;
 using Statuses;

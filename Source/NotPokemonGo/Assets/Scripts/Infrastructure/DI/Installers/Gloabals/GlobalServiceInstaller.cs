@@ -26,6 +26,7 @@ using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
+using Services.UITextServices;
 using Statuses.Services;
 using UI.Ability;
 using UI.BattleUpgrages;
@@ -102,8 +103,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
-            builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
-            
             builder.Register<ILevelProgressService, LevelProgressService>(Lifetime.Singleton);
             
             builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
@@ -115,6 +114,13 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<PersistentProgressService>(Lifetime.Singleton).AsSelf();
             
             builder.Register<PlayerPrefsSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces();
+            
+            builder.Register<UITextService>(Lifetime.Singleton).AsSelf();
+            
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Resolve<UITextService>();
+            });
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
