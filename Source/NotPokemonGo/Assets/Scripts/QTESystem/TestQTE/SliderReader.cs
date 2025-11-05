@@ -25,7 +25,7 @@ namespace QTESystem.TestQTE
         {
             _slider.value = _currentSliderValue;
         
-            _targetTime = Unit.UnitAnimatorController.GetAnimationLength() ;  
+            _targetTime = Unit.UnitAnimatorController.GetAnimationLength();  
         }
 
         private void Update()
