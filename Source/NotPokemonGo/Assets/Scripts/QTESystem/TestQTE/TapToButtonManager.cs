@@ -11,6 +11,7 @@ namespace QTESystem.TestQTE
     {
         [SerializeField] private TapToButton _tapToButton;
         [SerializeField] private Image _image;
+        [SerializeField] private Image _timer;
 
         private int _valueToTap = 20;
         private float _maxValue = 100;
@@ -34,7 +35,6 @@ namespace QTESystem.TestQTE
         private void Start()
         {
             _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
-            Debug.Log(_targetTime);
         }
 
         private void OnDisable()
@@ -47,6 +47,8 @@ namespace QTESystem.TestQTE
         private void Update()
         {
             _currentTime += TimeService.UnscaledDeltaTime;
+
+            _timer.fillAmount = 1f - (_currentTime / _targetTime);
 
             if (_currentTime >= _targetTime)
                 Invalided?.Invoke(this);
