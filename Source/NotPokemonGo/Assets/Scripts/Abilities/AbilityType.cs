@@ -10,6 +10,8 @@
         DoubleAttack,
         BaseAbility,
         EngineeringSeries,
+        HittingGround,
+        BaseAttack,
         Defailt
     }
 }

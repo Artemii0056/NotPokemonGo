@@ -1,6 +1,7 @@
 ﻿using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
+using UI;
 
 namespace Infrastructure.StateMachines.GlobalStateMachine
 {

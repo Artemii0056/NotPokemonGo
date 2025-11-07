@@ -1,4 +1,5 @@
 ﻿using System;
+using Abilities.Bennet;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services;
@@ -20,6 +21,8 @@ namespace Abilities
         public event Action Finished;
 
         private EngineeringSeriesAbility _ability;
+        private HittingGround _hittingGbility;
+        private BennetBaseAttack _bennetBase;
 
         public AbilityService(
             IAbilityProvider abilityProvider, 
@@ -60,8 +63,22 @@ namespace Abilities
                     _ability.Play();
                     _ability.Finished +=  Continue;
                     break;
+                
+                case AbilityType.HittingGround:
+                    _hittingGbility = new HittingGround(_coroutineRunner, _abilityProvider, source); //Оставить один кейс и до этого найти подходящую абилку
+                    _hittingGbility.Play();
+                    _hittingGbility.Finished +=  Continue;
+                    break;
+                
+                case AbilityType.BaseAttack:
+                    _bennetBase = new BennetBaseAttack( source, target, _abilityProvider, _coroutineRunner);
+                    _bennetBase.Play();
+                    _bennetBase.Finished +=  Continue;
+                    break;
+                
                 case AbilityType.Defailt:
                     break;
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }

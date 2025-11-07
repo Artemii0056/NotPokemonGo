@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cameras;
 using Cinemachine;
+using DG.Tweening;
 using Infrastructure;
 using QTESystem;
 using Services;
@@ -10,10 +11,9 @@ using Services.QTEServices;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
-using DG.Tweening;
 using Object = UnityEngine.Object;
 
-namespace Abilities
+namespace Abilities.Bennet
 {
     public class EngineeringSeriesAbility
     {
