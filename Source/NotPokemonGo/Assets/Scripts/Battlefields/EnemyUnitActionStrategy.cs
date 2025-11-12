@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
+using Abilities;
 using Abilities.MV;
-using Infrastructure.StateMachines;
-using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
-using Services;
 using Units;
 using UnityEngine;
 using VContainer;
@@ -17,11 +12,9 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private IBattleStateMachine _battleStateMachine;
         private ISourceProvider _sourceProvider;
-        private IAbilityProvider _abilityProvider;
         private ITargetSelector _targetSelector;
-        private ICoroutineRunner _coroutineRunner;
+        private IAbilityService _abilityService;
 
         public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
         {
@@ -31,32 +24,26 @@ namespace Battlefields
 
         [Inject]
         public void Initialize(
-            IBattleStateMachine battleStateMachine,
             ISourceProvider sourceProvider,
-            IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
-            ICoroutineRunner coroutineRunner
+            IAbilityService abilityService
         )
         {
-            _coroutineRunner = coroutineRunner;
             _targetSelector = targetSelector;
-            _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
-            _battleStateMachine = battleStateMachine;
+            _abilityService = abilityService;
         }
 
         public override void Enable()
         {
             base.Enable();
             Attack(_battlefield.HeroesPlatoon.AliveUnits);
-            _source.Step.ActionEnded += OnAnimationActionEnded;
         }
 
         public override void Disable()
         {
             base.Disable();
-            _sourceProvider.Discard();
-            _source.Step.ActionEnded -= OnAnimationActionEnded;
+            _sourceProvider.Discard(); //Уберу дискард если чт
         }
 
         private void Attack(List<Unit> targets)
@@ -66,11 +53,11 @@ namespace Battlefields
                 if (abilityModel.IsReady())
                 {
                     Unit randomTarget = GetRandomTarget(targets);
-                    _source.Step.SetAbilityModel(abilityModel, _source, randomTarget);
                     
-                    _sourceProvider.Remember(_source);
-                    _abilityProvider.Remember(abilityModel);
+                    //_abilityProvider.Remember(abilityModel); //Для врагов нужно сделать отдельный AbilityService 
                     _targetSelector.Remember(randomTarget);
+                    _sourceProvider.Remember(_source);
+                    _abilityService.Handle(_source, randomTarget, _battlefield, abilityModel); 
                     
                     abilityModel.DiscardCurrentTime();
 
@@ -85,16 +72,10 @@ namespace Battlefields
         private Unit GetRandomTarget(List<Unit> targets) =>
             targets[Random.Range(0, targets.Count)];
 
-        private void OnAnimationActionEnded()
-        {
-            _coroutineRunner.StartCoroutine(Delay());
-        }
-
-        private IEnumerator Delay()
-        {
-            yield return new WaitForSeconds(0.5f);
-            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-            //_battleStateMachine.Enter<UpdateBattleTickState, Battlefield>(_battlefield);
-        }
+        // private IEnumerator Delay()
+        // {
+        //     yield return new WaitForSeconds(0.5f);
+        //     _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+        // }
     }
 }

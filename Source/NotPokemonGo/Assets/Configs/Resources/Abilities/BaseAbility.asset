@@ -17,23 +17,7 @@ MonoBehaviour:
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
-  <Phases>k__BackingField:
-  - AnimationClip: {fileID: 7400000, guid: ae3c91fea9508744ca55e5ea3c999ee6, type: 2}
-    ArmamentSetup:
-      <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField: []
-      <ParticleSystem>k__BackingField: {fileID: 0}
-      <ArmamentView>k__BackingField: {fileID: 0}
-      <MoveSpeed>k__BackingField: 0
-    CastamentSetup:
-      <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField:
-      - Type: 1
-        TargetType: 1
-        Value: 1
-      <ParticleSystem>k__BackingField: {fileID: 0}
-    TargetMode: 0
-    <PhaseType>k__BackingField: 3
+  <Parts>k__BackingField: []
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 0

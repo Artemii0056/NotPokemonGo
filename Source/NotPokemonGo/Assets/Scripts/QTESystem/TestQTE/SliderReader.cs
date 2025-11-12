@@ -51,8 +51,6 @@ namespace QTESystem.TestQTE
 
         private void ShowResult()
         {
-            Debug.Log(Mathf.Abs(_targetSliderValue - _slider.value));
-            
             if (Mathf.Abs(_targetSliderValue - _slider.value) <= 0.1)
             {
                 Successed?.Invoke(this);

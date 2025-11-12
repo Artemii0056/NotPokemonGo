@@ -23,7 +23,6 @@ namespace Factories
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private readonly ITargetSelector _targetSelector;
-        private readonly ICoroutineRunner _coroutineRunner;
 
         public UnitFactory(
             IObjectResolver objectResolver,
@@ -40,7 +39,6 @@ namespace Factories
             _staticDataService = staticDataService;
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
-            _coroutineRunner = coroutineRunner;
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -62,11 +60,9 @@ namespace Factories
                 _abilityApplicatorService,
                 _targetSelector);
 
-            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
-
             unit.SetAnumationTrigger(unitAnimatorTrigger);
 
-            unit.Construct(config.Stats, unitStep, platoonType);
+            unit.Construct(config.Stats,  platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
@@ -97,9 +93,7 @@ namespace Factories
                 _abilityApplicatorService,
                 _targetSelector);
 
-            UnitStep unitStep = new UnitStep(unitAnimatorTrigger, controller, _coroutineRunner);
-
-            unit.Construct(stats, unitStep, platoonType);
+            unit.Construct(stats, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

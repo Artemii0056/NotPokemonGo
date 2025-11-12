@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
-  m_Name: BennetUltimate
+  m_Name: BennetCounterattack
   m_EditorClassIdentifier: 
-  <AbilityType>k__BackingField: 8
+  <AbilityType>k__BackingField: 10
   <Icon>k__BackingField: {fileID: 21300120, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
   <Parts>k__BackingField:
   - <AbilityPhases>k__BackingField:
-    - AnimationClip: {fileID: 7400000, guid: 108c96c6ef914bb4aadf9927f9f3e0e2, type: 2}
+    - AnimationClip: {fileID: 7400000, guid: d8011a3effd0cb04b81250557ebdcb9f, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -28,7 +28,10 @@ MonoBehaviour:
         <MoveSpeed>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
+        <EffectInfo>k__BackingField:
+        - Type: 0
+          TargetType: 1
+          Value: 20
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
       QteType: 0

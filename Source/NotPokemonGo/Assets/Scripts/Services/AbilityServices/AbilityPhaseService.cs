@@ -4,8 +4,8 @@ namespace Services.AbilityServices
 {
     public class AbilityPhaseService
     {
-        private IAbilityApplicatorService _abilityApplicatorService;
-        private ITargetSelector _targetSelector;
+        private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private readonly ITargetSelector _targetSelector;
 
         public AbilityPhaseService(IAbilityApplicatorService abilityApplicatorService, ITargetSelector targetSelector)
         {

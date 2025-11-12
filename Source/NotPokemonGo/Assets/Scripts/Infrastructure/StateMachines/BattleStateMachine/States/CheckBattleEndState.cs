@@ -40,8 +40,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
             if (enemiesDead) 
             {
-                Debug.Log("Enter new wave");
-                
                 var survivors = battlefield.HeroesPlatoon.AliveUnits;
                 _battlefieldSessionService.Cleanup();
 

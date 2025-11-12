@@ -1,4 +1,6 @@
 ﻿using System;
+using Abilities;
+using Abilities.MV;
 using Infrastructure;
 using Stats;
 using Units;
@@ -8,18 +10,49 @@ namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
-        private ISourceProvider _sourceProvider;
+        private readonly ISourceProvider _sourceProvider;
+        private readonly IAbilityService _abilityService;
 
-        public EffectResolver(ISourceProvider sourceProvider) =>
-            _sourceProvider = sourceProvider;
-
-        public void ApplyEffect(Unit target, EffectInfo effect)
+        public EffectResolver(
+            ISourceProvider sourceProvider,
+            IAbilityService abilityService)
         {
-            float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value);
+            _sourceProvider = sourceProvider;
+            _abilityService = abilityService;
+        }
+
+        public void ApplyEffect(Unit target, EffectInfo effect) //Сейчас полная фигня
+        {
+            if (effect.Type == EffectType.Damage && SearchCounterAttackAbility(target, out AbilityModel abilityModel))
+            {
+                _abilityService.HandleCounterAttack(target, abilityModel);
+                return;
+            }
+
+            float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value); 
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
-        private float CalculateStatModification(Unit target, StatType targetStat, EffectType effectType,
+        private bool SearchCounterAttackAbility(Unit target, out AbilityModel ability)
+        {
+            ability = null;
+
+            foreach (var abilityModel in target.AbilityModels)
+            {
+                if (abilityModel.AbilityType == AbilityType.CounterAttack && abilityModel.IsReady())
+                {
+                    ability = abilityModel;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private float CalculateStatModification(
+            Unit target,
+            StatType targetStat,
+            EffectType effectType,
             float baseValue)
         {
             float qteModificator = _sourceProvider.Source.GetStat(StatType.QteDamageModifier);
@@ -51,7 +84,7 @@ namespace Effects
                                 finalValue = 0;
                             }
 
-                           // Debug.Log(finalValue);
+                            // Debug.Log(finalValue);
                             break;
 
                         case EffectType.Heal:

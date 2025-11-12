@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.MV;
+using Infrastructure;
 using Services;
 using Units;
 using Units.AnimationControllers;
@@ -8,7 +10,7 @@ using UnityEngine;
 
 namespace Abilities.Bennet
 {
-    public class HittingGround
+    public class HittingGround: IAbilityHandler
     {
         private Coroutine _currentRoutine;
         private ICoroutineRunner _coroutineRunner;
@@ -17,21 +19,26 @@ namespace Abilities.Bennet
         private readonly UnitAnimatorTrigger _animatorTrigger;
         private bool _animationPlaying;
 
-        public event Action Finished;
+        public event Action<IAbilityHandler> Finished;
 
         public HittingGround(ICoroutineRunner currentRoutine,
-            IAbilityProvider abilityProvider,
+            AbilityModel abilityModel,
             Unit source)
         {
             _coroutineRunner = currentRoutine;
             _animatorController = source.UnitAnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
-            _parts = abilityProvider.AbilityModel.Parts;
+            _parts = abilityModel.Parts;
         }
 
         public void Play()
         {
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
+        }
+
+        public void Stop()
+        {
+            _coroutineRunner.StopCoroutine(_currentRoutine);
         }
 
         private IEnumerator ExecuteAllParts()
@@ -55,7 +62,7 @@ namespace Abilities.Bennet
                 }
             }
 
-            //FinishAbility();
+            FinishAbility();
         }
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
@@ -97,5 +104,11 @@ namespace Abilities.Bennet
 
         private void FinishAnimation() =>
             _animationPlaying = false;
+        
+        private void FinishAbility()
+        {
+            _animatorController.Play(Constants.BaseAnimations.Idle);
+            Finished?.Invoke(this);
+        }
     }
 }

@@ -11,13 +11,16 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
     public class UnitActionState : IPayloadedState<UnitActionPayload>
     {
         private readonly IObjectResolver _objectResolver;
+        private readonly IBattleStateMachine _battleStateMachine;
+        private readonly IInputReader _inputReader;
 
         private UnitActionStrategy _unitActionStrategy;
-        private IInputReader _inputReader;
-        private IBattleStateMachine _battleStateMachine;
         private UnitActionPayload _payload;
 
-        public UnitActionState(IObjectResolver objectResolver, IInputReader inputReader, IBattleStateMachine battleStateMachine)
+        public UnitActionState(
+            IObjectResolver objectResolver, 
+            IInputReader inputReader,
+            IBattleStateMachine battleStateMachine)
         {
             _battleStateMachine = battleStateMachine;
             _inputReader = inputReader;
@@ -28,8 +31,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         {
             _payload = battlefield;
             _inputReader.SpacePressed += SetFinishBattleState;
-
-            _inputReader.EButtonPressed += SetQTEState;
 
             switch (battlefield.UnitSorce.PlatoonType)
             {
@@ -44,22 +45,14 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             _objectResolver.Inject(_unitActionStrategy);
 
-            _unitActionStrategy.Enable();        
-        }
-
-        private void SetQTEState()
-        {
-            // QTEPayload qtePayload = new QTEPayload() { Battlefield = _battlefield , AbilityType = _abilityProvider.AbilityModel.AbilityType};
-            // _battleStateMachine.Enter<QTEBattleState, QTEPayload>(qtePayload);
+            _unitActionStrategy.Enable();
         }
 
         public void Exit()
         {
-            _inputReader.EButtonPressed -= SetQTEState;
-
             _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
         }

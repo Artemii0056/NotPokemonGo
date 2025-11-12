@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities.MV;
 using Assets;
-using Characters;
 using Characters.Configs;
 using Cinemachine;
-using Effects;
 using Infrastructure;
 using Stats;
 using Statuses;
@@ -21,7 +19,9 @@ namespace Units
 
         private CapsuleCollider _capsuleCollider;
         public Transform abilityPos;
-        
+
+        public Vector3 StartPosition { get; private set;  }
+
         public CinemachineVirtualCamera virtualCamera;
         [field: SerializeField] public UnitType UnitType { get; private set; }
         public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
@@ -34,7 +34,6 @@ namespace Units
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
 
         public PlatoonType PlatoonType { get; private set; }
-        public UnitStep Step { get; private set; }
 
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
@@ -62,12 +61,9 @@ namespace Units
 
         public void Construct(
             List<StatConfig> statConfig,
-            UnitStep step,
             PlatoonType platoonType)
         {
             PlatoonType = platoonType;
-
-            Step = step;
 
             foreach (var statSetup in statConfig)
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
@@ -76,18 +72,17 @@ namespace Units
                 stat.CurrentValueChanged += StatChanged;
 
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
+            
+            StartPosition = transform.position;
         }
 
         public void Construct(
             Dictionary<StatType, StatSetup> stats,
-            UnitStep step,
             PlatoonType platoonType)
         {
             _stats = stats;
 
             PlatoonType = platoonType;
-
-            Step = step;
 
             foreach (StatSetup stat in _stats.Values)
                 stat.CurrentValueChanged += StatChanged;
@@ -109,6 +104,7 @@ namespace Units
                     float currentHealth = GetStat(StatType.Health);
 
                     float maxHealth = GetStat(StatType.MaxHealth);
+                    
                     HealthChanged?.Invoke(currentHealth, maxHealth);
 
                     if (GetStat(StatType.Health) <= 0)

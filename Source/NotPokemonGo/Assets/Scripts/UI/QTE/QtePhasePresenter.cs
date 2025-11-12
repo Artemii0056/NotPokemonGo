@@ -15,7 +15,7 @@ namespace UI.QTE
             _qteButtonView = qteButtonView;
             QtePhaseSetup = qtePhaseSetup;
             //AbilityType = abilityType;
-            AbilityType = AbilityType.Defailt; //
+            AbilityType = AbilityType.Default; //
         }
 
         public QtePhaseSetup QtePhaseSetup { get; }

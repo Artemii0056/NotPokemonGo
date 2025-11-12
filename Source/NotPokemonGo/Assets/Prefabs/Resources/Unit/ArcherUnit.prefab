@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 2223662153775098468, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c5b48d30563e2a1409a2c216281355e3, type: 2}
+      objectReference: {fileID: 9100000, guid: 288fea1895efa3b47917383115ced869, type: 2}
     - target: {fileID: 2283364625427053730, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -172,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4351324654158138044, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_Name
-      value: 'ArcherUnit '
+      value: ArcherUnit
       objectReference: {fileID: 0}
     - target: {fileID: 6040854845062619438, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_LocalPosition.y

@@ -14,7 +14,7 @@ using Object = UnityEngine.Object;
 
 namespace Abilities
 {
-    public class AbilityApplicatorService : IAbilityApplicatorService
+    public class AbilityApplicatorService : IAbilityApplicatorService //TODO Вот этот типсон должен отвечать за 
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IArmamentViewFactory _armamentViewFactory;

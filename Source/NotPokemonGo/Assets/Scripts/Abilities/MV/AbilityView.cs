@@ -67,19 +67,6 @@ namespace Abilities.MV
                 return;
 
             Debug.LogError($"Надо что то думать с заполнением в {typeof(AbilityView)}");
-            
-            // float remaining = _abilityModel.Cooldown - _abilityModel.CurrentTime;
-            // float sliderValue = Mathf.Clamp01(remaining / _abilityModel.Cooldown);
-            // CooldownImage.fillAmount = sliderValue;
-            //
-            // if (Mathf.Approximately(sliderValue, 0f))
-            // {
-            //     CooldownImage.gameObject.SetActive(false);
-            // }
-            // else
-            // {
-            //     CooldownImage.gameObject.SetActive(true);
-            // }
         }
     }
 }

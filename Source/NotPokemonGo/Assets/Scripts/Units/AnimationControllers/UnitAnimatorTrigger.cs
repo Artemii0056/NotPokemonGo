@@ -120,7 +120,6 @@ namespace Units.AnimationControllers
             _abilityPhaseService.OnNext(_phase);
         }
 
-
         private void OnFinished()
         {
             foreach (var particle in _particles.ToList())

@@ -71,7 +71,6 @@ namespace Battlefields
             base.Disable();
 
             _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
-           // _sourceProvider.Discard();
             
             Debug.Log("Disable Friend Unit Action");
         }
@@ -91,15 +90,10 @@ namespace Battlefields
                     break;
 
                 case PlatoonType.Enemies: 
-                    //АбилитиСервис (управлятор всеми абилками) ->
-                    //Имеет дикшарь/свичКейс со всеми возможными абилками ->
-                    //выбирает по типу абилку(передает продюсера и таргета) ->
-                    //Говорит абилке(MultyAttack) плей(внутри что-то похожее на HandlePhase из UnitStep) ->
-                    //Multyattack полностью следит за завершением абилки и событие о завершении
-                    _abilityService.Handle(_source, unit, _battlefield);
+                    _abilityService.Handle(_source, unit, _battlefield, _abilityProvider.AbilityModel);
                     
-                    //_source.Step.SetAbilityModel(_abilityProvider.AbilityModel, _source, unit);
-                    _targetSelector.Remember(unit); 
+                    // _targetSelector.Remember(unit); //TODO А нужен ли этот сервис вообще? 
+                    // _sourceProvider.Remember(_source); //TODO ХЗ
                     _abilityPanelPresenter.Disable();
                     break;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.MV;
 using Cameras;
 using Cinemachine;
 using DG.Tweening;
@@ -15,7 +16,7 @@ using Object = UnityEngine.Object;
 
 namespace Abilities.Bennet
 {
-    public class EngineeringSeriesAbility
+    public class EngineeringSeriesAbility : IAbilityHandler
     {
         private readonly Unit _source;
         private readonly Unit _target;
@@ -32,12 +33,12 @@ namespace Abilities.Bennet
         
         private bool _animationPlaying;
 
-        public event Action Finished;
+        public event Action<IAbilityHandler> Finished;
 
         public EngineeringSeriesAbility(
             Unit source,
             Unit target,
-            IAbilityProvider abilityProvider,
+            AbilityModel abilityModel,
             ICoroutineRunner coroutineRunner,
             IQteService qteService)
         {
@@ -48,7 +49,7 @@ namespace Abilities.Bennet
 
             _animatorController = source.UnitAnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
-            _parts = abilityProvider.AbilityModel.Parts;
+            _parts = abilityModel.Parts;
             _startPosition = source.transform.position;
             _cinemachineBrain = Object.FindObjectOfType<CinemachineBrain>(); //TODO Вот эту херню исправить 
             //Исправить и добавить тайм сервис и с ним связанную логику.
@@ -57,6 +58,11 @@ namespace Abilities.Bennet
         public void Play()
         {
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
+        }
+
+        public void Stop()
+        {
+            _coroutineRunner.StopCoroutine(_currentRoutine);
         }
 
         private IEnumerator ExecuteAllParts()
@@ -72,7 +78,6 @@ namespace Abilities.Bennet
                     // 🔸 пример: пропустить фазы после неудачного QTE
                     if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
                     {
-                        Debug.Log($"Фаза {phaseIndex} пропущена из-за неудачного QTE");
                         continue;
                     }
 
@@ -208,7 +213,7 @@ namespace Abilities.Bennet
         private void FinishAbility()
         {
             _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke();
+            Finished?.Invoke(this);
         }
         
         private void FinishAnimation() => 

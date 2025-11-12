@@ -1,45 +1,47 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.Bennet;
 using Abilities.MV;
-using DG.Tweening;
 using Infrastructure;
 using Services;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
 
-namespace Abilities.Bennet
+namespace Abilities.Enemies
 {
-    public class BennetBaseAttack : IAbilityHandler
+    public class BaseEnemyAttack: IAbilityHandler
     {
-        private Coroutine _currentRoutine;
-        private ICoroutineRunner _coroutineRunner;
-        private readonly List<AbilityPart> _parts;
+         private readonly UnitAnimatorTrigger _animatorTrigger;
         private readonly UnitAnimatorController _animatorController;
-        private readonly UnitAnimatorTrigger _animatorTrigger;
+        private readonly ICoroutineRunner _coroutineRunner;
+
         private bool _animationPlaying;
-        private readonly Unit _source;
-        private readonly Unit _target;
-        
-        private readonly Vector3 _startPosition;
+
+        private Vector3 _startPosition;
+
+        private readonly List<AbilityPart> _parts;
+        private Unit _source;
+        private Unit _target;
+
+        private Coroutine _currentRoutine;
+
+        public BaseEnemyAttack(Unit source,
+            Unit target,
+            ICoroutineRunner coroutineRunner,
+            AbilityModel abilityModel)
+        {
+            _animatorTrigger = source.AnimatorTrigger;
+            _animatorController = source.UnitAnimatorController;
+            _coroutineRunner = coroutineRunner;
+            _parts = abilityModel.Parts;
+            _target = target;
+            _source = source;
+            _startPosition = _source.transform.position;
+        }
 
         public event Action<IAbilityHandler> Finished;
-
-        public BennetBaseAttack(
-            Unit source,
-            Unit target,
-            AbilityModel abilityModel,
-            ICoroutineRunner coroutineRunner)
-        {
-            _source = source;
-            _target = target;
-            _coroutineRunner = coroutineRunner;
-            _animatorController = source.UnitAnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
-            _parts = abilityModel.Parts;
-            _startPosition = source.transform.position;
-        }
 
         public void Play()
         {
@@ -49,6 +51,7 @@ namespace Abilities.Bennet
         public void Stop()
         {
             _coroutineRunner.StopCoroutine(_currentRoutine);
+            //FinishAbility(); //???
         }
 
         private IEnumerator ExecuteAllParts()
@@ -61,20 +64,13 @@ namespace Abilities.Bennet
                 {
                     var phase = part.AbilityPhases[phaseIndex];
 
-                    // 🔸 пример: пропустить фазы после неудачного QTE
-                    // if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
-                    // {
-                    //     Debug.Log($"Фаза {phaseIndex} пропущена из-за неудачного QTE");
-                    //     continue;
-                    // }
-
                     yield return ExecutePhase(phase);
                 }
             }
 
-            FinishAbility();
+           FinishAbility();
         }
-
+        
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
             _animatorTrigger.SetPhase(phase);
@@ -85,9 +81,9 @@ namespace Abilities.Bennet
                 case PhaseType.IsMovementPhase:
                     yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));
                     break;
-                
+
                 case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _source.StartPosition);
+                    yield return MoveUnit(_source, _startPosition);
                     break;
 
                 default:
@@ -96,33 +92,22 @@ namespace Abilities.Bennet
             }
         }
 
+        private void FinishAbility()
+        {
+            _animatorController.Play(Constants.BaseAnimations.Idle);
+            Finished?.Invoke(this);
+        }
+        
         private IEnumerator WaitForAnimation()
         {
-            _animationPlaying = true;
-
-            void OnFinished() => FinishAnimation();
+            _animationPlaying = true; 
+            
+            void OnFinished() => 
+                FinishAnimation();
 
             _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
             _animatorController.Finished -= OnFinished;
-        }
-        
-        private IEnumerator MoveUnit(Unit unit, Vector3 target)
-        {
-            float liftDelay = 0.6f;
-            int jumpPower = 2;
-            var duration = _animatorController.GetAnimationLength();
-
-            yield return new WaitForSeconds(liftDelay);
-
-            float moveDuration = duration - liftDelay;
-            unit.transform.DOKill();
-
-            Tween jumpTween = unit.transform
-                .DOJump(target, jumpPower, 1, moveDuration)
-                .SetEase(Ease.InQuad);
-
-            yield return jumpTween.WaitForCompletion();
         }
         
         private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
@@ -131,14 +116,23 @@ namespace Abilities.Bennet
             Vector3 direction = (target - start).normalized;
             return target - direction * stopDistance;
         }
-        
-        private void FinishAbility()
-        {
-            _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke(this);
-        }
 
-        private void FinishAnimation() =>
+        private void FinishAnimation() => 
             _animationPlaying = false;
+
+        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
+        {
+            const float Speed = 4f;
+
+            while (Vector3.Distance(unit.transform.position, targetPosition) > offset)
+            {
+                unit.transform.position = Vector3.MoveTowards(
+                    unit.transform.position,
+                    targetPosition,
+                    Speed * Time.deltaTime);
+
+                yield return null;
+            }
+        }
     }
 }

@@ -54,5 +54,15 @@ namespace Units.AnimationControllers
 
             return currentState.length;
         }
+
+        public void Pause()
+        {
+            _animator.speed = 0;
+        }
+
+        public void Continue()
+        {
+            _animator.speed = 1;
+        }
     }
 }

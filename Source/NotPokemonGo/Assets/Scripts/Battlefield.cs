@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using Platoons;
+﻿using Platoons;
 using Statuses.Services;
-using Units;
 
 public class Battlefield
 {
     private readonly IStatusManager _statusManager;
-
-    //public readonly List<Unit> Units = new List<Unit>();
 
     public Battlefield(
         Platoon enemyPlatoon,
