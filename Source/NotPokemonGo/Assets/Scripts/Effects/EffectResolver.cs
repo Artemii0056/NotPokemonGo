@@ -2,29 +2,26 @@
 using Infrastructure;
 using Stats;
 using Units;
+using UnityEngine;
 
 namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
-        private readonly ISourceProvider _sourceProvider;
-
-        public EffectResolver(ISourceProvider sourceProvider) => 
-            _sourceProvider = sourceProvider;
-
         public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
         {
-            float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value); 
+            float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
         private float CalculateStatModification(
+            Unit source,
             Unit target,
             StatType targetStat,
             EffectType effectType,
             float baseValue)
         {
-            float qteModificator = _sourceProvider.Source.GetStat(StatType.QteDamageModifier);
+            float qteModificator = source.GetStat(StatType.QteDamageModifier);
 
             float finalValue;
 

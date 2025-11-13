@@ -18,9 +18,9 @@ namespace Abilities.Bennet
         
         private  UnitAnimatorController _animatorController;
         private  UnitAnimatorTrigger _animatorTrigger;
-        private bool _animationPlaying;
         private  Unit _source;
         private  Unit _target;
+        private bool _animationPlaying;
         
         private Coroutine _currentRoutine;
         private  Vector3 _startPosition;

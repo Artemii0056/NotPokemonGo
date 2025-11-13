@@ -99,6 +99,7 @@ namespace Abilities.Bennet
                 .SetEase(Ease.InQuad);
 
             yield return jumpTween.WaitForCompletion();
+            
             _source.UnitAnimatorController.Continue();
         }
 

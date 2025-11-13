@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BennetCounterattack
   m_EditorClassIdentifier: 
   <AbilityType>k__BackingField: 10
-  <Icon>k__BackingField: {fileID: 21300120, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 3a95bb32869c47442818894dfe9603be, type: 3}
   <StartAnimationParticles>k__BackingField: []
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
@@ -31,6 +31,7 @@ MonoBehaviour:
         <EffectInfo>k__BackingField:
         - Type: 0
           TargetType: 1
+          DamageType: 0
           Value: 20
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
