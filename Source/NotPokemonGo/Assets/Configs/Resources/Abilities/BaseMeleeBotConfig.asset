@@ -35,6 +35,7 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 1
+      _steps: []
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 81aa5bc23c62747479fea4b8e5326179, type: 2}
       ArmamentSetup:
@@ -55,6 +56,7 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 0
+      _steps: []
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: da7ec63fd8bba7a4c97f23b7b1e41aa6, type: 2}
       ArmamentSetup:
@@ -71,6 +73,7 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 2
+      _steps: []
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 2
@@ -80,3 +83,6 @@ MonoBehaviour:
     Value: 1
   - <StatsType>k__BackingField: 3
     Value: 1
+  references:
+    version: 2
+    RefIds: []

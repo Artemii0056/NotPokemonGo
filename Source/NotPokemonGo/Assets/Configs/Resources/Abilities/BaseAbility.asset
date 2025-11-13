@@ -18,12 +18,7 @@ MonoBehaviour:
   <MiddleAnimationParticles>k__BackingField: []
   <EndAnimationParticles>k__BackingField: []
   <Parts>k__BackingField: []
-  <AbilityStatSetup>k__BackingField:
-  - <StatsType>k__BackingField: 0
-    Value: 0
-  - <StatsType>k__BackingField: 1
-    Value: 0
-  - <StatsType>k__BackingField: 2
-    Value: 0
-  - <StatsType>k__BackingField: 3
-    Value: 0
+  <AbilityStatSetup>k__BackingField: []
+  references:
+    version: 2
+    RefIds: []
