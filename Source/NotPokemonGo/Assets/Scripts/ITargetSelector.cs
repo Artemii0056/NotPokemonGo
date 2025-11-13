@@ -5,8 +5,6 @@ using Units;
 
 public interface ITargetSelector
 {
-    void Remember(Unit unit);
-    List<Unit> GetTargets(TargetMode abilityModelTargetMode);
+    List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target);
     void SetPlatoons(Platoon platoon, Platoon platoon2);
-    Unit Target { get; }
 }

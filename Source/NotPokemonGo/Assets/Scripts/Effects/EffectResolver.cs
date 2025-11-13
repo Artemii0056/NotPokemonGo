@@ -12,7 +12,7 @@ namespace Effects
         public EffectResolver(ISourceProvider sourceProvider) => 
             _sourceProvider = sourceProvider;
 
-        public void ApplyEffect(Unit target, EffectInfo effect) 
+        public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
         {
             float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value); 
             target.ChangeStatValue(effect.TargetType, finalValue);

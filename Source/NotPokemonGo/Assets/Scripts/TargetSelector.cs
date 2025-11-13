@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using Abilities;
 using Platoons;
 using Units;
-using UnityEngine;
 
 public class TargetSelector : ITargetSelector
 {
-    private Unit _target;
-
     private List<Platoon> _platoons = new();
 
     public void SetPlatoons(Platoon platoon, Platoon platoon2)
@@ -17,16 +14,11 @@ public class TargetSelector : ITargetSelector
         _platoons.Add(platoon2);
     }
 
-    public Unit Target => _target;
-
-    public void Remember(Unit unit) => 
-        _target = unit;
-
-    public List<Unit> GetTargets(TargetMode abilityModelTargetMode)
+    public List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target) //Сюда передать и таргет сразу 
     {
         Platoon targetPlatoon;
         
-        if (_platoons[0].Type == _target.PlatoonType)
+        if (_platoons[0].Type == target.PlatoonType)
             targetPlatoon = _platoons[0];
         else
             targetPlatoon = _platoons[1];
@@ -36,7 +28,7 @@ public class TargetSelector : ITargetSelector
         switch (abilityModelTargetMode)
         {
             case TargetMode.Single:
-                targets.Add(_target);
+                targets.Add(target);
                break;
             
             case TargetMode.Several:

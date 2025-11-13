@@ -60,8 +60,8 @@ namespace Abilities
                     break;
 
                 case AbilityType.FrostBall:
-                    _abilityHandler = new BaseEnemyAttack(source, target, _coroutineRunner, abilityModel);
-                    _abilityHandler.Play();
+                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel);
+                    _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
                     break;
@@ -79,22 +79,22 @@ namespace Abilities
                 
                 case AbilityType.EngineeringSeries:
                     _abilityHandler =
-                        new EngineeringSeriesAbility(source, target, abilityModel, _coroutineRunner, _qteService);
-                    _abilityHandler.Play();
+                        new EngineeringSeriesAbility(abilityModel, _coroutineRunner, _qteService);
+                    _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
                     break;
 
                 case AbilityType.HittingGround:
-                    _abilityHandler = new HittingGround(_coroutineRunner, abilityModel, source);
-                    _abilityHandler.Play();
+                    _abilityHandler = new HittingGround(_coroutineRunner, abilityModel);
+                    _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
                     break;
 
                 case AbilityType.BaseAttack:
-                    _abilityHandler = new BennetBaseAttack(source, target, abilityModel, _coroutineRunner);
-                    _abilityHandler.Play();
+                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
+                    _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
                     break;
@@ -107,16 +107,16 @@ namespace Abilities
             }
         }
 
-        public void HandleCounterAttack(Unit target, AbilityModel abilityModel)
+        public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
         {
             _abilityHandler.Stop();
             _abilityHandler.Finished -= Continue;
             
-            _abilityHandler = new Counterattack(_coroutineRunner, abilityModel, _targetSelector, _sourceProvider);
+            _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
             _activeAbilityHandlers.Add(_abilityHandler);
 
-            _targetSelector.Remember(target); 
-            _abilityHandler.Play(); 
+           // _targetSelector.Remember(target); 
+            _abilityHandler.Play(source, target); 
             _abilityHandler.Finished += Continue;
         }
 

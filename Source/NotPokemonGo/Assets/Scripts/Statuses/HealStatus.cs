@@ -8,22 +8,23 @@ namespace Statuses
     {
         private readonly IEffectResolver _effectResolver;
 
-        public HealStatus(StatusSetup setup, Unit target, IEffectResolver effectResolver)
+        public HealStatus(StatusSetup setup, Unit source, Unit target, IEffectResolver effectResolver)
         {
+            Source = source;
             TickCount = setup.TickCount;
             Setup = setup;
             Target = target;
             _effectResolver = effectResolver;
 
-            // TargetTime = setup.TargetTime;
             IsRefreshed = setup.IsRefreshed;
             IsPermanent = setup.IsPermanent;
         }
 
         public override void OnTick()
         {
-            EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Health, EffectType.Heal , DamageType.None);
-            _effectResolver.ApplyEffect(Target, damageInfo);
+            EffectInfo damageInfo =
+                new EffectInfo(Setup.EffectSetup.Value, StatType.Health, EffectType.Heal, DamageType.None);
+            _effectResolver.ApplyEffect(Source, Target, damageInfo);
         }
     }
 }

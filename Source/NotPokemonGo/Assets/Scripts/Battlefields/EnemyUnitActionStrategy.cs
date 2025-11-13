@@ -43,7 +43,7 @@ namespace Battlefields
         public override void Disable()
         {
             base.Disable();
-            _sourceProvider.Discard(); //Уберу дискард если чт
+            _sourceProvider.Discard(); //Todo Сбрасываться должен в стейтмашине 
         }
 
         private void Attack(List<Unit> targets)
@@ -54,9 +54,9 @@ namespace Battlefields
                 {
                     Unit randomTarget = GetRandomTarget(targets);
                     
-                    //_abilityProvider.Remember(abilityModel); //Для врагов нужно сделать отдельный AbilityService 
-                    _targetSelector.Remember(randomTarget);
-                    _sourceProvider.Remember(_source);
+                    // _targetSelector.Remember(randomTarget); //Вот это зло.
+                    // _sourceProvider.Remember(_source);
+                    
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.Handle(_source, randomTarget, abilityModel); 
                     

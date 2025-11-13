@@ -8,7 +8,7 @@ namespace Abilities
     {
         void Handle(Unit source, Unit target, AbilityModel abilityModel);
         void SetBattlefield(Battlefield battlefield);
-        void HandleCounterAttack(Unit target, AbilityModel abilityModel);
+        void HandleCounterAttack(Unit source,Unit target, AbilityModel abilityModel);
         event Action Finished;
     }
 }

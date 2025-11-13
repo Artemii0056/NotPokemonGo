@@ -34,7 +34,6 @@ namespace Factories
             IStaticDataService staticDataService,
             IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector,
-            ICoroutineRunner coroutineRunner, 
             IAbilityService abilityService, 
             IReactionService reactionService)
         {
@@ -69,7 +68,7 @@ namespace Factories
                 _particleSystemFactory,
                 _abilityApplicatorService,
                 _targetSelector, 
-                _abilityService, _reactionService);
+                _reactionService);
 
             unit.SetAnumationTrigger(unitAnimatorTrigger);
 

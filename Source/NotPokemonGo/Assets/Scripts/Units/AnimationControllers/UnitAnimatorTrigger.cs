@@ -26,6 +26,8 @@ namespace Units.AnimationControllers
         private  List<ParticleSystem> _particles;
         
         private AbilityPhase _phase;
+        
+        private Unit _currentTarget;
 
         public event Action ActionEnded;
         
@@ -37,7 +39,6 @@ namespace Units.AnimationControllers
             IParticleSystemFactory particleSystemFactory, 
             IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector, 
-            IAbilityService abilityService, 
             IReactionService reactionService)
         {
             _unit = unit;
@@ -71,6 +72,11 @@ namespace Units.AnimationControllers
             _controller.Attack1Started -= OnAttack;
 
             _controller.Finished -= OnFinished;
+        }
+        
+        public void SetTarget(Unit target)
+        {
+            _currentTarget = target;
         }
         
         public void SetPhase(AbilityPhase phase)
@@ -121,7 +127,7 @@ namespace Units.AnimationControllers
 
         private void OnAttack()
         {
-            _abilityPhaseService.OnNext(_phase, _unit);
+            _abilityPhaseService.OnNext(_phase, _unit, _currentTarget);
         }
 
         private void OnFinished()
@@ -147,5 +153,7 @@ namespace Units.AnimationControllers
                 }
             }
         }
+
+       
     }
 }

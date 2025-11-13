@@ -18,16 +18,18 @@ namespace Abilities.Bennet
 {
     public class EngineeringSeriesAbility : IAbilityHandler
     {
-        private readonly Unit _source;
-        private readonly Unit _target;
-        private readonly UnitAnimatorController _animatorController;
-        private readonly UnitAnimatorTrigger _animatorTrigger;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IQteService _qteService;
         private readonly List<AbilityPart> _parts;
-        private readonly Vector3 _startPosition;
         private readonly CinemachineBrain _cinemachineBrain;
 
+        private  Unit _source;
+        private  Unit _target;
+        
+        private  Vector3 _startPosition;
+        private  UnitAnimatorController _animatorController;
+        private  UnitAnimatorTrigger _animatorTrigger;
+        
         private Coroutine _currentRoutine;
         private bool _lastQteSuccess;
         
@@ -36,27 +38,27 @@ namespace Abilities.Bennet
         public event Action<IAbilityHandler> Finished;
 
         public EngineeringSeriesAbility(
-            Unit source,
-            Unit target,
             AbilityModel abilityModel,
             ICoroutineRunner coroutineRunner,
             IQteService qteService)
         {
-            _source = source;
-            _target = target;
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
 
-            _animatorController = source.UnitAnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
             _parts = abilityModel.Parts;
-            _startPosition = source.transform.position;
             _cinemachineBrain = Object.FindObjectOfType<CinemachineBrain>(); //TODO Вот эту херню исправить 
             //Исправить и добавить тайм сервис и с ним связанную логику.
         }
 
-        public void Play()
+        public void Play(Unit source, Unit target)
         {
+            _source = source;
+            _target = target;
+            
+            _animatorController = source.UnitAnimatorController;
+            _animatorTrigger = source.AnimatorTrigger;
+            _startPosition = source.transform.position;
+            
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
@@ -90,6 +92,7 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 

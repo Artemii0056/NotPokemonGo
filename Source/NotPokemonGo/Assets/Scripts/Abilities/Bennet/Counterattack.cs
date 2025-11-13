@@ -19,8 +19,6 @@ namespace Abilities.Bennet
         private UnitAnimatorTrigger _animatorTrigger;
 
         private readonly List<AbilityPart> _parts;
-        private readonly ITargetSelector _targetSelector;
-        private ISourceProvider _sourceProvider;
 
         private Unit _target;
         private Unit _source;
@@ -33,22 +31,17 @@ namespace Abilities.Bennet
 
         public Counterattack(
             ICoroutineRunner currentRoutine,
-            AbilityModel abilityModel,
-            ITargetSelector targetSelector,
-            ISourceProvider sourceProvider)
+            AbilityModel abilityModel)
         {
             _coroutineRunner = currentRoutine;
             _parts = abilityModel.Parts;
-            _targetSelector = targetSelector;
-            _sourceProvider = sourceProvider;
         }
 
-        public void Play()
+        public void Play(Unit source, Unit target) 
         {
-            _source = _sourceProvider.Source; 
+            _source = source; 
 
-            _target = _targetSelector.Target;
-            _targetSelector.Remember(_source);
+            _target = target;
 
             _source.UnitAnimatorController.Pause();
 
@@ -111,6 +104,7 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            _target.AnimatorTrigger.SetTarget(_source);
             _target.AnimatorTrigger.SetPhase(phase);
             _target.UnitAnimatorController.Play(phase.AnimationCashName);
 

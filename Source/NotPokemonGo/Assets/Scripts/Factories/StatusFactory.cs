@@ -7,29 +7,29 @@ namespace Factories
 {
     public class StatusFactory : IStatusFactory
     {
-        public Status Create(StatusSetup setup, Unit target, IEffectResolver effectResolver)
+        public Status Create(StatusSetup setup, Unit source, Unit target, IEffectResolver effectResolver)
         {
             Status status = null;
 
             switch (setup.Type)
             {
                 case StatusType.Damage:
-                    status = new DamageStatus(setup, target, effectResolver);
+                    status = new DamageStatus(setup, source, target, effectResolver);
                     break;
-                
+
                 case StatusType.Heal:
-                    status = new HealStatus(setup, target, effectResolver);
+                    status = new HealStatus(setup, source, target, effectResolver);
                     break;
-                
+
                 case StatusType.Poison:
                     break;
-                
+
                 case StatusType.PositiveSpeed:
                     break;
-                
+
                 case StatusType.Stun:
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

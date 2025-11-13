@@ -6,6 +6,6 @@ namespace Factories
 {
     public interface IStatusFactory
     {
-        Status Create(StatusSetup setup, Unit target, IEffectResolver effectResolver);
+        Status Create(StatusSetup setup, Unit source, Unit target, IEffectResolver effectResolver);
     }
 }

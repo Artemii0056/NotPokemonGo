@@ -14,39 +14,36 @@ using Object = UnityEngine.Object;
 
 namespace Abilities
 {
-    public class AbilityApplicatorService : IAbilityApplicatorService 
+    public class AbilityApplicatorService : IAbilityApplicatorService
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IStatusFactory _statusFactory;
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
-        private readonly ISourceProvider _sourceProvider;
 
         public AbilityApplicatorService(
             IArmamentViewFactory armamentViewFactory,
             IStatusFactory statusFactory,
             IEffectResolver effectResolver,
             ICoroutineRunner coroutineRunner,
-            IStatusResolver statusResolver,
-            ISourceProvider sourceProvider)
+            IStatusResolver statusResolver)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
             _coroutineRunner = coroutineRunner;
             _statusResolver = statusResolver;
-            _sourceProvider = sourceProvider;
         }
 
-        public void Apply(CastamentSetup setup, params Unit[] targets)
+        public void Apply(CastamentSetup setup, Unit source, params Unit[] targets)
         {
             foreach (var target in targets)
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
-                List<Status> statuses = CreateStatuses(setup.Statuses, target);
+                List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
 
-                ApplyEffectsOnTarget(target, statuses, effects);
+                ApplyEffectsOnTarget(source, target, statuses, effects);
 
                 if (setup.ParticleSystem != null)
                 {
@@ -57,48 +54,48 @@ namespace Abilities
             }
         }
 
-        public void Apply(ArmamentSetup setup, params Unit[] targets)
+        public void Apply(ArmamentSetup setup, Unit source, params Unit[] targets)
         {
             foreach (var target in targets)
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
-                List<Status> statuses = CreateStatuses(setup.Statuses, target);
+                List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
 
-                if (_sourceProvider.Source == null)
+                if (source == null)
                 {
                     Debug.LogError("No sourceProvider has been setup");
                 }
 
                 ArmamentView armamentView =
-                    _armamentViewFactory.Create(_sourceProvider.Source.abilityPos.position,
+                    _armamentViewFactory.Create(source.abilityPos.position,
                         setup.ArmamentView, target);
 
-                _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, target));
+                _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, source, target));
             }
         }
 
         private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
-            ArmamentView armamentView, Unit target)
+            ArmamentView armamentView, Unit source, Unit target)
         {
-            while (Vector3.Distance(target.transform.position, armamentView.transform.position) > 0.1f)
+            while (Vector3.Distance(target.transform.position, armamentView.transform.position) > 0.1f) //TODO Distance
                 yield return null;
 
-            ApplyEffectsOnTarget(target, statuses, effects);
+            ApplyEffectsOnTarget(source, target, statuses, effects);
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
             effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type, s.DamageType)).ToList();
 
-        private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit target) =>
-            setups.Select(s => _statusFactory.Create(s, target, _effectResolver)).ToList();
+        private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit source, Unit target) =>
+            setups.Select(s => _statusFactory.Create(s, source, target, _effectResolver)).ToList();
 
-        private void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects)
+        private void ApplyEffectsOnTarget(Unit source, Unit target, List<Status> statuses, List<EffectInfo> effects)
         {
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
-            foreach (var effectInfo in effects) 
-                _effectResolver.ApplyEffect(target, effectInfo);
+            foreach (var effectInfo in effects)
+                _effectResolver.ApplyEffect(source, target, effectInfo);
         }
     }
 }

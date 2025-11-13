@@ -10,29 +10,33 @@ using UnityEngine;
 
 namespace Abilities.Bennet
 {
-    public class HittingGround: IAbilityHandler
+    public class HittingGround : IAbilityHandler
     {
-        private Coroutine _currentRoutine;
-        private ICoroutineRunner _coroutineRunner;
         private readonly List<AbilityPart> _parts;
-        private readonly UnitAnimatorController _animatorController;
-        private readonly UnitAnimatorTrigger _animatorTrigger;
+        private readonly ICoroutineRunner _coroutineRunner;
+
+        private Coroutine _currentRoutine;
+        private UnitAnimatorController _animatorController;
+        private UnitAnimatorTrigger _animatorTrigger;
+
         private bool _animationPlaying;
 
         public event Action<IAbilityHandler> Finished;
 
-        public HittingGround(ICoroutineRunner currentRoutine,
-            AbilityModel abilityModel,
-            Unit source)
+        public HittingGround(
+            ICoroutineRunner currentRoutine,
+            AbilityModel abilityModel)
         {
             _coroutineRunner = currentRoutine;
-            _animatorController = source.UnitAnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
+
             _parts = abilityModel.Parts;
         }
 
-        public void Play()
+        public void Play(Unit source, Unit target)
         {
+            _animatorController = source.UnitAnimatorController;
+            _animatorTrigger = source.AnimatorTrigger;
+
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
@@ -51,13 +55,6 @@ namespace Abilities.Bennet
                 {
                     var phase = part.AbilityPhases[phaseIndex];
 
-                    // 🔸 пример: пропустить фазы после неудачного QTE
-                    // if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
-                    // {
-                    //     Debug.Log($"Фаза {phaseIndex} пропущена из-за неудачного QTE");
-                    //     continue;
-                    // }
-
                     yield return ExecutePhase(phase);
                 }
             }
@@ -67,24 +64,12 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            //_animatorTrigger.SetTarget(phase);
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 
-            // HandleCamera(phase.CameraActionType);
-            //
-            // if (phase.QteType != QteType.Unknown)
-            //     yield return RunQtePhase(phase.QteType);
-
             switch (phase.PhaseType)
             {
-                // case PhaseType.IsMovementPhase:
-                //     yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));
-                //     break;
-                //
-                // case PhaseType.IsReturnPhase:
-                //     yield return MoveUnit(_source, _startPosition);
-                //     break;
-
                 default:
                     yield return WaitForAnimation();
                     break;
@@ -104,7 +89,7 @@ namespace Abilities.Bennet
 
         private void FinishAnimation() =>
             _animationPlaying = false;
-        
+
         private void FinishAbility()
         {
             _animatorController.Play(Constants.BaseAnimations.Idle);

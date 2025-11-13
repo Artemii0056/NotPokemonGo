@@ -13,36 +13,40 @@ namespace Abilities.Bennet
 {
     public class BennetBaseAttack : IAbilityHandler
     {
-        private Coroutine _currentRoutine;
-        private ICoroutineRunner _coroutineRunner;
+        private readonly ICoroutineRunner _coroutineRunner;
         private readonly List<AbilityPart> _parts;
-        private readonly UnitAnimatorController _animatorController;
-        private readonly UnitAnimatorTrigger _animatorTrigger;
-        private bool _animationPlaying;
-        private readonly Unit _source;
-        private readonly Unit _target;
         
-        private readonly Vector3 _startPosition;
+        private  UnitAnimatorController _animatorController;
+        private  UnitAnimatorTrigger _animatorTrigger;
+        private bool _animationPlaying;
+        private  Unit _source;
+        private  Unit _target;
+        
+        private Coroutine _currentRoutine;
+        private  Vector3 _startPosition;
 
         public event Action<IAbilityHandler> Finished;
 
         public BennetBaseAttack(
-            Unit source,
-            Unit target,
             AbilityModel abilityModel,
             ICoroutineRunner coroutineRunner)
         {
-            _source = source;
-            _target = target;
+            
             _coroutineRunner = coroutineRunner;
-            _animatorController = source.UnitAnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
+            
             _parts = abilityModel.Parts;
-            _startPosition = source.transform.position;
         }
 
-        public void Play()
+        public void Play(Unit source, Unit target)
         {
+            _source = source;
+            _target = target;
+            
+            _animatorController = source.UnitAnimatorController;
+            _animatorTrigger = source.AnimatorTrigger;
+            
+            _startPosition = source.transform.position;
+
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
@@ -77,6 +81,7 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 

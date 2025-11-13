@@ -11,11 +11,12 @@ using UnityEngine;
 
 namespace Abilities.Enemies
 {
-    public class BaseEnemyAttack: IAbilityHandler
+    public class BaseEnemyAttack : IAbilityHandler
     {
-         private readonly UnitAnimatorTrigger _animatorTrigger;
-        private readonly UnitAnimatorController _animatorController;
         private readonly ICoroutineRunner _coroutineRunner;
+
+        private UnitAnimatorTrigger _animatorTrigger;
+        private UnitAnimatorController _animatorController;
 
         private bool _animationPlaying;
 
@@ -27,24 +28,25 @@ namespace Abilities.Enemies
 
         private Coroutine _currentRoutine;
 
-        public BaseEnemyAttack(Unit source,
-            Unit target,
+        public BaseEnemyAttack(
             ICoroutineRunner coroutineRunner,
             AbilityModel abilityModel)
         {
-            _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.UnitAnimatorController;
             _coroutineRunner = coroutineRunner;
             _parts = abilityModel.Parts;
-            _target = target;
-            _source = source;
-            _startPosition = _source.transform.position;
         }
 
         public event Action<IAbilityHandler> Finished;
 
-        public void Play()
+        public void Play(Unit source, Unit target)
         {
+            _target = target;
+            _source = source;
+
+            _animatorTrigger = source.AnimatorTrigger;
+            _animatorController = source.UnitAnimatorController;
+
+            _startPosition = _source.transform.position;
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
@@ -68,18 +70,20 @@ namespace Abilities.Enemies
                 }
             }
 
-           FinishAbility();
+            FinishAbility();
         }
-        
+
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 
             switch (phase.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));
+                    yield return MoveUnit(_source,
+                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
                     break;
 
                 case PhaseType.IsReturnPhase:
@@ -97,19 +101,19 @@ namespace Abilities.Enemies
             _animatorController.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
         }
-        
+
         private IEnumerator WaitForAnimation()
         {
-            _animationPlaying = true; 
-            
-            void OnFinished() => 
+            _animationPlaying = true;
+
+            void OnFinished() =>
                 FinishAnimation();
 
             _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
             _animatorController.Finished -= OnFinished;
         }
-        
+
         private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
         {
             float stopDistance = 1.5f;
@@ -117,7 +121,7 @@ namespace Abilities.Enemies
             return target - direction * stopDistance;
         }
 
-        private void FinishAnimation() => 
+        private void FinishAnimation() =>
             _animationPlaying = false;
 
         private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)

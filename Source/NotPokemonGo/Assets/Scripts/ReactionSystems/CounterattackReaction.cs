@@ -9,10 +9,8 @@ namespace ReactionSystems
     {
         private readonly IAbilityService _abilityService;
 
-        public CounterattackReaction(IAbilityService abilityService)
-        {
+        public CounterattackReaction(IAbilityService abilityService) => 
             _abilityService = abilityService;
-        }
 
         public bool CanReact(ReactionContext context)
         {
@@ -32,7 +30,7 @@ namespace ReactionSystems
                 .Find(a => a.AbilityType == AbilityType.CounterAttack && a.IsReady());
 
             if (ability != null) 
-                _abilityService.HandleCounterAttack(context.Target, ability);
+                _abilityService.HandleCounterAttack(context.Source,context.Target, ability);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Effects;
 using Stats;
 using Units;
-using UnityEngine;
 
 namespace Statuses
 {
@@ -9,8 +8,9 @@ namespace Statuses
     {
         private readonly IEffectResolver _effectResolver;
 
-        public DamageStatus(StatusSetup setup, Unit target, IEffectResolver effectResolver)
+        public DamageStatus(StatusSetup setup, Unit source, Unit target, IEffectResolver effectResolver)
         {
+            Source = source;
             TickCount = setup.TickCount;
             Setup = setup;
             Target = target;
@@ -23,7 +23,7 @@ namespace Statuses
         public override void OnTick()
         {
             EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage, DamageType.None);
-            _effectResolver.ApplyEffect(Target, damageInfo);
+            _effectResolver.ApplyEffect(Source,Target, damageInfo);
         }
     }
 }
