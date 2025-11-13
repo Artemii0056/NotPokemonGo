@@ -5,12 +5,14 @@ using Effects;
 using Factories;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
+using Infrastructure.ReactionSystem;
 using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Platoons;
+using ReactionSystems;
 using Services;
 using Services.AssetManagement;
 using Services.BattleSessionService;
@@ -111,6 +113,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
             
             builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
+            
+            builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

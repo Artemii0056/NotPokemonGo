@@ -2,6 +2,7 @@
 using Abilities;
 using Abilities.MV;
 using Characters;
+using ReactionSystems;
 using Services;
 using Services.StaticDataServices;
 using Stats;
@@ -23,6 +24,8 @@ namespace Factories
         private readonly IStaticDataService _staticDataService;
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private readonly ITargetSelector _targetSelector;
+        private readonly IAbilityService _abilityService;
+        private readonly IReactionService _reactionService;
 
         public UnitFactory(
             IObjectResolver objectResolver,
@@ -31,7 +34,9 @@ namespace Factories
             IStaticDataService staticDataService,
             IAbilityApplicatorService abilityApplicatorService,
             ITargetSelector targetSelector,
-            ICoroutineRunner coroutineRunner)
+            ICoroutineRunner coroutineRunner, 
+            IAbilityService abilityService, 
+            IReactionService reactionService)
         {
             _objectResolver = objectResolver;
             _particleSystemFactory = particleSystemFactory;
@@ -39,10 +44,15 @@ namespace Factories
             _staticDataService = staticDataService;
             _abilityApplicatorService = abilityApplicatorService;
             _targetSelector = targetSelector;
+            _abilityService = abilityService;
+            _reactionService = reactionService;
+            
+            _reactionService.Register(new CounterattackReaction(_abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
         {
+            
             Vector3 posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
 
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
@@ -58,7 +68,8 @@ namespace Factories
                 controller,
                 _particleSystemFactory,
                 _abilityApplicatorService,
-                _targetSelector);
+                _targetSelector, 
+                _abilityService, _reactionService);
 
             unit.SetAnumationTrigger(unitAnimatorTrigger);
 
@@ -82,17 +93,6 @@ namespace Factories
 
             unit.transform.SetParent(parentPosition, false);
             
-            UnitAnimatorController controller = unit.UnitAnimatorController;
-
-            UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
-                unit,
-                _staticDataService,
-                _abilityProvider,
-                controller,
-                _particleSystemFactory,
-                _abilityApplicatorService,
-                _targetSelector);
-
             unit.Construct(stats, platoonType);
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)

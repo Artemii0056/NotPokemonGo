@@ -4,6 +4,7 @@ using System.Linq;
 using Abilities;
 using Assets;
 using Effects;
+using ReactionSystems;
 using Services.AbilityServices;
 using Services.StaticDataServices;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Units.AnimationControllers
         private IStaticDataService _staticDataService;
         private IAbilityProvider _abilityProvider;
         private IParticleSystemFactory _particleSystemFactory;
+        private IReactionService _reactionService;
         
         private AbilityPhaseService _abilityPhaseService;
 
@@ -35,17 +37,20 @@ namespace Units.AnimationControllers
             UnitAnimatorController controller,
             IParticleSystemFactory particleSystemFactory, 
             IAbilityApplicatorService abilityApplicatorService,
-            ITargetSelector targetSelector)
+            ITargetSelector targetSelector, 
+            IAbilityService abilityService, 
+            IReactionService reactionService)
         {
             _unit = unit;
             _staticDataService = staticDataService;
             _abilityProvider = abilityProvider;
             _controller = controller;
             _particleSystemFactory = particleSystemFactory;
+            _reactionService = reactionService;
 
             _particles = new List<ParticleSystem>();
 
-            _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector);
+            _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector, _reactionService);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
@@ -117,7 +122,7 @@ namespace Units.AnimationControllers
 
         private void OnAttack()
         {
-            _abilityPhaseService.OnNext(_phase);
+            _abilityPhaseService.OnNext(_phase, _unit);
         }
 
         private void OnFinished()

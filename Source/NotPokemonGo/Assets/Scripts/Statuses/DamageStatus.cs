@@ -22,7 +22,7 @@ namespace Statuses
 
         public override void OnTick()
         {
-            EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage);
+            EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, StatType.Damage, EffectType.Damage, DamageType.None);
             _effectResolver.ApplyEffect(Target, damageInfo);
         }
     }

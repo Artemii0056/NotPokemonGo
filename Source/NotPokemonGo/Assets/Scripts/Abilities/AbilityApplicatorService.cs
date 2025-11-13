@@ -14,7 +14,7 @@ using Object = UnityEngine.Object;
 
 namespace Abilities
 {
-    public class AbilityApplicatorService : IAbilityApplicatorService //TODO Вот этот типсон должен отвечать за 
+    public class AbilityApplicatorService : IAbilityApplicatorService 
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IArmamentViewFactory _armamentViewFactory;
@@ -87,7 +87,7 @@ namespace Abilities
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
-            effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type)).ToList();
+            effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type, s.DamageType)).ToList();
 
         private List<Status> CreateStatuses(IEnumerable<StatusSetup> setups, Unit target) =>
             setups.Select(s => _statusFactory.Create(s, target, _effectResolver)).ToList();

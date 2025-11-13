@@ -6,8 +6,9 @@ namespace Abilities
 {
     public interface IAbilityService
     {
-        void Handle(Unit source, Unit target, Battlefield battlefield, AbilityModel abilityModel);
-        event Action Finished;
+        void Handle(Unit source, Unit target, AbilityModel abilityModel);
+        void SetBattlefield(Battlefield battlefield);
         void HandleCounterAttack(Unit target, AbilityModel abilityModel);
+        event Action Finished;
     }
 }

@@ -4,49 +4,20 @@ using Abilities.MV;
 using Infrastructure;
 using Stats;
 using Units;
-using UnityEngine;
 
 namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
         private readonly ISourceProvider _sourceProvider;
-        private readonly IAbilityService _abilityService;
 
-        public EffectResolver(
-            ISourceProvider sourceProvider,
-            IAbilityService abilityService)
-        {
+        public EffectResolver(ISourceProvider sourceProvider) => 
             _sourceProvider = sourceProvider;
-            _abilityService = abilityService;
-        }
 
-        public void ApplyEffect(Unit target, EffectInfo effect) //Сейчас полная фигня
+        public void ApplyEffect(Unit target, EffectInfo effect) 
         {
-            if (effect.Type == EffectType.Damage && SearchCounterAttackAbility(target, out AbilityModel abilityModel))
-            {
-                _abilityService.HandleCounterAttack(target, abilityModel);
-                return;
-            }
-
             float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value); 
             target.ChangeStatValue(effect.TargetType, finalValue);
-        }
-
-        private bool SearchCounterAttackAbility(Unit target, out AbilityModel ability)
-        {
-            ability = null;
-
-            foreach (var abilityModel in target.AbilityModels)
-            {
-                if (abilityModel.AbilityType == AbilityType.CounterAttack && abilityModel.IsReady())
-                {
-                    ability = abilityModel;
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private float CalculateStatModification(

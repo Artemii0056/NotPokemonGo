@@ -8,7 +8,6 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services;
 using Services.QTEServices;
 using Units;
-using UnityEngine;
 
 namespace Abilities
 {
@@ -18,19 +17,17 @@ namespace Abilities
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly ISourceProvider _sourceProvider;
         private readonly IQteService _qteService;
+        private readonly ITargetSelector _targetSelector;
 
         private Battlefield _battlefield;
 
         private List<IAbilityHandler> _activeAbilityHandlers;
-        public event Action Finished;
-
-        //TODO Сделать список активных абилок?
-
 
         private Counterattack _counterattack;
 
         private IAbilityHandler _abilityHandler;
-        private ITargetSelector _targetSelector;
+        
+        public event Action Finished;
 
         public AbilityService(
             ICoroutineRunner coroutineRunner,
@@ -47,10 +44,14 @@ namespace Abilities
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
-        public void Handle(Unit source, Unit target, Battlefield battlefield, AbilityModel abilityModel)
+        public void SetBattlefield(Battlefield battlefield)
         {
             _battlefield = battlefield;
+        }
 
+        public void Handle(Unit source, Unit target, AbilityModel abilityModel) //Нужно по максимуму постараться избавиться от сурс и таргет провайдера.
+                                                                                //Сюда приходит кто и кого и дальше работает 
+        {
             AbilityType abilityType = abilityModel.AbilityType;
 
             switch (abilityType)

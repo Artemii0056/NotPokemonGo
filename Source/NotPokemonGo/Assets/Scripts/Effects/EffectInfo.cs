@@ -6,13 +6,15 @@ namespace Effects
     {
         public EffectType Type;
         public StatType TargetType;
+        public DamageType DamageType;
         public float Value;
 
-        public EffectInfo(float value, StatType targetType, EffectType type)
+        public EffectInfo(float value, StatType targetType, EffectType type, DamageType damageType)
         {
             Value = value;
             TargetType = targetType;
             Type = type;
+            DamageType = damageType;
         }
     }
 }

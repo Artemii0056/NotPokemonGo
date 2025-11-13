@@ -57,7 +57,8 @@ namespace Battlefields
                     //_abilityProvider.Remember(abilityModel); //Для врагов нужно сделать отдельный AbilityService 
                     _targetSelector.Remember(randomTarget);
                     _sourceProvider.Remember(_source);
-                    _abilityService.Handle(_source, randomTarget, _battlefield, abilityModel); 
+                    _abilityService.SetBattlefield(_battlefield);
+                    _abilityService.Handle(_source, randomTarget, abilityModel); 
                     
                     abilityModel.DiscardCurrentTime();
 
