@@ -6,5 +6,6 @@
         Mage = 1,
         Swordsman = 2,
         Archer = 3,
+        Bennet = 4,
     }
 }

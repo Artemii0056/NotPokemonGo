@@ -23,6 +23,5 @@ namespace Services.StaticDataServices
         UnitSkinItemView UnitSkinItemViewPrefab { get; }
         CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
-       // TargetMode GetTargetMode(AbilityType abilityType);
     }
 }
