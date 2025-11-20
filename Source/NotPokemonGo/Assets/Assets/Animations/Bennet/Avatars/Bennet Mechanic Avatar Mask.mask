@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bennet Mechanic Avatar Mask
+  m_Mask: 00000000010000000000000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Group
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L/HipPart2_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L/HipPart2_L/Knee_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L/HipPart2_L/Knee_L/Ankle_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L/HipPart2_L/Knee_L/Ankle_L/Toes_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_L/HipPart1_L/HipPart2_L/Knee_L/Ankle_L/Toes_L/ToesEnd_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R/HipPart2_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R/HipPart2_R/Knee_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R/HipPart2_R/Knee_R/Ankle_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R/HipPart2_R/Knee_R/Ankle_R/Toes_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/Hip_R/HipPart1_R/HipPart2_R/Knee_R/Ankle_R/Toes_R/ToesEnd_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L/joint4_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L/joint4_L/joint3_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L/joint4_L/joint3_L/joint5_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L/joint4_L/joint3_L/joint5_L/joint6_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_L/joint2_L/joint4_L/joint3_L/joint5_L/joint6_L/joint7_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R
+    m_Weight: 1
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R/joint4_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R/joint4_R/joint3_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R/joint4_R/joint3_R/joint5_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R/joint4_R/joint3_R/joint5_R/joint6_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/joint1_R/joint2_R/joint4_R/joint3_R/joint5_R/joint6_R/joint7_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Neck_M
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Neck_M/NeckPart1_M
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Neck_M/NeckPart1_M/NeckPart2_M
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Neck_M/NeckPart1_M/NeckPart2_M/Head_M
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Neck_M/NeckPart1_M/NeckPart2_M/Head_M/HeadEnd_M
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/ElbowPart1_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/ElbowPart1_L/ElbowPart2_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/ElbowPart1_L/ElbowPart2_L/Wrist_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_L/Shoulder_L/ShoulderPart1_L/ShoulderPart2_L/Elbow_L/ElbowPart1_L/ElbowPart2_L/Wrist_L/joint8_L
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/ElbowPart1_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/ElbowPart1_R/ElbowPart2_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/ElbowPart1_R/ElbowPart2_R/Wrist_R
+    m_Weight: 0
+  - m_Path: Group/DeformationSystem/Root_M/RootPart1_M/RootPart2_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M/Scapula_R/Shoulder_R/ShoulderPart1_R/ShoulderPart2_R/Elbow_R/ElbowPart1_R/ElbowPart2_R/Wrist_R/joint8_R
+    m_Weight: 0
+  - m_Path: Group/MotionSystem
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKIKSystem
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKIKSystem/FKIKParentConstraintSpine_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKIKSystem/FKIKParentConstraintSpine_M/FKIKSpine_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/FKExtraRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/FKExtraRoot_M/FKRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/FKExtraRoot_M/FKRoot_M/InbetweenTargetRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/FKXRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/HipSwingReverse
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/HipSwingReverse/HipSwingReversePart2
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/HipSwingReverse/HipSwingReversePart2/HipSwingReversePart1
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/HipSwingReverse/HipSwingReversePart2/HipSwingReversePart1/HipSwingReversePart0
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/HipSwingReverse/HipSwingReversePart2/HipSwingReversePart1/HipSwingReversePart0/HipSwingReverseRoot
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/FKSystem/FKOffsetRoot_M/InbetweenBaseRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M/IKhybridExtraSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M/IKhybridExtraSpine3_M/IKhybridSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M/IKhybridExtraSpine3_M/IKhybridSpine3_M/IKOffsetSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M/IKhybridExtraSpine3_M/IKhybridSpine3_M/IKOffsetSpine3_M/IKExtraSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKhybridFollowSpine1_M/IKhybridExtraSpine1_M/IKhybridSpine1_M/IKhybridOffsetSpine2_M/IKhybridExtraSpine2_M/IKhybridSpine2_M/IKhybridOffsetSpine3_M/IKhybridExtraSpine3_M/IKhybridSpine3_M/IKOffsetSpine3_M/IKExtraSpine3_M/IKSpine3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M/IKExtraSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M/IKExtraSpine1_M/IKSpine1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M/IKExtraSpine1_M/IKSpine1_M/IKSpine1LocalOrient1_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M/IKExtraSpine1_M/IKSpine1_M/IKSpine1LocalOrient1_M/IKSpine1LocalOrient2_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKHandle/IKOffsetConstrainedSpine1_M/IKhybridOffsetSpine1_M/IKOffsetSpine1_M/IKExtraSpine1_M/IKSpine1_M/IKSpine1LocalOrient1_M/IKSpine1LocalOrient2_M/IKSpine1LocalOrient3_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKAcSpineOffset2_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKAcSpineOffset2_M/IKAcRootFollowOffset_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKParentConstraintRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKParentConstraintRoot_M/IKXOffsetRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKParentConstraintRoot_M/IKXOffsetRoot_M/IKXRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKSpSpineOffset_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKJoints/IKSpSpineOffset_M/IKSpRootFollowOffset_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKScaler
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/IKSystem/IKScaler/IKScalerRoot_M
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/MainSystem
+    m_Weight: 0
+  - m_Path: Group/MotionSystem/MainSystem/Main
+    m_Weight: 0
+  - m_Path: model:big_hands
+    m_Weight: 0
+  - m_Path: model:body
+    m_Weight: 0
+  - m_Path: model:body/model:hands
+    m_Weight: 0
+  - m_Path: model:body/model:head
+    m_Weight: 0
+  - m_Path: model:body/model:head/model:pCube38
+    m_Weight: 0
+  - m_Path: model:body/model:legs
+    m_Weight: 0
+  - m_Path: model:body/model:torso
+    m_Weight: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1e57b9e6c4b27f74982492c935d769cc
+guid: ad1175ead6577cd47a366ef42d874ce2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -13,7 +13,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
@@ -24,7 +24,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -67,7 +67,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
@@ -81,451 +81,17 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human:
-    - boneName: Root_M
-      humanName: Hips
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: HipPart1_L
-      humanName: LeftUpperLeg
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: HipPart1_R
-      humanName: RightUpperLeg
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Knee_L
-      humanName: LeftLowerLeg
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Knee_R
-      humanName: RightLowerLeg
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Ankle_L
-      humanName: LeftFoot
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Ankle_R
-      humanName: RightFoot
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: RootPart1_M
-      humanName: Spine
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Spine1_M
-      humanName: Chest
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Neck_M
-      humanName: Neck
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: NeckPart2_M
-      humanName: Head
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Shoulder_L
-      humanName: LeftShoulder
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Shoulder_R
-      humanName: RightShoulder
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: ShoulderPart1_L
-      humanName: LeftUpperArm
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: ShoulderPart1_R
-      humanName: RightUpperArm
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Elbow_L
-      humanName: LeftLowerArm
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Elbow_R
-      humanName: RightLowerArm
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: ElbowPart1_L
-      humanName: LeftHand
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: ElbowPart1_R
-      humanName: RightHand
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Toes_L
-      humanName: LeftToes
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Toes_R
-      humanName: RightToes
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Head_M
-      humanName: RightEye
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: Chest_M
-      humanName: UpperChest
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
+    human: []
     skeleton:
-    - name: test_2(Clone)
+    - name: BennetModel(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Group
-      parentName: test_2(Clone)
+      parentName: BennetModel(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: MotionSystem
-      parentName: Group
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: MainSystem
-      parentName: MotionSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Main
-      parentName: MainSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKSystem
-      parentName: MotionSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKOffsetRoot_M
-      parentName: FKSystem
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKExtraRoot_M
-      parentName: FKOffsetRoot_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKRoot_M
-      parentName: FKExtraRoot_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: InbetweenTargetRoot_M
-      parentName: FKRoot_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKXRoot_M
-      parentName: FKOffsetRoot_M
-      position: {x: 2.6645352e-17, y: -1.2212453e-17, z: -4.5156067e-18}
-      rotation: {x: 6.162976e-33, y: -3.6977855e-32, z: 2.7755576e-17, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: InbetweenBaseRoot_M
-      parentName: FKOffsetRoot_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HipSwingReverse
-      parentName: FKOffsetRoot_M
-      position: {x: -0.008010438, y: -8.881784e-18, z: -4.5156067e-18}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HipSwingReversePart2
-      parentName: HipSwingReverse
-      position: {x: 0.0026701458, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HipSwingReversePart1
-      parentName: HipSwingReversePart2
-      position: {x: 0.0026701458, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HipSwingReversePart0
-      parentName: HipSwingReversePart1
-      position: {x: 0.0026701458, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HipSwingReverseRoot
-      parentName: HipSwingReversePart0
-      position: {x: -0, y: -1.110223e-18, z: -3.9443044e-33}
-      rotation: {x: -0, y: 1.2711138e-32, z: 1.3877788e-17, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSystem
-      parentName: MotionSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKJoints
-      parentName: IKSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKParentConstraintRoot_M
-      parentName: IKJoints
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKXOffsetRoot_M
-      parentName: IKParentConstraintRoot_M
-      position: {x: -0, y: 1.110223e-18, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKXRoot_M
-      parentName: IKXOffsetRoot_M
-      position: {x: -0, y: -1.110223e-18, z: -4.9303805e-34}
-      rotation: {x: -1.110223e-16, y: 1.110223e-16, z: -2.7755576e-17, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpSpineOffset_M
-      parentName: IKJoints
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpRootFollowOffset_M
-      parentName: IKSpSpineOffset_M
-      position: {x: -0, y: 1.110223e-18, z: 1.9721522e-33}
-      rotation: {x: 1.110223e-16, y: -1.110223e-16, z: 1.3877788e-17, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKAcSpineOffset2_M
-      parentName: IKJoints
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKAcRootFollowOffset_M
-      parentName: IKAcSpineOffset2_M
-      position: {x: -0, y: 2.220446e-18, z: -7.888609e-33}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKHandle
-      parentName: IKSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridFollowSpine1_M
-      parentName: IKHandle
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridExtraSpine1_M
-      parentName: IKhybridFollowSpine1_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridSpine1_M
-      parentName: IKhybridExtraSpine1_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridOffsetSpine2_M
-      parentName: IKhybridSpine1_M
-      position: {x: -0.007234746, y: -0.00003412822, z: -4.609289e-18}
-      rotation: {x: 0, y: 0, z: 0.027459884, w: 0.99962294}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridExtraSpine2_M
-      parentName: IKhybridOffsetSpine2_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridSpine2_M
-      parentName: IKhybridExtraSpine2_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridOffsetSpine3_M
-      parentName: IKhybridSpine2_M
-      position: {x: -0.007125474, y: -0.0011885286, z: 6.656967e-18}
-      rotation: {x: 0, y: 0, z: 0.09813275, w: 0.99517334}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridExtraSpine3_M
-      parentName: IKhybridOffsetSpine3_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridSpine3_M
-      parentName: IKhybridExtraSpine3_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKOffsetSpine3_M
-      parentName: IKhybridSpine3_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.4781975, y: 0.5208908, z: 0.4781975, w: 0.5208908}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKExtraSpine3_M
-      parentName: IKOffsetSpine3_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpine3_M
-      parentName: IKExtraSpine3_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKOffsetConstrainedSpine1_M
-      parentName: IKHandle
-      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKhybridOffsetSpine1_M
-      parentName: IKOffsetConstrainedSpine1_M
-      position: {x: -2.0954118e-33, y: 8.881784e-18, z: 4.1633362e-19}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKOffsetSpine1_M
-      parentName: IKhybridOffsetSpine1_M
-      position: {x: -0, y: 0, z: -1.2325951e-34}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: -0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKExtraSpine1_M
-      parentName: IKOffsetSpine1_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpine1_M
-      parentName: IKExtraSpine1_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpine1LocalOrient1_M
-      parentName: IKSpine1_M
-      position: {x: 2.0954118e-33, y: -8.881784e-18, z: -4.1633362e-19}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpine1LocalOrient2_M
-      parentName: IKSpine1LocalOrient1_M
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKSpine1LocalOrient3_M
-      parentName: IKSpine1LocalOrient2_M
-      position: {x: 8.881784e-18, y: 0, z: 1.9721522e-33}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKScaler
-      parentName: IKSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: IKScalerRoot_M
-      parentName: IKScaler
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKIKSystem
-      parentName: MotionSystem
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKIKParentConstraintSpine_M
-      parentName: FKIKSystem
-      position: {x: 3.6202474e-18, y: 0.044648815, z: -0.0008048547}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
-      scale: {x: 1, y: 1, z: 1}
-    - name: FKIKSpine_M
-      parentName: FKIKParentConstraintSpine_M
-      position: {x: -0.005189464, y: -1.110223e-18, z: 0.008760628}
-      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: -0.45680046}
       scale: {x: 1, y: 1, z: 1}
     - name: DeformationSystem
       parentName: Group
@@ -540,7 +106,7 @@ ModelImporter:
     - name: Hip_L
       parentName: Root_M
       position: {x: 0.0009775285, y: -0.00008324095, z: 0.0037236603}
-      rotation: {x: 0.9917015, y: 0.12751266, z: 0.014849573, w: -0.006940551}
+      rotation: {x: 0.9917015, y: 0.1275127, z: 0.014849573, w: -0.006940552}
       scale: {x: 1, y: 1, z: 1}
     - name: HipPart1_L
       parentName: Hip_L
@@ -645,17 +211,17 @@ ModelImporter:
     - name: joint2_L
       parentName: joint1_L
       position: {x: 0.0044198018, y: 4.440892e-18, z: 1.7763568e-17}
-      rotation: {x: 0.0006878206, y: 0.05286521, z: 0.03167593, w: 0.9980989}
+      rotation: {x: 0.0047445893, y: -0.096114755, z: 0.011690893, w: 0.9952903}
       scale: {x: 1, y: 1, z: 1}
     - name: joint4_L
       parentName: joint2_L
       position: {x: 0.014152514, y: 0, z: 2.6645352e-17}
-      rotation: {x: 0.024603155, y: -0.6821805, z: -0.058971416, w: 0.7283864}
+      rotation: {x: 0.03735946, y: -0.025406938, z: 0.0041934554, w: 0.9989701}
       scale: {x: 1, y: 1, z: 1}
     - name: joint3_L
       parentName: joint4_L
       position: {x: 0.018231519, y: -2.7755574e-18, z: -3.5527136e-17}
-      rotation: {x: -0.70249826, y: 0.7029846, z: -0.06874043, w: 0.08708421}
+      rotation: {x: -0.99327755, y: 0.08331961, z: 0.00872561, w: 0.07988375}
       scale: {x: 1, y: 1, z: 1}
     - name: joint5_L
       parentName: joint3_L
@@ -680,17 +246,17 @@ ModelImporter:
     - name: joint2_R
       parentName: joint1_R
       position: {x: -0.0044198018, y: 1.110223e-18, z: -4.4408918e-17}
-      rotation: {x: 0.0006878206, y: 0.05286521, z: 0.03167593, w: 0.9980989}
+      rotation: {x: 0.004938109, y: -0.10327179, z: 0.010716708, w: 0.9945832}
       scale: {x: 1, y: 1, z: 1}
     - name: joint4_R
       parentName: joint2_R
       position: {x: -0.014152514, y: 2.220446e-18, z: -2.6645352e-17}
-      rotation: {x: 0.024603155, y: -0.6821805, z: -0.058971416, w: 0.7283864}
+      rotation: {x: 0.037406772, y: -0.015228672, z: 0.005145796, w: 0.9991708}
       scale: {x: 1, y: 1, z: 1}
     - name: joint3_R
       parentName: joint4_R
       position: {x: -0.018231519, y: -2.220446e-18, z: 5.3290704e-17}
-      rotation: {x: -0.70249826, y: 0.7029846, z: -0.06874043, w: 0.08708421}
+      rotation: {x: -0.9903815, y: -0.018766567, z: -0.0151689155, w: 0.13624355}
       scale: {x: 1, y: 1, z: 1}
     - name: joint5_R
       parentName: joint3_R
@@ -822,178 +388,258 @@ ModelImporter:
       position: {x: -0.00282304, y: 5.551115e-19, z: -8.881784e-18}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:body
-      parentName: test_2(Clone)
-      position: {x: -0, y: 0.042169984, z: 0.0013901251}
+    - name: MotionSystem
+      parentName: Group
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:hands
-      parentName: model:body
-      position: {x: -0, y: 0.010646006, z: -0.0010949521}
+    - name: FKIKSystem
+      parentName: MotionSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface11
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: FKIKParentConstraintSpine_M
+      parentName: FKIKSystem
+      position: {x: 3.6202474e-18, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FKIKSpine_M
+      parentName: FKIKParentConstraintSpine_M
+      position: {x: -0.005189464, y: -1.110223e-18, z: 0.008760628}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: -0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FKSystem
+      parentName: MotionSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface9
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: FKOffsetRoot_M
+      parentName: FKSystem
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FKExtraRoot_M
+      parentName: FKOffsetRoot_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface6
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: FKRoot_M
+      parentName: FKExtraRoot_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface12
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: InbetweenTargetRoot_M
+      parentName: FKRoot_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface10
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: FKXRoot_M
+      parentName: FKOffsetRoot_M
+      position: {x: 2.6645352e-17, y: -1.2212453e-17, z: -4.5156067e-18}
+      rotation: {x: 6.162976e-33, y: -3.6977855e-32, z: 2.7755576e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: HipSwingReverse
+      parentName: FKOffsetRoot_M
+      position: {x: -0.008010438, y: -8.881784e-18, z: -4.5156067e-18}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface7
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: HipSwingReversePart2
+      parentName: HipSwingReverse
+      position: {x: 0.0026701458, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pSphere1
-      parentName: model:hands
-      position: {x: -0, y: -0.05281599, z: -0.000295173}
+    - name: HipSwingReversePart1
+      parentName: HipSwingReversePart2
+      position: {x: 0.0026701458, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:head
-      parentName: model:body
-      position: {x: -0, y: 0.036257286, z: 0.0012861853}
+    - name: HipSwingReversePart0
+      parentName: HipSwingReversePart1
+      position: {x: 0.0026701458, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube17
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: HipSwingReverseRoot
+      parentName: HipSwingReversePart0
+      position: {x: -0, y: -1.110223e-18, z: -3.9443044e-33}
+      rotation: {x: -0, y: 1.2711138e-32, z: 1.3877788e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: InbetweenBaseRoot_M
+      parentName: FKOffsetRoot_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube2
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKSystem
+      parentName: MotionSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:ears
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKHandle
+      parentName: IKSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCylinder1
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKhybridFollowSpine1_M
+      parentName: IKHandle
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKhybridExtraSpine1_M
+      parentName: IKhybridFollowSpine1_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube14
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKhybridSpine1_M
+      parentName: IKhybridExtraSpine1_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube38
-      parentName: model:head
-      position: {x: -2.9802322e-10, y: -0.001135342, z: 0.00461647}
+    - name: IKhybridOffsetSpine2_M
+      parentName: IKhybridSpine1_M
+      position: {x: -0.007234746, y: -0.00003412822, z: -4.609289e-18}
+      rotation: {x: 0, y: 0, z: 0.027459884, w: 0.99962294}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKhybridExtraSpine2_M
+      parentName: IKhybridOffsetSpine2_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface52
-      parentName: model:pCube38
-      position: {x: 2.9802322e-10, y: -0.07729193, z: -0.0072927806}
+    - name: IKhybridSpine2_M
+      parentName: IKhybridExtraSpine2_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube39
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKhybridOffsetSpine3_M
+      parentName: IKhybridSpine2_M
+      position: {x: -0.007125474, y: -0.0011885286, z: 6.656967e-18}
+      rotation: {x: 0, y: 0, z: 0.09813275, w: 0.99517334}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKhybridExtraSpine3_M
+      parentName: IKhybridOffsetSpine3_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface2
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKhybridSpine3_M
+      parentName: IKhybridExtraSpine3_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube36
-      parentName: model:head
-      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+    - name: IKOffsetSpine3_M
+      parentName: IKhybridSpine3_M
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.4781975, y: 0.5208908, z: 0.4781975, w: 0.5208908}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKExtraSpine3_M
+      parentName: IKOffsetSpine3_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:legs
-      parentName: model:body
-      position: {x: 0.00018042355, y: -0.016330754, z: -0.0006720394}
+    - name: IKSpine3_M
+      parentName: IKExtraSpine3_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface16
-      parentName: model:legs
-      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+    - name: IKOffsetConstrainedSpine1_M
+      parentName: IKHandle
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface17
-      parentName: model:legs
-      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+    - name: IKhybridOffsetSpine1_M
+      parentName: IKOffsetConstrainedSpine1_M
+      position: {x: -2.0954118e-33, y: 8.881784e-18, z: 4.1633362e-19}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKOffsetSpine1_M
+      parentName: IKhybridOffsetSpine1_M
+      position: {x: -0, y: 0, z: -1.2325951e-34}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: -0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKExtraSpine1_M
+      parentName: IKOffsetSpine1_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube21
-      parentName: model:legs
-      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+    - name: IKSpine1_M
+      parentName: IKExtraSpine1_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:torso
-      parentName: model:body
-      position: {x: -0, y: -0.0040546022, z: 0}
+    - name: IKSpine1LocalOrient1_M
+      parentName: IKSpine1_M
+      position: {x: 2.0954118e-33, y: -8.881784e-18, z: -4.1633362e-19}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKSpine1LocalOrient2_M
+      parentName: IKSpine1LocalOrient1_M
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube40
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKSpine1LocalOrient3_M
+      parentName: IKSpine1LocalOrient2_M
+      position: {x: 8.881784e-18, y: 0, z: 1.9721522e-33}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface4
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKJoints
+      parentName: IKSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface18
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKAcSpineOffset2_M
+      parentName: IKJoints
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKAcRootFollowOffset_M
+      parentName: IKAcSpineOffset2_M
+      position: {x: -0, y: 2.220446e-18, z: -7.888609e-33}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube37
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKParentConstraintRoot_M
+      parentName: IKJoints
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKXOffsetRoot_M
+      parentName: IKParentConstraintRoot_M
+      position: {x: -0, y: 1.110223e-18, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface14
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKXRoot_M
+      parentName: IKXOffsetRoot_M
+      position: {x: -0, y: -1.110223e-18, z: -4.9303805e-34}
+      rotation: {x: -1.110223e-16, y: 1.110223e-16, z: -2.7755576e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKSpSpineOffset_M
+      parentName: IKJoints
+      position: {x: -8.953594e-19, y: 0.044648815, z: -0.0008048547}
+      rotation: {x: 0.539753, y: -0.45680046, z: -0.539753, w: 0.45680046}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKSpRootFollowOffset_M
+      parentName: IKSpSpineOffset_M
+      position: {x: -0, y: 1.110223e-18, z: 1.9721522e-33}
+      rotation: {x: 1.110223e-16, y: -1.110223e-16, z: 1.3877788e-17, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: IKScaler
+      parentName: IKSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface5
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: IKScalerRoot_M
+      parentName: IKScaler
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:polySurface3
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: MainSystem
+      parentName: MotionSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube28
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: model:pCube6
-      parentName: model:torso
-      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+    - name: Main
+      parentName: MainSystem
+      position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: model:big_hands
-      parentName: test_2(Clone)
+      parentName: BennetModel(Clone)
       position: {x: -0, y: 0.065282755, z: 0.009524098}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -1082,6 +728,176 @@ ModelImporter:
       position: {x: -0, y: -0.065282755, z: -0.009524098}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
+    - name: model:body
+      parentName: BennetModel(Clone)
+      position: {x: -0, y: 0.042169984, z: 0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:hands
+      parentName: model:body
+      position: {x: -0, y: 0.010646006, z: -0.0010949521}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface6
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface7
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface9
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface10
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface11
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface12
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pSphere1
+      parentName: model:hands
+      position: {x: -0, y: -0.05281599, z: -0.000295173}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:head
+      parentName: model:body
+      position: {x: -0, y: 0.036257286, z: 0.0012861853}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:ears
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube2
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube14
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube17
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube36
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube38
+      parentName: model:head
+      position: {x: -2.9802322e-10, y: -0.001135342, z: 0.00461647}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface52
+      parentName: model:pCube38
+      position: {x: 2.9802322e-10, y: -0.07729193, z: -0.0072927806}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube39
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCylinder1
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface2
+      parentName: model:head
+      position: {x: -0, y: -0.07842726, z: -0.0026763105}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:legs
+      parentName: model:body
+      position: {x: 0.00018042355, y: -0.016330754, z: -0.0006720394}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube21
+      parentName: model:legs
+      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface16
+      parentName: model:legs
+      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface17
+      parentName: model:legs
+      position: {x: -0.00018042355, y: -0.025839228, z: -0.00071808574}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:torso
+      parentName: model:body
+      position: {x: -0, y: -0.0040546022, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube6
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube28
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube37
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:pCube40
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface3
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface4
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface5
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface14
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: model:polySurface18
+      parentName: model:torso
+      position: {x: -0, y: -0.038115382, z: -0.0013901251}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -1094,11 +910,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 1e57b9e6c4b27f74982492c935d769cc, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
