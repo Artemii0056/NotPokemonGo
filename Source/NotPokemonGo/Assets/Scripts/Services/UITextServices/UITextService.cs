@@ -25,13 +25,13 @@ namespace Services.UITextServices
       _effectResolver = effectResolver;
       _staticDataService = staticDataService;
       
-      _effectResolver.EffectOnTargetCompleted += OnEffectOnTargetCompleted;
+      //_effectResolver.EffectOnTargetCompleted += OnEffectOnTargetCompleted;
       _battleTextUISpawner = new BattleTextUISpawner(objectResolver, resourceLoader);
     }
 
     public void Dispose()
     {
-      _effectResolver.EffectOnTargetCompleted -= OnEffectOnTargetCompleted;
+      //_effectResolver.EffectOnTargetCompleted -= OnEffectOnTargetCompleted;
     }
 
     private void OnEffectOnTargetCompleted(EffectType effectType, Unit target, float targetValue)

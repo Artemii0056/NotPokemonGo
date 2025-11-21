@@ -42,8 +42,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
       _winPanel = _uiFactory.CreateWinPanel();
       _winPanel.BackMainMenuButtonPressed += OnBackMainMenuButtonPressed;
       _winPanel.RestartButtonPressed += OnRestartButtonPressed;
-      LevelConfig levelConfig = _staticDataService.GetLevelConfig(_currentMapTypeProvider.CurrentMapType);
-      _mapType =  levelConfig.MapType;
+      // LevelConfig levelConfig = _staticDataService.GetLevelConfig(_currentMapTypeProvider.CurrentMapType);
+      // _mapType =  levelConfig.MapType;
       _saveLoadService.ProgressReaders.Add(this);
     }
 

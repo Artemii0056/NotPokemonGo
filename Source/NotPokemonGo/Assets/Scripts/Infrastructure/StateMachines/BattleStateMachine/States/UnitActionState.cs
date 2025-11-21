@@ -59,7 +59,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         private void SetFinishBattleState()
         {
-            _battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
+            //_battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
         }
     }
 }

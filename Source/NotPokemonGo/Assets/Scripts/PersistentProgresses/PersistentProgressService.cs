@@ -1,8 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
-using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace PersistentProgresses
 {
