@@ -3,7 +3,6 @@ using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services.InputServices;
-using UnityEngine;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -59,7 +58,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         private void SetFinishBattleState()
         {
-            //_battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
+            _battleStateMachine.Enter<FinishBattleState, UnitActionPayload>(_payload);
         }
     }
 }
