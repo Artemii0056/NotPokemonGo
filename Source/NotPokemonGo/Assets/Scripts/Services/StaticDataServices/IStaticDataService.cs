@@ -3,6 +3,7 @@ using Abilities;
 using Characters;
 using Characters.Configs;
 using LevelSetting;
+using Map;
 using QTESystem;
 using Statuses;
 using UI;
@@ -23,5 +24,6 @@ namespace Services.StaticDataServices
         UnitSkinItemView UnitSkinItemViewPrefab { get; }
         CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
+        LevelConfig GetLevelConfig(MapType currentMapType);
     }
 }
