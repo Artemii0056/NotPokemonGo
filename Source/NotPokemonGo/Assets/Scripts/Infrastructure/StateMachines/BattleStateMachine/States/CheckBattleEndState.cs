@@ -31,11 +31,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         {
             bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
             bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
-            
 
             if (heroesDead && enemiesDead)
             {
                 Debug.Log("Сделать авто проигрыш");
+                return;
             }
 
             if (enemiesDead) 

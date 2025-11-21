@@ -11,20 +11,25 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
+using Map;
+using PersistentProgresses;
 using Platoons;
 using ReactionSystems;
+using SaveLoadService;
 using Services;
 using Services.AssetManagement;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.InputServices;
+using Services.ObjectPools;
 using Services.QTEServices;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
+using Services.UITextServices;
 using Statuses.Services;
 using TimeServices;
 using UI.Ability;
@@ -102,8 +107,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
-            builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
-            
             builder.Register<ILevelProgressService, LevelProgressService>(Lifetime.Singleton);
             
             builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
@@ -115,6 +118,19 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
             
             builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
+
+            builder.Register<ICurrentMapTypeProvider, CurrentMapTypeProvider>(Lifetime.Singleton);
+            
+            builder.Register<PersistentProgressService>(Lifetime.Singleton).AsSelf();
+            
+            builder.Register<PlayerPrefsSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces();
+            
+            builder.Register<UITextService>(Lifetime.Singleton).AsSelf();
+            
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Resolve<UITextService>();
+            });
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
@@ -190,7 +206,7 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsImplementedInterfaces()
                     .AsSelf();
 
-                builder.Register<FinishBattleState>(Lifetime.Singleton)
+                builder.Register<UpgradePlayerPlatoonState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
                 
@@ -203,6 +219,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsSelf();
                 
                 builder.Register<LoosePanelState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
+                
+                builder.Register<WinLevelState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }

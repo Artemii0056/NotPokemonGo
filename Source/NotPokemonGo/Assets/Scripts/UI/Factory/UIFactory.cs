@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using Map;
 using Services.AssetManagement;
 using Services.StaticDataServices;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UI.Factory
 {
@@ -12,12 +15,24 @@ namespace UI.Factory
     {
         private readonly IResourceLoader _resourceLoader;
         private readonly IStaticDataService _staticDataService;
+        private readonly ICurrentMapTypeProvider _currentMapTypeProvider;
 
-        public UIFactory(IResourceLoader resourceLoader,
-            IStaticDataService staticDataService)
+        private readonly Dictionary<Type, string> _uiPaths = new()
+        {
+            { typeof(MainMenuUI), Constants.AssetPath.MainMenuCanvasPath },
+            { typeof(LoosePanel), Constants.AssetPath.LoosePanelPath },
+            { typeof(WinPanel), Constants.AssetPath.WinPanelPath },
+            { typeof(BattleInfoUI), Constants.AssetPath.BattleInfoUIPath }
+        };
+        
+        public UIFactory(
+            IResourceLoader resourceLoader,
+            IStaticDataService staticDataService, 
+            ICurrentMapTypeProvider currentMapTypeProvider)
         {
             _resourceLoader = resourceLoader;
             _staticDataService = staticDataService;
+            _currentMapTypeProvider = currentMapTypeProvider;
         }
 
         public ChooseUnitToFightPanel CreateUnitSelectionController(IEnumerable<UnitItemConfig> configCharacterItemConfigs)
@@ -76,6 +91,21 @@ namespace UI.Factory
             return Object.Instantiate(loosePanel);
         }
 
+        public WinPanel CreateWinPanel()
+        {
+            WinPanel winPanel = _resourceLoader.Load<WinPanel>(Constants.AssetPath.WinPanelPath);
+            return Object.Instantiate(winPanel);
+        }
+
+        public T CreatePanel<T>() where T : MonoBehaviour
+        {
+            if (!_uiPaths.TryGetValue(typeof(T), out string path))
+                throw new ArgumentException($"Unknown UI panel type: {typeof(T)}");
+
+            T panel = _resourceLoader.Load<T>(path);
+            return Object.Instantiate(panel);
+        }
+
         public BattleInfoUI CreateBattleUIInfo()
         {
             BattleInfoUI battleInfoUI = _resourceLoader.Load<BattleInfoUI>(Constants.AssetPath.BattleInfoUIPath);
@@ -110,7 +140,7 @@ namespace UI.Factory
            CharactersCatalogStaticData config = _staticDataService.LoadCharacterCatalogStaticDatas();
             
             ChooseUnitToFightPanel toFightPanel = CreateUnitSelectionController(config.CharacterItemConfigs);
-            chooseMapUI.Initialize(mapLevels, _staticDataService, toFightPanel); 
+            chooseMapUI.Initialize(mapLevels, _staticDataService, toFightPanel, _currentMapTypeProvider); 
             toFightPanel.Hide();
 
             startScreen.Initialize(characterSelectionScreenContainer, chooseMapUI);

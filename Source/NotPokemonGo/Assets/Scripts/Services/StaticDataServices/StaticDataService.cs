@@ -5,6 +5,7 @@ using Characters;
 using Characters.Configs;
 using Infrastructure;
 using LevelSetting;
+using Map;
 using QTESystem;
 using Services.AssetManagement;
 using Services.QTEServices;
@@ -26,7 +27,7 @@ namespace Services.StaticDataServices
         private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
         
-        private List<LevelConfig> _levelConfigs;
+        private Dictionary<MapType, LevelConfig> _levelConfigs;
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
@@ -46,8 +47,17 @@ namespace Services.StaticDataServices
         }
 
         public List<LevelConfig> GetLevelConfigs() => 
-            _levelConfigs.ToList();
+            _levelConfigs.Values.ToList();
 
+        public LevelConfig GetLevelConfig(MapType mapType)
+        {
+            if (_levelConfigs.TryGetValue(mapType, out LevelConfig abilityConfig))
+                return abilityConfig;
+
+            throw new KeyNotFoundException($"No levelConfig found for map {mapType}");
+        }
+
+        
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
         {
             if (_abilityConfigs.TryGetValue(abilityType, out AbilityConfig abilityConfig))
@@ -93,7 +103,8 @@ namespace Services.StaticDataServices
 
         private void LoadLevelConfigs()
         {
-            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
+            _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath)
+                .ToDictionary(x => x.MapType, x => x);
         }
 
         private void LoadQteConfigs()

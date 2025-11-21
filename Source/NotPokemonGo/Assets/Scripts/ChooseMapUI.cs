@@ -10,6 +10,8 @@ public class ChooseMapUI : MonoBehaviour
 {
     [SerializeField] private List<MapButton> _mapButtons;
 
+    private ICurrentMapTypeProvider _currentMapTypeProvider;
+
     public ChooseUnitToFightPanel ChooseUnitToFightPanel { get; private set; }
 
     public List<MapLevel> MapLevels { get; private set; }
@@ -18,8 +20,10 @@ public class ChooseMapUI : MonoBehaviour
 
     public void Initialize(List<MapLevel> mapLevels, 
         IStaticDataService staticDataService,
-        ChooseUnitToFightPanel chooseUnitToFightPanel)
+        ChooseUnitToFightPanel chooseUnitToFightPanel,
+        ICurrentMapTypeProvider currentMapTypeProvider)
     {
+        _currentMapTypeProvider = currentMapTypeProvider;
         ChooseUnitToFightPanel = chooseUnitToFightPanel;
         MapLevels = mapLevels;
 
@@ -41,6 +45,9 @@ public class ChooseMapUI : MonoBehaviour
             button.OnClick -= OnButtonClick;
     }
     
-    private void OnButtonClick(MapType type) => 
+    private void OnButtonClick(MapType type)
+    {
+        _currentMapTypeProvider.CurrentMapType = type;
         MapSelected?.Invoke(type);
+    }
 }

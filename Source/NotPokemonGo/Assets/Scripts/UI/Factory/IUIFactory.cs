@@ -1,4 +1,5 @@
 using Characters;
+using UnityEngine;
 
 namespace UI.Factory
 {
@@ -9,5 +10,8 @@ namespace UI.Factory
         MainMenuUI CreateMainMenu();
         LoosePanel CreateLoosePanel();
         BattleInfoUI CreateBattleUIInfo();
+        WinPanel CreateWinPanel();
+
+        T CreatePanel<T>() where T : MonoBehaviour;
     }
 }
