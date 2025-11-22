@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.AbilitySteps;
 using Abilities.MV;
 using DG.Tweening;
 using Infrastructure;
@@ -79,13 +80,25 @@ namespace Abilities.Bennet
             FinishAbility();
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        private IEnumerator ExecutePhase(AbilityStepData abilityStepData)
         {
             _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
-            _animatorController.Play(phase.AnimationCashName);
+            _animatorTrigger.SetPhase(abilityStepData);
+            _animatorController.Play(abilityStepData.AnimationCashName);
 
-            switch (phase.PhaseType)
+            switch (abilityStepData)
+            {
+                case ArmamentStepData armamentStepData:
+                    break;
+                case CastamentStepData castamentStepData:
+                    break;
+                case PlayAnimationStepData playAnimationStepData:
+                    break;
+                case QteStepData qteStepData:
+                    break;
+            }
+            
+            switch (abilityStepData.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
                     yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));

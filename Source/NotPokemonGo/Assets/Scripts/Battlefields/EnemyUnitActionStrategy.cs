@@ -12,8 +12,6 @@ namespace Battlefields
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
 
-        private ISourceProvider _sourceProvider;
-        private ITargetSelector _targetSelector;
         private IAbilityService _abilityService;
 
         public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
@@ -23,27 +21,13 @@ namespace Battlefields
         }
 
         [Inject]
-        public void Initialize(
-            ISourceProvider sourceProvider,
-            ITargetSelector targetSelector,
-            IAbilityService abilityService
-        )
-        {
-            _targetSelector = targetSelector;
-            _sourceProvider = sourceProvider;
+        public void Initialize(IAbilityService abilityService) => 
             _abilityService = abilityService;
-        }
 
         public override void Enable()
         {
             base.Enable();
             Attack(_battlefield.HeroesPlatoon.AliveUnits);
-        }
-
-        public override void Disable()
-        {
-            base.Disable();
-            _sourceProvider.Discard(); //Todo Сбрасываться должен в стейтмашине 
         }
 
         private void Attack(List<Unit> targets)
@@ -53,9 +37,6 @@ namespace Battlefields
                 if (abilityModel.IsReady())
                 {
                     Unit randomTarget = GetRandomTarget(targets);
-                    
-                    // _targetSelector.Remember(randomTarget); //Вот это зло.
-                    // _sourceProvider.Remember(_source);
                     
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.Handle(_source, randomTarget, abilityModel); 
@@ -72,11 +53,5 @@ namespace Battlefields
 
         private Unit GetRandomTarget(List<Unit> targets) =>
             targets[Random.Range(0, targets.Count)];
-
-        // private IEnumerator Delay()
-        // {
-        //     yield return new WaitForSeconds(0.5f);
-        //     _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-        // }
     }
 }

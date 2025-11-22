@@ -182,7 +182,9 @@ namespace Units
             if (_abilityModels.Count > 0)
             {
                 foreach (AbilityModel abilityModel in _abilityModels)
+                {
                     abilityModel.Tick();
+                }
             }
         }
 

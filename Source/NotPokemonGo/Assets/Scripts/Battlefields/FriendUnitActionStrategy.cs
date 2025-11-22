@@ -18,7 +18,6 @@ namespace Battlefields
 
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
-        private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IInputReader _inputReader;
         private IRaycastService _raycastService;
@@ -36,7 +35,6 @@ namespace Battlefields
             IRaycastService raycastService,
             ISourceProvider sourceProvider,
             IAbilityProvider abilityProvider,
-            ITargetSelector targetSelector,
             AbilityPanelPresenter abilityPanelPresenter,
             IInputReader inputReader,
             IAbilityService abilityService
@@ -46,7 +44,6 @@ namespace Battlefields
             _inputReader = inputReader;
             _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
-            _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
             _abilityService = abilityService;
         }
@@ -92,9 +89,6 @@ namespace Battlefields
                 case PlatoonType.Enemies: 
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.Handle(_source, unit, _abilityProvider.AbilityModel);
-                    
-                    // _targetSelector.Remember(unit); //TODO А нужен ли этот сервис вообще? 
-                    // _sourceProvider.Remember(_source); //TODO ХЗ
                     _abilityPanelPresenter.Disable();
                     break;
 
@@ -106,6 +100,8 @@ namespace Battlefields
 
             if (_abilityProvider.AbilityModel.Cost > 0)
                 _source.ResetAgility();
+            
+            _abilityProvider.Discard();
         }
 
         private void ShowAbilityInfos(List<AbilityModel> abilityModels)

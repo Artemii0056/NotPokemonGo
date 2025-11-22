@@ -2,7 +2,7 @@
 using UnityEngine.Serialization;
 using Unit = Units.Unit;
 
-namespace Abilities
+namespace Armaments
 {
     public class ArmamentView : MonoBehaviour
     {

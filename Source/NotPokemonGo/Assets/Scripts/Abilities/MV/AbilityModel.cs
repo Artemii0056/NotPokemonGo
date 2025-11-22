@@ -1,34 +1,40 @@
 ﻿using System.Collections.Generic;
+using Abilities.AbilitySteps;
+using UnityEngine;
 
 namespace Abilities.MV
 {
     public class AbilityModel
     {
+        private Dictionary<AbilityStatType, AbilityStatSetup> _stats;
+
         public AbilityModel(AbilityConfig config)
         {
             AbilityType = config.AbilityType;
             
-           Parts = config.Parts;
+            Steps = config.Steps;
 
             _stats = new Dictionary<AbilityStatType, AbilityStatSetup>();
 
             foreach (AbilityStatSetup abilityStatSetup in config.AbilityStatSetup) 
                 _stats[abilityStatSetup.StatsType] = abilityStatSetup;
         }
-
-        private Dictionary<AbilityStatType, AbilityStatSetup> _stats;
-
+        
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }
         
-        public List<AbilityPart> Parts { get; private set; }
-        
-       // public List<AbilityPhase> Phases { get; private set; }
+        public List<AbilityStepData> Steps { get; private set; }
         
         public float Cost => _stats[AbilityStatType.Cost].Value; 
 
         public bool IsReady()
         {
+            if (_stats.ContainsKey(AbilityStatType.CurrentTime) == false)
+            {
+                Debug.LogError("No stats have been assigned " + AbilityType);
+                return false;
+            }
+            
             float currentTime = _stats[AbilityStatType.CurrentTime].Value;
             float cooldown = _stats[AbilityStatType.Cooldown].Value;
 

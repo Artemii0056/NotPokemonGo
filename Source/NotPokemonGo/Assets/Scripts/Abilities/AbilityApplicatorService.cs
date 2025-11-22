@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities.AbilityActions.Armaments;
 using Abilities.AbilityActions.Castaments;
+using Armaments;
+using Armaments.Factories;
 using Effects;
 using Factories;
 using Services;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Abilities.AbilityTypes;
 using Abilities.Bennet;
 using Abilities.Enemies;
 using Abilities.MV;
@@ -15,9 +16,7 @@ namespace Abilities
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBattleStateMachine _battleStateMachine;
-        private readonly ISourceProvider _sourceProvider;
         private readonly IQteService _qteService;
-        private readonly ITargetSelector _targetSelector;
 
         private Battlefield _battlefield;
 
@@ -32,15 +31,11 @@ namespace Abilities
         public AbilityService(
             ICoroutineRunner coroutineRunner,
             IQteService qteService,
-            IBattleStateMachine battleStateMachine,
-            ITargetSelector targetSelector,
-            ISourceProvider sourceProvider)
+            IBattleStateMachine battleStateMachine)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
-            _targetSelector = targetSelector;
-            _sourceProvider = sourceProvider;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -49,8 +44,7 @@ namespace Abilities
             _battlefield = battlefield;
         }
 
-        public void Handle(Unit source, Unit target, AbilityModel abilityModel) //Нужно по максимуму постараться избавиться от сурс и таргет провайдера.
-                                                                                //Сюда приходит кто и кого и дальше работает 
+        public void Handle(Unit source, Unit target, AbilityModel abilityModel) 
         {
             AbilityType abilityType = abilityModel.AbilityType;
 
@@ -93,10 +87,11 @@ namespace Abilities
                     break;
 
                 case AbilityType.BaseAttack:
-                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
+                    // _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
+                    // _abilityHandler.Play(source, target);
+                    // _activeAbilityHandlers.Add(_abilityHandler);
+                    // _abilityHandler.Finished += Continue;
+                    _abilityHandler = new AbilityBaseAttack(abilityModel, _coroutineRunner);
                     break;
 
                 case AbilityType.Default:
@@ -111,11 +106,10 @@ namespace Abilities
         {
             _abilityHandler.Stop();
             _abilityHandler.Finished -= Continue;
-            
+            _abilityHandler = null;
             _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
             _activeAbilityHandlers.Add(_abilityHandler);
 
-           // _targetSelector.Remember(target); 
             _abilityHandler.Play(source, target); 
             _abilityHandler.Finished += Continue;
         }
@@ -124,13 +118,6 @@ namespace Abilities
         {
             _activeAbilityHandlers.Remove(handler);
             handler.Finished -= Continue;
-
-            // if (_activeAbilityHandlers.Count > 0)
-            // {
-            //     foreach (var abilityHandler in _activeAbilityHandlers) //Не, бред какой то 
-            //         abilityHandler.Finished -= Continue;
-            // }
-
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }

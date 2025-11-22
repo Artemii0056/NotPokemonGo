@@ -19,32 +19,25 @@ MonoBehaviour:
   <MiddleAnimationParticles>k__BackingField:
   - {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
   <EndAnimationParticles>k__BackingField: []
-  <Phases>k__BackingField:
-  - AnimationClip: {fileID: 7400000, guid: ae3c91fea9508744ca55e5ea3c999ee6, type: 2}
-    ArmamentSetup:
-      <Statuses>k__BackingField: []
-      <EffectInfo>k__BackingField: []
-      <ParticleSystem>k__BackingField: {fileID: 0}
-      <ArmamentView>k__BackingField: {fileID: 0}
-      <MoveSpeed>k__BackingField: 0
-    CastamentSetup:
-      <Statuses>k__BackingField:
-      - EffectSetup:
-          Type: 0
-          TargetType: 1
-          Value: 10
-        Type: 1
-        TargetTime: 1
-        TickCount: 5
-        IsPermanent: 0
-        IsRefreshed: 1
-      <EffectInfo>k__BackingField:
-      - Type: 0
-        TargetType: 1
-        Value: 30
-      <ParticleSystem>k__BackingField: {fileID: 0}
-    TargetMode: 2
-    <PhaseType>k__BackingField: 3
+  <Parts>k__BackingField:
+  - <AbilityPhases>k__BackingField:
+    - AnimationClip: {fileID: 0}
+      ArmamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField: []
+        <ParticleSystem>k__BackingField: {fileID: 0}
+        <ArmamentView>k__BackingField: {fileID: 0}
+        <MoveSpeed>k__BackingField: 0
+      CastamentSetup:
+        <Statuses>k__BackingField: []
+        <EffectInfo>k__BackingField: []
+        <ParticleSystem>k__BackingField: {fileID: 0}
+      TargetMode: 0
+      QteType: 0
+      CameraActionType: 0
+      <PhaseType>k__BackingField: 3
+      _steps:
+      - rid: 4359734520832065537
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 2
@@ -53,4 +46,25 @@ MonoBehaviour:
   - <StatsType>k__BackingField: 2
     Value: 0
   - <StatsType>k__BackingField: 3
-    Value: 0
+    Value: 3
+  _steps:
+  - rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 4359734520832065537
+      type: {class: ArmamentStepData, ns: Abilities.AbilitySteps, asm: Assembly-CSharp}
+      data:
+        Armament:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 2
+            Value: 0
+          <ParticleSystem>k__BackingField: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
+          <ArmamentView>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+        TargetMode: 1

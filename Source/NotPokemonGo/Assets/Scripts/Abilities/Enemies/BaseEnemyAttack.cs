@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.AbilitySteps;
 using Abilities.Bennet;
 using Abilities.MV;
 using Infrastructure;
@@ -22,7 +23,7 @@ namespace Abilities.Enemies
 
         private Vector3 _startPosition;
 
-        private readonly List<AbilityPart> _parts;
+        private readonly List<AbilityStepData> _steps;
         private Unit _source;
         private Unit _target;
 
@@ -33,7 +34,7 @@ namespace Abilities.Enemies
             AbilityModel abilityModel)
         {
             _coroutineRunner = coroutineRunner;
-            _parts = abilityModel.Parts;
+            _steps = abilityModel.Steps;
         }
 
         public event Action<IAbilityHandler> Finished;
@@ -53,14 +54,13 @@ namespace Abilities.Enemies
         public void Stop()
         {
             _coroutineRunner.StopCoroutine(_currentRoutine);
-            //FinishAbility(); //???
         }
 
         private IEnumerator ExecuteAllParts()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            for (int partIndex = 0; partIndex < _steps.Count; partIndex++)
             {
-                var part = _parts[partIndex];
+                var part = _steps[partIndex];
 
                 for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
                 {

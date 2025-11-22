@@ -1,7 +1,7 @@
 ﻿using Units;
 using UnityEngine;
 
-namespace Abilities
+namespace Armaments.Factories
 {
     public interface IArmamentViewFactory
     {

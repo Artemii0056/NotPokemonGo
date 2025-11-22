@@ -1,8 +1,7 @@
-﻿using Abilities.AbilityActions.Armaments;
-using Units;
+﻿using Units;
 using UnityEngine;
 
-namespace Abilities
+namespace Armaments.Factories
 {
     public class ArmamentViewFactory : IArmamentViewFactory
     {
