@@ -9,7 +9,6 @@ namespace Abilities.AbilitySteps
   {
     public ArmamentSetup Armament;
     public TargetMode TargetMode;
-    public override void Accept(IAbilityStepVisitor visitor, Unit source, Unit target)
-      => visitor.Visit(this, source, target);
+    public bool WhenQteSuccess;
   }
 }

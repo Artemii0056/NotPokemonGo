@@ -8,8 +8,7 @@ namespace Abilities.AbilitySteps
   public sealed class PlayAnimationStepData : AbilityStepData
   {
     public AnimationClip Clip;
+    public string AnimationName;
     public bool WaitForFinish = true;
-    public override void Accept(IAbilityStepVisitor visitor, Unit source, Unit target)
-      => visitor.Visit(this, source, target);
   }
 }

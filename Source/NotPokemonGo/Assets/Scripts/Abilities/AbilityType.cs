@@ -13,6 +13,8 @@
         HittingGround,
         BaseAttack,
         CounterAttack,
-        Default
+        BennetBaseAttack,
+        Generic,
+        Default,
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Abilities.AbilityTypes;
 using Abilities.Bennet;
 using Abilities.Enemies;
 using Abilities.MV;
@@ -12,11 +11,16 @@ namespace Abilities.Factories
 	{
 		private readonly ICoroutineRunner _coroutineRunner;
 		private readonly IQteService _qteService;
+		private readonly IAbilityStepExecutor _abilityStepExecutor;
 
-		public AbilityHandlerFactory(ICoroutineRunner coroutineRunner, IQteService qteService)
+		public AbilityHandlerFactory(
+			ICoroutineRunner coroutineRunner, 
+			IQteService qteService, 
+			IAbilityStepExecutor abilityStepExecutor)
 		{
 			_coroutineRunner = coroutineRunner;
 			_qteService = qteService;
+			_abilityStepExecutor = abilityStepExecutor;
 		}
 
 		public IAbilityHandler Create(AbilityModel model)
@@ -26,8 +30,9 @@ namespace Abilities.Factories
 				AbilityType.FrostBall => new BaseEnemyAttack(_coroutineRunner, model),
 				AbilityType.EngineeringSeries => new EngineeringSeriesAbility(model, _coroutineRunner, _qteService),
 				AbilityType.HittingGround => new HittingGround(_coroutineRunner, model),
-				AbilityType.BaseAttack => new AbilityBaseAttack(model, _coroutineRunner),
 				AbilityType.CounterAttack => new Counterattack(_coroutineRunner, model),
+				AbilityType.BennetBaseAttack => new BennetBaseAttack(_coroutineRunner, model),
+				AbilityType.Generic => new GenericAbilityHandler(_coroutineRunner, model, _abilityStepExecutor),
 				_ => throw new ArgumentOutOfRangeException(nameof(model.AbilityType), model.AbilityType, null)
 			};
 		}

@@ -7,7 +7,7 @@ using Units;
 
 namespace Services.AbilityServices
 {
-    public class AbilityPhaseService : IAbilityStepVisitor
+    public class AbilityPhaseService
     {
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private readonly ITargetSelector _targetSelector;

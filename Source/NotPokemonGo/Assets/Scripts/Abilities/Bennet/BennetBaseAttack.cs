@@ -24,17 +24,12 @@ namespace Abilities.Bennet
         private bool _animationPlaying;
         
         private Coroutine _currentRoutine;
-        private  Vector3 _startPosition;
 
         public event Action<IAbilityHandler> Finished;
 
-        public BennetBaseAttack(
-            AbilityModel abilityModel,
-            ICoroutineRunner coroutineRunner)
+        public BennetBaseAttack(ICoroutineRunner coroutineRunner, AbilityModel abilityModel)
         {
-            
             _coroutineRunner = coroutineRunner;
-            
             _parts = abilityModel.Parts;
         }
 
@@ -46,8 +41,6 @@ namespace Abilities.Bennet
             _animatorController = source.UnitAnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
             
-            _startPosition = source.transform.position;
-
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
@@ -85,18 +78,6 @@ namespace Abilities.Bennet
             _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(abilityStepData);
             _animatorController.Play(abilityStepData.AnimationCashName);
-
-            switch (abilityStepData)
-            {
-                case ArmamentStepData armamentStepData:
-                    break;
-                case CastamentStepData castamentStepData:
-                    break;
-                case PlayAnimationStepData playAnimationStepData:
-                    break;
-                case QteStepData qteStepData:
-                    break;
-            }
             
             switch (abilityStepData.PhaseType)
             {

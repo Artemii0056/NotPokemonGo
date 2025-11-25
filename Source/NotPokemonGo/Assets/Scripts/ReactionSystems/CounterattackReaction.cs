@@ -30,7 +30,7 @@ namespace ReactionSystems
                 .Find(a => a.AbilityType == AbilityType.CounterAttack && a.IsReady());
 
             if (ability != null) 
-                _abilityService.HandleCounterAttack(context.Source,context.Target, ability);
+                _abilityService.Handle(context.Source,context.Target, ability);
         }
     }
 }

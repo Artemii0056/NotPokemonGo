@@ -94,6 +94,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<IAbilityApplicatorService, AbilityApplicatorService>(Lifetime.Singleton);
+            builder.Register<IAbilityStepExecutor, AbilityStepExecutor>(Lifetime.Singleton);
+            
             builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
             builder.Register<IQteService, QteService>(Lifetime.Singleton);
             

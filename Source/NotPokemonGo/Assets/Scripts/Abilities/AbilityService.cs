@@ -38,14 +38,6 @@ namespace Abilities
 
 		public void Handle(Unit source, Unit target, AbilityModel abilityModel)
 		{
-			IAbilityHandler handler = _abilityHandlerFactory.Create(abilityModel);
-
-			RegisterHandler(handler);
-			handler.Play(source, target);
-		}
-		
-		public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
-		{
 			StopAllHandlers();
 
 			IAbilityHandler handler = _abilityHandlerFactory.Create(abilityModel);
@@ -81,3 +73,12 @@ namespace Abilities
 		}
 	}
 }
+
+// public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
+// {
+// 	StopAllHandlers();
+//
+// 	IAbilityHandler handler = _abilityHandlerFactory.Create(abilityModel);
+// 	RegisterHandler(handler);
+// 	handler.Play(source, target);
+// }

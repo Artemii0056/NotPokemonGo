@@ -16,8 +16,6 @@ namespace Abilities.Enemies
     public class BaseEnemyAttack : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly AbilityPhaseService _abilityPhaseService;
-
         private UnitAnimatorTrigger _animatorTrigger;
         private UnitAnimatorController _animatorController;
 
@@ -35,11 +33,9 @@ namespace Abilities.Enemies
 
         public BaseEnemyAttack(
             ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel,
-            AbilityPhaseService abilityPhaseService)
+            AbilityModel abilityModel)
         {
             _coroutineRunner = coroutineRunner;
-            _abilityPhaseService = abilityPhaseService;
             _steps = abilityModel.Steps;
         }
         

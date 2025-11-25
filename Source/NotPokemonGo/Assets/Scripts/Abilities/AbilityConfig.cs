@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Abilities.AbilitySteps;
 using UnityEngine;
 
 namespace Abilities
@@ -13,12 +12,12 @@ namespace Abilities
          [field: SerializeField] public List<ParticleSystem> StartAnimationParticles { get; private set; }
          [field: SerializeField] public List<ParticleSystem> MiddleAnimationParticles { get; private set; }
          [field: SerializeField] public List<ParticleSystem> EndAnimationParticles { get; private set; }
-
-         [SerializeReference]
-         private List<AbilityStepData> _steps = new();
-
-         public List<AbilityStepData> Steps => _steps;
-         
          [field: SerializeField] public List<AbilityStatSetup> AbilityStatSetup { get; private set; }
+
+
+         [SerializeField] private List<AbilityLevelConfig> _levels;
+         
+         public AbilityLevelConfig GetLevel(int level) => 
+	         _levels.Find(l => l.Level == level);
     }
 }
