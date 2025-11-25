@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Abilities.AbilitySteps;
 using Assets;
 using ReactionSystems;
 using Services.AbilityServices;
@@ -25,7 +26,7 @@ namespace Units.AnimationControllers
         private Dictionary<AbilityType, AbilityAnchor> _anchors;
         private  List<ParticleSystem> _particles;
         
-        private AbilityPhase _phase;
+        private AbilityStepData _phase;
         
         private Unit _currentTarget;
 
@@ -79,7 +80,7 @@ namespace Units.AnimationControllers
             _currentTarget = target;
         }
         
-        public void SetPhase(AbilityPhase phase)
+        public void SetPhase(AbilityStepData phase)
         {
             _phase = phase;
         }

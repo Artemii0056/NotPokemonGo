@@ -1,4 +1,5 @@
 ﻿using System;
+using Units;
 using UnityEngine;
 
 namespace Abilities.AbilitySteps
@@ -8,5 +9,7 @@ namespace Abilities.AbilitySteps
   {
     public AnimationClip Clip;
     public bool WaitForFinish = true;
+    public override void Accept(IAbilityStepVisitor visitor, Unit source, Unit target)
+      => visitor.Visit(this, source, target);
   }
 }

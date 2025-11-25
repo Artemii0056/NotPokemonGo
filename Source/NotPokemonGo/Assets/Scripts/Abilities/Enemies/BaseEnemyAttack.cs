@@ -6,6 +6,7 @@ using Abilities.Bennet;
 using Abilities.MV;
 using Infrastructure;
 using Services;
+using Services.AbilityServices;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Abilities.Enemies
     public class BaseEnemyAttack : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly AbilityPhaseService _abilityPhaseService;
 
         private UnitAnimatorTrigger _animatorTrigger;
         private UnitAnimatorController _animatorController;
@@ -29,16 +31,18 @@ namespace Abilities.Enemies
 
         private Coroutine _currentRoutine;
 
-        public BaseEnemyAttack(
-            ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel)
-        {
-            _coroutineRunner = coroutineRunner;
-            _steps = abilityModel.Steps;
-        }
-
         public event Action<IAbilityHandler> Finished;
 
+        public BaseEnemyAttack(
+            ICoroutineRunner coroutineRunner,
+            AbilityModel abilityModel,
+            AbilityPhaseService abilityPhaseService)
+        {
+            _coroutineRunner = coroutineRunner;
+            _abilityPhaseService = abilityPhaseService;
+            _steps = abilityModel.Steps;
+        }
+        
         public void Play(Unit source, Unit target)
         {
             _target = target;
@@ -60,26 +64,20 @@ namespace Abilities.Enemies
         {
             for (int partIndex = 0; partIndex < _steps.Count; partIndex++)
             {
-                var part = _steps[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
-                {
-                    var phase = part.AbilityPhases[phaseIndex];
-
-                    yield return ExecutePhase(phase);
-                }
+                AbilityStepData abilitStepData = _steps[partIndex];
+                yield return ExecutePhase(abilitStepData);
             }
 
             FinishAbility();
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        private IEnumerator ExecutePhase(AbilityStepData abilityStepData)
         {
             _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
-            _animatorController.Play(phase.AnimationCashName);
+            _animatorTrigger.SetPhase(abilityStepData);
+            _animatorController.Play(abilityStepData.AnimationCashName);
 
-            switch (phase.PhaseType)
+            switch (abilityStepData.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
                     yield return MoveUnit(_source,

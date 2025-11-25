@@ -1,124 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
-using Abilities.AbilityTypes;
 using Abilities.Bennet;
-using Abilities.Enemies;
+using Abilities.Factories;
 using Abilities.MV;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
-using Services;
-using Services.QTEServices;
 using Units;
 
 namespace Abilities
 {
-    public class AbilityService : IAbilityService
-    {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IBattleStateMachine _battleStateMachine;
-        private readonly IQteService _qteService;
+	public class AbilityService : IAbilityService
+	{
+		private readonly IBattleStateMachine _battleStateMachine;
+		private readonly IAbilityHandlerFactory _abilityHandlerFactory;
 
-        private Battlefield _battlefield;
+		private Battlefield _battlefield;
 
-        private List<IAbilityHandler> _activeAbilityHandlers;
+		private List<IAbilityHandler> _activeAbilityHandlers;
 
-        private Counterattack _counterattack;
+		private Counterattack _counterattack;
 
-        private IAbilityHandler _abilityHandler;
-        
-        public event Action Finished;
+		private IAbilityHandler _abilityHandler;
 
-        public AbilityService(
-            ICoroutineRunner coroutineRunner,
-            IQteService qteService,
-            IBattleStateMachine battleStateMachine)
-        {
-            _coroutineRunner = coroutineRunner;
-            _qteService = qteService;
-            _battleStateMachine = battleStateMachine;
-            _activeAbilityHandlers = new List<IAbilityHandler>();
-        }
+		public event Action Finished;
 
-        public void SetBattlefield(Battlefield battlefield)
-        {
-            _battlefield = battlefield;
-        }
+		public AbilityService(IBattleStateMachine battleStateMachine, IAbilityHandlerFactory abilityHandlerFactory)
+		{
+			_battleStateMachine = battleStateMachine;
+			_abilityHandlerFactory = abilityHandlerFactory;
+			_activeAbilityHandlers = new List<IAbilityHandler>();
+		}
 
-        public void Handle(Unit source, Unit target, AbilityModel abilityModel) 
-        {
-            AbilityType abilityType = abilityModel.AbilityType;
+		public void SetBattlefield(Battlefield battlefield)
+		{
+			_battlefield = battlefield;
+		}
 
-            switch (abilityType)
-            {
-                case AbilityType.FireBall:
-                    break;
+		public void Handle(Unit source, Unit target, AbilityModel abilityModel)
+		{
+			IAbilityHandler handler = _abilityHandlerFactory.Create(abilityModel);
 
-                case AbilityType.FrostBall:
-                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
+			RegisterHandler(handler);
+			handler.Play(source, target);
+		}
+		
+		public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
+		{
+			StopAllHandlers();
 
-                case AbilityType.PoisonBall:
-                    break;
-                case AbilityType.AlcoholBall:
-                    break;
-                case AbilityType.CastSpell:
-                    break;
-                case AbilityType.DoubleAttack:
-                    break;
-                case AbilityType.BaseAbility:
-                    break;
-                
-                case AbilityType.EngineeringSeries:
-                    _abilityHandler =
-                        new EngineeringSeriesAbility(abilityModel, _coroutineRunner, _qteService);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
+			IAbilityHandler handler = _abilityHandlerFactory.Create(abilityModel);
+			RegisterHandler(handler);
+			handler.Play(source, target);
+		}
+		
+		private void RegisterHandler(IAbilityHandler handler)
+		{
+			_activeAbilityHandlers.Add(handler);
+			handler.Finished += OnHandlerFinished;
+		}
 
-                case AbilityType.HittingGround:
-                    _abilityHandler = new HittingGround(_coroutineRunner, abilityModel);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
+		private void OnHandlerFinished(IAbilityHandler handler)
+		{
+			handler.Finished -= OnHandlerFinished;
+			_activeAbilityHandlers.Remove(handler);
 
-                case AbilityType.BaseAttack:
-                    // _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
-                    // _abilityHandler.Play(source, target);
-                    // _activeAbilityHandlers.Add(_abilityHandler);
-                    // _abilityHandler.Finished += Continue;
-                    _abilityHandler = new AbilityBaseAttack(abilityModel, _coroutineRunner);
-                    break;
+			_battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
 
-                case AbilityType.Default:
-                    break;
+			Finished?.Invoke();
+		}
 
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
-            }
-        }
+		private void StopAllHandlers()
+		{
+			foreach (var handler in _activeAbilityHandlers)
+			{
+				handler.Finished -= OnHandlerFinished;
+				handler.Stop();
+			}
 
-        public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
-        {
-            _abilityHandler.Stop();
-            _abilityHandler.Finished -= Continue;
-            _abilityHandler = null;
-            _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
-            _activeAbilityHandlers.Add(_abilityHandler);
-
-            _abilityHandler.Play(source, target); 
-            _abilityHandler.Finished += Continue;
-        }
-
-        private void Continue(IAbilityHandler handler)
-        {
-            _activeAbilityHandlers.Remove(handler);
-            handler.Finished -= Continue;
-            _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-        }
-    }
+			_activeAbilityHandlers.Clear();
+		}
+	}
 }

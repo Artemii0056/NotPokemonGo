@@ -1,5 +1,6 @@
 ﻿using System;
 using Abilities.AbilityActions.Castaments;
+using Units;
 
 namespace Abilities.AbilitySteps
 {
@@ -8,5 +9,7 @@ namespace Abilities.AbilitySteps
   {
     public CastamentSetup Castament;
     public TargetMode TargetMode;
+    public override void Accept(IAbilityStepVisitor visitor, Unit source, Unit target)
+      => visitor.Visit(this, source, target);
   }
 }

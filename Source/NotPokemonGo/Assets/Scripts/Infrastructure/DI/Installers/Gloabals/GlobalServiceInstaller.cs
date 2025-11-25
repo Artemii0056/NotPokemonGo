@@ -1,13 +1,11 @@
 ﻿using Abilities;
+using Abilities.Factories;
 using Armaments.Factories;
 using Battlefields;
-using Cameras;
 using Effects;
 using Factories;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
-using Infrastructure.ReactionSystem;
-using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
@@ -23,7 +21,6 @@ using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
 using Services.InputServices;
-using Services.ObjectPools;
 using Services.QTEServices;
 using Services.RaycastServices;
 using Services.SceneServices;
@@ -36,7 +33,6 @@ using TimeServices;
 using UI.Ability;
 using UI.BattleUpgrages;
 using UI.Factory;
-using UI.QTE;
 using Units.AnimationControllers;
 using UnityEngine;
 using VContainer;
@@ -86,6 +82,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IArmamentViewFactory, ArmamentViewFactory>(Lifetime.Singleton);
             builder.Register<IStatusFactory, StatusFactory>(Lifetime.Singleton);
             builder.Register<ISystemFactory, SystemFactory>(Lifetime.Singleton);
+            builder.Register<IAbilityHandlerFactory, AbilityHandlerFactory>(Lifetime.Singleton);
         }
 
         private void RegisterServices(IContainerBuilder builder)

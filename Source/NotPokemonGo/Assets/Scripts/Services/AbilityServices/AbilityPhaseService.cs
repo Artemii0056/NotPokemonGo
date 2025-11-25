@@ -1,12 +1,13 @@
-﻿using Abilities;
-using Abilities.AbilityActions.Castaments;
+﻿using System;
+using Abilities;
+using Abilities.AbilitySteps;
 using Infrastructure.ReactionSystem;
 using ReactionSystems;
 using Units;
 
 namespace Services.AbilityServices
 {
-    public class AbilityPhaseService
+    public class AbilityPhaseService : IAbilityStepVisitor
     {
         private readonly IAbilityApplicatorService _abilityApplicatorService;
         private readonly ITargetSelector _targetSelector;
@@ -22,30 +23,62 @@ namespace Services.AbilityServices
             _reactionService = reactionService;
         }
 
-        public void OnNext(AbilityPhase phase, Unit source, Unit target)
+        public void OnNext(AbilityStepData phase, Unit source, Unit target)
         {
-            //Unit target = _targetSelector.Target; //TODO Тут как будто не обойтись без селектора
-
-            var setup = phase.CastamentSetup;
+        }
+        
+        private void HandleArmamentSetup(ArmamentStepData armamentStepData,  Unit source, Unit target)
+        {
+            var setup = armamentStepData.Armament;
 
             if (setup.HasSetupData == false)
                 return;
 
-            var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
+            var targets = _targetSelector.GetTargets(armamentStepData.TargetMode, target).ToArray();
+
+            _abilityApplicatorService.Apply(setup, source, targets);
+        }
+
+        private void HandleCastamentSetup(CastamentStepData castamentStepData, Unit source, Unit target)
+        {
+            var setup = castamentStepData.Castament;
+
+            if (setup.HasSetupData == false)
+                return;
+
+            var targets = _targetSelector.GetTargets(castamentStepData.TargetMode, target).ToArray();
+
+            var context = new ReactionContext(source, target, setup.EffectsSetup[0]);
 
             if (_reactionService.TryReact(context))
                 return;
 
-            _abilityApplicatorService.Apply(setup, source,
-                _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
-
-            if (phase.ArmamentSetup.HasSetupData)
-                _abilityApplicatorService.Apply(phase.ArmamentSetup, source,
-                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            _abilityApplicatorService.Apply(setup, source, targets);
         }
 
-        private void HandleCastamentSetup(CastamentSetup setup)
+        public void Visit(CastamentStepData step, Unit source, Unit target)
         {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(ArmamentStepData step, Unit source, Unit target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(PlayAnimationStepData step, Unit source, Unit target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(QteStepData step, Unit source, Unit target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(MeleeAttackStepData step, Unit source, Unit target)
+        {
+            throw new NotImplementedException();
         }
     }
 }
