@@ -62,10 +62,8 @@ namespace Abilities.Bennet
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
-        public void Stop()
-        {
+        public void Stop() => 
             _coroutineRunner.StopCoroutine(_currentRoutine);
-        }
 
         private IEnumerator ExecuteAllParts()
         {
@@ -78,10 +76,10 @@ namespace Abilities.Bennet
                     var phase = part.AbilityPhases[phaseIndex];
 
                     // 🔸 пример: пропустить фазы после неудачного QTE
-                    if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
-                    {
-                        continue;
-                    }
+                    // if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
+                    // {
+                    //     continue;
+                    // }
 
                     yield return ExecutePhase(phase);
                 }
@@ -90,7 +88,7 @@ namespace Abilities.Bennet
             FinishAbility();
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        private IEnumerator ExecutePhase(AbilityPhase phase) //Как то иначе нужно сделать. Подождать, пока QTE не закончится? 
         {
             _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
@@ -98,7 +96,9 @@ namespace Abilities.Bennet
 
             HandleCamera(phase.CameraActionType);
 
-            if (phase.QteType != QteType.Unknown)
+           Debug.Log( _animatorController.GetAnimationName() + " In ExecutePhase");
+            
+            if (phase.QteType != QteType.Unknown) //TODO Пока идет это - дальше не проходит. Но почему тут такое короткое время? 
                 yield return RunQtePhase(phase.QteType);
 
             switch (phase.PhaseType)
@@ -128,8 +128,9 @@ namespace Abilities.Bennet
                 result = success;
                 _qteService.Completed -= OnCompleted;
             }
-
+            
             _qteService.Completed += OnCompleted;
+
             SetTimeScaleForQte(qteType);
             _qteService.Start(qteType);
 

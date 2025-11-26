@@ -55,6 +55,22 @@ namespace Units.AnimationControllers
             return currentState.length;
         }
 
+        public string GetAnimationName()
+        {
+            string animationName = string.Empty;
+            
+            AnimatorClipInfo[] currentClips = _animator.GetCurrentAnimatorClipInfo(0);
+
+            if (currentClips.Length > 0)
+            {
+                animationName = currentClips[0].clip.name;
+                Debug.Log("Текущая анимация: " + animationName);
+            }
+
+            return animationName;
+        }
+
+
         public void Pause()
         {
             _animator.speed = 0;

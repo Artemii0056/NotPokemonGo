@@ -35,6 +35,7 @@ namespace QTESystem.TestQTE
         private void Start()
         {
             _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
+            Debug.Log(Unit.UnitAnimatorController.GetAnimationName() + " TapManager");
         }
 
         private void OnDisable()
@@ -46,7 +47,7 @@ namespace QTESystem.TestQTE
 
         private void Update()
         {
-            _currentTime += TimeService.UnscaledDeltaTime;
+            _currentTime += TimeService.DeltaTime;
 
             _timer.fillAmount = 1f - (_currentTime / _targetTime);
 
@@ -57,7 +58,7 @@ namespace QTESystem.TestQTE
                 return;
 
             if (_currentValue > 0)
-                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.UnscaledDeltaTime);
+                _currentValue = Mathf.MoveTowards(_currentValue, 0, _decaySpeed * TimeService.DeltaTime);
 
             _image.fillAmount = _currentValue / _maxValue;
         }
