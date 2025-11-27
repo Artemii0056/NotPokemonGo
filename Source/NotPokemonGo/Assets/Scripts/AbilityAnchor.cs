@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Abilities;
 using UnityEngine;
 
 namespace Assets
@@ -8,8 +7,7 @@ namespace Assets
     [Serializable]
     public class AbilityAnchor
     {
-        public AbilityType AbilityType;
-        public ParticlesType ParticlesType;
+        public ParticleSpawnType spawnType;
         public List<Transform> Transforms;
     }
 }

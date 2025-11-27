@@ -13,6 +13,8 @@
         HittingGround,
         BaseAttack,
         CounterAttack,
+        LeftHandAttack,
+        RightHandAttack,
         Default
     }
 }

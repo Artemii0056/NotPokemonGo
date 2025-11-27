@@ -64,7 +64,6 @@ namespace Units.AnimationControllers
             if (currentClips.Length > 0)
             {
                 animationName = currentClips[0].clip.name;
-                Debug.Log("Текущая анимация: " + animationName);
             }
 
             return animationName;

@@ -8,10 +8,6 @@ namespace Abilities
     {
         [field: SerializeField] public AbilityType AbilityType { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
-
-        [field: SerializeField] public List<ParticleSystem> StartAnimationParticles { get; private set; }
-        [field: SerializeField] public List<ParticleSystem> MiddleAnimationParticles { get; private set; }
-        [field: SerializeField] public List<ParticleSystem> EndAnimationParticles { get; private set; }
         [field: SerializeField] public List<AbilityPart> Parts { get; private set; }
         [field: SerializeField] public List<AbilityStatSetup> AbilityStatSetup { get; private set; }
     }

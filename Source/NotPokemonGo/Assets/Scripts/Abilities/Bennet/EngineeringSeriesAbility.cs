@@ -88,7 +88,7 @@ namespace Abilities.Bennet
             FinishAbility();
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase) //Как то иначе нужно сделать. Подождать, пока QTE не закончится? 
+        private IEnumerator ExecutePhase(AbilityPhase phase) 
         {
             _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
@@ -96,8 +96,6 @@ namespace Abilities.Bennet
 
             HandleCamera(phase.CameraActionType);
 
-           Debug.Log( _animatorController.GetAnimationName() + " In ExecutePhase");
-            
             if (phase.QteType != QteType.Unknown) //TODO Пока идет это - дальше не проходит. Но почему тут такое короткое время? 
                 yield return RunQtePhase(phase.QteType);
 

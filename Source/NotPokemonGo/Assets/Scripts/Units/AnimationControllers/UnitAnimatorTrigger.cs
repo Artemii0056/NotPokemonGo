@@ -7,6 +7,7 @@ using ReactionSystems;
 using Services.AbilityServices;
 using Services.StaticDataServices;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Units.AnimationControllers
 {
@@ -15,30 +16,29 @@ namespace Units.AnimationControllers
         private IStaticDataService _staticDataService;
         private IAbilityProvider _abilityProvider;
         private IParticleSystemFactory _particleSystemFactory;
-        private IReactionService _reactionService;
-        
+
         private AbilityPhaseService _abilityPhaseService;
 
         private UnitAnimatorController _controller;
         private Unit _unit;
 
-        private Dictionary<AbilityType, AbilityAnchor> _anchors;
-        private  List<ParticleSystem> _particles;
-        
+        private Dictionary<ParticleSpawnType, AbilityAnchor> _anchors;
+        private List<ParticleSystem> _particles;
+
         private AbilityPhase _phase;
-        
+
         private Unit _currentTarget;
 
         public event Action ActionEnded;
-        
+
         public UnitAnimatorTrigger(
             Unit unit,
             IStaticDataService staticDataService,
             IAbilityProvider abilityProvider,
             UnitAnimatorController controller,
-            IParticleSystemFactory particleSystemFactory, 
+            IParticleSystemFactory particleSystemFactory,
             IAbilityApplicatorService abilityApplicatorService,
-            ITargetSelector targetSelector, 
+            ITargetSelector targetSelector,
             IReactionService reactionService)
         {
             _unit = unit;
@@ -46,15 +46,13 @@ namespace Units.AnimationControllers
             _abilityProvider = abilityProvider;
             _controller = controller;
             _particleSystemFactory = particleSystemFactory;
-            _reactionService = reactionService;
 
             _particles = new List<ParticleSystem>();
 
-            _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector, _reactionService);
+            _abilityPhaseService = new AbilityPhaseService(abilityApplicatorService, targetSelector, reactionService);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started;
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
-            _controller.ParticleSystem3Started += OnParticleSystem3Started;
 
             _controller.Attack1Started += OnAttack;
 
@@ -67,18 +65,17 @@ namespace Units.AnimationControllers
         {
             _controller.ParticleSystem1Started -= OnParticleSystem1Started;
             _controller.ParticleSystem2Started -= OnParticleSystem2Started;
-            _controller.ParticleSystem3Started -= OnParticleSystem3Started;
 
             _controller.Attack1Started -= OnAttack;
 
             _controller.Finished -= OnFinished;
         }
-        
+
         public void SetTarget(Unit target)
         {
             _currentTarget = target;
         }
-        
+
         public void SetPhase(AbilityPhase phase)
         {
             _phase = phase;
@@ -89,40 +86,45 @@ namespace Units.AnimationControllers
 
         private void OnParticleSystem1Started()
         {
-            var type = SearchAbility().AbilityType;
+            var info = _phase.ParticleSystemBySpawnType[0];
+
+            ParticleSystem system = info.ParticleSystem;
+            //Список Партиклов/типов партиклов содержится в фазе
+
+            ParticleSpawnType type = info.ParticleSpawnType;
+            Debug.Log(type);
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
+                Debug.Log("In On");
+
                 var point = anchor.Transforms[0];
 
-                List<ParticleSystem> a =_particleSystemFactory.Create(SearchAbility().StartAnimationParticles, point,
-                    Quaternion.identity);
-                
-                _particles.AddRange(a);
+                var ps = Object.Instantiate(system, point.position, Quaternion.identity, point);
+                ps.Play();
+                //_particles.AddRange(a);
             }
         }
 
         private void OnParticleSystem2Started()
         {
-            var type = SearchAbility().AbilityType;
+            var info = _phase.ParticleSystemBySpawnType[0];
+
+            ParticleSystem system = info.ParticleSystem;
+
+            ParticleSpawnType type = info.ParticleSpawnType;
+            Debug.Log(type);
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
-                var point = anchor.Transforms[1];
+                Debug.Log("In On");
 
-                var a = _particleSystemFactory.Create(SearchAbility().MiddleAnimationParticles, point,
-                    Quaternion.identity);
-                
-                _particles.AddRange(a);
+                var point = anchor.Transforms[0];
+
+                var ps = Object.Instantiate(system, point.position, Quaternion.identity, point);
+                ps.Play();
+                //_particles.AddRange(a);
             }
-        }
-
-        private void OnParticleSystem3Started()
-        {
-            var a = _particleSystemFactory.Create(SearchAbility().EndAnimationParticles, _unit.transform,
-                Quaternion.identity);
-            
-            _particles.AddRange(a);
         }
 
         private void OnAttack()
@@ -134,10 +136,10 @@ namespace Units.AnimationControllers
         {
             foreach (var particle in _particles.ToList())
             {
-                UnityEngine.Object.Destroy(particle.gameObject);
+                Object.Destroy(particle.gameObject);
                 _particles.Remove(particle);
             }
-            
+
             ActionEnded?.Invoke();
         }
 
@@ -147,13 +149,11 @@ namespace Units.AnimationControllers
 
             foreach (var anchor in unit.AbilityAnchors)
             {
-                if (!_anchors.TryAdd(anchor.AbilityType, anchor))
+                if (!_anchors.TryAdd(anchor.spawnType, anchor))
                 {
-                    Debug.LogWarning($"Дубликат Anchor для {anchor.AbilityType} у {unit.name}");
+                    Debug.LogWarning($"Дубликат Anchor для {anchor.spawnType} у {unit.name}");
                 }
             }
         }
-
-       
     }
 }
