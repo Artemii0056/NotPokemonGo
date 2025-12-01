@@ -189,9 +189,9 @@ namespace Abilities.Bennet
 
         private IEnumerator MoveUnit(Unit unit, Vector3 target)
         {
-            float liftDelay = 0.6f;
-            int jumpPower = 2;
-            var duration = _animatorController.GetAnimationLength();
+            float liftDelay = 0.1f;
+            int jumpPower = 1;
+            var duration = _animatorController.GetAnimationLength() / 2;
 
             yield return new WaitForSeconds(liftDelay);
 

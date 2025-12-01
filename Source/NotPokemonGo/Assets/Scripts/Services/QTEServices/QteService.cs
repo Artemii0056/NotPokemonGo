@@ -18,7 +18,6 @@ namespace Services.QTEServices
         private readonly IObjectResolver _objectResolver;
         private readonly ISourceProvider _sourceProvider;
         private readonly ITimeService _timeService;
-        private AbilityType _abilityType;
 
         public event Action <bool> Completed; 
         
@@ -51,7 +50,7 @@ namespace Services.QTEServices
                 
                 view.Construct(_sourceProvider.Source, _timeService);
                 _objectResolver.Inject(view);
-                QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view, _abilityType);
+                QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view);
                 qtePhasePresenter.Enable();
                 
                 yield return new WaitWhile(qtePhasePresenter.IsActive);

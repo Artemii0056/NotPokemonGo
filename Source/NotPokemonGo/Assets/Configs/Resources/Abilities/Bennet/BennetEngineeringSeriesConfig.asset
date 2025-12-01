@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
-  m_Name: BennetSecondSkill
+  m_Name: BennetEngineeringSeriesConfig
   m_EditorClassIdentifier: 
   <AbilityType>k__BackingField: 7
   <Icon>k__BackingField: {fileID: 21300000, guid: 1a2940869317a9b4d8df4f17fa5068ea, type: 3}

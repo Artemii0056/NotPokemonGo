@@ -8,6 +8,7 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Services;
 using Services.QTEServices;
 using Units;
+using UnityEngine;
 
 namespace Abilities
 {
@@ -49,8 +50,7 @@ namespace Abilities
             _battlefield = battlefield;
         }
 
-        public void Handle(Unit source, Unit target, AbilityModel abilityModel) //Нужно по максимуму постараться избавиться от сурс и таргет провайдера.
-                                                                                //Сюда приходит кто и кого и дальше работает 
+        public void Handle(Unit source, Unit target, AbilityModel abilityModel) 
         {
             AbilityType abilityType = abilityModel.AbilityType;
 
@@ -85,8 +85,8 @@ namespace Abilities
                     _abilityHandler.Finished += Continue;
                     break;
 
-                case AbilityType.HittingGround:
-                    _abilityHandler = new HittingGround(_coroutineRunner, abilityModel);
+                case AbilityType.StrikeFromAbove:
+                    _abilityHandler = new StrikeFromAbove(_coroutineRunner, abilityModel);
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -115,7 +115,6 @@ namespace Abilities
             _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
             _activeAbilityHandlers.Add(_abilityHandler);
 
-           // _targetSelector.Remember(target); 
             _abilityHandler.Play(source, target); 
             _abilityHandler.Finished += Continue;
         }

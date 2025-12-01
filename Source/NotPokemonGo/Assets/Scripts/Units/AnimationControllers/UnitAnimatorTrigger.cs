@@ -81,7 +81,7 @@ namespace Units.AnimationControllers
             _phase = phase;
         }
 
-        private AbilityConfig SearchAbility() =>
+        private AbilityConfig SearchAbility() => //TODO
             _staticDataService.GetAbilityConfig(_abilityProvider.AbilityModel.AbilityType);
 
         private void OnParticleSystem1Started()
@@ -89,20 +89,17 @@ namespace Units.AnimationControllers
             var info = _phase.ParticleSystemBySpawnType[0];
 
             ParticleSystem system = info.ParticleSystem;
-            //Список Партиклов/типов партиклов содержится в фазе
 
             ParticleSpawnType type = info.ParticleSpawnType;
             Debug.Log(type);
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
-                Debug.Log("In On");
+                Transform point = anchor.Transforms[0];
 
-                var point = anchor.Transforms[0];
-
-                var ps = Object.Instantiate(system, point.position, Quaternion.identity, point);
-                ps.Play();
-                //_particles.AddRange(a);
+                ParticleSystem particleSystem = Object.Instantiate(system, point.position, Quaternion.identity, point);
+                particleSystem.Play();
+                _particles.Add(particleSystem);
             }
         }
 

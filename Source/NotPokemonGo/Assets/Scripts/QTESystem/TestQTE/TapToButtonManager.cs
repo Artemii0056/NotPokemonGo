@@ -35,7 +35,6 @@ namespace QTESystem.TestQTE
         private void Start()
         {
             _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
-            Debug.Log(Unit.UnitAnimatorController.GetAnimationName() + " TapManager");
         }
 
         private void OnDisable()

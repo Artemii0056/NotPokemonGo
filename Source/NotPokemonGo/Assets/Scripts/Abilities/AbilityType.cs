@@ -10,11 +10,9 @@
         DoubleAttack,
         BaseAbility,
         EngineeringSeries,
-        HittingGround,
+        StrikeFromAbove,
         BaseAttack,
         CounterAttack,
-        LeftHandAttack,
-        RightHandAttack,
         Default
     }
 }

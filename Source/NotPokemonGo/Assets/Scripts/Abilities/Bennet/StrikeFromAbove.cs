@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Abilities.Bennet
 {
-    public class HittingGround : IAbilityHandler
+    public class StrikeFromAbove : IAbilityHandler
     {
         private readonly List<AbilityPart> _parts;
         private readonly ICoroutineRunner _coroutineRunner;
@@ -23,7 +23,7 @@ namespace Abilities.Bennet
 
         public event Action<IAbilityHandler> Finished;
 
-        public HittingGround(
+        public StrikeFromAbove(
             ICoroutineRunner currentRoutine,
             AbilityModel abilityModel)
         {
@@ -64,7 +64,6 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
-            //_animatorTrigger.SetTarget(phase);
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 

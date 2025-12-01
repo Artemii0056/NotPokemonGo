@@ -2,12 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets
+[Serializable]
+public class AbilityAnchor
 {
-    [Serializable]
-    public class AbilityAnchor
-    {
-        public ParticleSpawnType spawnType;
-        public List<Transform> Transforms;
-    }
+    public ParticleSpawnType spawnType;
+    public List<Transform> Transforms;
 }

@@ -65,13 +65,6 @@ namespace Abilities.Bennet
                 {
                     var phase = part.AbilityPhases[phaseIndex];
 
-                    // 🔸 пример: пропустить фазы после неудачного QTE
-                    // if (!_lastQteSuccess && phase.QteType == QteType.SliderForward)
-                    // {
-                    //     Debug.Log($"Фаза {phaseIndex} пропущена из-за неудачного QTE");
-                    //     continue;
-                    // }
-
                     yield return ExecutePhase(phase);
                 }
             }
@@ -92,7 +85,7 @@ namespace Abilities.Bennet
                     break;
                 
                 case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _source.StartPosition);
+                    yield return MoveUnit(_source, _startPosition);
                     break;
 
                 default:
@@ -114,15 +107,17 @@ namespace Abilities.Bennet
         
         private IEnumerator MoveUnit(Unit unit, Vector3 target)
         {
-            float liftDelay = 0.6f;
-            int jumpPower = 2;
-            var duration = _animatorController.GetAnimationLength();
+            float liftDelay = 0.1f;
+            int jumpPower = 1;
+            Debug.Log(_animatorController.GetAnimationName());
 
             yield return new WaitForSeconds(liftDelay);
+            
+            var duration = _animatorController.GetAnimationLength() / 2;
 
             float moveDuration = duration - liftDelay;
             unit.transform.DOKill();
-
+            
             Tween jumpTween = unit.transform
                 .DOJump(target, jumpPower, 1, moveDuration)
                 .SetEase(Ease.InQuad);

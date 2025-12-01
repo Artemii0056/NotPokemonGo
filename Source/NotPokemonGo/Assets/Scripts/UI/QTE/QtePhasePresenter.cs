@@ -10,16 +10,13 @@ namespace UI.QTE
         private readonly QteButtonView _qteButtonView;
         private bool _isActive;
 
-        public QtePhasePresenter(QtePhaseSetup qtePhaseSetup, QteButtonView qteButtonView, AbilityType abilityType)
+        public QtePhasePresenter(QtePhaseSetup qtePhaseSetup, QteButtonView qteButtonView)
         {
             _qteButtonView = qteButtonView;
             QtePhaseSetup = qtePhaseSetup;
-            //AbilityType = abilityType;
-            AbilityType = AbilityType.Default; //
         }
 
         public QtePhaseSetup QtePhaseSetup { get; }
-        public AbilityType AbilityType { get; }
 
         public bool IsSuccess { get; private set; }
 
