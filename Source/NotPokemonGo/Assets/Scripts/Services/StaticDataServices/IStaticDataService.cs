@@ -3,6 +3,7 @@ using Abilities;
 using Abilities.Configs;
 using Characters;
 using Characters.Configs;
+using DodgeSystem.Configs;
 using LevelSetting;
 using QTESystem;
 using Statuses;
@@ -24,5 +25,6 @@ namespace Services.StaticDataServices
         UnitSkinItemView UnitSkinItemViewPrefab { get; }
         CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
+        DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
     }
 }

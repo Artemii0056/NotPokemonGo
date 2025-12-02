@@ -4,6 +4,7 @@ using Abilities;
 using Abilities.Configs;
 using Characters;
 using Characters.Configs;
+using DodgeSystem.Configs;
 using Infrastructure;
 using LevelSetting;
 using QTESystem;
@@ -27,6 +28,7 @@ namespace Services.StaticDataServices
         private Dictionary<AbilityType, TargetMode> _targetModes;
         
         private List<LevelConfig> _levelConfigs;
+        private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
@@ -42,7 +44,8 @@ namespace Services.StaticDataServices
             LoadPlatoonPositionContainer();
             LoadQteConfigs();
             LoadLevelConfigs();
-           // ConfigurateTargetModesForAbilities();
+            LoadDodgeConfigs();
+            // ConfigurateTargetModesForAbilities();
         }
 
         public List<LevelConfig> GetLevelConfigs() => 
@@ -70,6 +73,14 @@ namespace Services.StaticDataServices
                 return platoonSpawnContainer;
 
             throw new KeyNotFoundException($"No ability config found for mode {count}");
+        }
+
+        public DodgeConfig GetDodgeConfigByUnitType(UnitType unitType)
+        {
+            if (_dodgeConfigs.TryGetValue(unitType, out DodgeConfig dodgeConfig))
+                return dodgeConfig;
+
+            throw new KeyNotFoundException($"No DodgeConfig found for unit type - {unitType}");
         }
 
         public UnitConfig GetUnitConfig(UnitType unitType)
@@ -119,6 +130,12 @@ namespace Services.StaticDataServices
         {
             _abilityConfigs = Resources.LoadAll<AbilityConfig>(Constants.AssetPath.AbilityConfigPath)
                 .ToDictionary(x => x.AbilityType, x => x);
+        }
+        
+        private void LoadDodgeConfigs()
+        {
+            _dodgeConfigs = Resources.LoadAll<DodgeConfig>(Constants.AssetPath.DodgeConfigPath)
+                .ToDictionary(x => x.UnitType, x => x);
         }
 
         private void LoadStatusTypeIcons()
