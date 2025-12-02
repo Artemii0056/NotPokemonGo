@@ -2,6 +2,7 @@
 using Characters;
 using Characters.Configs;
 using Infrastructure;
+using Infrastructure.MVP.Implementation;
 using Services.AssetManagement;
 using Services.StaticDataServices;
 using UI.DodgeUI;
@@ -17,6 +18,7 @@ namespace UI.Factory
         private readonly IStaticDataService _staticDataService;
         private readonly IObjectResolver _objectResolver;
 
+        
         public UIFactory(IResourceLoader resourceLoader,
             IStaticDataService staticDataService,
             IObjectResolver objectResolver)
@@ -93,6 +95,7 @@ namespace UI.Factory
             DodgeView dodgeView = _resourceLoader.Load<DodgeView>(Constants.AssetPath.DodgeView);
             return _objectResolver.Instantiate(dodgeView);
         }
+
 
         public StartScreenUI CreateStartScreen()
         {

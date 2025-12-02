@@ -10,6 +10,7 @@ namespace Stats
         ArmorChance = 6,
         Damage = 7,
         QteDamageModifier = 8,
+        DodgeFlag = 9,
         
         CurrentAgility = 20,
         MaxAgility = 21,

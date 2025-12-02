@@ -14,7 +14,7 @@ namespace Armaments
         [field: SerializeField] public List<EffectSetup> EffectInfo { get; private set; }
         
         [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
-        [field: SerializeField] public ArmamentView ArmamentView { get; private set; }
+        [field: SerializeField] public Armament ArmamentPrefab { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
 
         public List<StatusSetup> StatusesSetup => Statuses.ToList();

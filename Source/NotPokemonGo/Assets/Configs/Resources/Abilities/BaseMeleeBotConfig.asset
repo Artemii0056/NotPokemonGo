@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
   m_Name: BaseMeleeBotConfig
   m_EditorClassIdentifier: 
-  <AbilityType>k__BackingField: 1
+  <AbilityType>k__BackingField: 0
   <Icon>k__BackingField: {fileID: 21300004, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-  <StartAnimationParticles>k__BackingField:
-  - {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
-  <MiddleAnimationParticles>k__BackingField: []
-  <EndAnimationParticles>k__BackingField: []
   <Parts>k__BackingField:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: da7ec63fd8bba7a4c97f23b7b1e41aa6, type: 2}
@@ -25,7 +21,7 @@ MonoBehaviour:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
@@ -35,13 +31,14 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 1
+      ParticleSystemBySpawnType: []
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 81aa5bc23c62747479fea4b8e5326179, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
@@ -55,13 +52,14 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 0
+      ParticleSystemBySpawnType: []
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: da7ec63fd8bba7a4c97f23b7b1e41aa6, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
@@ -71,6 +69,7 @@ MonoBehaviour:
       QteType: 0
       CameraActionType: 0
       <PhaseType>k__BackingField: 2
+      ParticleSystemBySpawnType: []
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 2

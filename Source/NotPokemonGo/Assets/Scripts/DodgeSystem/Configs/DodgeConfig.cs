@@ -1,4 +1,5 @@
-﻿using Characters.Configs;
+﻿using System;
+using Characters.Configs;
 using UnityEngine;
 
 namespace DodgeSystem.Configs
@@ -8,5 +9,7 @@ namespace DodgeSystem.Configs
 	{
 		public UnitType UnitType;
 		public AnimationClip AnimationClip;
+		
+		public int AnimationCashName => AnimationClip != null ? AnimationClip.name.GetHashCode() : throw new Exception("Animation clip is null");
 	}
 }

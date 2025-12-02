@@ -1,10 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Armaments;
 using Castaments;
 using Effects;
-using Services;
 using Statuses;
 using Statuses.Services;
 using Units;
@@ -13,25 +10,19 @@ using Object = UnityEngine.Object;
 
 namespace Abilities
 {
-    public class AbilityApplicatorService : IAbilityApplicatorService
+    public class CastamentApplicatorService : ICastamentApplicatorService
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IStatusFactory _statusFactory;
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
 
-        public AbilityApplicatorService(
-            IArmamentViewFactory armamentViewFactory,
+        public CastamentApplicatorService(
             IStatusFactory statusFactory,
             IEffectResolver effectResolver,
-            ICoroutineRunner coroutineRunner,
             IStatusResolver statusResolver)
         {
-            _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
-            _coroutineRunner = coroutineRunner;
             _statusResolver = statusResolver;
         }
 
@@ -53,34 +44,6 @@ namespace Abilities
             }
         }
 
-        public void Apply(ArmamentSetup setup, Unit source, params Unit[] targets)
-        {
-            foreach (var target in targets)
-            {
-                List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
-                List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
-
-                if (source == null)
-                {
-                    Debug.LogError("No sourceProvider has been setup");
-                }
-
-                ArmamentView armamentView =
-                    _armamentViewFactory.Create(source.abilityPos.position,
-                        setup.ArmamentView, target);
-
-                _coroutineRunner.StartCoroutine(PlayArmamentAbility(statuses, effects, armamentView, source, target));
-            }
-        }
-
-        private IEnumerator PlayArmamentAbility(List<Status> statuses, List<EffectInfo> effects,
-            ArmamentView armamentView, Unit source, Unit target)
-        {
-            while (Vector3.Distance(target.transform.position, armamentView.transform.position) > 0.1f) //TODO Distance
-                yield return null;
-
-            ApplyEffectsOnTarget(source, target, statuses, effects);
-        }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>
             effects.Select(s => new EffectInfo(s.Value, s.TargetType, s.Type, s.DamageType)).ToList();

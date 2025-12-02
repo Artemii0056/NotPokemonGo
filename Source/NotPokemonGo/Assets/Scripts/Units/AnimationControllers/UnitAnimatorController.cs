@@ -30,8 +30,11 @@ namespace Units.AnimationControllers
         public void FlagParticleSystem3() =>
             ParticleSystem3Started?.Invoke();
 
-        public void FlagAttack() =>
+        public void FlagAttack()
+        {
+            Debug.LogError("FlagAttack");
             Attack1Started?.Invoke();
+        }
 
         public void FlagAttack2() =>
             Attack2Started?.Invoke();

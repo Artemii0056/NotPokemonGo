@@ -3,6 +3,7 @@
     public enum EffectType
     {
         Damage,
-        Heal
+        Heal,
+        None
     }
 }

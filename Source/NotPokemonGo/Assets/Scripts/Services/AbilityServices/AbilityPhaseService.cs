@@ -1,47 +1,60 @@
 ﻿using Abilities;
 using Abilities.Configs;
+using Armaments;
 using Castaments;
 using ReactionSystems;
 using Units;
+using UnityEngine;
 
 namespace Services.AbilityServices
 {
     public class AbilityPhaseService
     {
-        private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private readonly ICastamentApplicatorService _castamentApplicatorService;
+        private readonly IArmamentApplicatorService _armamentApplicatorService;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
 
         public AbilityPhaseService(
-            IAbilityApplicatorService abilityApplicatorService,
+            ICastamentApplicatorService castamentApplicatorService,
+            IArmamentApplicatorService armamentApplicatorService,
             ITargetSelector targetSelector,
             IReactionService reactionService)
         {
-            _abilityApplicatorService = abilityApplicatorService;
+            _castamentApplicatorService = castamentApplicatorService;
+            _armamentApplicatorService = armamentApplicatorService;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
         }
 
         public void OnNext(AbilityPhase phase, Unit source, Unit target)
         {
+            Debug.LogError("OnNext");
             //Unit target = _targetSelector.Target; //TODO Тут как будто не обойтись без селектора
 
             var setup = phase.CastamentSetup;
 
-            if (setup.HasSetupData == false)
-                return;
+            // if (setup.HasSetupData == false)
+            //     return;
+            //
+            // var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
+            //
+            // if (_reactionService.TryReact(context))
+            //     return;
 
-            var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
-
-            if (_reactionService.TryReact(context))
-                return;
-
-            _abilityApplicatorService.Apply(setup, source,
+            _castamentApplicatorService.Apply(setup, source,
                 _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
-            if (phase.ArmamentSetup.HasSetupData)
-                _abilityApplicatorService.Apply(phase.ArmamentSetup, source,
+            if (phase.CastamentSetup.HasSetupData)
+                _castamentApplicatorService.Apply(phase.CastamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+
+            if (phase.ArmamentSetup.HasSetupData)
+            {
+                Debug.LogError("насрал");
+                _armamentApplicatorService.Apply(phase.ArmamentSetup, source,
+                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            }
         }
 
         private void HandleCastamentSetup(CastamentSetup setup)

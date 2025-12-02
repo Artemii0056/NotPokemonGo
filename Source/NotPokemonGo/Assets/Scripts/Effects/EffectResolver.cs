@@ -14,6 +14,9 @@ namespace Effects
             target.ChangeStatValue(effect.TargetType, finalValue);
         }
 
+        public void ApplyEffect(Unit target, EffectInfo effect) => 
+            target.ChangeStatValue(effect.TargetType, effect.Value);
+
         private float CalculateStatModification(
             Unit source,
             Unit target,

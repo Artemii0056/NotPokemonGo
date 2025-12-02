@@ -1,9 +1,11 @@
-﻿using Units;
+﻿using Armaments;
+using Units;
 
 namespace DodgeSystem
 {
 	public interface IDodgeService
 	{
-		void Dodge(Unit source);
+		Armament Dodge(Armament armament);
+		bool CanDodge(Unit unit);
 	}
 }

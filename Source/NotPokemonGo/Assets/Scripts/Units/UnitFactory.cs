@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
+using Armaments;
 using Characters;
 using Platoons;
 using ReactionSystems;
@@ -21,7 +22,8 @@ namespace Units
         private readonly IParticleSystemFactory _particleSystemFactory;
         private readonly IAbilityProvider _abilityProvider;
         private readonly IStaticDataService _staticDataService;
-        private readonly IAbilityApplicatorService _abilityApplicatorService;
+        private readonly ICastamentApplicatorService _castamentApplicatorService;
+        private readonly IArmamentApplicatorService _armamentApplicatorService;
         private readonly ITargetSelector _targetSelector;
         private readonly IAbilityService _abilityService;
         private readonly IReactionService _reactionService;
@@ -31,7 +33,8 @@ namespace Units
             IParticleSystemFactory particleSystemFactory,
             IAbilityProvider abilityProvider,
             IStaticDataService staticDataService,
-            IAbilityApplicatorService abilityApplicatorService,
+            ICastamentApplicatorService castamentApplicatorService,
+            IArmamentApplicatorService armamentApplicatorService,
             ITargetSelector targetSelector,
             IAbilityService abilityService, 
             IReactionService reactionService)
@@ -40,7 +43,8 @@ namespace Units
             _particleSystemFactory = particleSystemFactory;
             _abilityProvider = abilityProvider;
             _staticDataService = staticDataService;
-            _abilityApplicatorService = abilityApplicatorService;
+            _castamentApplicatorService = castamentApplicatorService;
+            _armamentApplicatorService = armamentApplicatorService;
             _targetSelector = targetSelector;
             _abilityService = abilityService;
             _reactionService = reactionService;
@@ -64,7 +68,8 @@ namespace Units
                 _abilityProvider,
                 controller,
                 _particleSystemFactory,
-                _abilityApplicatorService,
+                _castamentApplicatorService,
+                _armamentApplicatorService,
                 _targetSelector, 
                 _reactionService);
 

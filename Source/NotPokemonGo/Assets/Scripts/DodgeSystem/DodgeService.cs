@@ -1,6 +1,9 @@
-﻿using DodgeSystem.Configs;
+﻿using Armaments;
+using DodgeSystem.Configs;
 using Services.StaticDataServices;
+using Stats;
 using Units;
+using UnityEngine;
 
 namespace DodgeSystem
 {
@@ -8,15 +11,22 @@ namespace DodgeSystem
 	{
 		private readonly IStaticDataService _staticDataService;
 
-		public DodgeService(IStaticDataService staticDataService)
-		{
+		public DodgeService(IStaticDataService staticDataService) => 
 			_staticDataService = staticDataService;
-		}
-		
-		public void Dodge(Unit source)
+
+		public Armament Dodge(Armament armament)
 		{
-			DodgeConfig dodgeConfig = _staticDataService.GetDodgeConfigByUnitType(source.UnitType);
-			
+			DodgeConfig dodgeConfig = _staticDataService.GetDodgeConfigByUnitType(armament.Target.UnitType);
+			armament.Target.UnitAnimatorController.Play(dodgeConfig.AnimationCashName);
+
+			Armament newArmament = Object.Instantiate(armament);
+			newArmament.Initialize(armament.Effects, armament.Statuses, armament.Target, armament.Source);
+			Object.Destroy(armament);
+
+			return newArmament;
 		}
+
+		public bool CanDodge(Unit unit) =>
+			unit.GetStat(StatType.DodgeFlag) > 0;
 	}
 }

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e1af1c406c4a878c505dfe32a6b67e, type: 3}
   m_Name: DodgeConfig
   m_EditorClassIdentifier: 
-  AnimationClip: {fileID: 0}
+  UnitType: 4
+  AnimationClip: {fileID: 7400014, guid: 5fe51830c6e12034892d1041e85357b6, type: 3}
