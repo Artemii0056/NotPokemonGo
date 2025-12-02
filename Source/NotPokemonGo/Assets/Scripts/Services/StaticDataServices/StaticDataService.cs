@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Abilities.Configs;
 using Characters;
 using Characters.Configs;
 using Infrastructure;
 using LevelSetting;
 using QTESystem;
 using Services.AssetManagement;
-using Services.QTEServices;
 using Statuses;
 using UI;
 using UI.SpawnPositions;

@@ -1,7 +1,6 @@
 ﻿using Abilities;
 using Abilities.MV;
 using Effects;
-using Infrastructure.ReactionSystem;
 
 namespace ReactionSystems
 {

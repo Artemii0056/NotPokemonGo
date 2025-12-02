@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Abilities;
+using Abilities.Configs;
 using UnityEngine;
 
 namespace UI.BattleUpgrages

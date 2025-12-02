@@ -1,4 +1,5 @@
-﻿using Infrastructure.StateMachines.GlobalStateMachine;
+﻿using Battlefields;
+using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.BattleSessionService;

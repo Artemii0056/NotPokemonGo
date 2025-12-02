@@ -1,5 +1,5 @@
-﻿using Abilities.AbilityActions.Armaments;
-using Abilities.AbilityActions.Castaments;
+﻿using Armaments;
+using Castaments;
 using Units;
 
 namespace Abilities

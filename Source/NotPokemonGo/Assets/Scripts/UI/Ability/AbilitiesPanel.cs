@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Abilities;
+using Abilities.Configs;
 using Abilities.MV;
 using Services.StaticDataServices;
 using UnityEngine;

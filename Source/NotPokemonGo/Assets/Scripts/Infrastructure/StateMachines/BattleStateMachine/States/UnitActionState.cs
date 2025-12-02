@@ -2,6 +2,7 @@ using System;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
+using Platoons;
 using Services.InputServices;
 using UnityEngine;
 using VContainer;

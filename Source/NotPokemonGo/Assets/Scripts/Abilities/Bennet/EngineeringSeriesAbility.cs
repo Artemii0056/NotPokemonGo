@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities.Configs;
 using Abilities.MV;
 using Cameras;
 using Cinemachine;
@@ -8,7 +9,6 @@ using DG.Tweening;
 using Infrastructure;
 using QTESystem;
 using Services;
-using Services.QTEServices;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;

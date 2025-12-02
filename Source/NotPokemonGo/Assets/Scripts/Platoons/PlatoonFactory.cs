@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Characters;
-using Factories;
 using UI.SpawnPositions;
 using Units;
 using UnityEngine;

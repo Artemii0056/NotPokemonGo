@@ -1,5 +1,3 @@
-using Infrastructure.ReactionSystem;
-
 namespace ReactionSystems
 {
     public interface IReactionService

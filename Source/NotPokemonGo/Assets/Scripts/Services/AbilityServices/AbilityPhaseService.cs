@@ -1,6 +1,6 @@
 ﻿using Abilities;
-using Abilities.AbilityActions.Castaments;
-using Infrastructure.ReactionSystem;
+using Abilities.Configs;
+using Castaments;
 using ReactionSystems;
 using Units;
 

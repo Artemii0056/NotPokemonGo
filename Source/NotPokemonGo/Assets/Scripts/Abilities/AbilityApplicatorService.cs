@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Abilities.AbilityActions.Armaments;
-using Abilities.AbilityActions.Castaments;
+using Armaments;
+using Castaments;
 using Effects;
-using Factories;
 using Services;
 using Statuses;
 using Statuses.Services;
