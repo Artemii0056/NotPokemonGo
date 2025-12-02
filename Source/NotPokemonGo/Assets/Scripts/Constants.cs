@@ -28,6 +28,7 @@ public static class Constants
         public const string LevelConfigsPath = "LevelConfig";
         public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
         public const string QteConfigs = "QTE";
+        public const string DodgeView = "VALUE"; // TODO нет пути и нет префаба
     }
 
     public class Positions

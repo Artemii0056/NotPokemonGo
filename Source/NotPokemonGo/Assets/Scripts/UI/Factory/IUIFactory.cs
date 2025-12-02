@@ -1,4 +1,5 @@
 using Characters;
+using UI.DodgeUI;
 
 namespace UI.Factory
 {
@@ -9,5 +10,6 @@ namespace UI.Factory
         MainMenuUI CreateMainMenu();
         LoosePanel CreateLoosePanel();
         BattleInfoUI CreateBattleUIInfo();
+        IDodgeView CreateDodgeView();
     }
 }

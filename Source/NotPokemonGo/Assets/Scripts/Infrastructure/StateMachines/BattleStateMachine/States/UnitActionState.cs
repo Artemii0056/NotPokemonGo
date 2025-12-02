@@ -4,7 +4,6 @@ using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.InputServices;
-using UnityEngine;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -40,7 +39,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     break;
 
                 case PlatoonType.Enemies:
-                    _unitActionStrategy = new EnemyUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce);
+                    _unitActionStrategy = new EnemyUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce, _battleStateMachine);
                     break;
 
                 default:

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
+using Infrastructure.StateMachines.BattleStateMachine;
+using Infrastructure.StateMachines.BattleStateMachine.States;
 using Units;
 using UnityEngine;
 using VContainer;
@@ -11,14 +13,16 @@ namespace Battlefields
     {
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
+        private readonly IBattleStateMachine _battleStateMachine;
 
         private ISourceProvider _sourceProvider;
         private ITargetSelector _targetSelector;
         private IAbilityService _abilityService;
 
-        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
+        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source, IBattleStateMachine battleStateMachine)
         {
             _source = source;
+            _battleStateMachine = battleStateMachine;
             _battlefield = battlefield;
         }
 
@@ -54,9 +58,6 @@ namespace Battlefields
                 {
                     Unit randomTarget = GetRandomTarget(targets);
                     
-                    // _targetSelector.Remember(randomTarget); //Вот это зло.
-                    // _sourceProvider.Remember(_source);
-                    
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.Handle(_source, randomTarget, abilityModel); 
                     
@@ -65,6 +66,7 @@ namespace Battlefields
                     if (abilityModel.Cost > 0) 
                         _source.ResetAgility();
 
+                    _battleStateMachine.Enter<PlayerDodgeState>();
                     break;
                 }
             }

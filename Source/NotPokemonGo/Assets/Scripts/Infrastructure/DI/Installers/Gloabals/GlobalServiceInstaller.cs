@@ -206,6 +206,10 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<LoosePanelState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
+                
+                builder.Register<PlayerDodgeState>(Lifetime.Singleton)
+                    .AsImplementedInterfaces()
+                    .AsSelf();
             }
         }
     }

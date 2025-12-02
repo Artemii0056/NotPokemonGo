@@ -4,7 +4,10 @@ using Characters.Configs;
 using Infrastructure;
 using Services.AssetManagement;
 using Services.StaticDataServices;
+using UI.DodgeUI;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace UI.Factory
 {
@@ -12,12 +15,15 @@ namespace UI.Factory
     {
         private readonly IResourceLoader _resourceLoader;
         private readonly IStaticDataService _staticDataService;
+        private readonly IObjectResolver _objectResolver;
 
         public UIFactory(IResourceLoader resourceLoader,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService,
+            IObjectResolver objectResolver)
         {
             _resourceLoader = resourceLoader;
             _staticDataService = staticDataService;
+            _objectResolver = objectResolver;
         }
 
         public ChooseUnitToFightPanel CreateUnitSelectionController(IEnumerable<UnitItemConfig> configCharacterItemConfigs)
@@ -80,6 +86,12 @@ namespace UI.Factory
         {
             BattleInfoUI battleInfoUI = _resourceLoader.Load<BattleInfoUI>(Constants.AssetPath.BattleInfoUIPath);
             return Object.Instantiate(battleInfoUI);
+        }
+
+        public IDodgeView CreateDodgeView()
+        {
+            DodgeView dodgeView = _resourceLoader.Load<DodgeView>(Constants.AssetPath.DodgeView);
+            return _objectResolver.Instantiate(dodgeView);
         }
 
         public StartScreenUI CreateStartScreen()
