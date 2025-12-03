@@ -34,7 +34,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
             switch (battlefield.UnitSorce.PlatoonType)
             {
-                case PlatoonType.Friends:
+                case PlatoonType.Heroes:
                     _unitActionStrategy = new FriendUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce);
                     break;
 

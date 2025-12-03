@@ -1,4 +1,5 @@
 ﻿using System;
+using Platoons;
 using Services.InputServices;
 using Services.RaycastServices;
 using Units;
@@ -47,8 +48,7 @@ namespace UI.DodgeUI
 				if (_unit != null) 
 					_dodgeView.Show();
 
-
-				if (unit.TryGetComponent(out SquadMember squadMember) == false && squadMember.SquadMemberType != SquadMemberType.Hero)
+				if (unit.PlatoonType != PlatoonType.Heroes)
 					return;
 				
 				_unit = unit;

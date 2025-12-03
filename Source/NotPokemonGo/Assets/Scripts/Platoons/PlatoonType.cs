@@ -2,7 +2,7 @@
 {
     public enum PlatoonType
     {
-        Friends = 1,
+        Heroes = 1,
         Enemies = 2,
     }
 }

@@ -35,12 +35,6 @@ namespace Statuses
             TickCount--;
         }
         
-        public void RealtimeTick(float deltaTime)
-        {
-            OnTick();
-            TickCount -= deltaTime;
-        }
-
         public void IncreaseTickCount(float tickCount) =>
             TickCount += tickCount;
 

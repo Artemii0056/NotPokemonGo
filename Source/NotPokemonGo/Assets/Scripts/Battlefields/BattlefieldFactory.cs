@@ -52,7 +52,7 @@ namespace Battlefields
             PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(levelPartSetup.Units.Count);
             
             Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, enemiesConfig);
-            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends, unitConfigFirst);
+            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Heroes, unitConfigFirst);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
             
@@ -83,7 +83,7 @@ namespace Battlefields
             PlatoonSpawnContainer friendPlatoonContainer = _staticDataService.GetSpawnPositionContainer(friendPlatoon.AliveUnits.Count);
             
             Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, unitConfigSecond);
-            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Friends,unitConfigFirst, friendPlatoon.AliveUnits);
+            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Heroes,unitConfigFirst, friendPlatoon.AliveUnits);
 
             Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
 

@@ -13,7 +13,6 @@ using UnityEngine;
 
 namespace Units
 {
-    [RequireComponent(typeof(SquadMember))]
     public class Unit : MonoBehaviour
     {
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
@@ -24,7 +23,7 @@ namespace Units
         public Transform abilityPos;
         public CinemachineVirtualCamera virtualCamera;
 
-        private List<Status> _imposedStatuses = new List<Status>();
+        private List<Status> _imposedStatuses = new List<Status>(); // отдельный сервис
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
 

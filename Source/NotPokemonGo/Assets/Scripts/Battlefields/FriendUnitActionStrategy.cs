@@ -86,7 +86,7 @@ namespace Battlefields
 
             switch (unit.PlatoonType)
             {
-                case PlatoonType.Friends:
+                case PlatoonType.Heroes:
                     Debug.Log("Выбрали союзника");
                     break;
 
