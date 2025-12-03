@@ -48,7 +48,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 		public void Enter()
 		{
 			_dodgeView = _uiFactory.CreateDodgeView();
-
+			_dodgeView.Hide();
+			
 			_dodgePresenter = new DodgePresenter(_dodgeView, _inputReader, _raycastService);
 			_dodgePresenter.Enable();
 			_dodgePresenter.Dodged += OnDodged;

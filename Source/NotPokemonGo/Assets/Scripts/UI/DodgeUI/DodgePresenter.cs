@@ -2,6 +2,7 @@
 using Services.InputServices;
 using Services.RaycastServices;
 using Units;
+using UnityEngine;
 
 namespace UI.DodgeUI
 {
@@ -45,6 +46,7 @@ namespace UI.DodgeUI
 			{
 				if (_unit != null) 
 					_dodgeView.Show();
+
 
 				if (unit.TryGetComponent(out SquadMember squadMember) == false && squadMember.SquadMemberType != SquadMemberType.Hero)
 					return;

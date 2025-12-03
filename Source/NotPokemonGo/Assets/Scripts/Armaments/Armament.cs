@@ -11,7 +11,7 @@ namespace Armaments
     {
         [SerializeField] private ParticleSystem _particleSystemPrefab;
 
-        public float delta = 10f;
+        public float delta = 5f;
 
         private List<EffectInfo> _effectInfo;
         private List<Status> _statuses;

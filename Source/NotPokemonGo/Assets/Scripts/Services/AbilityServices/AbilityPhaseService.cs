@@ -29,7 +29,6 @@ namespace Services.AbilityServices
 
         public void OnNext(AbilityPhase phase, Unit source, Unit target)
         {
-            Debug.LogError("OnNext");
             //Unit target = _targetSelector.Target; //TODO Тут как будто не обойтись без селектора
 
             var setup = phase.CastamentSetup;
@@ -51,7 +50,6 @@ namespace Services.AbilityServices
 
             if (phase.ArmamentSetup.HasSetupData)
             {
-                Debug.LogError("насрал");
                 _armamentApplicatorService.Apply(phase.ArmamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
             }

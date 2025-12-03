@@ -32,7 +32,6 @@ namespace Units.AnimationControllers
 
         public void FlagAttack()
         {
-            Debug.LogError("FlagAttack");
             Attack1Started?.Invoke();
         }
 

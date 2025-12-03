@@ -146,5 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8508303c4cf74d26b310f3e292c60d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particleSystem: {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
-  delta: 10
+  _particleSystemPrefab: {fileID: 0}
+  delta: 5

@@ -41,7 +41,7 @@ namespace QTESystem.TestQTE
         {
             _tapToButton.Click -= OnClick;
 
-            Unit.SetStatValue(StatType.QteDamageModifier, 1);
+            Unit.ChangeStatValue(1, StatType.QteDamageModifier);
         }
 
         private void Update()
@@ -74,7 +74,7 @@ namespace QTESystem.TestQTE
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
 
-                Unit.SetStatValue(StatType.QteDamageModifier, _currentValue);
+                Unit.ChangeStatValue(_currentValue, StatType.QteDamageModifier);
                 Successed?.Invoke(this);
                 _isFulled = true;
             }

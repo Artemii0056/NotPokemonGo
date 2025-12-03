@@ -18,7 +18,6 @@ namespace Armaments
         {
             Armament armament = Object.Instantiate(prefab, position, Quaternion.identity);
             armament.Initialize(effects,  statuses, source, target);
-            Debug.LogError("created");
             return armament;
         }
     }

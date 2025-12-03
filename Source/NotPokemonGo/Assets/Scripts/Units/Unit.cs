@@ -96,12 +96,7 @@ namespace Units
         {
             _stats[statType].SetValue(value);
         }
-
-        public void SetStatValue(StatType statType, float value)
-        {
-            _stats[statType].SetValue(value);
-        }
-
+        
         public void AddStatus(Status status)
         {
             StatusAdded?.Invoke(status);
@@ -129,6 +124,11 @@ namespace Units
             Ticked?.Invoke();
         }
 
+        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
+        {
+            AnimatorTrigger = unitAnimatorTrigger;
+        }
+
         private void TickAbilities()
         {
             if (_abilityModels.Count > 0)
@@ -141,18 +141,16 @@ namespace Units
         private void TickAgility()
         {
             if (GetStat(StatType.CurrentAgility) < GetStat(StatType.MaxAgility))
-                ChangeStatValue(GetStat(StatType.AgilityRestoreSpeed), StatType.CurrentAgility);
+            {
+                float newValue = GetStat(StatType.CurrentAgility) + GetStat(StatType.AgilityRestoreSpeed);
+                ChangeStatValue(newValue, StatType.CurrentAgility);
+            }
 
             if (GetStat(StatType.CurrentAgility) >= GetStat(StatType.MaxAgility))
             {
                 _stats[StatType.CurrentAgility].SetValue(GetStat(StatType.MaxAgility));
                 Prepared?.Invoke(this);
             }
-        }
-
-        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
-        {
-            AnimatorTrigger = unitAnimatorTrigger;
         }
 
         private void OnStatValueChanged(float value, StatType statType)
