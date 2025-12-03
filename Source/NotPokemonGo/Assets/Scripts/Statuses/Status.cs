@@ -2,7 +2,10 @@
 
 namespace Statuses
 {
-    public abstract class Status
+    /// <summary>
+    /// Сделать один Status. Не абстрактный класс
+    /// </summary>
+    public abstract class Status 
     {
         public string Name { get; protected set; }
 

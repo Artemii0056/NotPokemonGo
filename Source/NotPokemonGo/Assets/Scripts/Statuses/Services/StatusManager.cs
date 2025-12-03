@@ -4,27 +4,27 @@ namespace Statuses.Services
 {
     public class StatusManager : IStatusManager
     {
-       private List<Status> _statusEffects = new List<Status>();
+       private List<Status> _statuses = new List<Status>();
 
-        public void RegisterStatusEffect(Status status)
+        public void RegisterStatus(Status status)
         {
-            _statusEffects.Add(status);
+            _statuses.Add(status);
             status.OnApply();
         }
 
-        public void UnregisterStatusEffect(Status status)
+        public void UnregisterStatus(Status status)
         {
             status.Target.RemoveStatus(status);
-            _statusEffects.Remove(status);
+            _statuses.Remove(status);
             status.OnExpire();
         }
 
         public void Tick()
         {
-            if (_statusEffects.Count <= 0)
+            if (_statuses.Count <= 0)
                 return;
             
-            foreach (var status in _statusEffects)
+            foreach (var status in _statuses)
             {
                 // status.UpdateTimer();
 
@@ -34,13 +34,13 @@ namespace Statuses.Services
 
         public void RemoveInactive()
         {
-            if (_statusEffects.Count <= 0)
+            if (_statuses.Count <= 0)
                 return;
             
-            for (int i = _statusEffects.Count - 1; i >= 0; i--)
+            for (int i = _statuses.Count - 1; i >= 0; i--)
             {
-                if (_statusEffects[i].IsEnded) 
-                    UnregisterStatusEffect(_statusEffects[i]);
+                if (_statuses[i].IsEnded) 
+                    UnregisterStatus(_statuses[i]);
             }
         }
     }

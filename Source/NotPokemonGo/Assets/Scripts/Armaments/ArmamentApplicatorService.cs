@@ -40,12 +40,7 @@ namespace Armaments
 			{
 				List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
 				List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
-
-				if (source == null)
-				{
-					Debug.LogError("No sourceProvider has been setup");
-				}
-
+				
 				Armament armament =
 					_armamentViewFactory.Create(
 						effects,
@@ -55,8 +50,6 @@ namespace Armaments
 						source,
 						target);
 				
-				var armaTarget = (armament, target);
-				// нам нужен тот кто передвигает и потом сообщает кудато что армамент достиг
 				_armamentMover.Move(armament);
 				_armamentMover.Reached += OnReached;
 			}

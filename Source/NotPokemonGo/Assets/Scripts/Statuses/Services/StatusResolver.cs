@@ -13,7 +13,7 @@ namespace Statuses.Services
         {
             if (HasStatusEffect(out Status statusToResolve, status.Setup.Type, target) == false)
             {
-                _statusManager.RegisterStatusEffect(status); 
+                _statusManager.RegisterStatus(status); 
                 target.AddStatus(status);
                 return;
             }

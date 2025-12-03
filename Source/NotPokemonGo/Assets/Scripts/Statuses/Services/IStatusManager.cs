@@ -2,8 +2,8 @@
 {
     public interface IStatusManager
     {
-        void RegisterStatusEffect(Status status);
-        void UnregisterStatusEffect(Status status);
+        void RegisterStatus(Status status);
+        void UnregisterStatus(Status status);
         void Tick();
         void RemoveInactive();
     }
