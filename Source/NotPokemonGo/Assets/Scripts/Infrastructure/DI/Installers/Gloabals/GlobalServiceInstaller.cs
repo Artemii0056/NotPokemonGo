@@ -2,6 +2,7 @@
 using Armaments;
 using Battlefields;
 using Cameras;
+using Castaments;
 using DodgeSystem;
 using Effects;
 using Infrastructure.DI.Initializers.Globals;
@@ -92,8 +93,8 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IEffectResolver, EffectResolver>(Lifetime.Singleton);
             builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
-            builder.Register<ICastamentApplicatorService, CastamentApplicatorService>(Lifetime.Singleton);
-            builder.Register<IArmamentApplicatorService, ArmamentApplicatorService>(Lifetime.Singleton);
+            builder.Register<ICastamentApplicator, CastamentApplicator>(Lifetime.Singleton);
+            builder.Register<IArmamentApplicator, ArmamentApplicator>(Lifetime.Singleton);
             builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
             builder.Register<IQteService, QteService>(Lifetime.Singleton);
             builder.Register<IDodgeService, DodgeService>(Lifetime.Singleton);

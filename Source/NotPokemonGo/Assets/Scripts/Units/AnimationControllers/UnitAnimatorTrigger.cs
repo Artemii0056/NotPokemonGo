@@ -5,6 +5,7 @@ using Abilities;
 using Abilities.Configs;
 using Armaments;
 using Assets;
+using Castaments;
 using ReactionSystems;
 using Services.AbilityServices;
 using Services.StaticDataServices;
@@ -39,8 +40,8 @@ namespace Units.AnimationControllers
             IAbilityProvider abilityProvider,
             UnitAnimatorController controller,
             IParticleSystemFactory particleSystemFactory,
-            ICastamentApplicatorService castamentApplicatorService,
-            IArmamentApplicatorService armamentApplicatorService,
+            ICastamentApplicator castamentApplicator,
+            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
             IReactionService reactionService)
         {
@@ -52,7 +53,7 @@ namespace Units.AnimationControllers
 
             _particles = new List<ParticleSystem>();
 
-            _abilityPhaseService = new AbilityPhaseService(castamentApplicatorService, armamentApplicatorService, targetSelector, reactionService);
+            _abilityPhaseService = new AbilityPhaseService(castamentApplicator, armamentApplicator, targetSelector, reactionService);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started; // TODO слушать один партил и одну атаку
             _controller.ParticleSystem2Started += OnParticleSystem2Started;

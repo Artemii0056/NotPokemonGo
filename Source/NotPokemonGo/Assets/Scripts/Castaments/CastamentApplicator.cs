@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Castaments;
 using Effects;
 using Statuses;
 using Statuses.Services;
@@ -8,15 +7,15 @@ using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Abilities
+namespace Castaments
 {
-    public class CastamentApplicatorService : ICastamentApplicatorService
+    public class CastamentApplicator : ICastamentApplicator
     {
         private readonly IStatusFactory _statusFactory;
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
 
-        public CastamentApplicatorService(
+        public CastamentApplicator(
             IStatusFactory statusFactory,
             IEffectResolver effectResolver,
             IStatusResolver statusResolver)

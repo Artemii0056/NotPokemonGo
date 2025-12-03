@@ -5,11 +5,10 @@ using Effects;
 using Statuses;
 using Statuses.Services;
 using Units;
-using UnityEngine;
 
 namespace Armaments
 {
-	public class ArmamentApplicatorService : IArmamentApplicatorService
+	public class ArmamentApplicator : IArmamentApplicator
 	{
 		private readonly IArmamentViewFactory _armamentViewFactory;
 		private readonly IStatusFactory _statusFactory;
@@ -18,7 +17,7 @@ namespace Armaments
 		private readonly IArmamentMover _armamentMover;
 		private readonly IDodgeService _dodgeService;
 
-		public ArmamentApplicatorService(
+		public ArmamentApplicator(
 			IArmamentViewFactory armamentViewFactory,
 			IStatusFactory statusFactory,
 			IEffectResolver effectResolver,

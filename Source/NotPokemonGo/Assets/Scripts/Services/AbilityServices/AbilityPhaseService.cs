@@ -10,19 +10,19 @@ namespace Services.AbilityServices
 {
     public class AbilityPhaseService
     {
-        private readonly ICastamentApplicatorService _castamentApplicatorService;
-        private readonly IArmamentApplicatorService _armamentApplicatorService;
+        private readonly ICastamentApplicator _castamentApplicator;
+        private readonly IArmamentApplicator _armamentApplicator;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
 
         public AbilityPhaseService(
-            ICastamentApplicatorService castamentApplicatorService,
-            IArmamentApplicatorService armamentApplicatorService,
+            ICastamentApplicator castamentApplicator,
+            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
             IReactionService reactionService)
         {
-            _castamentApplicatorService = castamentApplicatorService;
-            _armamentApplicatorService = armamentApplicatorService;
+            _castamentApplicator = castamentApplicator;
+            _armamentApplicator = armamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
         }
@@ -41,16 +41,16 @@ namespace Services.AbilityServices
             // if (_reactionService.TryReact(context))
             //     return;
 
-            _castamentApplicatorService.Apply(setup, source,
+            _castamentApplicator.Apply(setup, source,
                 _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.CastamentSetup.HasSetupData)
-                _castamentApplicatorService.Apply(phase.CastamentSetup, source,
+                _castamentApplicator.Apply(phase.CastamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.ArmamentSetup.HasSetupData)
             {
-                _armamentApplicatorService.Apply(phase.ArmamentSetup, source,
+                _armamentApplicator.Apply(phase.ArmamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
             }
         }
