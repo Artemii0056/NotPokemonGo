@@ -9,7 +9,8 @@ namespace DodgeSystem.Configs
 	{
 		public UnitType UnitType;
 		public AnimationClip AnimationClip;
-		
+		public float Duration;
+
 		public int AnimationCashName => AnimationClip != null ? AnimationClip.name.GetHashCode() : throw new Exception("Animation clip is null");
 	}
 }

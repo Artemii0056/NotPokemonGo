@@ -11,11 +11,11 @@ namespace Effects
         public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
         {
             float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
-            target.ChangeStatValue(effect.TargetType, finalValue);
+            target.ChangeStatValue(finalValue, effect.TargetType);
         }
 
         public void ApplyEffect(Unit target, EffectInfo effect) => 
-            target.ChangeStatValue(effect.TargetType, effect.Value);
+            target.ChangeStatValue(effect.Value, effect.TargetType);
 
         private float CalculateStatModification(
             Unit source,

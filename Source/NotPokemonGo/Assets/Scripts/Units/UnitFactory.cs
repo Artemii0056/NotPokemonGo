@@ -73,7 +73,7 @@ namespace Units
                 _targetSelector, 
                 _reactionService);
 
-            unit.SetAnumationTrigger(unitAnimatorTrigger);
+            unit.SetAnimationTrigger(unitAnimatorTrigger);
 
             unit.Construct(config.Stats,  platoonType);
 

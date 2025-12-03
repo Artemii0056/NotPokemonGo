@@ -1,5 +1,4 @@
 ﻿using System;
-using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +8,11 @@ namespace UI.DodgeUI
 	{
 		[SerializeField] private Button _dodgeButton;
 
-		public event Action<Unit> Dodged;
+		public event Action Dodged;
 
 		public void Destroy() => 
 			Destroy(gameObject);
-
+		
 		public void Show()
 		{
 			gameObject.SetActive(true);
@@ -26,10 +25,7 @@ namespace UI.DodgeUI
 			gameObject.SetActive(false);
 		}
 
-		private void OnDodgeButtonCLicked()
-		{
-			Unit unit = FindAnyObjectByType<Unit>();
-			Dodged?.Invoke(unit);
-		}
+		private void OnDodgeButtonCLicked() => 
+			Dodged?.Invoke();
 	}
 }

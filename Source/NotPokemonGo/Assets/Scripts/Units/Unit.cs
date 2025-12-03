@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities;
 using Abilities.MV;
-using Assets;
 using Characters.Configs;
 using Cinemachine;
-using Infrastructure;
 using Platoons;
 using Stats;
 using Statuses;
@@ -15,31 +13,28 @@ using UnityEngine;
 
 namespace Units
 {
+    [RequireComponent(typeof(SquadMember))]
     public class Unit : MonoBehaviour
     {
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
 
-        private CapsuleCollider _capsuleCollider;
-        public Transform abilityPos;
-
-        public Vector3 StartPosition { get; private set;  }
-
-        public CinemachineVirtualCamera virtualCamera;
-        [field: SerializeField] public UnitType UnitType { get; private set; }
-        public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
+        [field: SerializeField] public UnitType UnitType { get; private set; }
 
-        private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
+        public Transform abilityPos;
+        public CinemachineVirtualCamera virtualCamera;
 
         private List<Status> _imposedStatuses = new List<Status>();
-
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
+        private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
 
+        public Vector3 StartPosition { get; private set;  }
+        public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         public PlatoonType PlatoonType { get; private set; }
-
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
+        public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
         public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
 
@@ -54,13 +49,7 @@ namespace Units
 
         public event Action<Unit> Death;
 
-        public Dictionary<StatType, StatSetup> Stats => new(_stats);
-
-        private void Awake()
-        {
-            _capsuleCollider = GetComponent<CapsuleCollider>();
-        }
-
+        
         public void Construct(
             List<StatConfig> statConfig,
             PlatoonType platoonType)
@@ -71,7 +60,7 @@ namespace Units
                 _stats.Add(statSetup.StatsType, new StatSetup(statSetup));
 
             foreach (StatSetup stat in _stats.Values)
-                stat.CurrentValueChanged += StatChanged;
+                stat.CurrentValueChanged += OnStatValueChanged;
 
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
             
@@ -87,7 +76,7 @@ namespace Units
             PlatoonType = platoonType;
 
             foreach (StatSetup stat in _stats.Values)
-                stat.CurrentValueChanged += StatChanged;
+                stat.CurrentValueChanged += OnStatValueChanged;
 
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
         }
@@ -95,61 +84,22 @@ namespace Units
         private void OnDestroy()
         {
             foreach (StatSetup stat in _stats.Values)
-                stat.CurrentValueChanged -= StatChanged;
+                stat.CurrentValueChanged -= OnStatValueChanged;
         }
-
-        private void StatChanged(float current, StatType statType)
-        {
-            switch (statType)
-            {
-                case StatType.Health:
-                    float currentHealth = GetStat(StatType.Health);
-
-                    float maxHealth = GetStat(StatType.MaxHealth);
-                    
-                    HealthChanged?.Invoke(currentHealth, maxHealth);
-
-                    if (GetStat(StatType.Health) <= 0)
-                    {
-                        Death?.Invoke(this);
-                        _capsuleCollider.enabled = false;
-                        UnitAnimatorController.Play(Constants.BaseAnimations.Death);
-                    }
-
-                    break;
-                case StatType.Mana:
-                    break;
-                case StatType.DodgeChance:
-                    break;
-                case StatType.Accuracy:
-                    break;
-                case StatType.ArmorChance:
-                    break;
-                case StatType.Damage:
-                    break;
-                case StatType.CurrentAgility:
-                    AgilityChanged?.Invoke(GetStat(StatType.CurrentAgility), GetStat(StatType.MaxAgility));
-                    break;
-                case StatType.MaxAgility:
-                    break;
-                case StatType.AgilityRestoreSpeed:
-                    break;
-            }
-        }
-
+        
         public float GetStat(StatType statType)
         {
             return _stats[statType].CurrentValue;
         }
 
-        public void ChangeStatValue(StatType statType, float value)
+        public void ChangeStatValue(float value, StatType statType)
         {
-            _stats[statType].Modify(value);
+            _stats[statType].SetValue(value);
         }
 
         public void SetStatValue(StatType statType, float value)
         {
-            _stats[statType].Set(value);
+            _stats[statType].SetValue(value);
         }
 
         public void AddStatus(Status status)
@@ -168,7 +118,7 @@ namespace Units
             _abilityModels.Add(ability);
 
         public void ResetAgility() =>
-            _stats[StatType.CurrentAgility].Set(0);
+            _stats[StatType.CurrentAgility].SetValue(0);
 
         public void Tick()
         {
@@ -191,18 +141,31 @@ namespace Units
         private void TickAgility()
         {
             if (GetStat(StatType.CurrentAgility) < GetStat(StatType.MaxAgility))
-                ChangeStatValue(StatType.CurrentAgility, GetStat(StatType.AgilityRestoreSpeed));
+                ChangeStatValue(GetStat(StatType.AgilityRestoreSpeed), StatType.CurrentAgility);
 
             if (GetStat(StatType.CurrentAgility) >= GetStat(StatType.MaxAgility))
             {
-                _stats[StatType.CurrentAgility].Set(GetStat(StatType.MaxAgility));
+                _stats[StatType.CurrentAgility].SetValue(GetStat(StatType.MaxAgility));
                 Prepared?.Invoke(this);
             }
         }
 
-        public void SetAnumationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
+        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
         {
             AnimatorTrigger = unitAnimatorTrigger;
+        }
+
+        private void OnStatValueChanged(float value, StatType statType)
+        {
+            switch (statType)
+            {
+                case StatType.Health:
+                    HealthChanged?.Invoke(value, GetStat(StatType.MaxHealth));
+                    break;
+                case StatType.CurrentAgility:
+                    AgilityChanged?.Invoke(value, GetStat(StatType.MaxAgility));
+                    break;
+            }
         }
     }
 }

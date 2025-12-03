@@ -16,14 +16,8 @@ namespace Stats
         public StatType Type { get; private set; }
         public float BaseValue { get; private set; }
         public float CurrentValue { get; private set; }
-
-        public void Modify(float value)
-        {
-            CurrentValue += value;
-            CurrentValueChanged?.Invoke(CurrentValue,  Type);
-        }
-
-        public void Set(float value)
+        
+        public void SetValue(float value)
         {
             CurrentValue = value;
             CurrentValueChanged?.Invoke(CurrentValue,  Type);

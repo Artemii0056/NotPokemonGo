@@ -12,12 +12,4 @@ namespace Effects
 
         public float Value;
     }
-
-    public enum DamageType
-    {
-        None = 0,
-        Physical,
-        Magical,
-        Clear
-    }
 }

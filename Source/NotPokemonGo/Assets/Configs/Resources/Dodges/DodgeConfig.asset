@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UnitType: 4
   AnimationClip: {fileID: 7400014, guid: 5fe51830c6e12034892d1041e85357b6, type: 3}
+  Duration: 1.6
