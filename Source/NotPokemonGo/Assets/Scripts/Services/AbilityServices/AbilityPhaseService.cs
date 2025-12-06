@@ -1,10 +1,8 @@
-﻿using Abilities;
-using Abilities.Configs;
+﻿using Abilities.Configs;
 using Armaments;
 using Castaments;
 using ReactionSystems;
 using Units;
-using UnityEngine;
 
 namespace Services.AbilityServices
 {
@@ -29,30 +27,27 @@ namespace Services.AbilityServices
 
         public void OnNext(AbilityPhase phase, Unit source, Unit target)
         {
-            //Unit target = _targetSelector.Target; //TODO Тут как будто не обойтись без селектора
-
             var setup = phase.CastamentSetup;
 
-            // if (setup.HasSetupData == false)
-            //     return;
-            //
-            // var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
-            //
+            if (setup.HasSetupData)
+            {
+                var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
+                _reactionService.TryReact(context);
+            }
+            
             // if (_reactionService.TryReact(context))
             //     return;
 
-            _castamentApplicator.Apply(setup, source,
-                _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            // _castamentApplicator.Apply(setup, source,
+            //     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.CastamentSetup.HasSetupData)
-                _castamentApplicator.Apply(phase.CastamentSetup, source,
+                _castamentApplicator.Apply(phase.CastamentSetup, source, //Апликатор - сделать метод TryApply
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.ArmamentSetup.HasSetupData)
-            {
                 _armamentApplicator.Apply(phase.ArmamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
-            }
         }
 
         private void HandleCastamentSetup(CastamentSetup setup)

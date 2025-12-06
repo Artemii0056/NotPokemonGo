@@ -58,6 +58,10 @@ namespace Abilities
             switch (abilityType)
             {
                 case AbilityType.FireBall:
+                    _abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel);
+                    _abilityHandler.Play(source, target);
+                    _activeAbilityHandlers.Add(_abilityHandler);
+                    _abilityHandler.Finished += Continue;
                     break;
 
                 case AbilityType.FrostBall:

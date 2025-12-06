@@ -6,7 +6,6 @@ using Abilities.MV;
 using Cameras;
 using Cinemachine;
 using DG.Tweening;
-using Infrastructure;
 using QTESystem;
 using Services;
 using Units;
@@ -96,7 +95,7 @@ namespace Abilities.Bennet
 
             HandleCamera(phase.CameraActionType);
 
-            if (phase.QteType != QteType.Unknown) //TODO Пока идет это - дальше не проходит. Но почему тут такое короткое время? 
+            if (phase.QteType != QteType.Unknown) 
                 yield return RunQtePhase(phase.QteType);
 
             switch (phase.PhaseType)

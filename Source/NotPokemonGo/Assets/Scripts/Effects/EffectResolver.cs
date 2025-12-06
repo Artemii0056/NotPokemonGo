@@ -1,8 +1,6 @@
 ﻿using System;
-using Infrastructure;
 using Stats;
 using Units;
-using UnityEngine;
 
 namespace Effects
 {
@@ -46,7 +44,7 @@ namespace Effects
                             if (target.IsAlive)
                             {
                                 finalValue = -finalValue;
-                                target.UnitAnimatorController.Play(Constants.BaseAnimations.TakeDamage);
+                               // target.UnitAnimatorController.Play(Constants.BaseAnimations.TakeDamage);
                             }
                             else
                             {

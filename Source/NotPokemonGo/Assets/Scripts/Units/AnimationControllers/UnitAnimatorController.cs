@@ -20,6 +20,11 @@ namespace Units.AnimationControllers
 
         public void Play(int animationName) =>
             _animator.Play(animationName);
+        
+        public void PlayTakeDamage(int animationName) 
+        {
+            
+        }
 
         public void FlagParticleSystem1() =>
             ParticleSystem1Started?.Invoke();
@@ -30,10 +35,8 @@ namespace Units.AnimationControllers
         public void FlagParticleSystem3() =>
             ParticleSystem3Started?.Invoke();
 
-        public void FlagAttack()
-        {
+        public void FlagAttack() => 
             Attack1Started?.Invoke();
-        }
 
         public void FlagAttack2() =>
             Attack2Started?.Invoke();

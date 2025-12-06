@@ -16,15 +16,15 @@ namespace Abilities.Bennet
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly List<AbilityPart> _parts;
-        
-        private  UnitAnimatorController _animatorController;
-        private  UnitAnimatorTrigger _animatorTrigger;
-        private  Unit _source;
-        private  Unit _target;
+
+        private UnitAnimatorController _animatorController;
+        private UnitAnimatorTrigger _animatorTrigger;
+        private Unit _source;
+        private Unit _target;
         private bool _animationPlaying;
-        
+
         private Coroutine _currentRoutine;
-        private  Vector3 _startPosition;
+        private Vector3 _startPosition;
 
         public event Action<IAbilityHandler> Finished;
 
@@ -32,9 +32,8 @@ namespace Abilities.Bennet
             AbilityModel abilityModel,
             ICoroutineRunner coroutineRunner)
         {
-            
             _coroutineRunner = coroutineRunner;
-            
+
             _parts = abilityModel.Parts;
         }
 
@@ -42,10 +41,10 @@ namespace Abilities.Bennet
         {
             _source = source;
             _target = target;
-            
+
             _animatorController = source.UnitAnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
-            
+
             _startPosition = source.transform.position;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
@@ -82,9 +81,10 @@ namespace Abilities.Bennet
             switch (phase.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source, CalculateTargetPosition(_source.transform.position, _target.transform.position));
+                    yield return MoveUnit(_source,
+                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
                     break;
-                
+
                 case PhaseType.IsReturnPhase:
                     yield return MoveUnit(_source, _startPosition);
                     break;
@@ -105,34 +105,34 @@ namespace Abilities.Bennet
             yield return new WaitWhile(() => _animationPlaying);
             _animatorController.Finished -= OnFinished;
         }
-        
+
         private IEnumerator MoveUnit(Unit unit, Vector3 target)
         {
             float liftDelay = 0.1f;
             int jumpPower = 1;
-            Debug.Log(_animatorController.GetAnimationName());
+//            Debug.Log(_animatorController.GetAnimationName());
 
             yield return new WaitForSeconds(liftDelay);
-            
+
             var duration = _animatorController.GetAnimationLength() / 2;
 
             float moveDuration = duration - liftDelay;
             unit.transform.DOKill();
-            
+
             Tween jumpTween = unit.transform
                 .DOJump(target, jumpPower, 1, moveDuration)
                 .SetEase(Ease.InQuad);
 
             yield return jumpTween.WaitForCompletion();
         }
-        
+
         private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
         {
             float stopDistance = 1.5f;
             Vector3 direction = (target - start).normalized;
             return target - direction * stopDistance;
         }
-        
+
         private void FinishAbility()
         {
             _animatorController.Play(Constants.BaseAnimations.Idle);

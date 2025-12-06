@@ -96,7 +96,6 @@ namespace UI.Factory
             return _objectResolver.Instantiate(dodgeView);
         }
 
-
         public StartScreenUI CreateStartScreen()
         {
             StartScreenUI startScreenPrefab =

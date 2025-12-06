@@ -83,6 +83,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 		private IEnumerator Dodge(float duration, Unit unit)
 		{
 			yield return new WaitForSeconds(duration);
+			
 			unit.ChangeStatValue(0, StatType.DodgeFlag);
 			_units.Remove(unit.UnitType);
 		}

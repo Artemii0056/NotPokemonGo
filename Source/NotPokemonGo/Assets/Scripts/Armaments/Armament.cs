@@ -9,7 +9,7 @@ namespace Armaments
 {
     public class Armament : MonoBehaviour
     {
-        [SerializeField] private ParticleSystem _particleSystemPrefab;
+        [field: SerializeField] public ParticleSystem _particleSystemPrefab;
 
         public float delta = 5f;
 
@@ -31,14 +31,11 @@ namespace Armaments
 
         private void Start()
         {
+            if (_particleSystemPrefab == null)
+                return;
+            
             var parcticle = Instantiate(_particleSystemPrefab, transform);
             parcticle.Play();
-        }
-        
-        public void Move()
-        {
-            transform.position =
-                Vector3.MoveTowards(transform.position, Target.transform.position, Time.deltaTime * delta);
         }
     }
 }

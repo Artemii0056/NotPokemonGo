@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Abilities.Enemies
 {
-    public class BaseEnemyAttack : IAbilityHandler
+    public class PortalFireballSummoner : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
 
@@ -20,15 +20,14 @@ namespace Abilities.Enemies
 
         private bool _animationPlaying;
 
-        private Vector3 _startPosition;
-
         private readonly List<AbilityPart> _parts;
         private Unit _source;
         private Unit _target;
 
         private Coroutine _currentRoutine;
-
-        public BaseEnemyAttack(
+        private Coroutine _attackRoutine;
+        
+        public PortalFireballSummoner(
             ICoroutineRunner coroutineRunner,
             AbilityModel abilityModel)
         {
@@ -46,14 +45,12 @@ namespace Abilities.Enemies
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.UnitAnimatorController;
 
-            _startPosition = _source.transform.position;
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
         public void Stop()
         {
             _coroutineRunner.StopCoroutine(_currentRoutine);
-            //FinishAbility(); //???
         }
 
         private IEnumerator ExecuteAllParts()
@@ -75,21 +72,12 @@ namespace Abilities.Enemies
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
-            _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
+            _animatorTrigger.SetPhase(phase);
+            _animatorTrigger.SetTarget(_target);
 
             switch (phase.PhaseType)
             {
-                case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source,
-                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
-                    break;
-
-                case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _startPosition);
-                    break;
-
                 default:
                     yield return WaitForAnimation();
                     break;
@@ -98,6 +86,7 @@ namespace Abilities.Enemies
 
         private void FinishAbility()
         {
+            _animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
         }
@@ -114,29 +103,7 @@ namespace Abilities.Enemies
             _animatorController.Finished -= OnFinished;
         }
 
-        private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
-        {
-            float stopDistance = 1.5f;
-            Vector3 direction = (target - start).normalized;
-            return target - direction * stopDistance;
-        }
-
-        private void FinishAnimation() =>
+        private void FinishAnimation() => 
             _animationPlaying = false;
-
-        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
-        {
-            const float Speed = 4f;
-
-            while (Vector3.Distance(unit.transform.position, targetPosition) > offset)
-            {
-                unit.transform.position = Vector3.MoveTowards(
-                    unit.transform.position,
-                    targetPosition,
-                    Speed * Time.deltaTime);
-
-                yield return null;
-            }
-        }
     }
 }

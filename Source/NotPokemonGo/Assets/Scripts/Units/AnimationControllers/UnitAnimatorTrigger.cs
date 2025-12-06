@@ -4,7 +4,6 @@ using System.Linq;
 using Abilities;
 using Abilities.Configs;
 using Armaments;
-using Assets;
 using Castaments;
 using ReactionSystems;
 using Services.AbilityServices;
@@ -25,14 +24,12 @@ namespace Units.AnimationControllers
         private UnitAnimatorController _controller;
         private Unit _unit;
 
-        private Dictionary<ParticleSpawnType, AbilityAnchor> _anchors;
+        public Dictionary<ParticleSpawnType, AbilityAnchor> _anchors; //TODO public
         private List<ParticleSystem> _particles;
 
         private AbilityPhase _phase;
 
         private Unit _currentTarget;
-
-        public event Action ActionEnded;
 
         public UnitAnimatorTrigger(
             Unit unit,
@@ -55,12 +52,12 @@ namespace Units.AnimationControllers
 
             _abilityPhaseService = new AbilityPhaseService(castamentApplicator, armamentApplicator, targetSelector, reactionService);
 
-            _controller.ParticleSystem1Started += OnParticleSystem1Started; // TODO слушать один партил и одну атаку
+            _controller.ParticleSystem1Started += OnParticleSystem1Started; //Отдельный класс с реакцией на партикды
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
 
             _controller.Attack1Started += OnAttack;
 
-            _controller.Finished += OnFinished;
+            //_controller.Finished += OnFinished;
 
             InitializeAnchors(_unit);
         }
@@ -72,7 +69,7 @@ namespace Units.AnimationControllers
 
             _controller.Attack1Started -= OnAttack;
 
-            _controller.Finished -= OnFinished;
+            //_controller.Finished -= OnFinished;
         }
 
         public void SetTarget(Unit target)
@@ -85,9 +82,6 @@ namespace Units.AnimationControllers
             _phase = phase;
         }
 
-        private AbilityConfig SearchAbility() => //TODO
-            _staticDataService.GetAbilityConfig(_abilityProvider.AbilityModel.AbilityType);
-
         private void OnParticleSystem1Started()
         {
             var info = _phase.ParticleSystemBySpawnType[0];
@@ -95,15 +89,14 @@ namespace Units.AnimationControllers
             ParticleSystem system = info.ParticleSystem;
 
             ParticleSpawnType type = info.ParticleSpawnType;
-            Debug.Log(type);
-
+            
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
                 Transform point = anchor.Transforms[0];
 
-                ParticleSystem particleSystem = Object.Instantiate(system, point.position, Quaternion.identity, point);
-                particleSystem.Play();
-                _particles.Add(particleSystem);
+                ParticleSystem particleSystemPrefab = Object.Instantiate(system, point.position, Quaternion.identity, point);
+                particleSystemPrefab.Play();
+                _particles.Add(particleSystemPrefab);
             }
         }
 
@@ -118,13 +111,10 @@ namespace Units.AnimationControllers
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
-                Debug.Log("In On");
-
                 var point = anchor.Transforms[0];
 
                 var ps = Object.Instantiate(system, point.position, Quaternion.identity, point);
                 ps.Play();
-                //_particles.AddRange(a);
             }
         }
 
@@ -133,15 +123,13 @@ namespace Units.AnimationControllers
             _abilityPhaseService.OnNext(_phase, _unit, _currentTarget);
         }
 
-        private void OnFinished()
+        public void ClearParticles()
         {
             foreach (var particle in _particles.ToList())
             {
                 Object.Destroy(particle.gameObject);
                 _particles.Remove(particle);
             }
-
-            ActionEnded?.Invoke();
         }
 
         private void InitializeAnchors(Unit unit)

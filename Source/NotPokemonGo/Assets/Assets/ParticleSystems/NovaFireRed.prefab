@@ -28980,7 +28980,7 @@ GameObject:
   - component: {fileID: 10855728}
   - component: {fileID: 11495504}
   m_Layer: 0
-  m_Name: NovaFireRed 1
+  m_Name: NovaFireRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

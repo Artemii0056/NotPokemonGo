@@ -37,6 +37,8 @@ MonoBehaviour:
     Value: 1
   - <StatsType>k__BackingField: 8
     Value: 1
+  - <StatsType>k__BackingField: 9
+    Value: 0
   _abilityConfigs:
   - {fileID: 11400000, guid: 516168dc99dd27f4ebb1abcf69231e14, type: 2}
   - {fileID: 11400000, guid: a2f657a9926c5f5428a27c7b1d38ec64, type: 2}

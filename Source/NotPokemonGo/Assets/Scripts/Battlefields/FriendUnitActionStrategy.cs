@@ -72,8 +72,6 @@ namespace Battlefields
             base.Disable();
 
             _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
-            
-            Debug.Log("Disable Friend Unit Action");
         }
 
         private void OnUnitSearched(Unit unit)
