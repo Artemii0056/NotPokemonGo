@@ -65,10 +65,7 @@ namespace Units
 
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,
-                _staticDataService,
-                _abilityProvider,
                 controller,
-                _particleSystemFactory,
                 _castamentApplicator,
                 _armamentApplicator,
                 _targetSelector, 

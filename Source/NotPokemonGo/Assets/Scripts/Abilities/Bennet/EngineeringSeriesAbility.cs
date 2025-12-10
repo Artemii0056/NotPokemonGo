@@ -33,8 +33,9 @@ namespace Abilities.Bennet
         private bool _lastQteSuccess;
         
         private bool _animationPlaying;
-
+        
         public event Action<IAbilityHandler> Finished;
+        public Interruptibility Interruptibility { get; }
 
         public EngineeringSeriesAbility(
             AbilityModel abilityModel,
@@ -45,6 +46,7 @@ namespace Abilities.Bennet
             _qteService = qteService;
 
             _parts = abilityModel.Parts;
+            Interruptibility = abilityModel.Interruptibility;
             _cinemachineBrain = Object.FindObjectOfType<CinemachineBrain>(); //TODO Вот эту херню исправить 
             //Исправить и добавить тайм сервис и с ним связанную логику.
         }
@@ -63,6 +65,8 @@ namespace Abilities.Bennet
 
         public void Stop() => 
             _coroutineRunner.StopCoroutine(_currentRoutine);
+
+        
 
         private IEnumerator ExecuteAllParts()
         {

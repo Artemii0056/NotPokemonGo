@@ -49,7 +49,7 @@ namespace Armaments
                         source.abilityPos.position, //TODO Связать с абилити энкором
                         setup.ArmamentPrefab,
                         source,
-                        target); //Сюда трансформ? 
+                        target); 
 
                 CreateMover(armament);
             }
@@ -62,15 +62,15 @@ namespace Armaments
 
         private void CreateMover(Armament armament, bool isReturn = false)
         {
-            ArmamentMover mover = new ArmamentMover(_coroutineRunner);
+            IArmamentMover mover = new ArmamentMover();
             mover.Move(armament, isReturn);
             mover.Reached += OnReached;
         }
 
-        private void OnReached(Armament armament, ArmamentMover mover)
+        private void OnReached(Armament armament, IArmamentMover mover)
         {
-            mover.Reached -= OnReached;
             Object.Destroy(armament);
+            mover.Reached -= OnReached;
 
             if (_dodgeService.CanDodge(armament.Target))
                 Apply(_dodgeService.Dodge(armament));

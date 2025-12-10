@@ -27,6 +27,8 @@ namespace Abilities.Bennet
         private Vector3 _startPosition;
 
         public event Action<IAbilityHandler> Finished;
+        
+        public Interruptibility Interruptibility { get; }
 
         public BennetBaseAttack(
             AbilityModel abilityModel,
@@ -35,6 +37,8 @@ namespace Abilities.Bennet
             _coroutineRunner = coroutineRunner;
 
             _parts = abilityModel.Parts;
+            
+            Interruptibility = abilityModel.Interruptibility;
         }
 
         public void Play(Unit source, Unit target)

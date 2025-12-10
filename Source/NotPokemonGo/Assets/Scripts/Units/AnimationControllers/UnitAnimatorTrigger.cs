@@ -7,7 +7,6 @@ using Armaments;
 using Castaments;
 using ReactionSystems;
 using Services.AbilityServices;
-using Services.StaticDataServices;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -15,10 +14,6 @@ namespace Units.AnimationControllers
 {
     public class UnitAnimatorTrigger : IDisposable
     {
-        private IStaticDataService _staticDataService;
-        private IAbilityProvider _abilityProvider;
-        private IParticleSystemFactory _particleSystemFactory;
-
         private AbilityPhaseService _abilityPhaseService;
 
         private UnitAnimatorController _controller;
@@ -31,26 +26,23 @@ namespace Units.AnimationControllers
 
         private Unit _currentTarget;
 
-        public UnitAnimatorTrigger(
+        public UnitAnimatorTrigger
+        (
             Unit unit,
-            IStaticDataService staticDataService,
-            IAbilityProvider abilityProvider,
             UnitAnimatorController controller,
-            IParticleSystemFactory particleSystemFactory,
             ICastamentApplicator castamentApplicator,
             IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
-            IReactionService reactionService)
+            IReactionService reactionService
+            )
         {
             _unit = unit;
-            _staticDataService = staticDataService;
-            _abilityProvider = abilityProvider;
             _controller = controller;
-            _particleSystemFactory = particleSystemFactory;
 
             _particles = new List<ParticleSystem>();
 
-            _abilityPhaseService = new AbilityPhaseService(castamentApplicator, armamentApplicator, targetSelector, reactionService);
+            _abilityPhaseService =
+                new AbilityPhaseService(castamentApplicator, armamentApplicator, targetSelector, reactionService);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started; //Отдельный класс с реакцией на партикды
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
@@ -60,6 +52,20 @@ namespace Units.AnimationControllers
             //_controller.Finished += OnFinished;
 
             InitializeAnchors(_unit);
+
+            _unit.HealthChanged += OnHealthChanged;
+        }
+
+        private void OnHealthChanged(float arg1, float arg2)
+        {
+            if (_unit.AbilityHandler == null)
+                return;
+
+            if (_unit.AbilityHandler.Interruptibility == Interruptibility.CannotBeInterrupted)
+                return;
+
+            Debug.Log("TakeDamage");
+            _controller.Play(Constants.BaseAnimations.TakeDamage);
         }
 
         public void Dispose()
@@ -68,6 +74,8 @@ namespace Units.AnimationControllers
             _controller.ParticleSystem2Started -= OnParticleSystem2Started;
 
             _controller.Attack1Started -= OnAttack;
+
+            _unit.HealthChanged -= OnHealthChanged;
 
             //_controller.Finished -= OnFinished;
         }
@@ -89,12 +97,13 @@ namespace Units.AnimationControllers
             ParticleSystem system = info.ParticleSystem;
 
             ParticleSpawnType type = info.ParticleSpawnType;
-            
+
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
                 Transform point = anchor.Transforms[0];
 
-                ParticleSystem particleSystemPrefab = Object.Instantiate(system, point.position, Quaternion.identity, point);
+                ParticleSystem particleSystemPrefab =
+                    Object.Instantiate(system, point.position, Quaternion.identity, point);
                 particleSystemPrefab.Play();
                 _particles.Add(particleSystemPrefab);
             }

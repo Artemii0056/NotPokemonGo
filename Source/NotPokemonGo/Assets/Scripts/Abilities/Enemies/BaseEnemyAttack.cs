@@ -33,8 +33,11 @@ namespace Abilities.Enemies
             AbilityModel abilityModel)
         {
             _coroutineRunner = coroutineRunner;
+            Interruptibility = abilityModel.Interruptibility;
             _parts = abilityModel.Parts;
         }
+        
+        public Interruptibility Interruptibility { get; }
 
         public event Action<IAbilityHandler> Finished;
 
@@ -55,6 +58,7 @@ namespace Abilities.Enemies
             _coroutineRunner.StopCoroutine(_currentRoutine);
             //FinishAbility(); //???
         }
+
 
         private IEnumerator ExecuteAllParts()
         {

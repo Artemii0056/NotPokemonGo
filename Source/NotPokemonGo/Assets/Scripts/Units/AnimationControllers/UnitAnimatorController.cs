@@ -20,11 +20,6 @@ namespace Units.AnimationControllers
 
         public void Play(int animationName) =>
             _animator.Play(animationName);
-        
-        public void PlayTakeDamage(int animationName) 
-        {
-            
-        }
 
         public void FlagParticleSystem1() =>
             ParticleSystem1Started?.Invoke();

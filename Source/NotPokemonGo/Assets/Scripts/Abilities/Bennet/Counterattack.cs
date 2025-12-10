@@ -29,6 +29,7 @@ namespace Abilities.Bennet
         private bool _animationPlaying;
 
         public event Action<IAbilityHandler> Finished;
+        public Interruptibility Interruptibility { get; }
 
         public Counterattack(
             ICoroutineRunner currentRoutine,
@@ -36,6 +37,8 @@ namespace Abilities.Bennet
         {
             _coroutineRunner = currentRoutine;
             _parts = abilityModel.Parts;
+            
+            Interruptibility = abilityModel.Interruptibility;
         }
 
         public void Play(Unit source, Unit target) 

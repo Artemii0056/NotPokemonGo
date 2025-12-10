@@ -31,7 +31,11 @@ namespace Abilities.Bennet
             _coroutineRunner = currentRoutine;
 
             _parts = abilityModel.Parts;
+            
+            Interruptibility = abilityModel.Interruptibility;
         }
+        
+        public Interruptibility Interruptibility { get; }
 
         public void Play(Unit source, Unit target)
         {

@@ -110,6 +110,8 @@ namespace Abilities
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
+            
+            source.RememberAbility(_abilityHandler);
         }
 
         public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)

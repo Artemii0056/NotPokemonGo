@@ -9,14 +9,7 @@ namespace Armaments
 {
     public class ArmamentMover : IArmamentMover
     {
-        private const float Epsilon = 0.5f;
-
-        private readonly ICoroutineRunner _coroutineRunner;
-
         public event Action<Armament, ArmamentMover> Reached;
-
-        public ArmamentMover(ICoroutineRunner coroutineRunner) =>
-            _coroutineRunner = coroutineRunner;
 
         public void Move(Armament armament, bool isReturn = false)
         {
@@ -24,21 +17,6 @@ namespace Armaments
                 PlayDirectFlight(armament);
             else
                 PlayArcFlight(armament);
-        }
-
-        private IEnumerator MoveCoroutine(Armament armament)
-        {
-            while (Vector3.Distance(armament.transform.position, armament.Target.transform.position) >=
-                   Epsilon) //TODO Distance
-            {
-                armament.transform.position =
-                    Vector3.MoveTowards(armament.transform.position, armament.Target.transform.position,
-                        Time.deltaTime * armament.delta);
-
-                yield return null;
-            }
-
-            Reached?.Invoke(armament, this);
         }
 
         private void PlayDirectFlight(Armament armament)

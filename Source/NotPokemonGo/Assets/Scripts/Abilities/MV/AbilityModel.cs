@@ -10,6 +10,7 @@ namespace Abilities.MV
             AbilityType = config.AbilityType;
             
            Parts = config.Parts;
+           Interruptibility = config.Interruptibility;
 
             _stats = new Dictionary<AbilityStatType, AbilityStatSetup>();
 
@@ -21,6 +22,7 @@ namespace Abilities.MV
 
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }
+        public Interruptibility Interruptibility { get;  }
         
         public List<AbilityPart> Parts { get; private set; }
         

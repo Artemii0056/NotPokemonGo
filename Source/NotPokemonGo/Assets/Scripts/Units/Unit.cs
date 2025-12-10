@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Abilities;
+using Abilities.Bennet;
 using Abilities.MV;
 using Characters.Configs;
 using Cinemachine;
@@ -47,6 +48,8 @@ namespace Units
         public event Action<float, float> HealthChanged;
 
         public event Action<Unit> Death;
+        
+        public IAbilityHandler AbilityHandler { get; private set; }
 
         
         public void Construct(
@@ -159,10 +162,16 @@ namespace Units
                 case StatType.Health:
                     HealthChanged?.Invoke(value, GetStat(StatType.MaxHealth));
                     break;
+                
                 case StatType.CurrentAgility:
                     AgilityChanged?.Invoke(value, GetStat(StatType.MaxAgility));
                     break;
             }
+        }
+
+        public void RememberAbility(IAbilityHandler activeAbilityHandlers)
+        {
+            AbilityHandler = activeAbilityHandlers;
         }
     }
 }

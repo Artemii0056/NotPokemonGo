@@ -1,4 +1,5 @@
 ﻿using System;
+using Abilities.Configs;
 using Units;
 
 namespace Abilities.Bennet
@@ -8,5 +9,6 @@ namespace Abilities.Bennet
         event Action<IAbilityHandler> Finished;
         void Play(Unit source, Unit target);
         void Stop();
+        Interruptibility Interruptibility { get;  }
     }
 }

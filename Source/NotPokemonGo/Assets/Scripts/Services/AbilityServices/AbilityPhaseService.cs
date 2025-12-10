@@ -25,7 +25,7 @@ namespace Services.AbilityServices
             _reactionService = reactionService;
         }
 
-        public void OnNext(AbilityPhase phase, Unit source, Unit target)
+        public void OnNext(AbilityPhase phase, Unit source, Unit target) // Тут переключить состояние на отражение у игрока? 
         {
             var setup = phase.CastamentSetup;
 
@@ -38,15 +38,15 @@ namespace Services.AbilityServices
             // if (_reactionService.TryReact(context))
             //     return;
 
+            if (phase.ArmamentSetup.HasSetupData)
+                _armamentApplicator.Apply(phase.ArmamentSetup, source,
+                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            
             // _castamentApplicator.Apply(setup, source,
             //     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.CastamentSetup.HasSetupData)
                 _castamentApplicator.Apply(phase.CastamentSetup, source, //Апликатор - сделать метод TryApply
-                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
-
-            if (phase.ArmamentSetup.HasSetupData)
-                _armamentApplicator.Apply(phase.ArmamentSetup, source,
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
         }
 

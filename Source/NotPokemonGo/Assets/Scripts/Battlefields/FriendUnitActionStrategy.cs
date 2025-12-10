@@ -19,7 +19,6 @@ namespace Battlefields
 
         private ISourceProvider _sourceProvider;
         private IAbilityProvider _abilityProvider;
-        private ITargetSelector _targetSelector;
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IInputReader _inputReader;
         private IRaycastService _raycastService;
@@ -47,7 +46,6 @@ namespace Battlefields
             _inputReader = inputReader;
             _abilityProvider = abilityProvider;
             _sourceProvider = sourceProvider;
-            _targetSelector = targetSelector;
             _abilityPanelPresenter = abilityPanelPresenter;
             _abilityService = abilityService;
         }

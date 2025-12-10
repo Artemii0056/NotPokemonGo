@@ -16,7 +16,6 @@ namespace Battlefields
         private readonly IBattleStateMachine _battleStateMachine;
 
         private ISourceProvider _sourceProvider;
-        private ITargetSelector _targetSelector;
         private IAbilityService _abilityService;
 
         public EnemyUnitActionStrategy(Battlefield battlefield, Unit source, IBattleStateMachine battleStateMachine)
@@ -33,7 +32,6 @@ namespace Battlefields
             IAbilityService abilityService
         )
         {
-            _targetSelector = targetSelector;
             _sourceProvider = sourceProvider;
             _abilityService = abilityService;
         }
@@ -50,7 +48,10 @@ namespace Battlefields
             _sourceProvider.Discard(); //Todo Сбрасываться должен в стейтмашине 
         }
 
-        private void Attack(List<Unit> targets)
+        private void Attack(List<Unit> targets) //Имеем несколько проблем. 1 - именно тут рандомится враг, хотя абилка может наносить атаку по разным таргетам.
+                                                //2 - Изменяет стейт. Этого тут не должно происходить. Только если "включить стейт ходьбы врага"
+                                                //3 - работает с абилити сервисом. Нужно эту логику разбить. Враг просто ходит - выбирает способность, которую применит и все, дальше уже логика способности
+                                                //4 -  
         {
             foreach (AbilityModel abilityModel in _source.AbilityModels)
             {

@@ -47,6 +47,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		public void Enter()
 		{
+			Debug.Log("Entering PlayerDodgeState");
+			
 			_dodgeView = _uiFactory.CreateDodgeView();
 			_dodgeView.Hide();
 			
@@ -57,6 +59,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		public void Exit()
 		{
+			Debug.Log("Exit");
+			
 			_units.Clear();
 
 			_dodgePresenter.Dodged -= OnDodged;
@@ -67,8 +71,11 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		private void OnDodged(Unit unit)
 		{
+			
+			Debug.Log("OnDodged");
 			if (_units.Contains(unit.UnitType) == false)
 			{
+				Debug.LogWarning("OnDodged Contains");
 				DodgeConfig dodgeConfig = _staticDataService.GetDodgeConfigByUnitType(unit.UnitType);
 
 				unit.ChangeStatValue(1, StatType.DodgeFlag);
