@@ -97,7 +97,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IArmamentApplicator, ArmamentApplicator>(Lifetime.Singleton);
             builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
             builder.Register<IQteService, QteService>(Lifetime.Singleton);
-            builder.Register<IDodgeService, DodgeService>(Lifetime.Singleton);
             builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);
             
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
