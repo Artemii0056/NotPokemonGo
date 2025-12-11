@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace ReactionSystems
 {
@@ -12,16 +11,10 @@ namespace ReactionSystems
 
         public bool TryReact(ReactionContext context)
         {
-            Debug.Log(_reactions.Count);
-            
             foreach (var reaction in _reactions)
             {
-                Debug.Log(reaction.GetType().Name + " In TryReact");
-                
                 if (reaction.CanReact(context))
                 {
-                    Debug.Log("CanReact...");
-
                     reaction.React(context);
                     return true;
                 }

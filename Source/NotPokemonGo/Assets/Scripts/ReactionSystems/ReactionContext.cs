@@ -15,16 +15,6 @@ namespace ReactionSystems
             Phase = phase;
         }
         
-        public ReactionContext(Unit source, Unit target, EffectInfo effectInfo)
-        {
-            Source = source;
-            Target = target;
-            EffectInfo = effectInfo;
-
-            Effect = null;
-            Phase = null;
-        }
-        
         public ReactionContext(Unit source, Unit target, Armament armament)
         {
             Source = source;
@@ -35,7 +25,6 @@ namespace ReactionSystems
         public Unit Source { get; }
         public Unit Target { get; }
         public EffectSetup Effect { get; }
-        public EffectInfo EffectInfo { get; }
         public AbilityPhase Phase { get; }
         public Armament Armament { get; }
     }

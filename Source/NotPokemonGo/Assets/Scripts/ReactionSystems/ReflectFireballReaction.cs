@@ -1,5 +1,6 @@
 ﻿using Armaments;
 using Stats;
+using UnityEngine;
 
 namespace ReactionSystems
 {
@@ -15,6 +16,8 @@ namespace ReactionSystems
 
         public void React(ReactionContext context)
         {
+            Debug.Log("Reflect fireball reaction");
+            
             _armamentApplicator.Apply(
                 setup: context.Armament.Setup,
                 ArmamentFlyingType.Direct,

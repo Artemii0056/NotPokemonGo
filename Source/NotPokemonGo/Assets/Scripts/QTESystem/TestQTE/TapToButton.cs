@@ -7,7 +7,7 @@ namespace QTESystem.TestQTE
     public class TapToButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
-        
+
         public event Action Click;
 
         private void OnEnable() => 

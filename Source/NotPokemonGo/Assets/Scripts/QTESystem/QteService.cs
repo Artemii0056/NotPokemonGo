@@ -16,7 +16,6 @@ namespace QTESystem
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IObjectResolver _objectResolver;
-        private readonly ISourceProvider _sourceProvider;
         private readonly ITimeService _timeService;
 
         public event Action <bool> Completed; 
@@ -25,30 +24,49 @@ namespace QTESystem
             IStaticDataService staticDataService, 
             ICoroutineRunner coroutineRunner, 
             IObjectResolver objectResolver, 
-            ISourceProvider sourceProvider, 
             ITimeService timeService)
         {
             _staticDataService = staticDataService;
             _coroutineRunner = coroutineRunner;
             _objectResolver = objectResolver;
-            _sourceProvider = sourceProvider;
             _timeService = timeService;
         }
-        
-        public void Start(QteType qteType)
+
+        public (QteButtonView,QtePhasePresenter)  StartSimple(QteType qteType, Unit target)
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
-            _coroutineRunner.StartCoroutine(StartQte(qteConfig));
+            QtePhaseSetup qteConfigQtePhaseSetup = qteConfig.QtePhaseSetups[0];
+            
+            QteButtonView view = Object.Instantiate(qteConfigQtePhaseSetup.QTEButtonView);
+                
+            view.Construct(target, _timeService);
+            
+            _objectResolver.Inject(view);
+            
+            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qteConfigQtePhaseSetup, view);
+            qtePhasePresenter.Enable();
+                
+            // Object.Destroy(view.gameObject);
+            // qtePhasePresenter.Disable();
+
+            return (view, qtePhasePresenter);
         }
 
-        private IEnumerator StartQte(QteConfig qteConfig)
+        public void Start(QteType qteType, Unit target)
+        {
+            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
+
+            _coroutineRunner.StartCoroutine(StartQte(qteConfig, target));
+        }
+
+        private IEnumerator StartQte(QteConfig qteConfig, Unit target)
         {
             foreach (QtePhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
             {
                 QteButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
                 
-                view.Construct(_sourceProvider.Source, _timeService);
+                view.Construct(target, _timeService);
                 _objectResolver.Inject(view);
                 QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view);
                 qtePhasePresenter.Enable();

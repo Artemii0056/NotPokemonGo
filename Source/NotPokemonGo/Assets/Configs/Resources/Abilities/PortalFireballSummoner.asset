@@ -23,6 +23,7 @@ MonoBehaviour:
         <ParticleSystem>k__BackingField: {fileID: 0}
         <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -45,12 +46,13 @@ MonoBehaviour:
         <ParticleSystem>k__BackingField: {fileID: 0}
         <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
-      QteType: 0
+      QteType: 8
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
@@ -65,12 +67,13 @@ MonoBehaviour:
         <ParticleSystem>k__BackingField: {fileID: 0}
         <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
-      QteType: 0
+      QteType: 8
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
@@ -85,12 +88,13 @@ MonoBehaviour:
         <ParticleSystem>k__BackingField: {fileID: 0}
         <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
-      QteType: 0
+      QteType: 8
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
@@ -104,3 +108,4 @@ MonoBehaviour:
     Value: 0
   - <StatsType>k__BackingField: 3
     Value: 1
+  <Interruptibility>k__BackingField: 0

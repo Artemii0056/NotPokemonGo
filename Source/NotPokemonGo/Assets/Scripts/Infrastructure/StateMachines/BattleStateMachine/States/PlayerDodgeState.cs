@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
 {
-	public class PlayerDodgeState : IState
+	public class PlayerDodgeState : IState //TODO DELETE
 	{
 		private readonly IBattleStateMachine _battleStateMachine;
 		private readonly IStaticDataService _staticDataService;
@@ -47,8 +47,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		public void Enter()
 		{
-			Debug.Log("Entering PlayerDodgeState");
-			
 			_dodgeView = _uiFactory.CreateDodgeView();
 			_dodgeView.Hide();
 			
@@ -59,8 +57,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		public void Exit()
 		{
-			Debug.Log("Exit");
-			
 			_units.Clear();
 
 			_dodgePresenter.Dodged -= OnDodged;
@@ -71,11 +67,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
 		private void OnDodged(Unit unit)
 		{
-			
-			Debug.Log("OnDodged");
 			if (_units.Contains(unit.UnitType) == false)
 			{
-				Debug.LogWarning("OnDodged Contains");
 				DodgeConfig dodgeConfig = _staticDataService.GetDodgeConfigByUnitType(unit.UnitType);
 
 				unit.ChangeStatValue(1, StatType.DodgeFlag);

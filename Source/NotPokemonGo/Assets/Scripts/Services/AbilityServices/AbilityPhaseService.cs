@@ -41,7 +41,7 @@ namespace Services.AbilityServices
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
 
             if (phase.CastamentSetup.HasSetupData)
-                _castamentApplicator.Apply(phase.CastamentSetup, source, //Апликатор - сделать метод TryApply
+                _castamentApplicator.Apply(phase.CastamentSetup, source, 
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
         }
     }

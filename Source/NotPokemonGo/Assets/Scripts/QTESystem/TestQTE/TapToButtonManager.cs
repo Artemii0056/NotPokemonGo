@@ -1,7 +1,6 @@
 ﻿using System;
 using Stats;
 using UI.QTE;
-using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,18 +23,14 @@ namespace QTESystem.TestQTE
         private float _currentTime = 0;
         private float _targetTime;
 
-        private Unit _unit;
-
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
 
         private void OnEnable() =>
             _tapToButton.Click += OnClick;
 
-        private void Start()
-        {
+        private void Start() => 
             _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
-        }
 
         private void OnDisable()
         {

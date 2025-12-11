@@ -131,7 +131,7 @@ namespace Abilities.Bennet
             _qteService.Completed += OnCompleted;
 
             SetTimeScaleForQte(qteType);
-            _qteService.Start(qteType);
+            _qteService.Start(qteType, _source);
 
             yield return new WaitUntil(() => completed);
 

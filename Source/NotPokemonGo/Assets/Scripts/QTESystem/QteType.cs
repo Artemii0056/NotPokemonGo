@@ -11,6 +11,7 @@ namespace QTESystem
         TapToButton = 5,
         SliderBack = 6,
         SliderForward = 7,
+        PressedButton = 8,
         //SliderPingPong = 6,
     }
 }
