@@ -2,7 +2,7 @@
 using System.Linq;
 using DodgeSystem;
 using Effects;
-using Services;
+using ReactionSystems;
 using Statuses;
 using Statuses.Services;
 using Units;
@@ -13,69 +13,73 @@ namespace Armaments
     public class ArmamentApplicator : IArmamentApplicator
     {
         private readonly IArmamentViewFactory _armamentViewFactory;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly IStatusFactory _statusFactory;
         private readonly IEffectResolver _effectResolver;
         private readonly IStatusResolver _statusResolver;
-        private readonly IDodgeService _dodgeService;
+        private readonly IReactionService _reactionService;
 
         public ArmamentApplicator(
             IArmamentViewFactory armamentViewFactory,
             IStatusFactory statusFactory,
             IEffectResolver effectResolver,
             IStatusResolver statusResolver,
-            IDodgeService dodgeService,
-            ICoroutineRunner coroutineRunner)
+            IReactionService reactionService)
         {
             _armamentViewFactory = armamentViewFactory;
             _statusFactory = statusFactory;
             _effectResolver = effectResolver;
             _statusResolver = statusResolver;
-            _dodgeService = dodgeService;
-            _coroutineRunner = coroutineRunner;
+            _reactionService = reactionService;
         }
 
-        public void Apply(ArmamentSetup setup, Unit source, params Unit[] targets)
+        public void Apply(ArmamentSetup setup, ArmamentFlyingType flyingType, Unit source, params Unit[] targets)
         {
             foreach (var target in targets)
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
-
+                
                 Armament armament =
                     _armamentViewFactory.Create(
                         effects,
-                        statuses,
+                        statuses, //TODO Есть сетап - это и 
                         source.abilityPos.position, //TODO Связать с абилити энкором
                         setup.ArmamentPrefab,
                         source,
-                        target); 
+                        target,
+                        setup); 
 
-                CreateMover(armament);
+                CreateMover(armament, flyingType);
             }
         }
 
-        public void Apply(Armament armament)
-        {
-            CreateMover(armament, true);
-        }
-
-        private void CreateMover(Armament armament, bool isReturn = false)
+        private void CreateMover(Armament armament, ArmamentFlyingType flyingType)
         {
             IArmamentMover mover = new ArmamentMover();
-            mover.Move(armament, isReturn);
+            mover.Move(armament, flyingType);
             mover.Reached += OnReached;
         }
 
         private void OnReached(Armament armament, IArmamentMover mover)
         {
-            Object.Destroy(armament);
             mover.Reached -= OnReached;
 
-            if (_dodgeService.CanDodge(armament.Target))
-                Apply(_dodgeService.Dodge(armament));
-            else
-                ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
+            var context = new ReactionContext(
+                source: armament.Source,
+                target: armament.Target,
+                armament);
+            
+            Object.Destroy(armament);
+
+            if (_reactionService.TryReact(context))
+                return;
+            
+            ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
+
+            // if (_dodgeService.CanDodge(armament.Target)) 
+            //     Apply(_dodgeService.Dodge(armament), armament.FlyingType);
+            // else
+            //     ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>

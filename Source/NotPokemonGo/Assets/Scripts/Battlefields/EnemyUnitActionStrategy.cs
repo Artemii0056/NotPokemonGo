@@ -67,7 +67,7 @@ namespace Battlefields
                     if (abilityModel.Cost > 0) 
                         _source.ResetAgility();
 
-                    _battleStateMachine.Enter<PlayerDodgeState>();
+                   // _battleStateMachine.Enter<PlayerDodgeState>();
                     break;
                 }
             }

@@ -66,8 +66,6 @@ namespace Abilities.Bennet
         public void Stop() => 
             _coroutineRunner.StopCoroutine(_currentRoutine);
 
-        
-
         private IEnumerator ExecuteAllParts()
         {
             for (int partIndex = 0; partIndex < _parts.Count; partIndex++)

@@ -11,12 +11,19 @@ namespace Armaments
     {
         public event Action<Armament, ArmamentMover> Reached;
 
-        public void Move(Armament armament, bool isReturn = false)
+        public void Move(Armament armament, ArmamentFlyingType type)
         {
-            if (isReturn)
-                PlayDirectFlight(armament);
-            else
-                PlayArcFlight(armament);
+            switch (type)
+            {
+                case ArmamentFlyingType.Arc:
+                    PlayArcFlight(armament);
+                    break;
+                case ArmamentFlyingType.Direct:
+                    PlayDirectFlight(armament);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         private void PlayDirectFlight(Armament armament)

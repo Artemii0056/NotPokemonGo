@@ -14,10 +14,11 @@ namespace Armaments
             Vector3 position, 
             Armament prefab,
             Unit source,
-            Unit target)
+            Unit target,
+            ArmamentSetup setup)
         {
             Armament armament = Object.Instantiate(prefab, position, Quaternion.identity);
-            armament.Initialize(effects,  statuses, source, target);
+            armament.Initialize(effects,  statuses, source, target, setup);
             return armament;
         }
     }

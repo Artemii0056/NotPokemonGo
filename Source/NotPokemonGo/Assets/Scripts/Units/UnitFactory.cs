@@ -26,7 +26,6 @@ namespace Units
         private readonly ICastamentApplicator _castamentApplicator;
         private readonly IArmamentApplicator _armamentApplicator;
         private readonly ITargetSelector _targetSelector;
-        private readonly IAbilityService _abilityService;
         private readonly IReactionService _reactionService;
 
         public UnitFactory(
@@ -47,10 +46,10 @@ namespace Units
             _castamentApplicator = castamentApplicator;
             _armamentApplicator = armamentApplicator;
             _targetSelector = targetSelector;
-            _abilityService = abilityService;
             _reactionService = reactionService;
             
-            _reactionService.Register(new CounterattackReaction(_abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+            _reactionService.Register(new ReflectFireballReaction(_armamentApplicator)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+            _reactionService.Register(new CounterattackReaction(abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)

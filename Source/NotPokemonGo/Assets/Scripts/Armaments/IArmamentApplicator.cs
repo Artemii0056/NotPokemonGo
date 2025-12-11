@@ -4,7 +4,6 @@ namespace Armaments
 {
 	public interface IArmamentApplicator
 	{
-		void Apply(ArmamentSetup setup, Unit source,params Unit[] targets);
-		void Apply(Armament armament);
+		void Apply(ArmamentSetup setup, ArmamentFlyingType flyingType, Unit source, params Unit[] targets);
 	}
 }

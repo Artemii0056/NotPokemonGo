@@ -28,7 +28,7 @@ namespace ReactionSystems
             AbilityModel ability = context.Target.AbilityModels
                 .Find(a => a.AbilityType == AbilityType.CounterAttack && a.IsReady());
 
-            if (ability != null) 
+            if (ability != null) //TODO Как будто этого он не должен делать 
                 _abilityService.HandleCounterAttack(context.Source,context.Target, ability);
         }
     }

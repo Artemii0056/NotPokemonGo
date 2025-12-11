@@ -2,9 +2,9 @@
 
 namespace Armaments
 {
-	public interface IArmamentMover //TODO Не используется? 
+	public interface IArmamentMover 
 	{
-		void Move(Armament armament, bool isReturn = false);
+		void Move(Armament armament, ArmamentFlyingType armamentFlyingType);
 		event Action<Armament, ArmamentMover>  Reached;
 	}
 }
