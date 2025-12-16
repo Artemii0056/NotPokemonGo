@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using DG.Tweening;
-using Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,9 +16,15 @@ namespace Armaments
                 case ArmamentFlyingType.Arc:
                     PlayArcFlight(armament);
                     break;
+
                 case ArmamentFlyingType.Direct:
                     PlayDirectFlight(armament);
                     break;
+
+                case ArmamentFlyingType.Laser:
+                    PlayLaserFlight(armament);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -29,7 +33,7 @@ namespace Armaments
         private void PlayDirectFlight(Armament armament)
         {
             float duration = 1f;
-            
+
             armament.transform.DOMove(armament.Target.transform.position, duration)
                 .SetEase(Ease.Linear)
                 .OnComplete(() => Reached?.Invoke(armament, this));
@@ -59,12 +63,26 @@ namespace Armaments
             Vector3[] path = { start, control, end };
 
             armament.transform.DOPath(path, duration, PathType.CatmullRom)
-                .SetDelay(0.25f) 
+                .SetDelay(0.25f)
                 .SetEase(Ease.InExpo)
                 .OnComplete(() =>
                 {
                     Reached?.Invoke(armament, this);
                 });
+        }
+
+        private void PlayLaserFlight(Armament armament)
+        {
+            float duration = .05f;
+            
+            DOTween.Sequence()
+                .Append(
+                    armament.transform
+                        .DOMove(armament.Target.transform.position, duration)
+                        .SetEase(Ease.Linear)
+                )
+                .AppendInterval(0.25f)
+                .OnComplete(() => Reached?.Invoke(armament, this));
         }
     }
 }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5844dfbe42fcbb14ab254d4cb1be3339, type: 3}
+  m_Name: DroneUnitConfig
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 5
+  <Prefab>k__BackingField: {fileID: 5494254139291904022, guid: 3ef9953169693704ca2a391a99cbf1d0, type: 3}
+  _stats:
+  - <StatsType>k__BackingField: 1
+    Value: 100
+  - <StatsType>k__BackingField: 2
+    Value: 60
+  - <StatsType>k__BackingField: 3
+    Value: 20
+  - <StatsType>k__BackingField: 4
+    Value: 15
+  - <StatsType>k__BackingField: 5
+    Value: 10
+  - <StatsType>k__BackingField: 6
+    Value: 3
+  - <StatsType>k__BackingField: 7
+    Value: 5
+  - <StatsType>k__BackingField: 20
+    Value: 3
+  - <StatsType>k__BackingField: 21
+    Value: 10
+  - <StatsType>k__BackingField: 22
+    Value: 1
+  - <StatsType>k__BackingField: 8
+    Value: 1
+  - <StatsType>k__BackingField: 9
+    Value: 0
+  _abilityConfigs:
+  - {fileID: 11400000, guid: d7676c4c7182d034286a1344ec09dbb8, type: 2}

@@ -7,8 +7,7 @@ namespace QTESystem
     [CreateAssetMenu(fileName = nameof(QteConfig), menuName = "Config/" + nameof(QteConfig))]
     public class QteConfig : ScriptableObject //Отрефакторить
     {
-       // public AbilityType AbilityType;
-       public QteType QteType;
+        public QteType QteType;
         public List<QtePhaseSetup> QtePhaseSetups;
         public QTECanvas QteCanvas;
     }

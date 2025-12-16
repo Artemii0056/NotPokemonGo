@@ -49,8 +49,6 @@ namespace Units.AnimationControllers
 
             _controller.Attack1Started += OnAttack;
 
-            //_controller.Finished += OnFinished;
-
             InitializeAnchors(_unit);
 
             _unit.HealthChanged += OnHealthChanged;
@@ -76,8 +74,6 @@ namespace Units.AnimationControllers
             _controller.Attack1Started -= OnAttack;
 
             _unit.HealthChanged -= OnHealthChanged;
-
-            //_controller.Finished -= OnFinished;
         }
 
         public void SetTarget(Unit target)
@@ -100,10 +96,13 @@ namespace Units.AnimationControllers
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
+                Debug.Log(anchor.spawnType);
+                
                 Transform point = anchor.Transforms[0];
 
                 ParticleSystem particleSystemPrefab =
                     Object.Instantiate(system, point.position, Quaternion.identity, point);
+                
                 particleSystemPrefab.Play();
                 _particles.Add(particleSystemPrefab);
             }

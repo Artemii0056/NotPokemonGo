@@ -4,5 +4,6 @@
     {
         Arc,
         Direct,
+        Laser
     }
 }

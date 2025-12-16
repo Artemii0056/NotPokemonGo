@@ -35,6 +35,8 @@ MonoBehaviour:
       ParticleSystemBySpawnType:
       - ParticleSpawnType: 1
         ParticleSystem: {fileID: 198968939792773440, guid: 92e2fa28d7cc2f540ae37a675e5cb4c3, type: 3}
+    <Interruptibility>k__BackingField: 1
+  - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []

@@ -46,9 +46,6 @@ namespace QTESystem
             
             QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qteConfigQtePhaseSetup, view);
             qtePhasePresenter.Enable();
-                
-            // Object.Destroy(view.gameObject);
-            // qtePhasePresenter.Disable();
 
             return (view, qtePhasePresenter);
         }

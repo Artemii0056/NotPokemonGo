@@ -36,7 +36,7 @@ namespace Units.AnimationControllers
         public void FlagAttack2() =>
             Attack2Started?.Invoke();
 
-        public void FlagFinishAnimation() =>
+        public void FlagFinishAnimation() => 
             Finished?.Invoke();
 
         public float GetAnimationLength()

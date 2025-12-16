@@ -89,16 +89,12 @@ namespace Units
                 stat.CurrentValueChanged -= OnStatValueChanged;
         }
         
-        public float GetStat(StatType statType)
-        {
-            return _stats[statType].CurrentValue;
-        }
+        public float GetStat(StatType statType) => 
+            _stats[statType].CurrentValue;
 
-        public void ChangeStatValue(float value, StatType statType)
-        {
+        public void ChangeStatValue(float value, StatType statType) => 
             _stats[statType].SetValue(value);
-        }
-        
+
         public void AddStatus(Status status)
         {
             StatusAdded?.Invoke(status);
@@ -126,10 +122,8 @@ namespace Units
             Ticked?.Invoke();
         }
 
-        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger)
-        {
+        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger) => 
             AnimatorTrigger = unitAnimatorTrigger;
-        }
 
         private void TickAbilities()
         {
@@ -169,9 +163,7 @@ namespace Units
             }
         }
 
-        public void RememberAbility(IAbilityHandler activeAbilityHandlers)
-        {
+        public void RememberAbility(IAbilityHandler activeAbilityHandlers) => 
             AbilityHandler = activeAbilityHandlers;
-        }
     }
 }
