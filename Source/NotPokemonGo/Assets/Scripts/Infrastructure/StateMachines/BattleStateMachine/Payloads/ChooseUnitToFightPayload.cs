@@ -1,7 +1,7 @@
 ﻿using LevelSetting;
 using UI;
 
-namespace Infrastructure.StateMachines.BattleStateMachine.States
+namespace Infrastructure.StateMachines.BattleStateMachine.Payloads
 {
     public class ChooseUnitToFightPayload
     {

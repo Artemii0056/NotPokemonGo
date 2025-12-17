@@ -1,7 +1,6 @@
-﻿using Infrastructure.StateMachines.GlobalStateMachine;
-using UI;
+﻿using UI;
 
-namespace Infrastructure.StateMachines
+namespace Infrastructure.StateMachines.BattleStateMachine.Payloads
 {
     public class ShowHeroPayload
     {

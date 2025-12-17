@@ -2,6 +2,7 @@
 using System.Linq;
 using Characters;
 using Characters.Configs;
+using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;

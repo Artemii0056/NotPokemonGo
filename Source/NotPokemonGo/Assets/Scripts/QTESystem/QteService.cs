@@ -18,12 +18,12 @@ namespace QTESystem
         private readonly IObjectResolver _objectResolver;
         private readonly ITimeService _timeService;
 
-        public event Action <bool> Completed; 
-        
+        public event Action<bool> Completed;
+
         public QteService(
-            IStaticDataService staticDataService, 
-            ICoroutineRunner coroutineRunner, 
-            IObjectResolver objectResolver, 
+            IStaticDataService staticDataService,
+            ICoroutineRunner coroutineRunner,
+            IObjectResolver objectResolver,
             ITimeService timeService)
         {
             _staticDataService = staticDataService;
@@ -32,19 +32,17 @@ namespace QTESystem
             _timeService = timeService;
         }
 
-        public (QteButtonView,QtePhasePresenter)  StartSimple(QteType qteType, Unit target)
+        public (QteButtonView, QtePhasePresenter) StartSimple(QteType qteType, Unit target)
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
-            QtePhaseSetup qteConfigQtePhaseSetup = qteConfig.QtePhaseSetups[0];
-            
-            QteButtonView view = Object.Instantiate(qteConfigQtePhaseSetup.QTEButtonView);
-                
+            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
+
             view.Construct(target, _timeService);
-            
+
             _objectResolver.Inject(view);
-            
-            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qteConfigQtePhaseSetup, view);
+
+            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(view);
             qtePhasePresenter.Enable();
 
             return (view, qtePhasePresenter);
@@ -59,26 +57,23 @@ namespace QTESystem
 
         private IEnumerator StartQte(QteConfig qteConfig, Unit target)
         {
-            foreach (QtePhaseSetup qtePhaseSetup in qteConfig.QtePhaseSetups)
-            {
-                QteButtonView view = GameObject.Instantiate(qtePhaseSetup.QTEButtonView);
-                
-                view.Construct(target, _timeService);
-                _objectResolver.Inject(view);
-                QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(qtePhaseSetup, view);
-                qtePhasePresenter.Enable();
-                
-                yield return new WaitWhile(qtePhasePresenter.IsActive);
-                Object.Destroy(view.gameObject);
-                qtePhasePresenter.Disable();
+            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
 
-                if (qtePhasePresenter.IsSuccess == false)
-                {
-                    Completed?.Invoke(false);
-                    yield break;
-                }
+            view.Construct(target, _timeService);
+            _objectResolver.Inject(view);
+            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(view);
+            qtePhasePresenter.Enable();
+
+            yield return new WaitWhile(qtePhasePresenter.IsActive);
+            Object.Destroy(view.gameObject);
+            qtePhasePresenter.Disable();
+
+            if (qtePhasePresenter.IsSuccess == false)
+            {
+                Completed?.Invoke(false);
+                yield break;
             }
-            
+
             Completed?.Invoke(true);
         }
     }
