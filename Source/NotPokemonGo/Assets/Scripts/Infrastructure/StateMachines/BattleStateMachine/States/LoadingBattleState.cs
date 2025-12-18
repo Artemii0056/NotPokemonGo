@@ -45,7 +45,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             
             _levelProgressService.Set(levelRuntimeDataPayload); //Надо дропнуть _levelProgressService
             
-            _sceneLoader.Load(Constants.AssetPath.MainMenuSceneName, EnterGlobalBattleState);
+            _sceneLoader.Load(Constants.AssetPath.GameplaySceneName, EnterGlobalBattleState);
         }
 
         private void EnterGlobalBattleState()
