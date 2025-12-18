@@ -45,8 +45,8 @@ namespace UI.DodgeUI
 		{
 			if (_raycastService.Raycast(out Unit unit))
 			{
-				if (_unit != null) 
-					_dodgeView.Show();
+				// if (_unit != null) 
+				// 	_dodgeView.Show();
 
 				if (unit.PlatoonType != PlatoonType.Heroes)
 					return;
@@ -55,8 +55,8 @@ namespace UI.DodgeUI
 			}
 			else
 			{
-				_dodgeView.Hide();
-				_unit = null;
+				// _dodgeView.Hide();
+				// _unit = null;
 			}
 		}
 
@@ -66,5 +66,12 @@ namespace UI.DodgeUI
 		Dodged?.Invoke(_unit);
 		}
 
+		public void Activate()
+		{
+		}
+
+		public void Deactivate()
+		{
+		}
 	}
 }

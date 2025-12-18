@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Characters;
 using Characters.Configs;
-using Infrastructure;
-using Infrastructure.MVP.Implementation;
 using Services.AssetManagement;
 using Services.StaticDataServices;
 using UI.DodgeUI;
