@@ -13,12 +13,4 @@ MonoBehaviour:
   m_Name: SliderForward
   m_EditorClassIdentifier: 
   QteType: 7
-  QtePhaseSetups:
-  - ClickCount: 0
-    Speed: 0
-    QTEButtonView: {fileID: 2406574434842242592, guid: 0a3f97ed5def14947ac98b89288794f8, type: 3}
-    Overlay: {fileID: 0}
-    TargetTime: 0
-    Offset: 0
-    TimeToNextTarget: 0
-  QteCanvas: {fileID: 0}
+  QteButtonView: {fileID: 2406574434842242592, guid: 0a3f97ed5def14947ac98b89288794f8, type: 3}

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Abilities.Bennet;
+using Abilities.Configs;
 using Abilities.Enemies;
 using Abilities.MV;
 using Battlefields;
@@ -9,7 +11,9 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using QTESystem;
 using Services;
 using Units;
+using Unity.VisualScripting;
 using UnityEngine;
+using Unit = Units.Unit;
 
 namespace Abilities
 {
@@ -107,6 +111,16 @@ namespace Abilities
                 case AbilityType.Default:
                     break;
 
+                case AbilityType.CounterAttack:
+                    break;
+                
+                case AbilityType.DroneBaseAttack:
+                    _abilityHandler = new DroneBaseAttack(abilityModel, _coroutineRunner);
+                    _abilityHandler.Play(source, target);
+                    _activeAbilityHandlers.Add(_abilityHandler);
+                    _abilityHandler.Finished += Continue;
+                    break;
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
@@ -128,15 +142,16 @@ namespace Abilities
 
         private void Continue(IAbilityHandler handler)
         {
+            _coroutineRunner.StartCoroutine(Continue2(handler));
+        }
+
+        private IEnumerator Continue2(IAbilityHandler handler)
+        {
             _activeAbilityHandlers.Remove(handler);
             handler.Finished -= Continue;
 
-            // if (_activeAbilityHandlers.Count > 0)
-            // {
-            //     foreach (var abilityHandler in _activeAbilityHandlers) //Не, бред какой то 
-            //         abilityHandler.Finished -= Continue;
-            // }
-
+            yield return new WaitForSeconds(0.5f);
+            
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }

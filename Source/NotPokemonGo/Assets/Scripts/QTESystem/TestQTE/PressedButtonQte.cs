@@ -8,7 +8,7 @@ namespace QTESystem.TestQTE
     public class PressedButtonQte : QteButtonView
     {
         [SerializeField] private ButtonPointerUp _buttonPointerUp;
-        
+
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
 
@@ -25,9 +25,9 @@ namespace QTESystem.TestQTE
         }
 
         private void OnPointerUp() => 
-            Unit.ChangeStatValue(1, StatType.QteDamageModifier);
+            Unit.ChangeStatValue(0, StatType.DodgeFlag);
 
         private void OnPointerDown() => 
-            Unit.ChangeStatValue(0, StatType.QteDamageModifier);
+            Unit.ChangeStatValue(1, StatType.DodgeFlag);
     }
 }

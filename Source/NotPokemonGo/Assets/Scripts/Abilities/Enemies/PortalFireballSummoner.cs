@@ -17,23 +17,23 @@ namespace Abilities.Enemies
     public class PortalFireballSummoner : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IQteService _qteService;
+
+        private readonly List<AbilityPart> _parts;
 
         private UnitAnimatorTrigger _animatorTrigger;
         private UnitAnimatorController _animatorController;
 
         private bool _animationPlaying;
 
-        private readonly List<AbilityPart> _parts;
-        private Unit _source;
         private Unit _target;
 
         private Coroutine _currentRoutine;
         private Coroutine _attackRoutine;
-        private IQteService _qteService;
 
         public PortalFireballSummoner(
             ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel, 
+            AbilityModel abilityModel,
             IQteService qteService)
         {
             _coroutineRunner = coroutineRunner;
@@ -49,7 +49,6 @@ namespace Abilities.Enemies
         public void Play(Unit source, Unit target)
         {
             _target = target;
-            _source = source;
 
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.UnitAnimatorController;
@@ -67,7 +66,7 @@ namespace Abilities.Enemies
             for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
             {
                 var part = _parts[partIndex];
-
+                
                 for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
                 {
                     var phase = part.AbilityPhases[phaseIndex];
@@ -82,40 +81,31 @@ namespace Abilities.Enemies
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
             (QteButtonView, QtePhasePresenter) valueTuple = (null, null);
-            
+
             _animatorController.Play(phase.AnimationCashName);
             _animatorTrigger.SetPhase(phase);
             _animatorTrigger.SetTarget(_target);
 
             if (phase.QteType != QteType.Unknown)
-                valueTuple = _qteService.StartSimple(phase.QteType, _source);
+                valueTuple = _qteService.StartSimple(phase.QteType, _target);
 
             switch (phase.PhaseType)
             {
                 default:
-                    yield return WaitForAnimation();
+                    yield return WaitForAnimation(); //Нужно получить от армамент апликатора инфу об окончании полета армамента? 
                     break;
             }
 
-            yield return new WaitForSeconds(3f);
-            
+           yield return new WaitForSeconds(0.3f);
+           
             if (phase.QteType != QteType.Unknown)
             {
                 Object.Destroy(valueTuple.Item1.gameObject);
                 valueTuple.Item2.Disable();
             }
             
-            //yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.3f);
         }
-        
-        //QteConfig qteConfig = _staticDataService.GetQteConfig(qteType); //TODO тут не забыть подрубить
-        
-        // private (QteButtonView, QtePhasePresenter) RunQtePhase(QteType qteType)
-        // {
-        //    (QteButtonView, QtePhasePresenter) value = _qteService.StartSimple(qteType, _source);
-        //
-        //    return value;
-        // }
 
         private void FinishAbility()
         {
@@ -132,11 +122,11 @@ namespace Abilities.Enemies
                 FinishAnimation();
 
             _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
+            yield return new WaitWhile(() => _animationPlaying); 
             _animatorController.Finished -= OnFinished;
         }
 
-        private void FinishAnimation() =>
+        private void FinishAnimation() => 
             _animationPlaying = false;
     }
 }

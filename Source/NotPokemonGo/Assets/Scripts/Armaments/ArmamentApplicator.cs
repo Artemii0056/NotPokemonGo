@@ -37,7 +37,7 @@ namespace Armaments
             {
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
-                
+
                 Armament armament =
                     _armamentViewFactory.Create(
                         effects,
@@ -46,7 +46,7 @@ namespace Armaments
                         setup.ArmamentPrefab,
                         source,
                         target,
-                        setup); 
+                        setup);
 
                 CreateMover(armament, flyingType);
             }
@@ -67,18 +67,13 @@ namespace Armaments
                 source: armament.Source,
                 target: armament.Target,
                 armament);
-            
-            Object.Destroy(armament);
+
+            Object.Destroy(armament.gameObject);
 
             if (_reactionService.TryReact(context))
                 return;
-            
-            ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
 
-            // if (_dodgeService.CanDodge(armament.Target)) 
-            //     Apply(_dodgeService.Dodge(armament), armament.FlyingType);
-            // else
-            //     ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
+            ApplyEffectsOnTarget(armament.Source, armament.Target, armament.Statuses, armament.Effects);
         }
 
         private List<EffectInfo> CreateEffects(List<EffectSetup> effects) =>

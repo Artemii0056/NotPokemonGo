@@ -114,7 +114,6 @@ namespace Abilities.Bennet
         {
             float liftDelay = 0.1f;
             int jumpPower = 1;
-//            Debug.Log(_animatorController.GetAnimationName());
 
             yield return new WaitForSeconds(liftDelay);
 

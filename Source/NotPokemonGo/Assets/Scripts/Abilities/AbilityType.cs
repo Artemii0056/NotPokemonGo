@@ -13,6 +13,7 @@
         StrikeFromAbove,
         BaseAttack,
         CounterAttack,
+        DroneBaseAttack,
         Default
     }
 }

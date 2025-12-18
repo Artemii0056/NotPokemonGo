@@ -15,9 +15,9 @@ MonoBehaviour:
   <MapType>k__BackingField: 0
   _levelParts:
   - _units:
+    - {fileID: 11400000, guid: 732f6b0626218394a97bf373512bb6d7, type: 2}
     - {fileID: 11400000, guid: 974f95c441ac9b84fb432595d794a57a, type: 2}
-    - {fileID: 11400000, guid: 974f95c441ac9b84fb432595d794a57a, type: 2}
-    - {fileID: 11400000, guid: 974f95c441ac9b84fb432595d794a57a, type: 2}
+    - {fileID: 11400000, guid: 732f6b0626218394a97bf373512bb6d7, type: 2}
   - _units:
     - {fileID: 11400000, guid: 0393ed76e9239524da50c2febf12fdb9, type: 2}
   - _units:

@@ -13,12 +13,4 @@ MonoBehaviour:
   m_Name: SliderBack
   m_EditorClassIdentifier: 
   QteType: 6
-  QtePhaseSetups:
-  - ClickCount: 0
-    Speed: 0
-    QTEButtonView: {fileID: 8395745742862986506, guid: 24f4603151b2c474ab9f373f582467cd, type: 3}
-    Overlay: {fileID: 0}
-    TargetTime: 1
-    Offset: 0
-    TimeToNextTarget: 0
-  QteCanvas: {fileID: 0}
+  QteButtonView: {fileID: 8395745742862986506, guid: 24f4603151b2c474ab9f373f582467cd, type: 3}

@@ -7,5 +7,6 @@
         Swordsman = 2,
         Archer = 3,
         Bennet = 4,
+        Drone = 5,
     }
 }

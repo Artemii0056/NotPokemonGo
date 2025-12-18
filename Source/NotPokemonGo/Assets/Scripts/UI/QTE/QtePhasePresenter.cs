@@ -1,6 +1,4 @@
-﻿using Abilities;
-using QTESystem;
-using VContainer;
+﻿using VContainer;
 
 namespace UI.QTE
 {
@@ -10,13 +8,8 @@ namespace UI.QTE
         private readonly QteButtonView _qteButtonView;
         private bool _isActive;
 
-        public QtePhasePresenter(QtePhaseSetup qtePhaseSetup, QteButtonView qteButtonView)
-        {
+        public QtePhasePresenter(QteButtonView qteButtonView) => 
             _qteButtonView = qteButtonView;
-            QtePhaseSetup = qtePhaseSetup;
-        }
-
-        public QtePhaseSetup QtePhaseSetup { get; }
 
         public bool IsSuccess { get; private set; }
 
@@ -48,7 +41,6 @@ namespace UI.QTE
         private void OnSuccessed(QteButtonView qteButtonView)
         {
             qteButtonView.Successed -= OnSuccessed;
-            //  Debug.Log("ура");
             _isActive = false;
             IsSuccess = true;
         }

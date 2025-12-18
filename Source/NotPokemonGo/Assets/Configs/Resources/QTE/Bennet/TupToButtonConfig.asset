@@ -13,13 +13,4 @@ MonoBehaviour:
   m_Name: TupToButtonConfig
   m_EditorClassIdentifier: 
   QteType: 5
-  QtePhaseSetups:
-  - QTEPhaseType: 0
-    ClickCount: 5
-    Speed: 0
-    QTEButtonView: {fileID: 3919748202708329813, guid: 3190df85a54871b4eac6e7eae38ec099, type: 3}
-    Overlay: {fileID: 0}
-    TargetTime: 3
-    Offset: 0
-    TimeToNextTarget: 0
-  QteCanvas: {fileID: 8198002933347961941, guid: 47d21c52685d7b74c899d4d7e1c0fdc2, type: 3}
+  QteButtonView: {fileID: 3919748202708329813, guid: 3190df85a54871b4eac6e7eae38ec099, type: 3}
