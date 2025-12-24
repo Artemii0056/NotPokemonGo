@@ -32,7 +32,7 @@ namespace QTESystem
             _timeService = timeService;
         }
 
-        public (QteButtonView, QtePhasePresenter) StartSimple(QteType qteType, Unit target)
+        public (QteButtonView, QtePhasePresenter) PlaySimple(QteType qteType, Unit target)
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
@@ -52,10 +52,10 @@ namespace QTESystem
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
-            _coroutineRunner.StartCoroutine(StartQte(qteConfig, target));
+            _coroutineRunner.StartCoroutine(PlayQte(qteConfig, target));
         }
 
-        private IEnumerator StartQte(QteConfig qteConfig, Unit target)
+        private IEnumerator PlayQte(QteConfig qteConfig, Unit target)
         {
             QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
 

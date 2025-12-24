@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Armaments
 {
-    public class ArmamentApplicator : IArmamentApplicator
+    public class ArmamentApplicator : IArmamentApplicator //TODO Не должен следить за жизненным циклом армамента. перенести ответственность в класс обработчик обилки? 
     {
         private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IStatusFactory _statusFactory;
@@ -31,7 +31,7 @@ namespace Armaments
             _reactionService = reactionService;
         }
 
-        public void Apply(ArmamentSetup setup, ArmamentFlyingType flyingType, Unit source, params Unit[] targets)
+        public void Apply(ArmamentSetup setup, ArmamentFlyingType flyingType, Unit source, params Unit[] targets) //а че тут флаинг тайп делает? Надо из сетапа брать
         {
             foreach (var target in targets)
             {
@@ -50,6 +50,24 @@ namespace Armaments
 
                 CreateMover(armament, flyingType);
             }
+        }
+
+        public Armament Apply(ArmamentSetup setup, ArmamentFlyingType flyingType, Unit source, Unit target)
+        {
+                List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
+                List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
+
+                Armament armament =
+                    _armamentViewFactory.Create(
+                        effects,
+                        statuses, //TODO Есть сетап - это и 
+                        source.abilityPos.position, //TODO Связать с абилити энкором
+                        setup.ArmamentPrefab,
+                        source,
+                        target,
+                        setup);
+
+                return armament;
         }
 
         private void CreateMover(Armament armament, ArmamentFlyingType flyingType)

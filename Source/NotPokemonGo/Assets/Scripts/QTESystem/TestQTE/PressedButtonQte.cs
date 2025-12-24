@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace QTESystem.TestQTE
 {
-    public class PressedButtonQte : QteButtonView
+    public class PressedButtonQte : QteButtonView //TODO Not Used
     {
         [SerializeField] private ButtonPointerUp _buttonPointerUp;
 

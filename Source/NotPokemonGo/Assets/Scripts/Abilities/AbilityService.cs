@@ -5,6 +5,7 @@ using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.Enemies;
 using Abilities.MV;
+using Armaments;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
@@ -24,6 +25,7 @@ namespace Abilities
         private readonly ISourceProvider _sourceProvider;
         private readonly IQteService _qteService;
         private readonly ITargetSelector _targetSelector;
+        private readonly IArmamentApplicator armamentApplicator;
 
         private Battlefield _battlefield;
 
@@ -32,7 +34,7 @@ namespace Abilities
         private Counterattack _counterattack;
 
         private IAbilityHandler _abilityHandler;
-        
+
         public event Action Finished;
 
         public AbilityService(
@@ -55,14 +57,14 @@ namespace Abilities
             _battlefield = battlefield;
         }
 
-        public void Handle(Unit source, Unit target, AbilityModel abilityModel) 
+        public void Handle(Unit source, Unit target, AbilityModel abilityModel)
         {
             AbilityType abilityType = abilityModel.AbilityType;
 
             switch (abilityType)
             {
                 case AbilityType.FireBall:
-                    _abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel,_qteService );
+                    _abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, armamentApplicator);
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -85,7 +87,7 @@ namespace Abilities
                     break;
                 case AbilityType.BaseAbility:
                     break;
-                
+
                 case AbilityType.EngineeringSeries:
                     _abilityHandler =
                         new EngineeringSeriesAbility(abilityModel, _coroutineRunner, _qteService);
@@ -113,18 +115,18 @@ namespace Abilities
 
                 case AbilityType.CounterAttack:
                     break;
-                
+
                 case AbilityType.DroneBaseAttack:
                     _abilityHandler = new DroneBaseAttack(abilityModel, _coroutineRunner);
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
-            
+
             source.RememberAbility(_abilityHandler);
         }
 
@@ -132,11 +134,11 @@ namespace Abilities
         {
             _abilityHandler.Stop();
             _abilityHandler.Finished -= Continue;
-            
+
             _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
             _activeAbilityHandlers.Add(_abilityHandler);
 
-            _abilityHandler.Play(source, target); 
+            _abilityHandler.Play(source, target);
             _abilityHandler.Finished += Continue;
         }
 
@@ -151,7 +153,7 @@ namespace Abilities
             handler.Finished -= Continue;
 
             yield return new WaitForSeconds(0.5f);
-            
+
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }

@@ -8,6 +8,7 @@ namespace Armaments
     public class ArmamentMover : IArmamentMover
     {
         public event Action<Armament, ArmamentMover> Reached;
+        public event Action Launched; 
 
         public void Move(Armament armament, ArmamentFlyingType type)
         {
@@ -64,6 +65,7 @@ namespace Armaments
 
             armament.transform.DOPath(path, duration, PathType.CatmullRom)
                 .SetDelay(0.25f)
+                .OnStart(() => Launched?.Invoke())
                 .SetEase(Ease.InExpo)
                 .OnComplete(() =>
                 {

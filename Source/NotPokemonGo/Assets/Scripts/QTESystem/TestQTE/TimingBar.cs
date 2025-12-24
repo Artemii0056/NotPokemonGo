@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using QTESystem.TestQTE;
 using UnityEngine;
@@ -5,141 +6,101 @@ using UnityEngine.UI;
 
 public class TimingBar : MonoBehaviour
 {
-   [Header("References")]
-    [SerializeField] private RectTransform bar;
-    [SerializeField] private RectTransform cursor;
+    [Header("References")] 
+    [SerializeField] private RectTransform _cursor;
 
-    [SerializeField] private Image failLeft;
-    [SerializeField] private Image okZone;
-    [SerializeField] private Image perfectZone;
-    [SerializeField] private Image failRight;
+    [SerializeField] private RectTransform _bar;
 
-    [Header("Difficulty")]
-    [SerializeField] private QTEDifficulty difficulty;
+    [SerializeField] private Image _okZoneImage;
+    [SerializeField] private Image _perfectZoneImage;
 
-    [Header("Input")]
-    [SerializeField] private KeyCode inputKey = KeyCode.Space;
+    private Tween _tween;
+    private float _timer;
 
-    private Tween cursorTween;
-    private float barWidth;
+    [SerializeField] private QteDifficulty Difficulty;
 
-    private float perfectMin;
-    private float perfectMax;
-    private float okMin;
-    private float okMax;
+    public Action Fail;
+    public Action Ok;
+    public Action Perfect;
 
-    private bool active;
-
-    private void Start()
+    public void Play()
     {
-        barWidth = bar.rect.width;
-        SetupZones();
-        StartQTE();
+        _cursor.gameObject.SetActive(true);
+        SetCursor(0);
+        StartQte();
     }
 
-    private void Update()
+    private void StartQte()
     {
-        if (!active) return;
+        _timer = 0f;
 
-        if (Input.GetKeyDown(inputKey))
+        _tween?.Kill();
+        _tween = DOTween.To(
+            () => _timer,
+            SetCursor,
+            1f,
+            Difficulty.duration
+        ).SetEase(Ease.Linear);
+    }
+
+    private void StopQte() =>
+        _tween?.Kill();
+
+    private void SetCursor(float value)
+    {
+        _timer = value;
+
+        float difficultyDuration = Difficulty.duration / 2;
+
+        _cursor.anchorMin = new Vector2(_timer, difficultyDuration);
+        _cursor.anchorMax = new Vector2(_timer, difficultyDuration);
+    }
+
+    public void Evaluate()
+    {
+        StopQte();
+
+        if (_timer >= Difficulty.PerfectStart && _timer <= Difficulty.PerfectEnd)
         {
-            Evaluate();
+            Perfect?.Invoke();
+            return;
         }
-    }
 
-    // ---------------------------
-    // QTE LOGIC
-    // ---------------------------
-
-    public void StartQTE()
-    {
-        active = true;
-
-        float left = -barWidth / 2f;
-        float right = barWidth / 2f;
-
-        cursor.anchoredPosition = new Vector2(left, 0);
-
-        cursorTween?.Kill();
-        cursorTween = cursor
-            .DOAnchorPosX(right, difficulty.duration)
-            .SetEase(Ease.Linear)
-            .SetLoops(difficulty.pingPong ? -1 : 1, LoopType.Yoyo);
-    }
-
-    public void StopQTE()
-    {
-        active = false;
-        cursorTween?.Kill();
-    }
-
-    private void Evaluate()
-    {
-        StopQTE();
-
-        float pos = GetNormalizedCursorPosition();
-
-        if (pos >= perfectMin && pos <= perfectMax)
+        if (_timer >= Difficulty.OkStart && _timer <= Difficulty.OkEnd)
         {
-            Debug.Log("⭐ PERFECT");
+            Ok?.Invoke();
+            return;
         }
-        else if (pos >= okMin && pos <= okMax)
-        {
-            Debug.Log("✔ OK");
-        }
-        else
-        {
-            Debug.Log("❌ FAIL");
-        }
+
+        Fail?.Invoke();
     }
 
-    // ---------------------------
-    // ZONES
-    // ---------------------------
+    private void OnDisable()
+    {
+        _tween?.Kill();
+    }
+
+    private void OnValidate()
+    {
+        if (_okZoneImage != null && _perfectZoneImage != null)
+            SetupZones();
+
+        if (_cursor != null)
+            SetCursor(_timer);
+    }
 
     private void SetupZones()
     {
-        float perfectWidth = barWidth * difficulty.perfectSize;
-        float okWidth = barWidth * difficulty.okSize;
-
-        // PERFECT
-        perfectZone.rectTransform.sizeDelta =
-            new Vector2(perfectWidth, bar.rect.height);
-
-        // OK
-        okZone.rectTransform.sizeDelta =
-            new Vector2(okWidth, bar.rect.height);
-
-        // FAIL
-        float failWidth = (barWidth - okWidth) / 2f;
-        failLeft.rectTransform.sizeDelta =
-            new Vector2(failWidth, bar.rect.height);
-        failRight.rectTransform.sizeDelta =
-            new Vector2(failWidth, bar.rect.height);
-
-        // Positions
-        perfectZone.rectTransform.anchoredPosition = Vector2.zero;
-        okZone.rectTransform.anchoredPosition = Vector2.zero;
-
-        failLeft.rectTransform.anchoredPosition =
-            new Vector2(-barWidth / 2f + failWidth / 2f, 0);
-        failRight.rectTransform.anchoredPosition =
-            new Vector2(barWidth / 2f - failWidth / 2f, 0);
-
-        // Normalized windows
-        float perfectHalf = difficulty.perfectSize / 2f;
-        float okHalf = difficulty.okSize / 2f;
-
-        perfectMin = 0.5f - perfectHalf;
-        perfectMax = 0.5f + perfectHalf;
-
-        okMin = 0.5f - okHalf;
-        okMax = 0.5f + okHalf;
+        SetZone(_okZoneImage.rectTransform, Difficulty.OkStart, Difficulty.OkEnd);
+        SetZone(_perfectZoneImage.rectTransform, Difficulty.PerfectStart, Difficulty.PerfectEnd);
     }
 
-    private float GetNormalizedCursorPosition()
+    private void SetZone(RectTransform zone, float start, float end)
     {
-        float x = cursor.anchoredPosition.x;
-        return Mathf.InverseLerp(-barWidth / 2f, barWidth / 2f, x);
+        zone.SetParent(_bar, false);
+        zone.anchorMin = new Vector2(start, 0f);
+        zone.anchorMax = new Vector2(end, 1f);
+        zone.offsetMin = Vector2.zero;
+        zone.offsetMax = Vector2.zero;
     }
 }

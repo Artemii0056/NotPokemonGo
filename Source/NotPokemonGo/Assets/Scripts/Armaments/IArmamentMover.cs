@@ -6,5 +6,6 @@ namespace Armaments
 	{
 		void Move(Armament armament, ArmamentFlyingType armamentFlyingType);
 		event Action<Armament, ArmamentMover>  Reached;
+		event Action Launched;
 	}
 }

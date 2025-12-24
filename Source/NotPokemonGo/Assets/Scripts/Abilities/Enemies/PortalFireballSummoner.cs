@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
+using Armaments;
 using QTESystem;
 using Services;
 using UI.QTE;
@@ -18,6 +19,7 @@ namespace Abilities.Enemies
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IQteService _qteService;
+        private readonly IArmamentApplicator _armamentApplicator;
 
         private readonly List<AbilityPart> _parts;
 
@@ -31,13 +33,18 @@ namespace Abilities.Enemies
         private Coroutine _currentRoutine;
         private Coroutine _attackRoutine;
 
+        private AbilityPhase _currentPhase;
+        private Coroutine _abilityCoroutine;
+
         public PortalFireballSummoner(
             ICoroutineRunner coroutineRunner,
             AbilityModel abilityModel,
-            IQteService qteService)
+            IQteService qteService, 
+            IArmamentApplicator armamentApplicator)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
+            _armamentApplicator = armamentApplicator;
             Interruptibility = abilityModel.Interruptibility;
             _parts = abilityModel.Parts;
         }
@@ -52,27 +59,20 @@ namespace Abilities.Enemies
 
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.UnitAnimatorController;
+            _animatorController.Attack1Started += OnAttackStarted;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
-        public void Stop()
-        {
+        public void Stop() =>
             _coroutineRunner.StopCoroutine(_currentRoutine);
-        }
 
         private IEnumerator ExecuteAllParts()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            foreach (var part in _parts)
             {
-                var part = _parts[partIndex];
-                
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
-                {
-                    var phase = part.AbilityPhases[phaseIndex];
-
+                foreach (var phase in part.AbilityPhases)
                     yield return ExecutePhase(phase);
-                }
             }
 
             FinishAbility();
@@ -80,31 +80,18 @@ namespace Abilities.Enemies
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
-            (QteButtonView, QtePhasePresenter) valueTuple = (null, null);
+            _currentPhase = phase;
 
             _animatorController.Play(phase.AnimationCashName);
             _animatorTrigger.SetPhase(phase);
             _animatorTrigger.SetTarget(_target);
 
-            if (phase.QteType != QteType.Unknown)
-                valueTuple = _qteService.StartSimple(phase.QteType, _target);
-
             switch (phase.PhaseType)
             {
                 default:
-                    yield return WaitForAnimation(); //Нужно получить от армамент апликатора инфу об окончании полета армамента? 
+                    yield return WaitForAnimation();
                     break;
             }
-
-           yield return new WaitForSeconds(0.3f);
-           
-            if (phase.QteType != QteType.Unknown)
-            {
-                Object.Destroy(valueTuple.Item1.gameObject);
-                valueTuple.Item2.Disable();
-            }
-            
-            yield return new WaitForSeconds(0.3f);
         }
 
         private void FinishAbility()
@@ -122,11 +109,39 @@ namespace Abilities.Enemies
                 FinishAnimation();
 
             _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying); 
+            yield return new WaitWhile(() => _animationPlaying);
             _animatorController.Finished -= OnFinished;
         }
 
-        private void FinishAnimation() => 
+        private void OnAttackStarted()
+        {
+            
+            // Debug.Log("OnAttackStarted");
+            //
+            // if (_coroutine != null)
+            //     _coroutineRunner.StopCoroutine(_currentRoutine);
+            //
+            // _coroutine = _coroutineRunner.StartCoroutine(ExecuteAttack()); //Трабла в этой корутине
+        }
+
+        private IEnumerator ExecuteAttack() //попробовать проще и без корутины? Получить от мувера событие, когда начался полет? 
+        {
+            yield return new WaitForSeconds(0.25f); //TODO вот тут попробовать получить данные о задержке у мувера.
+            (QteButtonView, QtePhasePresenter) valueTuple = _qteService.PlaySimple(_currentPhase.QteType, _target);
+            //Дождаться, пока фаербол долетит? 
+
+           // yield return WaitForAnimation(); //задержка нужна для анимации
+
+           yield return new WaitUntil(() => _animationPlaying);
+           
+            if (_currentPhase.QteType != QteType.Unknown)
+            {
+                Object.Destroy(valueTuple.Item1.gameObject);
+                valueTuple.Item2.Disable();
+            }
+        }
+
+        private void FinishAnimation() =>
             _animationPlaying = false;
     }
 }
