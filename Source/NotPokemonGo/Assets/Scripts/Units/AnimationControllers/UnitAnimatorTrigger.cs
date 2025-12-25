@@ -14,7 +14,7 @@ namespace Units.AnimationControllers
 {
     public class UnitAnimatorTrigger : IDisposable
     {
-        private AbilityPhaseService _abilityPhaseService;
+        public AbilityPhaseService AbilityPhaseService { get; }
 
         private UnitAnimatorController _controller;
         private Unit _unit;
@@ -31,7 +31,6 @@ namespace Units.AnimationControllers
             Unit unit,
             UnitAnimatorController controller,
             ICastamentApplicator castamentApplicator,
-            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
             IReactionService reactionService
             )
@@ -41,8 +40,8 @@ namespace Units.AnimationControllers
 
             _particles = new List<ParticleSystem>();
 
-            _abilityPhaseService =
-                new AbilityPhaseService(castamentApplicator, armamentApplicator, targetSelector, reactionService);
+            AbilityPhaseService =
+                new AbilityPhaseService(castamentApplicator, targetSelector, reactionService);
 
             _controller.ParticleSystem1Started += OnParticleSystem1Started; //Отдельный класс с реакцией на партикды
             _controller.ParticleSystem2Started += OnParticleSystem2Started;
@@ -96,8 +95,6 @@ namespace Units.AnimationControllers
 
             if (_anchors.TryGetValue(type, out AbilityAnchor anchor))
             {
-                Debug.Log(anchor.spawnType);
-                
                 Transform point = anchor.Transforms[0];
 
                 ParticleSystem particleSystemPrefab =
@@ -128,7 +125,7 @@ namespace Units.AnimationControllers
 
         private void OnAttack()
         {
-            _abilityPhaseService.OnNext(_phase, _unit, _currentTarget);
+            AbilityPhaseService.OnNext(_phase, _unit, _currentTarget);
         }
 
         public void ClearParticles()

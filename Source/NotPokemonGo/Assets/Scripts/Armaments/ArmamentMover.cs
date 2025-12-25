@@ -7,12 +7,17 @@ namespace Armaments
 {
     public class ArmamentMover : IArmamentMover
     {
-        public event Action<Armament, ArmamentMover> Reached;
-        public event Action Launched; 
-
-        public void Move(Armament armament, ArmamentFlyingType type)
+        public Armament Armament { get; private set; }
+        public float Duration { get; private set; }
+        
+        public event Action<IArmamentMover> Launched;
+        public event Action<IArmamentMover> Reached;
+        
+        public void Move(Armament armament)
         {
-            switch (type)
+            Armament = armament;
+            
+            switch (armament.FlyingType)
             {
                 case ArmamentFlyingType.Arc:
                     PlayArcFlight(armament);
@@ -25,24 +30,26 @@ namespace Armaments
                 case ArmamentFlyingType.Laser:
                     PlayLaserFlight(armament);
                     break;
-
+                
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         private void PlayDirectFlight(Armament armament)
         {
-            float duration = 1f;
+            float duration = 1f; //TODO В конфиг
+            Duration = duration;
 
             armament.transform.DOMove(armament.Target.transform.position, duration)
                 .SetEase(Ease.Linear)
-                .OnComplete(() => Reached?.Invoke(armament, this));
+                .OnComplete(() => Reached?.Invoke(this));
         }
 
         private void PlayArcFlight(Armament armament)
         {
             float duration = 1f;
+            Duration = duration;
             float arcWidth = 3f;
             float arcHeight = 2f;
 
@@ -63,19 +70,20 @@ namespace Armaments
 
             Vector3[] path = { start, control, end };
 
-            armament.transform.DOPath(path, duration, PathType.CatmullRom)
-                .SetDelay(0.25f)
-                .OnStart(() => Launched?.Invoke())
+           armament.transform.DOPath(path, duration, PathType.CatmullRom)
+                .SetDelay(0.25f)//TODO В конфиг
+                .OnStart(() => Launched?.Invoke(this))
                 .SetEase(Ease.InExpo)
                 .OnComplete(() =>
                 {
-                    Reached?.Invoke(armament, this);
+                    Reached?.Invoke(this);
                 });
         }
 
         private void PlayLaserFlight(Armament armament)
         {
             float duration = .05f;
+            Duration = duration;
             
             DOTween.Sequence()
                 .Append(
@@ -83,8 +91,8 @@ namespace Armaments
                         .DOMove(armament.Target.transform.position, duration)
                         .SetEase(Ease.Linear)
                 )
-                .AppendInterval(0.25f)
-                .OnComplete(() => Reached?.Invoke(armament, this));
+                .AppendInterval(0.25f)//TODO В конфиг
+                .OnComplete(() => Reached?.Invoke(this));
         }
     }
 }

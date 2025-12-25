@@ -30,6 +30,7 @@ namespace Armaments
             Source = source;
             Target = target;
             Setup = setup;
+            FlyingType = setup.FlyingType;
         }
 
         private void Start()
@@ -40,8 +41,5 @@ namespace Armaments
             var parcticle = Instantiate(_particleSystemPrefab, transform);
             parcticle.Play();
         }
-
-        public void SetFlyingType(ArmamentFlyingType flyingType) => 
-            FlyingType = flyingType;
     }
 }

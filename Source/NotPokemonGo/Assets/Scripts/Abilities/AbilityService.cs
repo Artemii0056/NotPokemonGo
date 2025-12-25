@@ -2,17 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using Abilities.Bennet;
-using Abilities.Configs;
 using Abilities.Enemies;
 using Abilities.MV;
 using Armaments;
+using Armaments.Spawner;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using QTESystem;
 using Services;
-using Units;
-using Unity.VisualScripting;
 using UnityEngine;
 using Unit = Units.Unit;
 
@@ -22,10 +20,10 @@ namespace Abilities
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IBattleStateMachine _battleStateMachine;
-        private readonly ISourceProvider _sourceProvider;
         private readonly IQteService _qteService;
-        private readonly ITargetSelector _targetSelector;
-        private readonly IArmamentApplicator armamentApplicator;
+        private readonly IEffectsApplier _effectsApplier;
+        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IArmamentViewFactory _viewFactory;
 
         private Battlefield _battlefield;
 
@@ -41,14 +39,15 @@ namespace Abilities
             ICoroutineRunner coroutineRunner,
             IQteService qteService,
             IBattleStateMachine battleStateMachine,
-            ITargetSelector targetSelector,
-            ISourceProvider sourceProvider)
+            IEffectsApplier effectsApplier, 
+            IArmamentSpawner armamentSpawner, IArmamentViewFactory viewFactory)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
-            _targetSelector = targetSelector;
-            _sourceProvider = sourceProvider;
+            _effectsApplier = effectsApplier;
+            _armamentSpawner = armamentSpawner;
+            _viewFactory = viewFactory;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -64,10 +63,10 @@ namespace Abilities
             switch (abilityType)
             {
                 case AbilityType.FireBall:
-                    _abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, armamentApplicator);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
+                    var a = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, _armamentSpawner, _viewFactory);
+                    a.Play(source, target);
+                    //_activeAbilityHandlers.Add(_abilityHandler);
+                    a.Finished += Continue;
                     break;
 
                 case AbilityType.FrostBall:

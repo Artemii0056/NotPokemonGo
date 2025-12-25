@@ -1,13 +1,12 @@
 ﻿using Abilities;
 using Armaments;
+using Armaments.Spawner;
 using Battlefields;
-using Cameras;
 using Castaments;
-using DodgeSystem;
 using Effects;
+using Effects.Factory;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
-using Infrastructure.StateMachines;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Infrastructure.StateMachines.GlobalStateMachine;
@@ -27,12 +26,12 @@ using Services.StatesServices;
 using Services.StaticDataServices;
 using Services.SystemFactoryServices;
 using Statuses;
+using Statuses.Factory;
 using Statuses.Services;
 using TimeServices;
 using UI.Ability;
 using UI.BattleUpgrages;
 using UI.Factory;
-using UI.QTE;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -43,18 +42,18 @@ namespace Infrastructure.DI.Installers.Gloabals
 {
     public class GlobalServiceInstaller : MonoInstaller
     {
-         [SerializeField] private GameScopeInitializer _gameScopeInitializer;
-         [SerializeField] private InputReader _inputReader;
-         [SerializeField] private AbilitiesPanel _abilitiesPanel;
-         [SerializeField] private BattleUpgradePanel _battleUpgradePanel;
-         
+        [SerializeField] private GameScopeInitializer _gameScopeInitializer;
+        [SerializeField] private InputReader _inputReader;
+        [SerializeField] private AbilitiesPanel _abilitiesPanel;
+        [SerializeField] private BattleUpgradePanel _battleUpgradePanel;
+
         public override void Install(IContainerBuilder builder)
         {
             RegisterGameStateMachines(builder);
-            
+
             builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
             builder.RegisterComponent(_inputReader).AsImplementedInterfaces();
-            
+
             RegisterUserInterface(builder);
             RegisterStates(builder);
             RegisterServices(builder);
@@ -67,7 +66,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<AbilityPanelPresenter>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
                 .AsSelf();
-            
+
             builder.RegisterComponent(_battleUpgradePanel).AsImplementedInterfaces();
             builder.Register<BattleUpgradePanelPresenter>(Lifetime.Singleton)
                 .AsImplementedInterfaces()
@@ -94,32 +93,37 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
             builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
             builder.Register<ICastamentApplicator, CastamentApplicator>(Lifetime.Singleton);
-            builder.Register<IArmamentApplicator, ArmamentApplicator>(Lifetime.Singleton);
+            builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
             builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
             builder.Register<IQteService, QteService>(Lifetime.Singleton);
-            builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);
-            
+
             builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
-            
+
             builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
             builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
             builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
-            
+
             builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);
 
             builder.Register<IBattleUnitContainer, BattleUnitContainer>(Lifetime.Singleton);
-            
+
             builder.Register<ILevelProgressService, LevelProgressService>(Lifetime.Singleton);
-            
+
             builder.Register<IBattlefieldSessionService, BattlefieldSessionService>(Lifetime.Singleton);
-            
+
             builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
-            
+
             builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
-            
+
             builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
-            
+
             builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
+
+            builder.Register<IStatusesFactory, StatusesFactory>(Lifetime.Singleton);
+            builder.Register<IEffectInfoFactory, EffectInfoFactory>(Lifetime.Singleton);
+            
+            builder.Register<IArmamentLifecycle, ArmamentLifecycle>(Lifetime.Singleton);
+            builder.Register<IArmamentSpawner, ArmamentSpawner>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
@@ -131,10 +135,11 @@ namespace Infrastructure.DI.Installers.Gloabals
         private void RegisterStates(IContainerBuilder builder)
         {
             builder.Register<IStateProvider, StateProvider>(Lifetime.Singleton);
-            
+
             RegisterGlobalStates(builder);
             RegisterBattleStates(builder);
             RegisterUIStates(builder);
+
             void RegisterGlobalStates(IContainerBuilder builder)
             {
                 builder.Register<BootstrapState>(Lifetime.Singleton)
@@ -144,11 +149,11 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<LoadMainMenuState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-            
+
                 builder.Register<LoadingBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-            
+
                 builder.Register<BattleLoopState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
@@ -159,19 +164,19 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<StartScreenState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<ShowHeroState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<ChooseMapState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<ChooseUnitToFightState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<GlobalBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
@@ -182,7 +187,7 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<UnitActionState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<UpdateBattleTickState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
@@ -198,19 +203,19 @@ namespace Infrastructure.DI.Installers.Gloabals
                 builder.Register<FinishBattleState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<WaveProgressionState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<CheckBattleEndState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<LoosePanelState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
-                
+
                 builder.Register<PlayerDodgeState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();

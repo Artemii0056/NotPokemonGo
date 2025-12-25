@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Armaments;
+using Armaments.Spawner;
 using Castaments;
 using Characters;
 using Platoons;
 using ReactionSystems;
-using Services.StaticDataServices;
 using Stats;
 using UI;
 using UI.Sliders;
@@ -20,35 +19,24 @@ namespace Units
     public class UnitFactory : IUnitFactory
     {
         private readonly IObjectResolver _objectResolver;
-        private readonly IParticleSystemFactory _particleSystemFactory;
-        private readonly IAbilityProvider _abilityProvider;
-        private readonly IStaticDataService _staticDataService;
         private readonly ICastamentApplicator _castamentApplicator;
-        private readonly IArmamentApplicator _armamentApplicator;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
 
         public UnitFactory(
             IObjectResolver objectResolver,
-            IParticleSystemFactory particleSystemFactory,
-            IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService,
             ICastamentApplicator castamentApplicator,
-            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
             IAbilityService abilityService, 
-            IReactionService reactionService)
+            IReactionService reactionService, 
+            IArmamentSpawner armamentSpawner)
         {
             _objectResolver = objectResolver;
-            _particleSystemFactory = particleSystemFactory;
-            _abilityProvider = abilityProvider;
-            _staticDataService = staticDataService;
             _castamentApplicator = castamentApplicator;
-            _armamentApplicator = armamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
-            
-            _reactionService.Register(new ReflectFireballReaction(_armamentApplicator)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+
+            _reactionService.Register(new ReflectFireballReaction(armamentSpawner)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
             _reactionService.Register(new CounterattackReaction(abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
         }
 
@@ -66,7 +54,6 @@ namespace Units
                 unit,
                 controller,
                 _castamentApplicator,
-                _armamentApplicator,
                 _targetSelector, 
                 _reactionService);
 

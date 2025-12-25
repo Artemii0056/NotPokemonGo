@@ -1,5 +1,5 @@
-﻿using Abilities.Configs;
-using Armaments;
+﻿using System;
+using Abilities.Configs;
 using Castaments;
 using ReactionSystems;
 using Units;
@@ -9,18 +9,18 @@ namespace Services.AbilityServices
     public class AbilityPhaseService
     {
         private readonly ICastamentApplicator _castamentApplicator;
-        private readonly IArmamentApplicator _armamentApplicator;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
+        
+        public event Action<AbilityPhase> ArmamentRequested;
+        public event Action<AbilityPhase> CastamentRequested;
 
         public AbilityPhaseService(
             ICastamentApplicator castamentApplicator,
-            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
             IReactionService reactionService)
         {
             _castamentApplicator = castamentApplicator;
-            _armamentApplicator = armamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
         }
@@ -36,10 +36,16 @@ namespace Services.AbilityServices
                 return;
             }
 
-            if (phase.ArmamentSetup.HasSetupData)
-                _armamentApplicator.Apply(phase.ArmamentSetup, phase.ArmamentSetup.FlyingType, source, 
-                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            if (phase.ArmamentSetup.HasSetupData) 
+                ArmamentRequested?.Invoke(phase); //TODO 
+            
+            if (phase.CastamentSetup.HasSetupData) 
+                CastamentRequested?.Invoke(phase); //TODO
 
+            // if (phase.ArmamentSetup.HasSetupData)
+            //     _armamentApplicator.Apply(phase.ArmamentSetup, phase.ArmamentSetup.FlyingType, source, 
+            //         _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            
             if (phase.CastamentSetup.HasSetupData)
                 _castamentApplicator.Apply(phase.CastamentSetup, source, 
                     _targetSelector.GetTargets(phase.TargetMode, target).ToArray());

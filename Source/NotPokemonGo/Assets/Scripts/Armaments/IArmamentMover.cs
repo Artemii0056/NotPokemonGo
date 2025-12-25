@@ -4,8 +4,10 @@ namespace Armaments
 {
 	public interface IArmamentMover 
 	{
-		void Move(Armament armament, ArmamentFlyingType armamentFlyingType);
-		event Action<Armament, ArmamentMover>  Reached;
-		event Action Launched;
+		void Move(Armament armament);
+		event Action<IArmamentMover>  Reached;
+		event Action<IArmamentMover> Launched;
+		Armament Armament { get; }
+		float Duration { get;}
 	}
 }

@@ -5,8 +5,11 @@ using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
 using Armaments;
+using Armaments.Spawner;
 using QTESystem;
+using QTESystem.TestQTE;
 using Services;
+using Stats;
 using UI.QTE;
 using Units;
 using Units.AnimationControllers;
@@ -19,7 +22,8 @@ namespace Abilities.Enemies
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IQteService _qteService;
-        private readonly IArmamentApplicator _armamentApplicator;
+        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IArmamentViewFactory _viewFactory;
 
         private readonly List<AbilityPart> _parts;
 
@@ -29,22 +33,26 @@ namespace Abilities.Enemies
         private bool _animationPlaying;
 
         private Unit _target;
+        private Unit _source;
 
         private Coroutine _currentRoutine;
-        private Coroutine _attackRoutine;
 
         private AbilityPhase _currentPhase;
         private Coroutine _abilityCoroutine;
+        private (QteButtonView, QtePhasePresenter) _valueTuple;
+        private TimingBarQte _timingBarQte;
 
         public PortalFireballSummoner(
             ICoroutineRunner coroutineRunner,
             AbilityModel abilityModel,
-            IQteService qteService, 
-            IArmamentApplicator armamentApplicator)
+            IQteService qteService,
+            IArmamentSpawner armamentSpawner, 
+            IArmamentViewFactory viewFactory)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
-            _armamentApplicator = armamentApplicator;
+            _armamentSpawner = armamentSpawner;
+            _viewFactory = viewFactory;
             Interruptibility = abilityModel.Interruptibility;
             _parts = abilityModel.Parts;
         }
@@ -55,11 +63,13 @@ namespace Abilities.Enemies
 
         public void Play(Unit source, Unit target)
         {
+            _source = source;
             _target = target;
+
+            _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
 
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.UnitAnimatorController;
-            _animatorController.Attack1Started += OnAttackStarted;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
@@ -78,6 +88,57 @@ namespace Abilities.Enemies
             FinishAbility();
         }
 
+        private void OnArmamentRequested(AbilityPhase phase) 
+        {
+            ArmamentContext context = new ArmamentContext(_source, _target, phase.ArmamentSetup);
+
+            var armament = _viewFactory.Create(context);
+            ArmamentMover mover = new ArmamentMover();
+
+            Debug.Log("OnArmamentRequested");
+            mover.Reached += OnReached;
+            mover.Move(armament);
+
+            _valueTuple = _qteService.PlaySimple(_currentPhase.QteType, _target);
+
+            _timingBarQte = (TimingBarQte)_valueTuple.Item1;
+            _timingBarQte.InitializeTime(mover.Duration); //TODO Сделать более жесткую связь между Конфигом армамента/временем и QTЕ, Сделать QTE работающей по времени? 
+            _timingBarQte.OnReached += OnQteFinished;
+        }
+
+        private void OnQteFinished(QteResult result)
+        {
+            switch (result)
+            {
+                case QteResult.Fail:
+                    Debug.Log("OnFail");
+                    break;
+
+                case QteResult.Normal:
+                    Debug.Log("OnNormal");
+
+                    break;
+                case QteResult.Perfect:
+                    Debug.Log("Perfect");
+                    _source.ChangeStatValue(1, StatType.DodgeFlag); //подумать над реализацией "временных" бафов
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(result), result, null);
+            }
+        }
+
+        private void OnReached(IArmamentMover mover) 
+        {
+            Debug.Log("OnReached");
+
+            mover.Reached -= OnReached;
+            _timingBarQte.OnReached -= OnQteFinished;
+
+            _valueTuple.Item2.Disable();
+            Object.Destroy(_timingBarQte.gameObject);
+        }
+
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
             _currentPhase = phase;
@@ -86,18 +147,14 @@ namespace Abilities.Enemies
             _animatorTrigger.SetPhase(phase);
             _animatorTrigger.SetTarget(_target);
 
-            switch (phase.PhaseType)
-            {
-                default:
-                    yield return WaitForAnimation();
-                    break;
-            }
+            yield return WaitForAnimation();
         }
 
         private void FinishAbility()
         {
             _animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
+            _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
             Finished?.Invoke(this);
         }
 
@@ -111,34 +168,6 @@ namespace Abilities.Enemies
             _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
             _animatorController.Finished -= OnFinished;
-        }
-
-        private void OnAttackStarted()
-        {
-            
-            // Debug.Log("OnAttackStarted");
-            //
-            // if (_coroutine != null)
-            //     _coroutineRunner.StopCoroutine(_currentRoutine);
-            //
-            // _coroutine = _coroutineRunner.StartCoroutine(ExecuteAttack()); //Трабла в этой корутине
-        }
-
-        private IEnumerator ExecuteAttack() //попробовать проще и без корутины? Получить от мувера событие, когда начался полет? 
-        {
-            yield return new WaitForSeconds(0.25f); //TODO вот тут попробовать получить данные о задержке у мувера.
-            (QteButtonView, QtePhasePresenter) valueTuple = _qteService.PlaySimple(_currentPhase.QteType, _target);
-            //Дождаться, пока фаербол долетит? 
-
-           // yield return WaitForAnimation(); //задержка нужна для анимации
-
-           yield return new WaitUntil(() => _animationPlaying);
-           
-            if (_currentPhase.QteType != QteType.Unknown)
-            {
-                Object.Destroy(valueTuple.Item1.gameObject);
-                valueTuple.Item2.Disable();
-            }
         }
 
         private void FinishAnimation() =>

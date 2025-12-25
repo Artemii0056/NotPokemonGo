@@ -1,5 +1,4 @@
 ﻿using System;
-using Stats;
 using UI.QTE;
 using UnityEngine;
 
@@ -7,15 +6,18 @@ namespace QTESystem.TestQTE
 {
     public class TimingBarQte : QteButtonView
     {
-        [SerializeField] private PartTimingBar _partTimingBar; //TODO нужно получить скорость полета из точки в точку 
+        [SerializeField] private PartTimingBar _partTimingBar;  
         [SerializeField] private TimingBar _timingBar;
 
         [SerializeField] private KeyCode _inputKey = KeyCode.Space;
 
         private bool _isRun;
+        private float _duration;
 
         public override event Action<QteButtonView> Successed;
         public override event Action<QteButtonView> Invalided;
+        
+        public event Action<QteResult> OnReached;
 
         public void Start()
         {
@@ -23,6 +25,11 @@ namespace QTESystem.TestQTE
 
             _partTimingBar.Play();
             _partTimingBar.Finished += OnPartFinished;
+        }
+
+        public void InitializeTime(float time)
+        {
+            _duration = time;
         }
 
         private void Update()
@@ -37,35 +44,19 @@ namespace QTESystem.TestQTE
             }
         }
 
-        private void OnDisable()
-        {
-            _timingBar.Fail -= OnFail;
-            _timingBar.Ok -= OnOk;
-            _timingBar.Perfect -= OnPerfect;
-        }
+        private void OnDisable() => 
+            _timingBar.Result -= OnResult;
+
+        private void OnResult(QteResult result) => 
+            OnReached?.Invoke(result);
 
         private void OnPartFinished()
         {
-            _partTimingBar.DeactivateCursor();
             _partTimingBar.Finished -= OnPartFinished;
-            _timingBar.Play();
+            _partTimingBar.DeactivateCursor();
+            _timingBar.Play(_duration);
 
-            _timingBar.Fail += OnFail;
-            _timingBar.Ok += OnOk;
-            _timingBar.Perfect += OnPerfect;
+            _timingBar.Result += OnResult;
         }
-
-        private void OnPerfect()
-        {
-            Unit.ChangeStatValue(1, StatType.DodgeFlag);
-
-            Debug.Log("Perfect");
-        }
-
-        private void OnOk() =>
-            Debug.Log("OnOk");
-
-        private void OnFail() =>
-            Debug.Log("OnFail");
     }
 }

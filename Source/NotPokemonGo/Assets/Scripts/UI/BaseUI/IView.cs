@@ -1,4 +1,4 @@
-namespace UI.BaseUI.Presenters
+namespace UI.BaseUI
 {
 	public interface IView
 	{
