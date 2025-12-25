@@ -15,12 +15,12 @@ namespace Abilities.Enemies
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly List<AbilityPart> _parts;
-        
+
         private UnitAnimatorTrigger _animatorTrigger;
         private UnitAnimatorController _animatorController;
         private Coroutine _currentRoutine;
         private bool _animationPlaying;
-        
+
         private Unit _target;
         private Unit _source;
 
@@ -45,25 +45,17 @@ namespace Abilities.Enemies
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
-        public void Stop()
-        {
+        public void Stop() => 
             _coroutineRunner.StopCoroutine(_currentRoutine);
-        }
 
         private IEnumerator ExecuteAllParts()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            foreach (var part in _parts)
             {
-                var part = _parts[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
-                {
-                    var phase = part.AbilityPhases[phaseIndex];
-
+                foreach (var phase in part.AbilityPhases)
                     yield return ExecutePhase(phase);
-                }
             }
-            
+
             FinishAbility();
         }
 
@@ -73,12 +65,7 @@ namespace Abilities.Enemies
             _animatorTrigger.SetPhase(phase);
             _animatorTrigger.SetTarget(_target);
 
-            switch (phase.PhaseType)
-            {
-                default:
-                    yield return WaitForAnimation();
-                    break;
-            }
+            yield return WaitForAnimation();
         }
 
         private void FinishAbility()

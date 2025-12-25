@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using QTESystem.TestQTE;
 using Services;
 using Services.StaticDataServices;
 using TimeServices;
@@ -31,8 +32,8 @@ namespace QTESystem
             _objectResolver = objectResolver;
             _timeService = timeService;
         }
-
-        public (QteButtonView, QtePhasePresenter) PlaySimple(QteType qteType, Unit target)
+        
+        public TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration)
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
@@ -40,12 +41,11 @@ namespace QTESystem
 
             view.Construct(target, _timeService);
 
+            TimingBarQte barView = (TimingBarQte)view;
+            barView.InitializeTime(duration);
             _objectResolver.Inject(view);
 
-            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(view);
-            qtePhasePresenter.Enable();
-
-            return (view, qtePhasePresenter);
+            return barView;
         }
 
         public void Start(QteType qteType, Unit target)
@@ -55,7 +55,7 @@ namespace QTESystem
             _coroutineRunner.StartCoroutine(PlayQte(qteConfig, target));
         }
 
-        private IEnumerator PlayQte(QteConfig qteConfig, Unit target)
+        private IEnumerator PlayQte(QteConfig qteConfig, Unit target) //TODO Передавать время работы QTE? 
         {
             QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
 

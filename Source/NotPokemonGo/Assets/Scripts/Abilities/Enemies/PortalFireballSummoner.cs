@@ -10,7 +10,6 @@ using QTESystem;
 using QTESystem.TestQTE;
 using Services;
 using Stats;
-using UI.QTE;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -23,7 +22,6 @@ namespace Abilities.Enemies
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IQteService _qteService;
         private readonly IArmamentSpawner _armamentSpawner;
-        private readonly IArmamentViewFactory _viewFactory;
 
         private readonly List<AbilityPart> _parts;
 
@@ -39,20 +37,17 @@ namespace Abilities.Enemies
 
         private AbilityPhase _currentPhase;
         private Coroutine _abilityCoroutine;
-        private (QteButtonView, QtePhasePresenter) _valueTuple;
         private TimingBarQte _timingBarQte;
 
         public PortalFireballSummoner(
             ICoroutineRunner coroutineRunner,
             AbilityModel abilityModel,
             IQteService qteService,
-            IArmamentSpawner armamentSpawner, 
-            IArmamentViewFactory viewFactory)
+            IArmamentSpawner armamentSpawner)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _armamentSpawner = armamentSpawner;
-            _viewFactory = viewFactory;
             Interruptibility = abilityModel.Interruptibility;
             _parts = abilityModel.Parts;
         }
@@ -90,19 +85,14 @@ namespace Abilities.Enemies
 
         private void OnArmamentRequested(AbilityPhase phase) 
         {
-            ArmamentContext context = new ArmamentContext(_source, _target, phase.ArmamentSetup);
+            ArmamentContext context = new ArmamentContext(_source, _target, phase.ArmamentSetup, phase.ArmamentSetup.FlyingType);
+            
+            IArmamentMover mover = _armamentSpawner.Create(context);
 
-            var armament = _viewFactory.Create(context);
-            ArmamentMover mover = new ArmamentMover();
-
-            Debug.Log("OnArmamentRequested");
             mover.Reached += OnReached;
-            mover.Move(armament);
+            mover.Move();
 
-            _valueTuple = _qteService.PlaySimple(_currentPhase.QteType, _target);
-
-            _timingBarQte = (TimingBarQte)_valueTuple.Item1;
-            _timingBarQte.InitializeTime(mover.Duration); //TODO Сделать более жесткую связь между Конфигом армамента/временем и QTЕ, Сделать QTE работающей по времени? 
+            _timingBarQte = _qteService.PlayTimingBar(_currentPhase.QteType, _target, mover.Duration) as TimingBarQte; 
             _timingBarQte.OnReached += OnQteFinished;
         }
 
@@ -116,11 +106,11 @@ namespace Abilities.Enemies
 
                 case QteResult.Normal:
                     Debug.Log("OnNormal");
-
                     break;
+                
                 case QteResult.Perfect:
                     Debug.Log("Perfect");
-                    _source.ChangeStatValue(1, StatType.DodgeFlag); //подумать над реализацией "временных" бафов
+                    _target.ChangeStatValue(1, StatType.DodgeFlag); //подумать над реализацией "временных" бафов
                     break;
 
                 default:
@@ -130,12 +120,9 @@ namespace Abilities.Enemies
 
         private void OnReached(IArmamentMover mover) 
         {
-            Debug.Log("OnReached");
-
             mover.Reached -= OnReached;
             _timingBarQte.OnReached -= OnQteFinished;
 
-            _valueTuple.Item2.Disable();
             Object.Destroy(_timingBarQte.gameObject);
         }
 

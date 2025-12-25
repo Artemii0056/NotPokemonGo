@@ -6,10 +6,10 @@ namespace ReactionSystems
 {
     public class ReflectFireballReaction : IReaction
     {
-        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IArmamentSpawner _spawner;
 
-        public ReflectFireballReaction(IArmamentSpawner armamentSpawner) =>
-            _armamentSpawner = armamentSpawner;
+        public ReflectFireballReaction(IArmamentSpawner spawner) => 
+            _spawner = spawner;
 
         public bool CanReact(ReactionContext context) =>
             context.Target.GetStat(StatType.DodgeFlag) > 0;
@@ -17,9 +17,10 @@ namespace ReactionSystems
         public void React(ReactionContext context)
         {
             ArmamentContext armamentContext =
-                new ArmamentContext(context.Target, context.Source, context.Armament.Setup);
-
-            _armamentSpawner.Spawn(armamentContext, out Armament armament);
+                new ArmamentContext(context.Target, context.Source, context.Armament.Setup, ArmamentFlyingType.Direct);
+            
+            ArmamentMover mover = _spawner.Create(armamentContext);
+            mover.Move();
         }
     }
 }

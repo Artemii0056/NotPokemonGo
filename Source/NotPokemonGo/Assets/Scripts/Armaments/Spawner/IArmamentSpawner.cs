@@ -2,6 +2,6 @@
 {
     public interface IArmamentSpawner
     {
-        public IArmamentMover Spawn(ArmamentContext context, out Armament armament);
+        ArmamentMover Create(ArmamentContext context);
     }
 }

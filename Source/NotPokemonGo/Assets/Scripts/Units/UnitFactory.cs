@@ -29,14 +29,14 @@ namespace Units
             ITargetSelector targetSelector,
             IAbilityService abilityService, 
             IReactionService reactionService, 
-            IArmamentSpawner armamentSpawner)
+            IArmamentSpawner spawner)
         {
             _objectResolver = objectResolver;
             _castamentApplicator = castamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
 
-            _reactionService.Register(new ReflectFireballReaction(armamentSpawner)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+            _reactionService.Register(new ReflectFireballReaction(spawner)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
             _reactionService.Register(new CounterattackReaction(abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
         }
 

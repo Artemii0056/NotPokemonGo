@@ -11,8 +11,6 @@ namespace Armaments
     {
         [field: SerializeField] public ParticleSystem _particleSystemPrefab;
 
-        public float delta = 5f;
-
         private List<EffectInfo> _effectInfo;
         private List<Status> _statuses;
 
@@ -23,14 +21,14 @@ namespace Armaments
         public ArmamentFlyingType FlyingType { get; private set; } = ArmamentFlyingType.Direct;
         public ArmamentSetup Setup { get;  private set; }
 
-        public void Initialize(List<EffectInfo> effectInfo, List<Status> statuses, Unit source, Unit target, ArmamentSetup setup)
+        public void Initialize(List<EffectInfo> effectInfo, List<Status> statuses, Unit source, Unit target, ArmamentSetup setup, ArmamentFlyingType flyingType)
         {
             _statuses = statuses;
             _effectInfo = effectInfo;
             Source = source;
             Target = target;
             Setup = setup;
-            FlyingType = setup.FlyingType;
+            FlyingType =flyingType;
         }
 
         private void Start()

@@ -1,5 +1,5 @@
 using System;
-using UI.QTE;
+using QTESystem.TestQTE;
 using Units;
 
 namespace QTESystem
@@ -7,7 +7,7 @@ namespace QTESystem
     public interface IQteService
     {
         void Start(QteType qteType, Unit target);
-        (QteButtonView,QtePhasePresenter) PlaySimple(QteType qteType, Unit target);
+        TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration);
         event Action <bool> Completed;
     }
 }

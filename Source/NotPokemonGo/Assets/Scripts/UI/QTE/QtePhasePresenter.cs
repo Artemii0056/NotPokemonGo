@@ -17,7 +17,6 @@ namespace UI.QTE
         {
             _isActive = true;
 
-            _qteButtonView.Initialize(this);
             _qteButtonView.Successed += OnSuccessed;
             _qteButtonView.Invalided += OnInvalided;
         }

@@ -22,8 +22,9 @@ namespace Abilities
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IQteService _qteService;
         private readonly IEffectsApplier _effectsApplier;
-        private readonly IArmamentSpawner _armamentSpawner;
         private readonly IArmamentViewFactory _viewFactory;
+        private readonly IArmamentLifecycle _armamentLifecycle;
+        private readonly IArmamentSpawner _armamentSpawner;
 
         private Battlefield _battlefield;
 
@@ -40,14 +41,15 @@ namespace Abilities
             IQteService qteService,
             IBattleStateMachine battleStateMachine,
             IEffectsApplier effectsApplier, 
-            IArmamentSpawner armamentSpawner, IArmamentViewFactory viewFactory)
+            IArmamentViewFactory viewFactory, IArmamentLifecycle armamentLifecycle, IArmamentSpawner armamentSpawner)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
             _effectsApplier = effectsApplier;
-            _armamentSpawner = armamentSpawner;
             _viewFactory = viewFactory;
+            _armamentLifecycle = armamentLifecycle;
+            _armamentSpawner = armamentSpawner;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -63,7 +65,7 @@ namespace Abilities
             switch (abilityType)
             {
                 case AbilityType.FireBall:
-                    var a = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, _armamentSpawner, _viewFactory);
+                    var a = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, _armamentSpawner);
                     a.Play(source, target);
                     //_activeAbilityHandlers.Add(_abilityHandler);
                     a.Finished += Continue;

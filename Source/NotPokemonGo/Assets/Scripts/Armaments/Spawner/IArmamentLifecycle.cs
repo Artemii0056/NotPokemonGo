@@ -2,6 +2,6 @@
 {
     public interface IArmamentLifecycle
     {
-        IArmamentMover Register(Armament armament);
+        void Register(IArmamentMover armamentMover);
     }
 }

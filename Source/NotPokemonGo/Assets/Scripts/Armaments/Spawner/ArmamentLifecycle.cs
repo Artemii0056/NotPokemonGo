@@ -9,36 +9,18 @@ namespace Armaments.Spawner
         private readonly IReactionService _reactionService;
 
         public ArmamentLifecycle(
-            IReactionService reactionService, 
+            IReactionService reactionService,
             IEffectsApplier effectsApplier)
         {
             _reactionService = reactionService;
             _effectsApplier = effectsApplier;
         }
 
-        public IArmamentMover Register(Armament armament)
-        {
-            Debug.Log($"Registering armament {armament.name}");
-            
-            IArmamentMover armamentMover = new ArmamentMover();
+        public void Register(IArmamentMover armamentMover) =>
             armamentMover.Reached += OnReached;
-            //armamentMover.Move(armament);
-
-            return armamentMover;
-        }
 
         private void OnReached(IArmamentMover mover)
         {
-            Debug.Log("Lifecycle OnReached START");
-
-            if (mover.Armament == null)
-            {
-                Debug.LogError("Armament is NULL in Lifecycle.OnReached");
-                return;
-            }
-
-            Debug.Log("Lifecycle OnReached HAS ARMAMENT");
-
             Armament armament = mover.Armament;
             mover.Reached -= OnReached;
 
@@ -47,7 +29,7 @@ namespace Armaments.Spawner
                 armament.Target,
                 armament);
 
-            //Object.Destroy(armament.gameObject); //ВОТ ТУТ
+            Object.Destroy(armament.gameObject);
 
             if (_reactionService.TryReact(context))
                 return;

@@ -2,24 +2,22 @@
 {
     public class ArmamentSpawner : IArmamentSpawner
     {
-        private readonly IArmamentLifecycle _lifecycle;
         private readonly IArmamentViewFactory _viewFactory;
+        private readonly IArmamentLifecycle _lifecycle;
 
-        public ArmamentSpawner(
-            IArmamentLifecycle lifecycle,
-            IArmamentViewFactory viewFactory)
+        public ArmamentSpawner(IArmamentViewFactory viewFactory, IArmamentLifecycle lifecycle)
         {
-            _lifecycle = lifecycle;
             _viewFactory = viewFactory;
+            _lifecycle = lifecycle;
         }
 
-        public IArmamentMover Spawn(ArmamentContext context, out Armament armament)
+        public ArmamentMover Create(ArmamentContext context)
         {
-            armament = _viewFactory.Create(context);
+            Armament armament = _viewFactory.Create(context);
+            ArmamentMover mover = new ArmamentMover(armament);
+            _lifecycle.Register(mover);
 
-            IArmamentMover armamentMover = _lifecycle.Register(armament);
-
-            return armamentMover;
+            return mover;
         }
     }
 }
