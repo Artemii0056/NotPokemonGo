@@ -73,5 +73,9 @@ namespace UI.DodgeUI
 		public void Deactivate()
 		{
 		}
+
+		public void Dispose()
+		{
+		}
 	}
 }

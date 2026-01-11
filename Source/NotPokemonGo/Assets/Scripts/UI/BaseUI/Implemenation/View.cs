@@ -1,7 +1,7 @@
-using UI.BaseUI.Presenters;
+using UI.BaseUI.Interfaces;
 using UnityEngine;
 
-namespace UI.BaseUI.Views
+namespace UI.BaseUI.Implemenation
 {
 	public abstract class View : MonoBehaviour, IView
 	{

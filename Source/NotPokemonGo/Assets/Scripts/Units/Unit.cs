@@ -50,7 +50,6 @@ namespace Units
         public event Action<Unit> Death;
         
         public IAbilityHandler AbilityHandler { get; private set; }
-
         
         public void Construct(
             List<StatConfig> statConfig,

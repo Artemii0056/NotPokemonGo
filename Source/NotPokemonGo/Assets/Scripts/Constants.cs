@@ -7,7 +7,6 @@ public static class Constants
         public const string InitialSceneName = "Initial";
         public const string GameplaySceneName = "Gameplay";
         public const string CharacterSelectionSceneName = "CharacterSelection";
-        public const string TestAbilitiesSceneName = "TestAbilities";
 
         public const string CharacterSkinItemName = "Canvases/UnitSkinItemForChoose";
         public const string StartScreenCanvasName = "Canvases/StartScreen_Canvas";

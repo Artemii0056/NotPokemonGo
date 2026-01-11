@@ -27,5 +27,13 @@ namespace UI.DodgeUI
 
 		private void OnDodgeButtonCLicked() => 
 			Dodged?.Invoke();
+
+		public void Activate()
+		{
+		}
+
+		public void Deactivate()
+		{
+		}
 	}
 }

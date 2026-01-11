@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Battlefields;
+using Characters;
 using Characters.Configs;
 using LevelSetting;
 using Platoons;
@@ -11,5 +12,6 @@ namespace Services.BattleUnitContainers
     {
         Battlefield Create(List<UnitType> units, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject);
         Battlefield Create(List<UnitType> units, Platoon friendPlatoon, LevelPartSetup levelPartSetup, out GameObject battlefieldGameObject);
+        Battlefield Create(List<UnitConfig> heroConfigs, List<UnitConfig> enemiesConfigs);
     }
 }

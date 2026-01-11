@@ -14,6 +14,7 @@ using Services.Cameras;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StaticDataServices;
+using Services.UIServices;
 using Statuses.Services;
 using TimeServices;
 using Units;
@@ -60,7 +61,9 @@ namespace Infrastructure.DI.DIExtensions
             
 			builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
 			
-			return  builder;
+			builder.Register<UIService>(Lifetime.Singleton).AsImplementedInterfaces();
+			
+			return builder;
 		}
 	}
 }

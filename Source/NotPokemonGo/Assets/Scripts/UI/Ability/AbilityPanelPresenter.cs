@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Abilities.MV;
-using UI.BaseUI.Presenters;
+using UI.BaseUI.Interfaces;
 
 namespace UI.Ability
 {
-    public class AbilityPanelPresenter : IPresenter
+    public class AbilityPanelPresenter 
     {
         private AbilitiesPanel _abilitiesPanel;
 

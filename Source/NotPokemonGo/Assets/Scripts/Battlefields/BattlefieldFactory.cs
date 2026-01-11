@@ -92,6 +92,35 @@ namespace Battlefields
             return battlefield;
         }
 
+        public Battlefield Create(List<UnitConfig> heroConfigs, List<UnitConfig> enemiesConfigs)
+        {
+            GameObject battlefieldPosition = new GameObject("Battlefield");
+            
+            GameObject platoonPosition1 = new GameObject("EnemiesPlatoon");
+            platoonPosition1.transform.position = Constants.Positions.Platoon1Position;
+            
+            GameObject platoonPosition2 = new GameObject("FriendsPlatoon");
+            platoonPosition2.transform.position = Constants.Positions.Platoon2Position;
+            
+            platoonPosition1.transform.Rotate(Vector3.up, 180); 
+
+            platoonPosition1.transform.SetParent(battlefieldPosition.transform);
+            platoonPosition2.transform.SetParent(battlefieldPosition.transform);
+            
+            PlatoonSpawnContainer friendPlatoonContainer = _staticDataService.GetSpawnPositionContainer(heroConfigs.Count);
+            
+            PlatoonSpawnContainer enemyPlatoonContainer = _staticDataService.GetSpawnPositionContainer(enemiesConfigs.Count);
+            
+            Platoon platoon1 = _platoonFactory.Create(enemyPlatoonContainer, platoonPosition1.transform, PlatoonType.Enemies, enemiesConfigs.ToArray());
+            Platoon platoon2 = _platoonFactory.Create(friendPlatoonContainer, platoonPosition2.transform, PlatoonType.Heroes, heroConfigs.ToArray());
+
+            Battlefield battlefield = new Battlefield(platoon1, platoon2, _statusManager);
+            
+            //battlefieldGameObject = battlefieldPosition;
+
+            return battlefield;
+        }
+
         private List<UnitConfig> Create(List<UnitType> units)
         { 
             List<UnitConfig> unitConfigs = new List<UnitConfig>();
