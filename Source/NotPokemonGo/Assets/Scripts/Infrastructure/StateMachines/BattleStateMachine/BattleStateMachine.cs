@@ -2,9 +2,9 @@
 
 namespace Infrastructure.StateMachines.BattleStateMachine
 {
-    public class BattleStateMachine :  BaseStateMachine, IBattleStateMachine
+    public class BattleStateMachine : BaseStateMachine, IBattleStateMachine
     {
-        public BattleStateMachine(IStateProvider stateProvider) : base(stateProvider)
+        public BattleStateMachine(IStateFactory stateFactory) : base(stateFactory)
         {
         }
     }

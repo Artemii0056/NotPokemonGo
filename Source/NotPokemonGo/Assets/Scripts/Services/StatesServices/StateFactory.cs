@@ -3,11 +3,11 @@ using VContainer;
 
 namespace Services.StatesServices
 {
-    public class StateProvider : IStateProvider
+    public class StateFactory : IStateFactory
     {
         private readonly IObjectResolver _container;
 
-        public StateProvider(IObjectResolver  container) => 
+        public StateFactory(IObjectResolver  container) => 
             _container = container;
         
         public T GetState <T>() where T : IExitableState => 

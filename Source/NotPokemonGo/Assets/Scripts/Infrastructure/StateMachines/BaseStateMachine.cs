@@ -6,11 +6,11 @@ namespace Infrastructure.StateMachines
 {
     public class BaseStateMachine : IStateMachine
     {
-        private readonly IStateProvider _stateProvider;
+        private readonly IStateFactory _stateFactory;
         private IExitableState _currentState;
 
-        public BaseStateMachine(IStateProvider stateProvider) => 
-            _stateProvider = stateProvider;
+        public BaseStateMachine(IStateFactory stateFactory) => 
+            _stateFactory = stateFactory;
 
         public void Enter<TState>() where TState : class, IState
         {
@@ -34,7 +34,7 @@ namespace Infrastructure.StateMachines
         {
             _currentState?.Exit();
 
-            TState state = _stateProvider.GetState<TState>();
+            TState state = _stateFactory.GetState<TState>();
             _currentState = state;
 
             return state;
