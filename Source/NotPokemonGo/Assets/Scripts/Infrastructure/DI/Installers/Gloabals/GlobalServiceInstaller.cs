@@ -1,4 +1,5 @@
 ﻿using System;
+using AbilitiesTestFeature.BattleStates;
 using Infrastructure.DI.DIExtensions;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
@@ -38,10 +39,13 @@ namespace Infrastructure.DI.Installers.Gloabals
 			{
 				case GameTypeScopeInitializer.GameScopeInitializer:
 					builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
+					_testAbilitiesInitializer.enabled = false;
 					break;
 
 				case GameTypeScopeInitializer.TestAbilitiesInitializer:
-					builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
+					builder.RegisterComponent(_testAbilitiesInitializer).AsImplementedInterfaces();
+					builder.Register<CreateBattlfieldAbilityTestState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+					_gameScopeInitializer.enabled = false;
 					break;
 				
 				default:

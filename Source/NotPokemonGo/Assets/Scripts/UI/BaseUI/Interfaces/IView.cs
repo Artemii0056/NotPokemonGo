@@ -1,4 +1,6 @@
-﻿namespace UI.BaseUI.Interfaces
+﻿using System;
+
+namespace UI.BaseUI.Interfaces
 {
 	public interface IView
 	{

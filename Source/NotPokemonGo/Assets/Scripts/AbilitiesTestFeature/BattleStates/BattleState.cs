@@ -2,15 +2,19 @@
 
 namespace AbilitiesTestFeature.BattleStates
 {
-	public class BattleStateAbilityTest : IState
+	public class BattleState : IState
 	{
+		public BattleState()
+		{
+				
+		}
+		
 		public void Enter()
 		{
 		}
 
 		public void Exit()
 		{
-		
 		}
 	}
 }

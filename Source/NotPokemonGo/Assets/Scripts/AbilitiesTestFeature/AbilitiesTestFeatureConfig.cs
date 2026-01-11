@@ -8,6 +8,6 @@ namespace AbilitiesTestFeature
 	public class AbilitiesTestFeatureConfig : ScriptableObject
 	{
 		public List<UnitConfig> HeroConfigs;
-		public  List<UnitConfig> EnemyConfigs;
+		public List<UnitConfig> EnemyConfigs;
 	}
 }
