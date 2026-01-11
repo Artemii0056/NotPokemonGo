@@ -17,8 +17,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IUIFactory _uiFactory;
         
-        private LoadingBattleStatePayload _payload;
         private readonly ISceneLoader _sceneLoader;
+        private LoadingBattleStatePayload _payload;
 
         public LoadingBattleState(
             IGameStateMachine gameStateMachine,

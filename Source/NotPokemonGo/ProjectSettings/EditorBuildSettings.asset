@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Gameplay.unity
     guid: 3f7b53135507e8748bd954f027303d47
   - enabled: 1
     path: Assets/Scenes/StepByStepScene.unity
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CharacterSelection.unity
     guid: 88cfd7a2f185bc24baece5139e62c028
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestAbilities.unity
+    guid: a686e7f0110b71545902654f243afa2c
   m_configObjects: {}
