@@ -1,5 +1,5 @@
 ﻿using System;
-using AbilitiesTestFeature.BattleStates;
+using AbilitiesTestFeature.DIExtensions;
 using Infrastructure.DI.DIExtensions;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
@@ -27,8 +27,6 @@ namespace Infrastructure.DI.Installers.Gloabals
 		{
 			builder
 				.RegisterGlobalGameStateMachine()
-				.RegisterGlobalBattleStateMachine()
-				.RegisterGlobalServices()
 				.RegisterGlobalFactories()
 				.RegisterGlobalUIStates()
 				.RegisterGlobalUserInterface(_abilitiesPanel, _battleUpgradePanel);
@@ -39,12 +37,23 @@ namespace Infrastructure.DI.Installers.Gloabals
 			{
 				case GameTypeScopeInitializer.GameScopeInitializer:
 					builder.RegisterComponent(_gameScopeInitializer).AsImplementedInterfaces();
+					
+					builder
+						.RegisterGlobalServices()
+						.RegisterGlobalBattleStateMachine()
+						;
+
 					_testAbilitiesInitializer.enabled = false;
 					break;
 
 				case GameTypeScopeInitializer.TestAbilitiesInitializer:
 					builder.RegisterComponent(_testAbilitiesInitializer).AsImplementedInterfaces();
-					builder.Register<CreateBattlfieldAbilityTestState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+					
+					builder
+						.RegisterAbilityTestServices()
+						.RegisterAbilityTestBattleStates()
+						;
+					
 					_gameScopeInitializer.enabled = false;
 					break;
 				

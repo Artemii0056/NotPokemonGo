@@ -90,8 +90,6 @@ namespace Battlefields
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.Handle(_source, unit, _abilityProvider.AbilityModel);
                     
-                    // _targetSelector.Remember(unit); //TODO А нужен ли этот сервис вообще? 
-                    // _sourceProvider.Remember(_source); //TODO ХЗ
                     _abilityPanelPresenter.Disable();
                     break;
 

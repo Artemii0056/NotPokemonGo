@@ -14,6 +14,8 @@ namespace Stats
         
         CurrentAgility = 20,
         MaxAgility = 21,
-        AgilityRestoreSpeed = 22
+        AgilityRestoreSpeed = 22,
+        
+        Invulnerability = 99
     }
 }

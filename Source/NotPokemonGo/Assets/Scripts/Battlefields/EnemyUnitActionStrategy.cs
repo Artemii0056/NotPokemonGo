@@ -13,22 +13,19 @@ namespace Battlefields
     {
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
-        private readonly IBattleStateMachine _battleStateMachine;
 
         private ISourceProvider _sourceProvider;
         private IAbilityService _abilityService;
 
-        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source, IBattleStateMachine battleStateMachine)
+        public EnemyUnitActionStrategy(Battlefield battlefield, Unit source)
         {
             _source = source;
-            _battleStateMachine = battleStateMachine;
             _battlefield = battlefield;
         }
 
         [Inject]
         public void Initialize(
             ISourceProvider sourceProvider,
-            ITargetSelector targetSelector,
             IAbilityService abilityService
         )
         {
@@ -67,7 +64,6 @@ namespace Battlefields
                     if (abilityModel.Cost > 0) 
                         _source.ResetAgility();
 
-                   // _battleStateMachine.Enter<PlayerDodgeState>();
                     break;
                 }
             }
@@ -75,11 +71,5 @@ namespace Battlefields
 
         private Unit GetRandomTarget(List<Unit> targets) =>
             targets[Random.Range(0, targets.Count)];
-
-        // private IEnumerator Delay()
-        // {
-        //     yield return new WaitForSeconds(0.5f);
-        //     _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-        // }
     }
 }

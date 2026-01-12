@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Abilities;
 using Abilities.Bennet;
-using Abilities.Configs;
 using Abilities.Enemies;
 using Abilities.MV;
+using AbilitiesTestFeature.BattleStates;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
 using QTESystem;
 using Services;
 using Units;
-using Unity.VisualScripting;
 using UnityEngine;
-using Unit = Units.Unit;
 
-namespace Abilities
+namespace AbilitiesTestFeature.Services
 {
-	public class AbilityService : IAbilityService
+	public class AbilityServiceAbilityTest : IAbilityService
 	{
 		private readonly ICoroutineRunner _coroutineRunner;
 		private readonly IBattleStateMachine _battleStateMachine;
-		private readonly ISourceProvider _sourceProvider;
 		private readonly IQteService _qteService;
-		private readonly ITargetSelector _targetSelector;
 
 		private Battlefield _battlefield;
 
@@ -35,18 +31,14 @@ namespace Abilities
 
 		public event Action Finished;
 
-		public AbilityService(
+		public AbilityServiceAbilityTest(
 			ICoroutineRunner coroutineRunner,
 			IQteService qteService,
-			IBattleStateMachine battleStateMachine,
-			ITargetSelector targetSelector,
-			ISourceProvider sourceProvider)
+			IBattleStateMachine battleStateMachine)
 		{
 			_coroutineRunner = coroutineRunner;
 			_qteService = qteService;
 			_battleStateMachine = battleStateMachine;
-			_targetSelector = targetSelector;
-			_sourceProvider = sourceProvider;
 			_activeAbilityHandlers = new List<IAbilityHandler>();
 		}
 
@@ -152,7 +144,7 @@ namespace Abilities
 
 			yield return new WaitForSeconds(0.5f);
 
-			_battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+			_battleStateMachine.Enter<PlayerTurnBattleStateAbilityTest, Battlefield>(_battlefield);
 		}
 	}
 }

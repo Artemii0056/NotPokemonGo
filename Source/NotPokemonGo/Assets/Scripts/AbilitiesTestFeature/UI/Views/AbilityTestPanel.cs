@@ -3,48 +3,34 @@ using UI.BaseUI.Implemenation;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AbilitiesTestFeature.UI
+namespace AbilitiesTestFeature.UI.Views
 {
 	public class AbilityTestPanel : View, IAbilityTestPanel
 	{
 		[SerializeField] private Toggle _enableTakeHit;
-		[SerializeField] private Toggle _enableEnemyStep;
-		[SerializeField] private Toggle _enableUnitAgility;
 
-		[SerializeField] private Button _repeatButton;
+		[SerializeField] private Button _enemyAction;
 
 		public event Action<bool> EnableTakeHitChanged;
-		public event Action<bool> EnableEnemyStepChanged;
-		public event Action<bool> EnableUnitAgilityChanged;
 
-		public event Action RepeatButtonClicked;
+		public event Action EnemyActionButtonClicked;
 
 		protected override void OnActivate()
 		{
 			base.OnActivate();
-			_repeatButton.onClick.AddListener(OnRepeatButtonClicked);
+			_enemyAction.onClick.AddListener(OnEnemyActionButtonClicked);
 			_enableTakeHit.onValueChanged.AddListener(OnEnableTakeHitChanged);
-			_enableEnemyStep.onValueChanged.AddListener(OnEnableEnemyStepChanged);
-			_enableUnitAgility.onValueChanged.AddListener(OnEnableUnitAgilityChanged);
 		}
 
 		protected override void OnDeactivate()
 		{
 			base.OnDeactivate();
-			_repeatButton.onClick.AddListener(OnRepeatButtonClicked);
+			_enemyAction.onClick.AddListener(OnEnemyActionButtonClicked);
 			_enableTakeHit.onValueChanged.RemoveListener(OnEnableTakeHitChanged);
-			_enableEnemyStep.onValueChanged.RemoveListener(OnEnableEnemyStepChanged);
-			_enableUnitAgility.onValueChanged.RemoveListener(OnEnableUnitAgilityChanged);
 		}
 
-		private void OnRepeatButtonClicked() => 
-			RepeatButtonClicked?.Invoke();
-
-		private void OnEnableUnitAgilityChanged(bool value) =>
-			EnableUnitAgilityChanged?.Invoke(value);
-
-		private void OnEnableEnemyStepChanged(bool value) =>
-			EnableEnemyStepChanged?.Invoke(value);
+		private void OnEnemyActionButtonClicked() => 
+			EnemyActionButtonClicked?.Invoke();
 
 		private void OnEnableTakeHitChanged(bool value) =>
 			EnableTakeHitChanged?.Invoke(value);
