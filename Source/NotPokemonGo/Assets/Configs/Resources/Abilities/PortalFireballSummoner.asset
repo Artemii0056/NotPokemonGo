@@ -35,6 +35,7 @@ MonoBehaviour:
       ParticleSystemBySpawnType:
       - ParticleSpawnType: 1
         ParticleSystem: {fileID: 198968939792773440, guid: 92e2fa28d7cc2f540ae37a675e5cb4c3, type: 3}
+      SignalActions: []
     <Interruptibility>k__BackingField: 1
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
@@ -58,6 +59,20 @@ MonoBehaviour:
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
+      SignalActions:
+      - Signal: 0
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        TargetMode: 0
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
@@ -79,6 +94,7 @@ MonoBehaviour:
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
+      SignalActions: []
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
@@ -100,6 +116,7 @@ MonoBehaviour:
       CameraActionType: 0
       <PhaseType>k__BackingField: 3
       ParticleSystemBySpawnType: []
+      SignalActions: []
     <Interruptibility>k__BackingField: 1
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
@@ -107,7 +124,7 @@ MonoBehaviour:
   - <StatsType>k__BackingField: 1
     Value: 2
   - <StatsType>k__BackingField: 2
-    Value: 0
+    Value: 1
   - <StatsType>k__BackingField: 3
     Value: 1
   <Interruptibility>k__BackingField: 0

@@ -31,10 +31,6 @@ namespace Abilities.Bennet
 
         private const float StopDistance = 1.5f;
 
-        private const float LiftDelay = 0.10f;
-        private const float JumpPower = 1f;
-        private const int NumJumps = 1;
-
         public BennetBaseAttack(
             AbilityModel abilityModel,
             ICoroutineRunner coroutineRunner,
@@ -115,18 +111,22 @@ namespace Abilities.Bennet
 
         private IEnumerator JumpTo(Vector3 targetPosition)
         {
+          float liftDelay = 0.10f;
             float animLen = _animatorController.GetAnimationLength();
 
             float totalMoveWindow = animLen * 0.5f;
-            float moveDuration = Mathf.Max(0.01f, totalMoveWindow - LiftDelay);
+            float moveDuration = Mathf.Max(0.01f, totalMoveWindow - liftDelay);
+            
+          float jumpPower = 1f;
+          int numJumps = 1;
 
             _unitMover.JumpTo(
                 _source.transform,
                 targetPosition,
                 duration: moveDuration,
-                jumpPower: JumpPower,
-                numJumps: NumJumps,
-                delay: LiftDelay);
+                jumpPower: jumpPower,
+                numJumps: numJumps,
+                delay: liftDelay);
 
             yield return new WaitWhile(() => !_stopped && _unitMover.IsMoving);
         }

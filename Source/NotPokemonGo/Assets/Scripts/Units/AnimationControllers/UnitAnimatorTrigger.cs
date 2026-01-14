@@ -56,8 +56,11 @@ namespace Units.AnimationControllers
             _unit.HealthChanged += OnHealthChanged;
         }
 
-        private void OnSignal(PhaseSignal signal) => 
-            AbilityPhaseService.OnSignal(_phase, signal, _unit, _currentTarget);
+        private void OnSignal(PhaseSignal signal)
+        { Debug.Log($"[Trigger] OnSignal {signal}, phase={_phase?.AnimationClip?.name}");
+        AbilityPhaseService.OnSignal(_phase, signal, _unit, _currentTarget);
+        }
+
 
         private void OnHealthChanged(float arg1, float arg2)
         {

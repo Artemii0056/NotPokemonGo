@@ -61,7 +61,7 @@ namespace Abilities.Enemies
             _source = source;
             _target = target;
 
-            _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
+           // _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
 
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.AnimatorController;
@@ -143,7 +143,7 @@ namespace Abilities.Enemies
         {
             _animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
-            _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
+           // _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
             Finished?.Invoke(this);
         }
 

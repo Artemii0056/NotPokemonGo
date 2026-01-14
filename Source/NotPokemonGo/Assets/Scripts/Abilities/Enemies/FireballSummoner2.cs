@@ -11,6 +11,7 @@ using Armaments;
 using Armaments.Spawner;
 using QTESystem;
 using Services;
+using Services.AbilityServices;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -107,10 +108,9 @@ namespace Abilities.Enemies
 
         private IEnumerator PlayPhase(AbilityPhase phase)
         {
-            _anim.Play(phase.AnimationCashName);
-
             _animTrigger.SetPhase(phase);
             _animTrigger.SetTarget(_target);
+            _anim.Play(phase.AnimationCashName);
 
             yield return WaitAnimFinish();
         }
@@ -128,21 +128,21 @@ namespace Abilities.Enemies
             _waitingAnim = false;
         }
 
-        private void OnArmamentRequested(AbilityPhase phase)
+        private void OnArmamentRequested(ArmamentRequest armamentRequest)
         {
-            var setup = _source.AnimatorTrigger.AbilityPhaseService.LastRequestedArmamentSetup 
-                        ?? phase.ArmamentSetup;
-
-            ArmamentContext context = new ArmamentContext(_source, _target, setup, setup.FlyingType);
+            Debug.Log("Armament Requested");
             
-            var mover = _armamentSpawner.Create(context);
-
-            var shot = new Shot(phase, context, mover)
+            foreach (var context in ArmamentRequestMapper.ToContextsPerTarget(armamentRequest))
             {
-                RequiresQte = phase.QteType != QteType.Unknown
-            };
+                var mover = _armamentSpawner.Create(context);
 
-            StartShot(shot);
+                var shot = new Shot(armamentRequest.Phase, context, mover)
+                {
+                    RequiresQte = armamentRequest.Phase.QteType != QteType.Unknown
+                };
+
+                StartShot(shot);
+            }
         }
 
         private void StartShot(Shot shot)

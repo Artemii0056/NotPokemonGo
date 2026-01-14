@@ -24,6 +24,7 @@ namespace Units.AnimationControllers
         public void FlagSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
+            Debug.Log($"[Anim] FlagSignal id={id} -> {signal}");
             
             if (signal == PhaseSignal.None)
                 return;
