@@ -5,8 +5,6 @@ using Effects.Factory;
 using Statuses;
 using Statuses.Factory;
 using Units;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Castaments
 {
@@ -18,10 +16,12 @@ namespace Castaments
 
         public CastamentApplicator( 
             IEffectInfoFactory effectInfoFactory,
-            IStatusesFactory statusesFactory)
+            IStatusesFactory statusesFactory, 
+            IEffectsApplier effectsApplier)
         {
             _effectInfoFactory = effectInfoFactory;
             _statusesFactory = statusesFactory;
+            _effectsApplier = effectsApplier;
         }
 
         public void Apply(CastamentSetup setup, Unit source, params Unit[] targets)
@@ -32,13 +32,6 @@ namespace Castaments
                 List<Status> statuses = _statusesFactory.Create(setup.Statuses, source, target);
 
                 _effectsApplier.ApplyEffectsOnTarget(source, target, statuses, effects);
-
-                if (setup.ParticleSystem != null) //TODO Эт точно убрать
-                {
-                    ParticleSystem effect = Object.Instantiate(setup.ParticleSystem);
-                    effect.transform.position = target.transform.position;
-                    effect.Play();
-                }
             }
         }
     }

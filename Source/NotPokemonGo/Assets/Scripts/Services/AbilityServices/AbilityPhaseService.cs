@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Abilities.Configs;
+using Abilities.Signals;
+using Armaments;
 using Castaments;
 using ReactionSystems;
 using Units;
@@ -14,6 +17,8 @@ namespace Services.AbilityServices
         
         public event Action<AbilityPhase> ArmamentRequested;
         public event Action<AbilityPhase> CastamentRequested;
+        
+        public ArmamentSetup LastRequestedArmamentSetup { get; private set; }
 
         public AbilityPhaseService(
             ICastamentApplicator castamentApplicator,
@@ -23,6 +28,45 @@ namespace Services.AbilityServices
             _castamentApplicator = castamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
+        }
+        
+        public void OnSignal(AbilityPhase phase, PhaseSignal signal, Unit source, Unit target)
+        {
+            if (phase == null) 
+                return;
+            
+            if (signal == PhaseSignal.None) 
+                return;
+
+            var action = phase.SignalActions?.Find(a => a.Signal == signal);
+            
+            if (action == null) 
+                return;
+
+            if (action.HasCastament)
+            {
+                var firstEffect = action.CastamentSetup.EffectsSetup.FirstOrDefault();
+                
+                if (firstEffect != null)
+                {
+                    var reactionContext = new ReactionContext(source, target, firstEffect, phase);
+                    if (_reactionService.TryReact(reactionContext))
+                        return;
+                }
+            }
+
+            if (action.HasArmament)
+            {
+                LastRequestedArmamentSetup = action.ArmamentSetup;
+                ArmamentRequested?.Invoke(phase);
+                LastRequestedArmamentSetup = null;
+            }
+
+            if (action.HasCastament)
+            {
+                var targets = _targetSelector.GetTargets(action.TargetMode, target).ToArray();
+                _castamentApplicator.Apply(action.CastamentSetup, source, targets);
+            }
         }
 
         public void OnNext(AbilityPhase phase, Unit source, Unit target)

@@ -30,13 +30,11 @@ namespace QTESystem.TestQTE
             _tapToButton.Click += OnClick;
 
         private void Start() => 
-            _targetTime = Unit.UnitAnimatorController.GetAnimationLength();
+            _targetTime = Unit.AnimatorController.GetAnimationLength();
 
         private void OnDisable()
         {
             _tapToButton.Click -= OnClick;
-
-            Unit.ChangeStatValue(1, StatType.QteDamageModifier);
         }
 
         private void Update()
@@ -69,7 +67,7 @@ namespace QTESystem.TestQTE
                 _currentValue = _maxValue;
                 _image.fillAmount = 1f;
 
-                Unit.ChangeStatValue(_currentValue, StatType.QteDamageModifier);
+                //Unit.ChangeStatValue(_currentValue, StatType.QteDamageModifier);
                 Successed?.Invoke(this);
                 _isFulled = true;
             }

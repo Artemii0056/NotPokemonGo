@@ -8,6 +8,7 @@ namespace QTESystem
     {
         void Start(QteType qteType, Unit target);
         TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration);
+        IQteSession StartSession(QteType qteType, Unit target, float duration);
         event Action <bool> Completed;
     }
 }

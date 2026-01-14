@@ -15,7 +15,7 @@ namespace Abilities.Bennet
     public class Counterattack : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private UnitAnimatorController _animatorController;
+        private AnimatorController _animatorController;
 
         private UnitAnimatorTrigger _animatorTrigger;
 
@@ -47,7 +47,7 @@ namespace Abilities.Bennet
 
             _target = target;
 
-            _source.UnitAnimatorController.Pause();
+            _source.AnimatorController.Pause();
 
             _coroutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
 
@@ -84,7 +84,7 @@ namespace Abilities.Bennet
         {
             yield return MoveUnit(_source, _source.StartPosition);
 
-            _source.UnitAnimatorController.Play(Constants.BaseAnimations.Idle);
+            _source.AnimatorController.Play(Constants.BaseAnimations.Idle);
             
             FinishAbility();
         }
@@ -92,7 +92,7 @@ namespace Abilities.Bennet
         private IEnumerator MoveUnit(Unit source, Vector3 sourceStartPosition)
         {
             int jumpPower = 2;
-            var duration = source.UnitAnimatorController.GetAnimationLength();
+            var duration = source.AnimatorController.GetAnimationLength();
 
             float moveDuration = duration /2;
 
@@ -104,14 +104,14 @@ namespace Abilities.Bennet
 
             yield return jumpTween.WaitForCompletion();
             
-            _source.UnitAnimatorController.Continue();
+            _source.AnimatorController.Continue();
         }
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
             _target.AnimatorTrigger.SetTarget(_source);
             _target.AnimatorTrigger.SetPhase(phase);
-            _target.UnitAnimatorController.Play(phase.AnimationCashName);
+            _target.AnimatorController.Play(phase.AnimationCashName);
 
             yield return WaitForAnimation();
         }
@@ -122,11 +122,11 @@ namespace Abilities.Bennet
 
             void OnFinished() => FinishAnimation();
 
-            _target.UnitAnimatorController.Finished += OnFinished;
+            _target.AnimatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _target.UnitAnimatorController.Finished -= OnFinished;
+            _target.AnimatorController.Finished -= OnFinished;
 
-            _target.UnitAnimatorController.Play(Constants.BaseAnimations.Idle); 
+            _target.AnimatorController.Play(Constants.BaseAnimations.Idle); 
         }
 
         private void FinishAbility() => 

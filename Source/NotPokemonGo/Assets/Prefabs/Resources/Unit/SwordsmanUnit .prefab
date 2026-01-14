@@ -329,6 +329,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6803579719754832547}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: <AnimatorController>k__BackingField
+      value: 
+      objectReference: {fileID: 6803579719754832547}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitAnimatorController>k__BackingField
       value: 
       objectReference: {fileID: 6803579719754832547}

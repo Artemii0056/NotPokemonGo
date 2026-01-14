@@ -1,6 +1,7 @@
 ﻿using Abilities;
 using Abilities.MV;
 using Effects;
+using UnityEngine;
 
 namespace ReactionSystems
 {
@@ -13,14 +14,20 @@ namespace ReactionSystems
 
         public bool CanReact(ReactionContext context)
         {
-            if (context.Effect.Type != EffectType.Damage)
-                return false;
+            Debug.Log(context.Armament == null);
             
-            if (context.Effect.DamageType != DamageType.Physical)
-                return false;
-            
-            return context.Target.AbilityModels.Exists(a =>
-                a.AbilityType == AbilityType.CounterAttack && a.IsReady());
+            // if (context.Effect == null )
+            //     return false;
+            //
+            // if (context.Effect.Type != EffectType.Damage)
+            //     return false;
+            //
+            // if (context.Effect.DamageType != DamageType.Physical)
+            //     return false;
+            //
+            // return context.Target.AbilityModels.Exists(a =>
+            //     a.AbilityType == AbilityType.CounterAttack && a.IsReady());
+                 return false;
         }
 
         public void React(ReactionContext context)

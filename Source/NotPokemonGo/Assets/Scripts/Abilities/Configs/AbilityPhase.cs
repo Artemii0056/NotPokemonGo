@@ -21,6 +21,8 @@ namespace Abilities.Configs
 
         [field: SerializeField] public PhaseType PhaseType { get; set; }
         public List<ParticleSystemBySpawnType> ParticleSystemBySpawnType;
+        
+        public List<PhaseSignalAction> SignalActions = new();
 
         public int AnimationCashName => Animator.StringToHash(AnimationClip.name);
     }

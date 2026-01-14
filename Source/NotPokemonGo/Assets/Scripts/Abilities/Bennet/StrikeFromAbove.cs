@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.MV;
-using Infrastructure;
 using Services;
 using Units;
 using Units.AnimationControllers;
@@ -17,7 +16,7 @@ namespace Abilities.Bennet
         private readonly ICoroutineRunner _coroutineRunner;
 
         private Coroutine _currentRoutine;
-        private UnitAnimatorController _animatorController;
+        private AnimatorController _animatorController;
         private UnitAnimatorTrigger _animatorTrigger;
 
         private bool _animationPlaying;
@@ -39,7 +38,7 @@ namespace Abilities.Bennet
 
         public void Play(Unit source, Unit target)
         {
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());

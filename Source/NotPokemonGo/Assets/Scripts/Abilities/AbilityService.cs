@@ -11,6 +11,7 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using QTESystem;
 using Services;
+using Units.Movement;
 using UnityEngine;
 using Unit = Units.Unit;
 
@@ -23,7 +24,6 @@ namespace Abilities
         private readonly IQteService _qteService;
         private readonly IEffectsApplier _effectsApplier;
         private readonly IArmamentViewFactory _viewFactory;
-        private readonly IArmamentLifecycle _armamentLifecycle;
         private readonly IArmamentSpawner _armamentSpawner;
 
         private Battlefield _battlefield;
@@ -41,14 +41,13 @@ namespace Abilities
             IQteService qteService,
             IBattleStateMachine battleStateMachine,
             IEffectsApplier effectsApplier, 
-            IArmamentViewFactory viewFactory, IArmamentLifecycle armamentLifecycle, IArmamentSpawner armamentSpawner)
+            IArmamentViewFactory viewFactory, IArmamentSpawner armamentSpawner)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
             _effectsApplier = effectsApplier;
             _viewFactory = viewFactory;
-            _armamentLifecycle = armamentLifecycle;
             _armamentSpawner = armamentSpawner;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
@@ -65,14 +64,14 @@ namespace Abilities
             switch (abilityType)
             {
                 case AbilityType.FireBall:
-                    var a = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService, _armamentSpawner);
+                    var a = new FireballSummoner2(_coroutineRunner, abilityModel, _qteService, _armamentSpawner, _effectsApplier);
                     a.Play(source, target);
                     //_activeAbilityHandlers.Add(_abilityHandler);
                     a.Finished += Continue;
                     break;
 
                 case AbilityType.FrostBall:
-                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel);
+                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel, new UnitMover());
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -105,7 +104,7 @@ namespace Abilities
                     break;
 
                 case AbilityType.BaseAttack:
-                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
+                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner, new UnitMover());
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;

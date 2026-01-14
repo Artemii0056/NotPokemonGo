@@ -122,7 +122,6 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IStatusesFactory, StatusesFactory>(Lifetime.Singleton);
             builder.Register<IEffectInfoFactory, EffectInfoFactory>(Lifetime.Singleton);
             
-            builder.Register<IArmamentLifecycle, ArmamentLifecycle>(Lifetime.Singleton);
             builder.Register<IArmamentSpawner, ArmamentSpawner>(Lifetime.Singleton);
         }
 
@@ -213,10 +212,6 @@ namespace Infrastructure.DI.Installers.Gloabals
                     .AsSelf();
 
                 builder.Register<LoosePanelState>(Lifetime.Singleton)
-                    .AsImplementedInterfaces()
-                    .AsSelf();
-
-                builder.Register<PlayerDodgeState>(Lifetime.Singleton)
                     .AsImplementedInterfaces()
                     .AsSelf();
             }

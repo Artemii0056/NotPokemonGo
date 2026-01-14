@@ -3,73 +3,87 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.MV;
-using DG.Tweening;
-using Infrastructure;
 using Services;
 using Units;
 using Units.AnimationControllers;
+using Units.Movement;
 using UnityEngine;
 
 namespace Abilities.Bennet
 {
-    public class BennetBaseAttack : IAbilityHandler
+    public sealed class BennetBaseAttack : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IUnitMover _unitMover;
         private readonly List<AbilityPart> _parts;
 
-        private UnitAnimatorController _animatorController;
+        private AnimatorController _animatorController;
         private UnitAnimatorTrigger _animatorTrigger;
+
         private Unit _source;
         private Unit _target;
-        private bool _animationPlaying;
 
-        private Coroutine _currentRoutine;
+        private Coroutine _routine;
+        private bool _animationPlaying;
+        private bool _stopped;
+
         private Vector3 _startPosition;
 
-        public event Action<IAbilityHandler> Finished;
-        
-        public Interruptibility Interruptibility { get; }
+        private const float StopDistance = 1.5f;
+
+        private const float LiftDelay = 0.10f;
+        private const float JumpPower = 1f;
+        private const int NumJumps = 1;
 
         public BennetBaseAttack(
             AbilityModel abilityModel,
-            ICoroutineRunner coroutineRunner)
+            ICoroutineRunner coroutineRunner,
+            IUnitMover unitMover)
         {
             _coroutineRunner = coroutineRunner;
+            _unitMover = unitMover;
 
             _parts = abilityModel.Parts;
-            
             Interruptibility = abilityModel.Interruptibility;
         }
+
+        public event Action<IAbilityHandler> Finished;
+        public Interruptibility Interruptibility { get; }
 
         public void Play(Unit source, Unit target)
         {
             _source = source;
             _target = target;
 
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
 
             _startPosition = source.transform.position;
 
-            _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
+            _stopped = false;
+            _routine = _coroutineRunner.StartCoroutine(Execute());
         }
 
         public void Stop()
         {
-            _coroutineRunner.StopCoroutine(_currentRoutine);
+            _stopped = true;
+
+            if (_routine != null)
+                _coroutineRunner.StopCoroutine(_routine);
+
+            _unitMover.Stop();
         }
 
-        private IEnumerator ExecuteAllParts()
+        private IEnumerator Execute()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            foreach (var part in _parts)
             {
-                var part = _parts[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
+                foreach (var phase in part.AbilityPhases)
                 {
-                    var phase = part.AbilityPhases[phaseIndex];
-
                     yield return ExecutePhase(phase);
+
+                    if (_stopped)
+                        yield break;
                 }
             }
 
@@ -80,69 +94,65 @@ namespace Abilities.Bennet
         {
             _animatorTrigger.SetTarget(_target);
             _animatorTrigger.SetPhase(phase);
+
             _animatorController.Play(phase.AnimationCashName);
 
             switch (phase.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source,
-                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
-                    break;
+                    yield return JumpTo(CalculateTargetPosition(_source.transform.position, _target.transform.position));
+                    yield break;
 
                 case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _startPosition);
-                    break;
+                    yield return JumpTo(_startPosition);
+                    yield break;
 
                 default:
                     yield return WaitForAnimation();
-                    break;
+                    yield break;
             }
+        }
+
+        private IEnumerator JumpTo(Vector3 targetPosition)
+        {
+            float animLen = _animatorController.GetAnimationLength();
+
+            float totalMoveWindow = animLen * 0.5f;
+            float moveDuration = Mathf.Max(0.01f, totalMoveWindow - LiftDelay);
+
+            _unitMover.JumpTo(
+                _source.transform,
+                targetPosition,
+                duration: moveDuration,
+                jumpPower: JumpPower,
+                numJumps: NumJumps,
+                delay: LiftDelay);
+
+            yield return new WaitWhile(() => !_stopped && _unitMover.IsMoving);
         }
 
         private IEnumerator WaitForAnimation()
         {
             _animationPlaying = true;
 
-            void OnFinished() => FinishAnimation();
+            void OnFinished() => _animationPlaying = false;
 
             _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
+            yield return new WaitWhile(() => !_stopped && _animationPlaying);
             _animatorController.Finished -= OnFinished;
         }
 
-        private IEnumerator MoveUnit(Unit unit, Vector3 target)
+        private static Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
         {
-            float liftDelay = 0.1f;
-            int jumpPower = 1;
-
-            yield return new WaitForSeconds(liftDelay);
-
-            var duration = _animatorController.GetAnimationLength() / 2;
-
-            float moveDuration = duration - liftDelay;
-            unit.transform.DOKill();
-
-            Tween jumpTween = unit.transform
-                .DOJump(target, jumpPower, 1, moveDuration)
-                .SetEase(Ease.InQuad);
-
-            yield return jumpTween.WaitForCompletion();
-        }
-
-        private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
-        {
-            float stopDistance = 1.5f;
-            Vector3 direction = (target - start).normalized;
-            return target - direction * stopDistance;
+            Vector3 dir = (target - start).normalized;
+            return target - dir * StopDistance;
         }
 
         private void FinishAbility()
         {
+            _unitMover.Stop();
             _animatorController.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
         }
-
-        private void FinishAnimation() =>
-            _animationPlaying = false;
     }
 }

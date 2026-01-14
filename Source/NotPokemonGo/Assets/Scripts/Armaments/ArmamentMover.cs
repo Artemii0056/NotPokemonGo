@@ -21,7 +21,7 @@ namespace Armaments
             switch (Armament.FlyingType)
             {
                 case ArmamentFlyingType.Arc:
-                    PlayArcFlight(); //Тогда нет смысла передавать 
+                    PlayArcFlight();
                     break;
 
                 case ArmamentFlyingType.Direct:
@@ -39,8 +39,10 @@ namespace Armaments
 
         private void PlayDirectFlight()
         {
-            float duration = 1f; //TODO В конфиг
+            float duration = 1f;
             Duration = duration;
+
+            Launched?.Invoke(this);
 
             Armament.transform.DOMove(Armament.Target.transform.position, duration)
                 .SetEase(Ease.Linear)
@@ -72,13 +74,9 @@ namespace Armaments
             Vector3[] path = { start, control, end };
 
             Armament.transform.DOPath(path, duration, PathType.CatmullRom)
-                .SetDelay(0.25f) //TODO В конфиг
                 .OnStart(() => Launched?.Invoke(this))
                 .SetEase(Ease.InExpo)
-                .OnComplete(() =>
-                {
-                    Reached?.Invoke(this);
-                });
+                .OnComplete(() => Reached?.Invoke(this));
         }
 
         private void PlayLaserFlight()
@@ -86,13 +84,11 @@ namespace Armaments
             float duration = .05f;
             Duration = duration;
 
+            Launched?.Invoke(this);
+
             DOTween.Sequence()
-                .Append(
-                    Armament.transform
-                        .DOMove(Armament.Target.transform.position, duration)
-                        .SetEase(Ease.Linear)
-                )
-                .AppendInterval(0.25f) //TODO В конфиг
+                .Append(Armament.transform.DOMove(Armament.Target.transform.position, duration).SetEase(Ease.Linear))
+                .AppendInterval(0.25f)
                 .OnComplete(() => Reached?.Invoke(this));
         }
     }

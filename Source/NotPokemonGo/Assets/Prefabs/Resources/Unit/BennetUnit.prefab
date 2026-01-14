@@ -411,6 +411,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2360843817326182424, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2552950014036497942, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -462,6 +466,10 @@ PrefabInstance:
     - target: {fileID: 3261846321331165846, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314789548855338799, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3881798629425095007, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_Enabled
@@ -559,6 +567,10 @@ PrefabInstance:
       propertyPath: abilityAnchors.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: <AnimatorController>k__BackingField
+      value: 
+      objectReference: {fileID: 4053421496063404515}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].spawnType
       value: 2
@@ -804,6 +816,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a1e848794dcba7740a7ce412d1979f01, type: 3}
       propertyPath: m_Name
       value: BennetModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a1e848794dcba7740a7ce412d1979f01, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: a1e848794dcba7740a7ce412d1979f01, type: 3}
       propertyPath: m_Controller

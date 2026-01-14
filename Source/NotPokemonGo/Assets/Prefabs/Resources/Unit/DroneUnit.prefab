@@ -484,6 +484,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: <AnimatorController>k__BackingField
+      value: 
+      objectReference: {fileID: 1806925355937353778}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].spawnType
       value: 0
       objectReference: {fileID: 0}

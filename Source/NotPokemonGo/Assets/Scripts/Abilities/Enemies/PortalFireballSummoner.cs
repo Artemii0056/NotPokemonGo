@@ -26,7 +26,7 @@ namespace Abilities.Enemies
         private readonly List<AbilityPart> _parts;
 
         private UnitAnimatorTrigger _animatorTrigger;
-        private UnitAnimatorController _animatorController;
+        private AnimatorController _animatorController;
 
         private bool _animationPlaying;
 
@@ -64,7 +64,7 @@ namespace Abilities.Enemies
             _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
 
             _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
@@ -89,10 +89,10 @@ namespace Abilities.Enemies
             
             IArmamentMover mover = _armamentSpawner.Create(context);
 
-            mover.Reached += OnReached;
             mover.Move();
+            mover.Reached += OnReached;
 
-            _timingBarQte = _qteService.PlayTimingBar(_currentPhase.QteType, _target, mover.Duration) as TimingBarQte; 
+            _timingBarQte = _qteService.PlayTimingBar(_currentPhase.QteType, _target, mover.Duration); 
             _timingBarQte.OnReached += OnQteFinished;
         }
 
@@ -110,7 +110,7 @@ namespace Abilities.Enemies
                 
                 case QteResult.Perfect:
                     Debug.Log("Perfect");
-                    _target.ChangeStatValue(1, StatType.DodgeFlag); //подумать над реализацией "временных" бафов
+                    //_target.ChangeStatValue(1, StatType.DodgeFlag); //подумать над реализацией "временных" бафов
                     break;
 
                 default:
@@ -120,6 +120,8 @@ namespace Abilities.Enemies
 
         private void OnReached(IArmamentMover mover) 
         {
+            Debug.Log(" OnReached");
+            
             mover.Reached -= OnReached;
             _timingBarQte.OnReached -= OnQteFinished;
 
@@ -128,7 +130,7 @@ namespace Abilities.Enemies
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
-            _currentPhase = phase;
+            _currentPhase = phase;      
 
             _animatorController.Play(phase.AnimationCashName);
             _animatorTrigger.SetPhase(phase);

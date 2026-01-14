@@ -1,6 +1,7 @@
 ﻿using Abilities.Configs;
 using Armaments;
 using Effects;
+using JetBrains.Annotations;
 using Units;
 
 namespace ReactionSystems
@@ -15,7 +16,7 @@ namespace ReactionSystems
             Phase = phase;
         }
         
-        public ReactionContext(Unit source, Unit target, Armament armament)
+        public ReactionContext(Unit source, Unit target, Armament armament) //TODO Вот тут залупа
         {
             Source = source;
             Target = target;
@@ -24,7 +25,7 @@ namespace ReactionSystems
         
         public Unit Source { get; }
         public Unit Target { get; }
-        public EffectSetup Effect { get; }
+        [CanBeNull] public EffectSetup Effect { get; }
         public AbilityPhase Phase { get; }
         public Armament Armament { get; }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abilities;
 using Abilities.Configs;
+using Abilities.Signals;
 using Armaments;
 using Castaments;
 using ReactionSystems;
@@ -16,7 +17,7 @@ namespace Units.AnimationControllers
     {
         public AbilityPhaseService AbilityPhaseService { get; }
 
-        private UnitAnimatorController _controller;
+        private AnimatorController _controller;
         private Unit _unit;
 
         public Dictionary<ParticleSpawnType, AbilityAnchor> _anchors; //TODO public
@@ -29,7 +30,7 @@ namespace Units.AnimationControllers
         public UnitAnimatorTrigger
         (
             Unit unit,
-            UnitAnimatorController controller,
+            AnimatorController controller,
             ICastamentApplicator castamentApplicator,
             ITargetSelector targetSelector,
             IReactionService reactionService
@@ -38,23 +39,30 @@ namespace Units.AnimationControllers
             _unit = unit;
             _controller = controller;
 
+            _controller.Signal += OnSignal;
+
             _particles = new List<ParticleSystem>();
 
             AbilityPhaseService =
                 new AbilityPhaseService(castamentApplicator, targetSelector, reactionService);
 
-            _controller.ParticleSystem1Started += OnParticleSystem1Started; //Отдельный класс с реакцией на партикды
-            _controller.ParticleSystem2Started += OnParticleSystem2Started;
+            _controller.Particle1 += OnParticle1; //Отдельный класс с реакцией на партикды
+            _controller.Particle2 += OnParticle2;
 
-            _controller.Attack1Started += OnAttack;
+            _controller.Attack1 += OnAttack;
 
             InitializeAnchors(_unit);
 
             _unit.HealthChanged += OnHealthChanged;
         }
 
+        private void OnSignal(PhaseSignal signal) => 
+            AbilityPhaseService.OnSignal(_phase, signal, _unit, _currentTarget);
+
         private void OnHealthChanged(float arg1, float arg2)
         {
+            Debug.Log("OnHealthChanged");
+            
             if (_unit.AbilityHandler == null)
                 return;
 
@@ -67,10 +75,10 @@ namespace Units.AnimationControllers
 
         public void Dispose()
         {
-            _controller.ParticleSystem1Started -= OnParticleSystem1Started;
-            _controller.ParticleSystem2Started -= OnParticleSystem2Started;
+            _controller.Particle1 -= OnParticle1;
+            _controller.Particle2 -= OnParticle2;
 
-            _controller.Attack1Started -= OnAttack;
+            _controller.Attack1 -= OnAttack;
 
             _unit.HealthChanged -= OnHealthChanged;
         }
@@ -85,7 +93,7 @@ namespace Units.AnimationControllers
             _phase = phase;
         }
 
-        private void OnParticleSystem1Started()
+        private void OnParticle1()
         {
             var info = _phase.ParticleSystemBySpawnType[0];
 
@@ -105,7 +113,7 @@ namespace Units.AnimationControllers
             }
         }
 
-        private void OnParticleSystem2Started()
+        private void OnParticle2()
         {
             var info = _phase.ParticleSystemBySpawnType[0];
 

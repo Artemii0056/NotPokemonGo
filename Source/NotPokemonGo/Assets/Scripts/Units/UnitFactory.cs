@@ -48,7 +48,7 @@ namespace Units
 
             unit.transform.SetParent(parentPosition, false);
             
-            UnitAnimatorController controller = unit.UnitAnimatorController;
+            AnimatorController controller = unit.AnimatorController;
 
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,

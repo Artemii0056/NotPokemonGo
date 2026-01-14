@@ -1,40 +1,53 @@
 using System;
+using Abilities.Signals;
 using UnityEngine;
 
 namespace Units.AnimationControllers
 {
-    public class UnitAnimatorController : MonoBehaviour
+    public class AnimatorController : MonoBehaviour
     {
         private Animator _animator;
 
-        public event Action ParticleSystem1Started;
-        public event Action ParticleSystem2Started;
-        public event Action ParticleSystem3Started;
-        public event Action Attack1Started;
-        public event Action Attack2Started;
+        public event Action Particle1;
+        public event Action Particle2;
+        public event Action Particle3;
+        public event Action Attack1;
+        public event Action Attack2;
 
         public event Action Finished;
+        
+        public event Action<PhaseSignal> Signal;
 
         private void Awake() =>
             _animator = GetComponent<Animator>();
+        
+        public void FlagSignal(int id)
+        {
+            var signal = PhaseSignalUtil.FromInt(id);
+            
+            if (signal == PhaseSignal.None)
+                return;
 
+            Signal?.Invoke(signal);
+        }
+        
         public void Play(int animationName) =>
-            _animator.Play(animationName);
-
+            _animator.Play(animationName, 0, 0f);
+        
         public void FlagParticleSystem1() =>
-            ParticleSystem1Started?.Invoke();
+            Particle1?.Invoke();
 
         public void FlagParticleSystem2() =>
-            ParticleSystem2Started?.Invoke();
+            Particle2?.Invoke();
 
         public void FlagParticleSystem3() =>
-            ParticleSystem3Started?.Invoke();
+            Particle3?.Invoke();
 
         public void FlagAttack() => 
-            Attack1Started?.Invoke();
+            Attack1?.Invoke();
 
         public void FlagAttack2() =>
-            Attack2Started?.Invoke();
+            Attack2?.Invoke();
 
         public void FlagFinishAnimation() => 
             Finished?.Invoke();

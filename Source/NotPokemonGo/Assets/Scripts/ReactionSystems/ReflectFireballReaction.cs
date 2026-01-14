@@ -19,7 +19,7 @@ namespace ReactionSystems
             ArmamentContext armamentContext =
                 new ArmamentContext(context.Target, context.Source, context.Armament.Setup, ArmamentFlyingType.Direct);
             
-            ArmamentMover mover = _spawner.Create(armamentContext);
+            IArmamentMover mover = _spawner.Create(armamentContext);
             mover.Move();
         }
     }

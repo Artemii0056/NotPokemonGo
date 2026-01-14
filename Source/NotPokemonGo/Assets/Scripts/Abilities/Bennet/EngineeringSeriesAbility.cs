@@ -26,7 +26,7 @@ namespace Abilities.Bennet
         private  Unit _target;
         
         private  Vector3 _startPosition;
-        private  UnitAnimatorController _animatorController;
+        private  AnimatorController _animatorController;
         private  UnitAnimatorTrigger _animatorTrigger;
         
         private Coroutine _currentRoutine;
@@ -56,7 +56,7 @@ namespace Abilities.Bennet
             _source = source;
             _target = target;
             
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
             _animatorTrigger = source.AnimatorTrigger;
             _startPosition = source.transform.position;
             

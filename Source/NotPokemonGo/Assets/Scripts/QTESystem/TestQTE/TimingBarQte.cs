@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace QTESystem.TestQTE
 {
-    public class TimingBarQte : QteButtonView
+    public class TimingBarQte : QteButtonView, IHasQteDuration, IProvidesQteResult
     {
         [SerializeField] private PartTimingBar _partTimingBar;  
         [SerializeField] private TimingBar _timingBar;
@@ -23,8 +23,11 @@ namespace QTESystem.TestQTE
         {
             _isRun = true;
 
-            _partTimingBar.Play();
-            _partTimingBar.Finished += OnPartFinished;
+            // _partTimingBar.Play();
+            // _partTimingBar.Finished += OnPartFinished;
+            
+            _timingBar.Play(_duration);
+            _timingBar.Result += OnResult;
         }
 
         public void InitializeTime(float time)
@@ -58,5 +61,11 @@ namespace QTESystem.TestQTE
 
             _timingBar.Result += OnResult;
         }
+
+        public void SetDuration(float duration)
+        {
+            _duration = duration;
+        }
+
     }
 }

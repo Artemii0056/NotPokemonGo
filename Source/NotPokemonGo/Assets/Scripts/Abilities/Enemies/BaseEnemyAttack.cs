@@ -7,74 +7,84 @@ using Abilities.MV;
 using Services;
 using Units;
 using Units.AnimationControllers;
+using Units.Movement;
 using UnityEngine;
 
 namespace Abilities.Enemies
 {
-    public class BaseEnemyAttack : IAbilityHandler
+    public sealed class BaseEnemyAttack : IAbilityHandler
     {
         private readonly ICoroutineRunner _coroutineRunner;
-
-        private UnitAnimatorTrigger _animatorTrigger;
-        private UnitAnimatorController _animatorController;
-
-        private bool _animationPlaying;
-
-        private Vector3 _startPosition;
-
+        private readonly UnitMover _unitMover;
         private readonly List<AbilityPart> _parts;
+
         private Unit _source;
         private Unit _target;
 
-        private Coroutine _currentRoutine;
+        private UnitAnimatorTrigger _animatorTrigger;
+        private AnimatorController _animatorController;
+
+        private Coroutine _routine;
+        private bool _animationPlaying;
+        private bool _stopped;
+
+        private Vector3 _startPosition;
+
+        private const float MoveSpeed = 4f;
+        private const float StopDistance = 1.5f;
 
         public BaseEnemyAttack(
             ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel)
+            AbilityModel abilityModel,
+            UnitMover unitMover)
         {
             _coroutineRunner = coroutineRunner;
-            Interruptibility = abilityModel.Interruptibility;
+            _unitMover = unitMover;
             _parts = abilityModel.Parts;
+            Interruptibility = abilityModel.Interruptibility;
         }
-        
-        public Interruptibility Interruptibility { get; }
 
+        public Interruptibility Interruptibility { get; }
         public event Action<IAbilityHandler> Finished;
 
         public void Play(Unit source, Unit target)
         {
-            _target = target;
             _source = source;
+            _target = target;
 
             _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
 
-            _startPosition = _source.transform.position;
-            _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
+            _startPosition = source.transform.position;
+            _stopped = false;
+
+            _routine = _coroutineRunner.StartCoroutine(Execute());
         }
 
         public void Stop()
         {
-            _coroutineRunner.StopCoroutine(_currentRoutine);
-            //FinishAbility(); //???
+            _stopped = true;
+
+            if (_routine != null)
+                _coroutineRunner.StopCoroutine(_routine);
+
+            _unitMover.Stop();
         }
 
-
-        private IEnumerator ExecuteAllParts()
+        private IEnumerator Execute()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            foreach (var part in _parts)
             {
-                var part = _parts[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
+                foreach (var phase in part.AbilityPhases)
                 {
-                    var phase = part.AbilityPhases[phaseIndex];
-
                     yield return ExecutePhase(phase);
+                    
+                    if (_stopped)
+                        yield break;
                 }
             }
 
-            FinishAbility();
+            Finish();
         }
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
@@ -86,12 +96,11 @@ namespace Abilities.Enemies
             switch (phase.PhaseType)
             {
                 case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source,
-                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
+                    yield return MoveTo(CalculateApproachPoint());
                     break;
 
                 case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _startPosition);
+                    yield return MoveTo(_startPosition);
                     break;
 
                 default:
@@ -100,47 +109,40 @@ namespace Abilities.Enemies
             }
         }
 
-        private void FinishAbility()
+        private IEnumerator MoveTo(Vector3 targetPosition)
         {
-            _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke(this);
+            _unitMover.MoveTo(_source.transform, targetPosition, MoveSpeed);
+
+            yield return new WaitWhile(() =>
+                !_stopped && _unitMover.IsMoving
+            );
         }
 
         private IEnumerator WaitForAnimation()
         {
             _animationPlaying = true;
 
-            void OnFinished() =>
-                FinishAnimation();
+            void OnFinished() => _animationPlaying = false;
 
             _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
+            yield return new WaitWhile(() => !_stopped && _animationPlaying);
             _animatorController.Finished -= OnFinished;
         }
 
-        private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
+        private Vector3 CalculateApproachPoint()
         {
-            float stopDistance = 1.5f;
-            Vector3 direction = (target - start).normalized;
-            return target - direction * stopDistance;
+            Vector3 start = _source.transform.position;
+            Vector3 target = _target.transform.position;
+
+            Vector3 dir = (target - start).normalized;
+            return target - dir * StopDistance;
         }
 
-        private void FinishAnimation() =>
-            _animationPlaying = false;
-
-        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
+        private void Finish()
         {
-            const float Speed = 4f;
-
-            while (Vector3.Distance(unit.transform.position, targetPosition) > offset)
-            {
-                unit.transform.position = Vector3.MoveTowards(
-                    unit.transform.position,
-                    targetPosition,
-                    Speed * Time.deltaTime);
-
-                yield return null;
-            }
+            _unitMover.Stop();
+            _animatorController.Play(Constants.BaseAnimations.Idle);
+            Finished?.Invoke(this);
         }
     }
 }

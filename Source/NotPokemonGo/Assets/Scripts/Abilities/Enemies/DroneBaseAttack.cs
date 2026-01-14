@@ -17,7 +17,7 @@ namespace Abilities.Enemies
         private readonly List<AbilityPart> _parts;
 
         private UnitAnimatorTrigger _animatorTrigger;
-        private UnitAnimatorController _animatorController;
+        private AnimatorController _animatorController;
         private Coroutine _currentRoutine;
         private bool _animationPlaying;
 
@@ -40,7 +40,7 @@ namespace Abilities.Enemies
             _source = source;
 
             _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.UnitAnimatorController;
+            _animatorController = source.AnimatorController;
 
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }

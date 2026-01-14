@@ -42,7 +42,7 @@ namespace QTESystem
             view.Construct(target, _timeService);
 
             TimingBarQte barView = (TimingBarQte)view;
-            barView.InitializeTime(duration);
+            barView.SetDuration(duration);
             _objectResolver.Inject(view);
 
             return barView;
@@ -75,6 +75,24 @@ namespace QTESystem
             }
 
             Completed?.Invoke(true);
+        }
+        
+        public IQteSession StartSession(QteType qteType, Unit target, float duration)
+        {
+            // if (qteType == QteType.Unknown)
+            //     return NullQteSession.Instance;
+
+            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
+
+            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
+
+            view.Construct(target, _timeService);
+            _objectResolver.Inject(view);
+
+            if (view is IHasQteDuration durationView)
+                durationView.SetDuration(duration);
+
+            return new QteViewSession(view);
         }
     }
 }
