@@ -3,156 +3,104 @@ using System.Collections;
 using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.MV;
+using Abilities.Signals;
 using Services;
 using Units;
 using Units.AnimationControllers;
-using Units.Movement;
 using UnityEngine;
 
 namespace Abilities.Bennet
 {
     public sealed class BennetBaseAttack : IAbilityHandler
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IUnitMover _unitMover;
+        private readonly ICoroutineRunner _runner;
         private readonly List<AbilityPart> _parts;
-
-        private AnimatorController _animatorController;
-        private UnitAnimatorTrigger _animatorTrigger;
 
         private Unit _source;
         private Unit _target;
+        private UnitAnimatorTrigger _trigger;
+        private AnimatorController _anim;
 
         private Coroutine _routine;
-        private bool _animationPlaying;
-        private bool _stopped;
 
-        private Vector3 _startPosition;
-
-        private const float StopDistance = 1.5f;
-
-        public BennetBaseAttack(
-            AbilityModel abilityModel,
-            ICoroutineRunner coroutineRunner,
-            IUnitMover unitMover)
-        {
-            _coroutineRunner = coroutineRunner;
-            _unitMover = unitMover;
-
-            _parts = abilityModel.Parts;
-            Interruptibility = abilityModel.Interruptibility;
-        }
+        private bool _waitingFinish;
+        private Action<int> _onSignal;
 
         public event Action<IAbilityHandler> Finished;
         public Interruptibility Interruptibility { get; }
+
+        public BennetBaseAttack(AbilityModel model, ICoroutineRunner runner)
+        {
+            _runner = runner;
+            _parts = model.Parts;
+            Interruptibility = model.Interruptibility;
+        }
 
         public void Play(Unit source, Unit target)
         {
             _source = source;
             _target = target;
 
-            _animatorController = source.AnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
+            _trigger = source.AnimatorTrigger;
+            _anim = source.AnimatorController;
 
-            _startPosition = source.transform.position;
+            source.SetStartPosition(source.transform.position);
 
-            _stopped = false;
-            _routine = _coroutineRunner.StartCoroutine(Execute());
+            _routine = _runner.StartCoroutine(Run());
         }
 
         public void Stop()
         {
-            _stopped = true;
-
             if (_routine != null)
-                _coroutineRunner.StopCoroutine(_routine);
+                _runner.StopCoroutine(_routine);
 
-            _unitMover.Stop();
+            UnbindFinishWait();
+            _routine = null;
         }
 
-        private IEnumerator Execute()
+        private IEnumerator Run()
         {
             foreach (var part in _parts)
             {
                 foreach (var phase in part.AbilityPhases)
-                {
-                    yield return ExecutePhase(phase);
-
-                    if (_stopped)
-                        yield break;
-                }
+                    yield return PlayPhase(phase);
             }
 
-            FinishAbility();
-        }
-
-        private IEnumerator ExecutePhase(AbilityPhase phase)
-        {
-            _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
-
-            _animatorController.Play(phase.AnimationCashName);
-
-            switch (phase.PhaseType)
-            {
-                case PhaseType.IsMovementPhase:
-                    yield return JumpTo(CalculateTargetPosition(_source.transform.position, _target.transform.position));
-                    yield break;
-
-                case PhaseType.IsReturnPhase:
-                    yield return JumpTo(_startPosition);
-                    yield break;
-
-                default:
-                    yield return WaitForAnimation();
-                    yield break;
-            }
-        }
-
-        private IEnumerator JumpTo(Vector3 targetPosition)
-        {
-          float liftDelay = 0.10f;
-            float animLen = _animatorController.GetAnimationLength();
-
-            float totalMoveWindow = animLen * 0.5f;
-            float moveDuration = Mathf.Max(0.01f, totalMoveWindow - liftDelay);
-            
-          float jumpPower = 1f;
-          int numJumps = 1;
-
-            _unitMover.JumpTo(
-                _source.transform,
-                targetPosition,
-                duration: moveDuration,
-                jumpPower: jumpPower,
-                numJumps: numJumps,
-                delay: liftDelay);
-
-            yield return new WaitWhile(() => !_stopped && _unitMover.IsMoving);
-        }
-
-        private IEnumerator WaitForAnimation()
-        {
-            _animationPlaying = true;
-
-            void OnFinished() => _animationPlaying = false;
-
-            _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => !_stopped && _animationPlaying);
-            _animatorController.Finished -= OnFinished;
-        }
-
-        private static Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
-        {
-            Vector3 dir = (target - start).normalized;
-            return target - dir * StopDistance;
-        }
-
-        private void FinishAbility()
-        {
-            _unitMover.Stop();
-            _animatorController.Play(Constants.BaseAnimations.Idle);
+            _anim.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
+        }
+
+        private IEnumerator PlayPhase(AbilityPhase phase)
+        {
+            _trigger.SetTarget(_target);
+            _trigger.SetPhase(phase);
+
+            BindFinishWait();
+            _anim.Play(phase.AnimationCashName);
+
+            yield return new WaitWhile(() => _waitingFinish);
+
+            UnbindFinishWait();
+        }
+
+        private void BindFinishWait()
+        {
+            _waitingFinish = true;
+            _onSignal = id =>
+            {
+                if (PhaseSignalUtil.FromInt(id) == PhaseSignal.Finish)
+                    _waitingFinish = false;
+            };
+            _anim.Signal += _onSignal;
+        }
+
+        private void UnbindFinishWait()
+        {
+            if (_onSignal != null && _anim != null)
+                _anim.Signal -= _onSignal;
+
+            _onSignal = null;
+            _waitingFinish = false;
         }
     }
 }

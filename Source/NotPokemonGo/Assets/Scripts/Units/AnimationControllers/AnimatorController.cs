@@ -1,97 +1,29 @@
 using System;
-using Abilities.Signals;
 using UnityEngine;
 
 namespace Units.AnimationControllers
 {
-    public class AnimatorController : MonoBehaviour
+    [RequireComponent(typeof(Animator))]
+    public sealed class AnimatorController : MonoBehaviour
     {
         private Animator _animator;
 
-        public event Action Particle1;
-        public event Action Particle2;
-        public event Action Particle3;
-        public event Action Attack1;
-        public event Action Attack2;
+        public event Action<int> Signal;
 
-        public event Action Finished;
-        
-        public event Action<PhaseSignal> Signal;
+        private void Awake() => _animator = GetComponent<Animator>();
 
-        private void Awake() =>
-            _animator = GetComponent<Animator>();
-        
-        public void FlagSignal(int id)
-        {
-            var signal = PhaseSignalUtil.FromInt(id);
-            Debug.Log($"[Anim] FlagSignal id={id} -> {signal}");
-            
-            if (signal == PhaseSignal.None)
-                return;
+        public void Play(int stateHash) => _animator.Play(stateHash, 0, 0f);
 
-            Signal?.Invoke(signal);
-        }
-        
-        public void Play(int animationName) =>
-            _animator.Play(animationName, 0, 0f);
-        
-        public void FlagParticleSystem1() =>
-            Particle1?.Invoke();
-
-        public void FlagParticleSystem2() =>
-            Particle2?.Invoke();
-
-        public void FlagParticleSystem3() =>
-            Particle3?.Invoke();
-
-        public void FlagAttack() => 
-            Attack1?.Invoke();
-
-        public void FlagAttack2() =>
-            Attack2?.Invoke();
-
-        public void FlagFinishAnimation() => 
-            Finished?.Invoke();
+        // Animation Event -> FlagSignal(<int>)
+        public void FlagSignal(int id) => Signal?.Invoke(id);
 
         public float GetAnimationLength()
         {
-            AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
+            var clips = _animator.GetCurrentAnimatorClipInfo(0);
+            if (clips.Length > 0 && clips[0].clip != null)
+                return clips[0].clip.length;
 
-            AnimatorClipInfo[] currentClips = _animator.GetCurrentAnimatorClipInfo(0);
-            AnimatorClipInfo[] nextClips = _animator.GetNextAnimatorClipInfo(0);
-
-            if (currentClips.Length > 0)
-                return currentClips[0].clip.length;
-
-            if (nextClips.Length > 0)
-                return nextClips[0].clip.length;
-
-            return currentState.length;
-        }
-
-        public string GetAnimationName()
-        {
-            string animationName = string.Empty;
-            
-            AnimatorClipInfo[] currentClips = _animator.GetCurrentAnimatorClipInfo(0);
-
-            if (currentClips.Length > 0)
-            {
-                animationName = currentClips[0].clip.name;
-            }
-
-            return animationName;
-        }
-
-
-        public void Pause()
-        {
-            _animator.speed = 0;
-        }
-
-        public void Continue()
-        {
-            _animator.speed = 1;
+            return _animator.GetCurrentAnimatorStateInfo(0).length;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Abilities
                     break;
 
                 case AbilityType.FrostBall:
-                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel, new UnitMover());
+                    _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel);
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -104,7 +104,7 @@ namespace Abilities
                     break;
 
                 case AbilityType.BaseAttack:
-                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner, new UnitMover());
+                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;

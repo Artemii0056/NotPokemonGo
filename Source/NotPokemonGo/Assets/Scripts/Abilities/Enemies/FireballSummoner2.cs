@@ -7,6 +7,7 @@ using Abilities.General;
 using Abilities.MV;
 using Abilities.Runtime;
 using Abilities.Runtime.Impact;
+using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
 using QTESystem;
@@ -28,6 +29,7 @@ namespace Abilities.Enemies
         private readonly IShotImpactResolver _impactResolver;
 
         private readonly List<AbilityPart> _parts;
+
         public Interruptibility Interruptibility { get; }
         public event Action<IAbilityHandler> Finished;
 
@@ -38,9 +40,8 @@ namespace Abilities.Enemies
 
         private Coroutine _routine;
 
-        // аккуратное ожидание конца анимации
-        private bool _waitingAnim;
-        private Action _onAnimFinished;
+        // ожидание завершения фазы по сигналу Finish
+        private bool _waitingFinishSignal;
 
         public FireballSummoner2(
             ICoroutineRunner runner,
@@ -60,9 +61,9 @@ namespace Abilities.Enemies
             var policy = new ImpactPolicy
             {
                 NoQteAction = ImpactAction.ApplyEffectsAndDestroy,
-                OnFail = ImpactAction.ApplyEffectsAndDestroy,
-                OnNormal = ImpactAction.DestroyOnly,
-                OnPerfect = ImpactAction.ReflectToSourceAndDestroy
+                OnFail      = ImpactAction.ApplyEffectsAndDestroy,
+                OnNormal    = ImpactAction.DestroyOnly,
+                OnPerfect   = ImpactAction.ReflectToSourceAndDestroy
             };
 
             _impactResolver = new DefaultShotImpactResolver(
@@ -80,7 +81,11 @@ namespace Abilities.Enemies
             _animTrigger = source.AnimatorTrigger;
             _anim = source.AnimatorController;
 
-            _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
+            // Подписка на сигналы анимации (для Finish)
+            _anim.Signal += OnAnimSignal;
+
+            // Подписка на armament из AbilityPhaseService
+            //_source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested += OnArmamentRequested;
 
             _routine = _runner.StartCoroutine(RunAbility());
         }
@@ -89,10 +94,6 @@ namespace Abilities.Enemies
         {
             if (_routine != null)
                 _runner.StopCoroutine(_routine);
-
-            // если остановили во время ожидания конца анимации — отписаться
-            if (_waitingAnim && _onAnimFinished != null && _anim != null)
-                _anim.Finished -= _onAnimFinished;
 
             Cleanup();
         }
@@ -108,37 +109,36 @@ namespace Abilities.Enemies
 
         private IEnumerator PlayPhase(AbilityPhase phase)
         {
+            // 1) ставим контекст фазы
             _animTrigger.SetPhase(phase);
             _animTrigger.SetTarget(_target);
+
+            // 2) готовимся ждать Finish-сигнал
+            _waitingFinishSignal = true;
+
+            // 3) играем клип
             _anim.Play(phase.AnimationCashName);
 
-            yield return WaitAnimFinish();
+            // 4) ждём пока клип пришлёт FlagSignal(Finish)
+            yield return new WaitWhile(() => _waitingFinishSignal);
         }
 
-        private IEnumerator WaitAnimFinish()
+        private void OnAnimSignal(int id)
         {
-            _waitingAnim = true;
-            _onAnimFinished = () => _waitingAnim = false;
-
-            _anim.Finished += _onAnimFinished;
-            yield return new WaitWhile(() => _waitingAnim);
-            _anim.Finished -= _onAnimFinished;
-
-            _onAnimFinished = null;
-            _waitingAnim = false;
+            if (id == (int)PhaseSignal.Finish)
+                _waitingFinishSignal = false;
         }
 
-        private void OnArmamentRequested(ArmamentRequest armamentRequest)
+        private void OnArmamentRequested(ArmamentRequest req)
         {
-            Debug.Log("Armament Requested");
-            
-            foreach (var context in ArmamentRequestMapper.ToContextsPerTarget(armamentRequest))
+            // Канон: фаерболы могут быть мульти-таргет — спавним по каждому
+            foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(req))
             {
-                var mover = _armamentSpawner.Create(context);
+                var mover = _armamentSpawner.Create(ctx);
 
-                var shot = new Shot(armamentRequest.Phase, context, mover)
+                var shot = new Shot(req.Phase, ctx, mover)
                 {
-                    RequiresQte = armamentRequest.Phase.QteType != QteType.Unknown
+                    RequiresQte = req.Phase.QteType != QteType.Unknown
                 };
 
                 StartShot(shot);
@@ -168,20 +168,23 @@ namespace Abilities.Enemies
         private void Finish()
         {
             Cleanup();
-            _animTrigger.ClearParticles();
             _anim.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
         }
 
         private void Cleanup()
         {
-            if (_source?.AnimatorTrigger != null)
-                _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
+            if (_anim != null)
+                _anim.Signal -= OnAnimSignal;
+
+            // if (_source?.AnimatorTrigger != null)
+            //     _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
 
             _qteBinder.CleanupAll();
             _shotTracker.CleanupAll();
 
             _routine = null;
+            _waitingFinishSignal = false;
         }
     }
 }

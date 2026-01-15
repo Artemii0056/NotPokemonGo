@@ -47,7 +47,7 @@ namespace Abilities.Bennet
 
             _target = target;
 
-            _source.AnimatorController.Pause();
+            //_source.AnimatorController.Pause();
 
             _coroutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
 
@@ -104,7 +104,7 @@ namespace Abilities.Bennet
 
             yield return jumpTween.WaitForCompletion();
             
-            _source.AnimatorController.Continue();
+           // _source.AnimatorController.Continue();
         }
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
@@ -122,9 +122,9 @@ namespace Abilities.Bennet
 
             void OnFinished() => FinishAnimation();
 
-            _target.AnimatorController.Finished += OnFinished;
+          //  _target.AnimatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _target.AnimatorController.Finished -= OnFinished;
+         //   _target.AnimatorController.Finished -= OnFinished;
 
             _target.AnimatorController.Play(Constants.BaseAnimations.Idle); 
         }

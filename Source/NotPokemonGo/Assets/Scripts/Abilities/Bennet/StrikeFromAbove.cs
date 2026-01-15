@@ -85,9 +85,9 @@ namespace Abilities.Bennet
 
             void OnFinished() => FinishAnimation();
 
-            _animatorController.Finished += OnFinished;
+           // _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
+           // _animatorController.Finished -= OnFinished;
         }
 
         private void FinishAnimation() =>

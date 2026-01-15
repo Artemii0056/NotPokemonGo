@@ -95,7 +95,7 @@ namespace Abilities.Bennet
             _animatorTrigger.SetPhase(phase);
             _animatorController.Play(phase.AnimationCashName);
 
-            HandleCamera(phase.CameraActionType);
+           // HandleCamera(phase.CameraActionType);
 
             if (phase.QteType != QteType.Unknown) 
                 yield return RunQtePhase(phase.QteType);
@@ -183,9 +183,9 @@ namespace Abilities.Bennet
             
             void OnFinished() => FinishAnimation();
 
-            _animatorController.Finished += OnFinished;
+          //  _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
+           // _animatorController.Finished -= OnFinished;
         }
 
         private IEnumerator MoveUnit(Unit unit, Vector3 target)

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Abilities.Runtime
 {
-    public abstract class PhasedAbilityHandler : IAbilityHandler
+    public abstract class PhasedAbilityHandler : IAbilityHandler //DELETE
     {
         protected readonly ICoroutineRunner Runner;
         protected readonly List<AbilityPart> Parts;
@@ -55,8 +55,8 @@ namespace Abilities.Runtime
             if (_routine != null)
                 Runner.StopCoroutine(_routine);
 
-            if (_waitingAnim && _onAnimFinished != null && AnimatorController != null)
-                AnimatorController.Finished -= _onAnimFinished;
+            // if (_waitingAnim && _onAnimFinished != null && AnimatorController != null)
+            //     AnimatorController.Finished -= _onAnimFinished;
 
             _waitingAnim = false;
             _onAnimFinished = null;
@@ -92,12 +92,14 @@ namespace Abilities.Runtime
             _waitingAnim = true;
             _onAnimFinished = () => _waitingAnim = false;
 
-            AnimatorController.Finished += _onAnimFinished;
-            yield return new WaitWhile(() => _waitingAnim);
-            AnimatorController.Finished -= _onAnimFinished;
+            // AnimatorController.Finished += _onAnimFinished;
+            // AnimatorController.Finished -= _onAnimFinished;
 
             _onAnimFinished = null;
             _waitingAnim = false;
+            
+            yield return new WaitWhile(() => _waitingAnim);
+            
         }
 
         protected void FinishInternal()

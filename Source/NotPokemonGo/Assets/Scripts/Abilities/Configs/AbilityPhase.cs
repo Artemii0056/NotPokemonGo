@@ -13,12 +13,13 @@ namespace Abilities.Configs
     public class AbilityPhase
     {
         public AnimationClip AnimationClip;
-        public ArmamentSetup ArmamentSetup;
-        public CastamentSetup CastamentSetup;
-        public TargetMode TargetMode;
+        
+        // public ArmamentSetup ArmamentSetup;
+        // public CastamentSetup CastamentSetup;
+        // public TargetMode TargetMode;
+        // public CameraActionType CameraActionType;
+        //
         public QteType QteType;
-        public CameraActionType CameraActionType;
-
         [field: SerializeField] public PhaseType PhaseType { get; set; }
         public List<ParticleSystemBySpawnType> ParticleSystemBySpawnType;
         
@@ -26,4 +27,4 @@ namespace Abilities.Configs
 
         public int AnimationCashName => Animator.StringToHash(AnimationClip.name);
     }
-}
+}       

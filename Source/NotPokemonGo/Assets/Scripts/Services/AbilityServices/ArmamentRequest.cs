@@ -6,17 +6,19 @@ namespace Services.AbilityServices
 {
     public readonly struct ArmamentRequest
     {
-        public ArmamentRequest(ArmamentSetup setup, Unit source, Unit[] targets, AbilityPhase phase)
+        public readonly AbilityPhase Phase;
+        public readonly PhaseSignalAction Action;
+        public readonly Unit Source;
+        public readonly Unit[] Targets;
+
+        public ArmamentRequest(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit[] targets)
         {
-            Setup = setup;
+            Phase = phase;
+            Action = action;
             Source = source;
             Targets = targets;
-            Phase = phase;
         }
 
-        public ArmamentSetup Setup { get; }
-        public Unit Source { get; }
-        public Unit[] Targets { get; }
-        public AbilityPhase Phase { get; }
+        public ArmamentSetup Setup => Action.ArmamentSetup;
     }
 }

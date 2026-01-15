@@ -2,19 +2,37 @@
 
 namespace Armaments
 {
-    public class ArmamentContext
+    public sealed class ArmamentContext
     {
-        public readonly Unit Source;
-        public readonly Unit Target;
-        public readonly ArmamentSetup Setup;
-        public readonly ArmamentFlyingType Flying;
+        public Unit Source { get; }
+        public Unit Target { get; }
+        public ArmamentSetup Setup { get; }
+        public ArmamentFlyingType FlyingType { get; }
 
-        public ArmamentContext(Unit source, Unit target, ArmamentSetup setup, ArmamentFlyingType flying)
+        public ArmamentContext? Parent { get; }
+
+        public ArmamentContext(
+            Unit source,
+            Unit target,
+            ArmamentSetup setup,
+            ArmamentFlyingType flyingType,
+            ArmamentContext parent = null)
         {
             Source = source;
             Target = target;
             Setup = setup;
-            Flying = flying;
+            FlyingType = flyingType;
+            Parent = parent;
+        }
+
+        public ArmamentContext CreateReflected(Unit newTarget)
+        {
+            return new ArmamentContext(
+                source: Target,
+                target: newTarget,
+                setup: Setup,
+                flyingType: ArmamentFlyingType.Direct,
+                parent: this);
         }
     }
 }

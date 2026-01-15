@@ -1,33 +1,28 @@
 ﻿using System.Collections.Generic;
 using Armaments;
+using Units;
 
 namespace Services.AbilityServices
 {
     public static class ArmamentRequestMapper
     {
-        public static IEnumerable<ArmamentContext> ToContextsPerTarget(ArmamentRequest req)
+        public static IEnumerable<ArmamentContext> EnumerateContexts(ArmamentRequest req)
         {
+            if (req.Source == null) yield break;
+
             var setup = req.Setup;
-            var source = req.Source;
+            if (setup == null || !setup.HasSetupData) yield break;
 
-            if (source == null || setup == null || req.Targets == null)
-                yield break;
+            var targets = req.Targets;
+            if (targets == null || targets.Length == 0) yield break;
 
-            foreach (var t in req.Targets)
+            for (int i = 0; i < targets.Length; i++)
             {
-                if (t == null) 
-                    continue;
-                
-                yield return new ArmamentContext(source, t, setup, setup.FlyingType);
+                Unit t = targets[i];
+                if (t == null) continue;
+
+                yield return new ArmamentContext(req.Source, t, setup, setup.FlyingType);
             }
-        }
-
-        public static ArmamentContext? ToSingleContextFirstTarget(in ArmamentRequest req)
-        {
-            if (req.Targets == null || req.Targets.Length == 0 || req.Targets[0] == null)
-                return null;
-
-            return new ArmamentContext(req.Source, req.Targets[0], req.Setup, req.Setup.FlyingType);
         }
     }
 }

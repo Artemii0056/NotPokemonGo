@@ -4,12 +4,17 @@ using Abilities.MV;
 using Armaments.Spawner;
 using Castaments;
 using Characters;
+using DefaultNamespace;
 using Platoons;
 using ReactionSystems;
+using Services;
+using Services.AbilityServices;
+using Services.Audio;
 using Stats;
 using UI;
 using UI.Sliders;
 using Units.AnimationControllers;
+using Units.Movement;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -22,22 +27,31 @@ namespace Units
         private readonly ICastamentApplicator _castamentApplicator;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
+        private readonly IParticleSpawner _particleSpawner;
+        private readonly ICameraService _cameraService;
+        private readonly IAudioService _audioService;
 
         public UnitFactory(
             IObjectResolver objectResolver,
             ICastamentApplicator castamentApplicator,
             ITargetSelector targetSelector,
-            IAbilityService abilityService, 
-            IReactionService reactionService, 
-            IArmamentSpawner spawner)
+            IAbilityService abilityService,
+            IReactionService reactionService,
+            IArmamentSpawner spawner,
+            IParticleSpawner particleSpawner,
+            ICameraService cameraService, 
+            IAudioService audioService) // <-- добавил
         {
             _objectResolver = objectResolver;
             _castamentApplicator = castamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
+            _particleSpawner = particleSpawner;
+            _cameraService = cameraService;
+            _audioService = audioService;
 
-            _reactionService.Register(new ReflectFireballReaction(spawner)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
-            _reactionService.Register(new CounterattackReaction(abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+            _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
+            _reactionService.Register(new CounterattackReaction(abilityService));
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -53,9 +67,7 @@ namespace Units
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,
                 controller,
-                _castamentApplicator,
-                _targetSelector, 
-                _reactionService);
+                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(), _cameraService));
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 

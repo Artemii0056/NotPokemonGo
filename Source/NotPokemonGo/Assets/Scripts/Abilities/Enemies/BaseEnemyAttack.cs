@@ -4,44 +4,34 @@ using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
+using Abilities.Signals;
 using Services;
 using Units;
 using Units.AnimationControllers;
-using Units.Movement;
 using UnityEngine;
 
 namespace Abilities.Enemies
 {
     public sealed class BaseEnemyAttack : IAbilityHandler
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly UnitMover _unitMover;
+        private readonly ICoroutineRunner _runner;
         private readonly List<AbilityPart> _parts;
 
         private Unit _source;
         private Unit _target;
 
-        private UnitAnimatorTrigger _animatorTrigger;
-        private AnimatorController _animatorController;
+        private UnitAnimatorTrigger _trigger;
+        private AnimatorController _anim;
 
         private Coroutine _routine;
-        private bool _animationPlaying;
-        private bool _stopped;
 
-        private Vector3 _startPosition;
+        private bool _waitingFinishSignal;
 
-        private const float MoveSpeed = 4f;
-        private const float StopDistance = 1.5f;
-
-        public BaseEnemyAttack(
-            ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel,
-            UnitMover unitMover)
+        public BaseEnemyAttack(ICoroutineRunner runner, AbilityModel model)
         {
-            _coroutineRunner = coroutineRunner;
-            _unitMover = unitMover;
-            _parts = abilityModel.Parts;
-            Interruptibility = abilityModel.Interruptibility;
+            _runner = runner;
+            _parts = model.Parts;
+            Interruptibility = model.Interruptibility;
         }
 
         public Interruptibility Interruptibility { get; }
@@ -52,97 +42,73 @@ namespace Abilities.Enemies
             _source = source;
             _target = target;
 
-            _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.AnimatorController;
+            _trigger = source.AnimatorTrigger;
+            _anim = source.AnimatorController;
 
-            _startPosition = source.transform.position;
-            _stopped = false;
-
-            _routine = _coroutineRunner.StartCoroutine(Execute());
+            _routine = _runner.StartCoroutine(Run());
         }
 
         public void Stop()
         {
-            _stopped = true;
-
             if (_routine != null)
-                _coroutineRunner.StopCoroutine(_routine);
+                _runner.StopCoroutine(_routine);
 
-            _unitMover.Stop();
+            Cleanup();
         }
 
-        private IEnumerator Execute()
+        private IEnumerator Run()
         {
+            // подписываемся один раз
+            _anim.Signal += OnSignal;
+
             foreach (var part in _parts)
             {
                 foreach (var phase in part.AbilityPhases)
                 {
-                    yield return ExecutePhase(phase);
-                    
-                    if (_stopped)
-                        yield break;
+                    yield return PlayPhase(phase);
                 }
             }
 
             Finish();
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        private IEnumerator PlayPhase(AbilityPhase phase)
         {
-            _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
-            _animatorController.Play(phase.AnimationCashName);
+            _waitingFinishSignal = true;
 
-            switch (phase.PhaseType)
-            {
-                case PhaseType.IsMovementPhase:
-                    yield return MoveTo(CalculateApproachPoint());
-                    break;
+            _trigger.SetTarget(_target);
+            _trigger.SetPhase(phase);
 
-                case PhaseType.IsReturnPhase:
-                    yield return MoveTo(_startPosition);
-                    break;
+            _anim.Play(phase.AnimationCashName);
 
-                default:
-                    yield return WaitForAnimation();
-                    break;
-            }
+            // 1) ждём PhaseSignal.Finish (99) из клипа
+            yield return new WaitWhile(() => _waitingFinishSignal);
+
+            // 2) Rule A: ждём, пока кирпичики фазы дозавершатся
+            
         }
 
-        private IEnumerator MoveTo(Vector3 targetPosition)
+        private void OnSignal(int id)
         {
-            _unitMover.MoveTo(_source.transform, targetPosition, MoveSpeed);
-
-            yield return new WaitWhile(() =>
-                !_stopped && _unitMover.IsMoving
-            );
-        }
-
-        private IEnumerator WaitForAnimation()
-        {
-            _animationPlaying = true;
-
-            void OnFinished() => _animationPlaying = false;
-
-            _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => !_stopped && _animationPlaying);
-            _animatorController.Finished -= OnFinished;
-        }
-
-        private Vector3 CalculateApproachPoint()
-        {
-            Vector3 start = _source.transform.position;
-            Vector3 target = _target.transform.position;
-
-            Vector3 dir = (target - start).normalized;
-            return target - dir * StopDistance;
+            // handler реагирует ТОЛЬКО на Finish
+            if (id == (int)PhaseSignal.Finish)
+                _waitingFinishSignal = false;
         }
 
         private void Finish()
         {
-            _unitMover.Stop();
-            _animatorController.Play(Constants.BaseAnimations.Idle);
+            Cleanup();
+            _anim.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
+        }
+
+        private void Cleanup()
+        {
+            if (_anim != null)
+                _anim.Signal -= OnSignal;
+
+            _routine = null;
+            _waitingFinishSignal = false;
         }
     }
 }

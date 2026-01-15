@@ -93,8 +93,11 @@ namespace Units
         public float GetStat(StatType statType) =>
             _stats[statType].CurrentValue;
 
-        public void ChangeStatValue(float value, StatType statType) => 
+        public void ChangeStatValue(float value, StatType statType)
+        {
+            Debug.Log(statType + " " + value);
             _stats[statType].SetValue(value);
+        }
 
         public void AddStatus(Status status)
         {
@@ -166,5 +169,13 @@ namespace Units
 
         public void RememberAbility(IAbilityHandler activeAbilityHandlers) =>
             AbilityHandler = activeAbilityHandlers;
+
+        public void CaptureStartPosition()
+            => StartPosition = transform.position;
+            
+        public void SetStartPosition(Vector3 pos)
+        {
+            StartPosition = pos;
+        }
     }
 }

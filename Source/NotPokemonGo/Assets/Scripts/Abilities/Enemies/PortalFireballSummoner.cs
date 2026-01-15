@@ -85,15 +85,15 @@ namespace Abilities.Enemies
 
         private void OnArmamentRequested(AbilityPhase phase) 
         {
-            ArmamentContext context = new ArmamentContext(_source, _target, phase.ArmamentSetup, phase.ArmamentSetup.FlyingType);
-            
-            IArmamentMover mover = _armamentSpawner.Create(context);
-
-            mover.Move();
-            mover.Reached += OnReached;
-
-            _timingBarQte = _qteService.PlayTimingBar(_currentPhase.QteType, _target, mover.Duration); 
-            _timingBarQte.OnReached += OnQteFinished;
+            // ArmamentContext context = new ArmamentContext(_source, _target, phase.ArmamentSetup, phase.ArmamentSetup.FlyingType);
+            //
+            // IArmamentMover mover = _armamentSpawner.Create(context);
+            //
+            // mover.Move();
+            // mover.Reached += OnReached;
+            //
+            // _timingBarQte = _qteService.PlayTimingBar(_currentPhase.QteType, _target, mover.Duration); 
+            // _timingBarQte.OnReached += OnQteFinished;
         }
 
         private void OnQteFinished(QteResult result)
@@ -141,7 +141,7 @@ namespace Abilities.Enemies
 
         private void FinishAbility()
         {
-            _animatorTrigger.ClearParticles();
+            //_animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
            // _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
             Finished?.Invoke(this);
@@ -154,9 +154,9 @@ namespace Abilities.Enemies
             void OnFinished() =>
                 FinishAnimation();
 
-            _animatorController.Finished += OnFinished;
+            //_animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
+          //  _animatorController.Finished -= OnFinished;
         }
 
         private void FinishAnimation() =>

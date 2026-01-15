@@ -70,7 +70,7 @@ namespace Abilities.Enemies
 
         private void FinishAbility()
         {
-            _animatorTrigger.ClearParticles();
+            //_animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
             Finished?.Invoke(this);
         }
@@ -82,9 +82,9 @@ namespace Abilities.Enemies
             void OnFinished() =>
                 FinishAnimation();
 
-            _animatorController.Finished += OnFinished;
+           // _animatorController.Finished += OnFinished;
             yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
+            //_animatorController.Finished -= OnFinished;
         }
 
         private void FinishAnimation() =>

@@ -3,6 +3,7 @@ using Armaments;
 using Armaments.Spawner;
 using Battlefields;
 using Castaments;
+using DefaultNamespace;
 using Effects;
 using Effects.Factory;
 using Infrastructure.DI.Initializers.Globals;
@@ -123,6 +124,7 @@ namespace Infrastructure.DI.Installers.Gloabals
             builder.Register<IEffectInfoFactory, EffectInfoFactory>(Lifetime.Singleton);
             
             builder.Register<IArmamentSpawner, ArmamentSpawner>(Lifetime.Singleton);
+            builder.Register<IParticleSpawner, ParticleSpawner>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)
