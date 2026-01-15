@@ -102,9 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3300c2301db74d73aeaf36d67208251c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityAnimationControllerBase: {fileID: 0}
+  abilityAnchors: []
+  <UnitAnimatorController>k__BackingField: {fileID: 0}
   <UnitType>k__BackingField: 0
   abilityPos: {fileID: 6040854845062619438}
+  virtualCamera: {fileID: 0}
 --- !u!1 &8770934594033795297
 GameObject:
   m_ObjectHideFlags: 0

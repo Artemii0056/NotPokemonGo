@@ -7,12 +7,15 @@ namespace AbilitiesTestFeature.Services
 { 
 	public class EffectResolverAbilityTests : IEffectResolver
 	{
+		public event Action<Unit, Unit, float, EffectInfo> EffectApllayed;
+
 		public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
 		{
 			if (target.GetStat(StatType.Invulnerability) != 0)
 				return;
-
+			
 			float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
+			EffectApllayed?.Invoke(source, target, finalValue, effect);
 			target.ChangeStatValue(finalValue, effect.TargetType);
 		}
 
@@ -23,6 +26,7 @@ namespace AbilitiesTestFeature.Services
 
 			target.ChangeStatValue(effect.Value, effect.TargetType);
 		}
+		
 
 		private float CalculateStatModification(
 			Unit source,

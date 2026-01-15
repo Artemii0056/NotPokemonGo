@@ -108,9 +108,10 @@ namespace Units
         {
             UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
-
+            UnitDamageView unitDamageView = unit.GetComponentInChildren<UnitDamageView>();
             _objectResolver.Inject(unitViewPanel);
             _objectResolver.Inject(slidersView);
+            _objectResolver.Inject(unitDamageView);
 
             unitViewPanel.Construct(unit);
         }

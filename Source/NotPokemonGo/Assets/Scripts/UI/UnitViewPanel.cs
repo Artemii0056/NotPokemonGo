@@ -34,7 +34,7 @@ namespace UI
             _unit.StatusRemoved -= OnStatusRemoved;
             _unit.StatusAdded -= OnStatusAdded;
             _unit.AgilityChanged -= OnAgilityChanged;
-            _unit.Death += OnUnitDead;
+            _unit.Death -= OnUnitDead;
         }
 
         [Inject]

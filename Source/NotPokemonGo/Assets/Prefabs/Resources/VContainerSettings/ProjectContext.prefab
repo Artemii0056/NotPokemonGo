@@ -74,7 +74,7 @@ MonoBehaviour:
   _inputReader: {fileID: 8491245413026243748}
   _abilitiesPanel: {fileID: 5021681746254418454}
   _battleUpgradePanel: {fileID: 8601748616846814497}
-  _gameTypeScopeInitializer: 2
+  _gameTypeScopeInitializer: 1
 --- !u!114 &599879259054730057
 MonoBehaviour:
   m_ObjectHideFlags: 0
