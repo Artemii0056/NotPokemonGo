@@ -1,138 +1,108 @@
 ﻿using System;
+using Abilities.Configs;
 using Cinemachine;
 using Services;
 using Units;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Cameras
+public sealed class CinemachineCameraService : ICameraService
 {
-    public sealed class CinemachineCameraService : ICameraService
+    private const int ActivePriority = 20;
+    private const int InactivePriority = 0;
+
+    private readonly CinemachineBrain _brain;
+
+    public CinemachineCameraService()
     {
-        private readonly CinemachineBrain _brain;
+        _brain = Object.FindFirstObjectByType<CinemachineBrain>();
+    }
 
-        public CinemachineCameraService(CinemachineBrain brain)
+    public void Play(CameraCommand cmd, Unit source, Unit target, float blendTimeout, Action onComplete)
+    {
+        if (_brain == null)
         {
-            _brain = brain;
+            onComplete?.Invoke();
+            return;
         }
-
-        public void FocusOnSource(Unit source, Unit target, float duration, Action onComplete)
+        
+        switch (cmd)
         {
-            throw new NotImplementedException();
-        }
+            
+            case CameraCommand.FocusOnSource:
+                SetPriority(source, ActivePriority);
+                SetPriority(target, InactivePriority);
+                break;
 
-        public void FocusOnTarget(Unit source, Unit target, float duration, Action onComplete)
-        {
-            throw new NotImplementedException();
-        }
+            case CameraCommand.FocusOnTarget:
+                SetPriority(source, InactivePriority);
+                SetPriority(target, ActivePriority);
+                break;
 
-        public void Reset(float duration, Action onComplete)
-        {
-            throw new NotImplementedException();
-        }
+            case CameraCommand.Reset:
+                SetPriority(source, InactivePriority);
+                SetPriority(target, InactivePriority);
+                break;
 
-        public void Play(Abilities.Configs.CameraCommand cmd, Unit source, Unit target, float blendTimeout, Action onComplete)
-        {
-            // если Cinemachine не настроен — не ломаем фазу
-            if (_brain == null)
-            {
+            default:
                 onComplete?.Invoke();
                 return;
-            }
-
-            switch (cmd)
-            {
-                case Abilities.Configs.CameraCommand.FocusOnSource:
-                    Enable(source, true);
-                    Enable(target, false);
-                    break;
-
-                case Abilities.Configs.CameraCommand.FocusOnTarget:
-                    Enable(source, false);
-                    Enable(target, true);
-                    break;
-
-                case Abilities.Configs.CameraCommand.Reset:
-                    Enable(source, false);
-                    Enable(target, false);
-                    break;
-
-                default:
-                    onComplete?.Invoke();
-                    return;
-            }
-
-            // Если бленда нет — можно сразу завершать
-            if (_brain.ActiveBlend == null)
-            {
-                onComplete?.Invoke();
-                return;
-            }
-
-            // Вызов “когда можно продолжать” делает не handler, а сервис — по Rule A
-            // Но нам нельзя корутины тут: значит используем таймер через Update-объект или tween.
-            // Самый лёгкий способ без новых монобехов: delayed invoke через Unity.
-            // Честно: это компромисс. Если хочешь “идеально” — вынесем в ITimer/CoroutineRunner.
-            WaitBlendEndOrTimeout(blendTimeout, onComplete);
         }
 
-        public void Shake(float intensity, float duration, Action onComplete)
-        {
-            throw new NotImplementedException();
-        }
+        // ждём появления бленда (он появляется не в тот же кадр)
+        CameraServiceRunner.Instance.Run(_brain, blendTimeout, onComplete);
+    }
 
-        private void Enable(Unit u, bool enabled)
-        {
-            if (u == null) return;
-            if (u.virtualCamera == null) return;
-            u.virtualCamera.enabled = enabled;
-        }
+    private static void SetPriority(Unit unit, int priority)
+    {
+        if (unit == null) 
+            return;
+        //unit.virtualCamera.
+        
+        if (unit.virtualCamera == null) 
+            return;
 
-        private void WaitBlendEndOrTimeout(float timeout, Action onComplete)
-        {
-            // Создаём маленький hidden runner один раз — самый быстрый способ.
-            // Если у тебя уже есть ICoroutineRunner/ITimeService — скажи, сделаем через него.
-            CameraServiceRunner.Instance.Run(_brain, Mathf.Max(0.01f, timeout), onComplete);
-        }
+        unit.virtualCamera.Priority = priority;
+    }
 
-        /// <summary>
-        /// Внутренний “микро-раннер” для ожидания конца бленда без внедрения корутин в AbilityHandler.
-        /// </summary>
-        private sealed class CameraServiceRunner : MonoBehaviour
+    private sealed class CameraServiceRunner : MonoBehaviour
+    {
+        private static CameraServiceRunner _instance;
+        public static CameraServiceRunner Instance
         {
-            public static CameraServiceRunner Instance
+            get
             {
-                get
-                {
-                    if (_instance != null) return _instance;
-                    var go = new GameObject("[CameraServiceRunner]");
-                    DontDestroyOnLoad(go);
-                    _instance = go.AddComponent<CameraServiceRunner>();
-                    return _instance;
-                }
+                if (_instance != null) return _instance;
+                var go = new GameObject("[CameraServiceRunner]");
+                DontDestroyOnLoad(go);
+                _instance = go.AddComponent<CameraServiceRunner>();
+                return _instance;
             }
-            private static CameraServiceRunner _instance;
+        }
 
-            public void Run(CinemachineBrain brain, float timeout, Action onComplete)
+        public void Run(CinemachineBrain brain, float timeout, Action onComplete)
+        {
+            StopAllCoroutines();
+            StartCoroutine(WaitBlend(brain, timeout, onComplete));
+        }
+
+        private System.Collections.IEnumerator WaitBlend(
+            CinemachineBrain brain,
+            float timeout,
+            Action onComplete)
+        {
+            float t = 0f;
+
+            // Ждём, пока Cinemachine обновится
+            yield return null;
+
+            while (brain != null && brain.ActiveBlend != null && t < timeout)
             {
-                StopAllCoroutines();
-                StartCoroutine(Wait(brain, timeout, onComplete));
-            }
-
-            private System.Collections.IEnumerator Wait(CinemachineBrain brain, float timeout, Action onComplete)
-            {
-                float t = 0f;
-
-                // ждём хотя бы кадр, чтобы ActiveBlend успел обновиться
+                t += Time.deltaTime;
                 yield return null;
-
-                while (brain != null && brain.ActiveBlend != null && t < timeout)
-                {
-                    t += Time.deltaTime;
-                    yield return null;
-                }
-
-                onComplete?.Invoke();
             }
+
+            onComplete?.Invoke();
         }
     }
 }

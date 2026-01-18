@@ -1,93 +1,37 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
+using Abilities.Runtime;
+using Abilities.Runtime.Policies;
 using Services;
 using Units;
-using Units.AnimationControllers;
-using UnityEngine;
 
 namespace Abilities.Enemies
 {
-    public class DroneBaseAttack : IAbilityHandler
+    /// <summary>
+    /// Атака дрона — тот же фазовый проигрыватель.
+    /// </summary>
+    public sealed class DroneBaseAttack : IAbilityHandler
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly List<AbilityPart> _parts;
-
-        private UnitAnimatorTrigger _animatorTrigger;
-        private AnimatorController _animatorController;
-        private Coroutine _currentRoutine;
-        private bool _animationPlaying;
-
-        private Unit _target;
-        private Unit _source;
+        private readonly ComposedPhasedAbilityHandler _impl;
 
         public DroneBaseAttack(AbilityModel abilityModel, ICoroutineRunner coroutineRunner)
         {
-            _parts = abilityModel.Parts;
-            _coroutineRunner = coroutineRunner;
+            _impl = new ComposedPhasedAbilityHandler(
+                abilityModel,
+                coroutineRunner,
+                new IAbilityPolicy[] { new FinishSignalPolicy() });
         }
 
-        public Interruptibility Interruptibility { get; }
-
-        public event Action<IAbilityHandler> Finished;
-
-        public void Play(Unit source, Unit target)
+        public event Action<IAbilityHandler> Finished
         {
-            _target = target;
-            _source = source;
-
-            _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.AnimatorController;
-
-            _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
+            add => _impl.Finished += value;
+            remove => _impl.Finished -= value;
         }
 
-        public void Stop() => 
-            _coroutineRunner.StopCoroutine(_currentRoutine);
-
-        private IEnumerator ExecuteAllParts()
-        {
-            foreach (var part in _parts)
-            {
-                foreach (var phase in part.AbilityPhases)
-                    yield return ExecutePhase(phase);
-            }
-
-            FinishAbility();
-        }
-
-        private IEnumerator ExecutePhase(AbilityPhase phase)
-        {
-            _animatorController.Play(phase.AnimationCashName);
-            _animatorTrigger.SetPhase(phase);
-            _animatorTrigger.SetTarget(_target);
-
-            yield return WaitForAnimation();
-        }
-
-        private void FinishAbility()
-        {
-            //_animatorTrigger.ClearParticles();
-            _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke(this);
-        }
-
-        private IEnumerator WaitForAnimation()
-        {
-            _animationPlaying = true;
-
-            void OnFinished() =>
-                FinishAnimation();
-
-           // _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
-            //_animatorController.Finished -= OnFinished;
-        }
-
-        private void FinishAnimation() =>
-            _animationPlaying = false;
+        public void Play(Unit source, Unit target) => _impl.Play(source, target);
+        public void Stop() => _impl.Stop();
+        public Interruptibility Interruptibility => _impl.Interruptibility;
     }
 }

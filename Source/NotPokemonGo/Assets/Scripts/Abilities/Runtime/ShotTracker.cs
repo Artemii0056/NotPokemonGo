@@ -16,6 +16,8 @@ namespace Abilities.Runtime
 
         private readonly Dictionary<IArmamentMover, Entry> _entries = new();
 
+        public int ActiveCount => _entries.Count;
+
         public void Register(Shot shot, Action<Shot> onLaunched, Action<Shot> onReached)
         {
             if (shot == null) throw new ArgumentNullException(nameof(shot));

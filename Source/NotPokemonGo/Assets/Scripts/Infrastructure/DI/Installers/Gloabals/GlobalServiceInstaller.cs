@@ -2,7 +2,9 @@
 using Armaments;
 using Armaments.Spawner;
 using Battlefields;
+using Cameras;
 using Castaments;
+using Cinemachine;
 using DefaultNamespace;
 using Effects;
 using Effects.Factory;
@@ -17,6 +19,7 @@ using QTESystem;
 using ReactionSystems;
 using Services;
 using Services.AssetManagement;
+using Services.Audio;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
@@ -125,6 +128,10 @@ namespace Infrastructure.DI.Installers.Gloabals
             
             builder.Register<IArmamentSpawner, ArmamentSpawner>(Lifetime.Singleton);
             builder.Register<IParticleSpawner, ParticleSpawner>(Lifetime.Singleton);
+            
+         //   builder.RegisterComponentInHierarchy<CinemachineBrain>(); //Вопросики
+            builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);
+            builder.Register<IAudioService, AudioService>(Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachines(IContainerBuilder builder)

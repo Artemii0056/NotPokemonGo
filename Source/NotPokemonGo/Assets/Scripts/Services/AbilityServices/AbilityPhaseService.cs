@@ -1,23 +1,28 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.Signals;
+using Abilities.Runtime;
 using Cameras;
 using Castaments;
 using DefaultNamespace;
+using Services.AbilityServices.Executors;
+using Services.Audio;
+using TimeServices;
 using Units;
 using Units.Movement;
-using UnityEngine;
 
 namespace Services.AbilityServices
 {
+    /// <summary>
+    /// Listens for phase signals and triggers configured actions.
+    /// </summary>
     public sealed class AbilityPhaseService
     {
-        private readonly ICastamentApplicator _castamentApplicator;
-        private readonly ITargetSelector _targetSelector;
-        private readonly IParticleSpawner _particleSpawner;
-        private readonly IUnitMover _unitMover;
-        private readonly ICameraService _camera;
+        private readonly PhaseFinishGate _finishGate = new();
+        private readonly List<IPhaseSignalActionExecutor> _executors;
+
+        private AbilityPhase _currentPhase;
 
         public event Action<ArmamentRequest> ArmamentRequested;
 
@@ -26,13 +31,22 @@ namespace Services.AbilityServices
             ITargetSelector targetSelector,
             IParticleSpawner particleSpawner,
             IUnitMover unitMover,
-            ICameraService camera)
+            ICameraService camera, 
+            IAudioService audio, 
+            ITimeService time)
         {
-            _castamentApplicator = castamentApplicator;
-            _targetSelector = targetSelector;
-            _particleSpawner = particleSpawner;
-            _unitMover = unitMover;
-            _camera = camera;
+            // The goal here is to keep AbilityPhaseService slim and open for extension.
+            // To add new mechanics: add a new executor, not a new "HasX" branch here.
+            _executors = new List<IPhaseSignalActionExecutor>
+            {
+                new ParticleActionExecutor(particleSpawner),
+                new SoundActionExecutor(audio),   
+                new TimeEffectExecutor(time),   
+                new CameraActionExecutor(camera),
+                new MoveActionExecutor(unitMover),
+                new ArmamentActionExecutor(targetSelector, req => ArmamentRequested?.Invoke(req)),
+                new CastamentActionExecutor(targetSelector, castamentApplicator)
+            };
         }
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
@@ -40,99 +54,57 @@ namespace Services.AbilityServices
             if (phase == null || source == null || target == null)
                 return;
 
+            // Reset finish aggregation when phase changes.
+            if (!ReferenceEquals(_currentPhase, phase))
+            {
+                _currentPhase = phase;
+                _finishGate.Reset();
+            }
+
             var actions = phase.SignalActions;
             if (actions == null || actions.Count == 0)
                 return;
 
+            bool anyAsync = false;
+
             for (int i = 0; i < actions.Count; i++)
             {
-                var a = actions[i];
-                if (a == null) continue;
-                if (a.Signal != signal) continue;
+                var action = actions[i];
+                if (action == null) continue;
+                if (action.Signal != signal) continue;
 
-                if (a.HasParticle)
+                for (int e = 0; e < _executors.Count; e++)
                 {
-                    var owner = a.ParticleOwner == ParticleOwner.Source ? source : target;
-                    _particleSpawner.Spawn(owner, a.ParticleSpawnType, a.ParticlePrefab);
+                    var executor = _executors[e];
+                    if (!executor.CanExecute(action))
+                        continue;
+
+                    anyAsync |= executor.Execute(
+                        phase,
+                        action,
+                        source,
+                        target,
+                        _finishGate,
+                        () => TryCompleteFinish(source));
                 }
+            }
 
-                // Камера: если она должна “дожить” до конца — она сама закрывает фазу Finish
-                if (a.HasCamera)
-                    StartCamera(a, source, target);
-
-                if (a.HasMove)
-                    StartMove(a, source, target);
-
-                if (a.HasArmament)
-                {
-                    var targets = _targetSelector.GetTargets(a.TargetMode, target).ToArray();
-                    if (targets.Length > 0)
-                        ArmamentRequested?.Invoke(new ArmamentRequest(phase, a, source, targets));
-                }
-
-                if (a.HasCastament)
-                {
-                    var targets = _targetSelector.GetTargets(a.TargetMode, target).ToArray();
-                    if (targets.Length > 0)
-                        _castamentApplicator.Apply(a.CastamentSetup, source, targets);
-                }
+            if (anyAsync)
+            {
+                _finishGate.RequestFinish();
+                TryCompleteFinish(source);
             }
         }
 
-        private void StartCamera(PhaseSignalAction a, Unit source, Unit target)
+        private void TryCompleteFinish(Unit source)
         {
-            void OnComplete()
-            {
-                if (source != null && source.AnimatorController != null)
-                    source.AnimatorController.FlagSignal((int)PhaseSignal.Finish);
-            }
+            if (!_finishGate.CanFinish)
+                return;
 
-            _camera?.Play(a.CameraCommand, source, target, a.CameraBlendTimeout, OnComplete);
-        }
+            // Reset first, then emit, to avoid re-entrancy issues.
+            _finishGate.Reset();
 
-        private void StartMove(PhaseSignalAction a, Unit source, Unit target)
-        {
-            Vector3 dest = ResolveMoveDestination(a, source, target);
-
-            float duration = Mathf.Max(0.01f, a.MoveDuration);
-            float delay = Mathf.Max(0f, a.MoveDelay);
-
-            void OnComplete()
-            {
-                if (source != null && source.AnimatorController != null)
-                    source.AnimatorController.FlagSignal((int)PhaseSignal.Finish);
-            }
-
-            if (a.MoveMode == MoveMode.Move)
-                _unitMover.MoveTo(source.transform, dest, duration, delay, OnComplete);
-            else
-                _unitMover.JumpTo(source.transform, dest, duration, Mathf.Max(0f, a.JumpPower), Mathf.Max(1, a.NumJumps), delay, OnComplete);
-        }
-
-        private static Vector3 ResolveMoveDestination(PhaseSignalAction a, Unit source, Unit target)
-        {
-            switch (a.MoveCommand)
-            {
-                case MoveCommand.ToTargetStopPoint:
-                {
-                    Vector3 from = source.transform.position;
-                    Vector3 to = target.transform.position;
-                    Vector3 dir = to - from;
-                    if (dir.sqrMagnitude < 0.0001f)
-                        return from;
-                    dir.Normalize();
-                    return to - dir * Mathf.Max(0f, a.StopDistance);
-                }
-
-                case MoveCommand.ToStartPosition:
-                    return source.StartPosition;
-
-                case MoveCommand.ToCustomPoint:
-                    return source.transform.position;
-
-                default:
-                    return source.transform.position;
-            }
+            source?.AnimatorController?.FlagSignal((int)PhaseSignal.Finish);
         }
     }
 }

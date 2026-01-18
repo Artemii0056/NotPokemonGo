@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Enemies;
 using Abilities.MV;
+using Abilities.Runtime;
+using Abilities.Runtime.Policies;
 using Armaments;
 using Armaments.Spawner;
 using Battlefields;
@@ -64,10 +66,19 @@ namespace Abilities
             switch (abilityType)
             {
                 case AbilityType.FireBall:
-                    var a = new FireballSummoner2(_coroutineRunner, abilityModel, _qteService, _armamentSpawner, _effectsApplier);
-                    a.Play(source, target);
-                    //_activeAbilityHandlers.Add(_abilityHandler);
-                    a.Finished += Continue;
+                    _abilityHandler = new ComposedPhasedAbilityHandler(
+                        abilityModel,
+                        _coroutineRunner,
+                        new IAbilityPolicy[]
+                        {
+                            new FinishSignalPolicy(),
+                            //new QtePhasePolicy(_qteService),
+                            new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier)
+                        });
+
+                    _abilityHandler.Finished += Continue;
+                    _abilityHandler.Play(source, target);
+                    _activeAbilityHandlers.Add(_abilityHandler);
                     break;
 
                 case AbilityType.FrostBall:

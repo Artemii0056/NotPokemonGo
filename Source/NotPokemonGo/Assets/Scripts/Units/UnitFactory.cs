@@ -11,6 +11,7 @@ using Services;
 using Services.AbilityServices;
 using Services.Audio;
 using Stats;
+using TimeServices;
 using UI;
 using UI.Sliders;
 using Units.AnimationControllers;
@@ -30,6 +31,8 @@ namespace Units
         private readonly IParticleSpawner _particleSpawner;
         private readonly ICameraService _cameraService;
         private readonly IAudioService _audioService;
+        private readonly ITimeService _timeService;
+        
 
         public UnitFactory(
             IObjectResolver objectResolver,
@@ -67,7 +70,7 @@ namespace Units
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,
                 controller,
-                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(), _cameraService));
+                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(), _cameraService, _audioService, _timeService));
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 

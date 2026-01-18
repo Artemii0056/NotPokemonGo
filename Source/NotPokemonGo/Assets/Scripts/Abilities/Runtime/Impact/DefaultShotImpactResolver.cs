@@ -4,7 +4,6 @@ using Armaments;
 using Armaments.Spawner;
 using QTESystem.TestQTE;
 using Units;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Abilities.Runtime.Impact
@@ -14,7 +13,7 @@ namespace Abilities.Runtime.Impact
         private readonly IEffectsApplier _effectsApplier;
         private readonly IArmamentSpawner _armamentSpawner;
         private readonly ImpactPolicy _policy;
-        private readonly Action<Shot> _startShot; // делегат из handler'а: register+move+bind qte
+        private readonly Action<Shot> _startShot; 
 
         public DefaultShotImpactResolver(
             IEffectsApplier effectsApplier,
@@ -30,7 +29,8 @@ namespace Abilities.Runtime.Impact
 
         public void Resolve(Shot shot)
         {
-            if (shot == null) return;
+            if (shot == null) 
+                return;
 
             ImpactAction action = ChooseAction(shot);
 
@@ -74,7 +74,9 @@ namespace Abilities.Runtime.Impact
         private void ApplyEffects(Shot shot)
         {
             Armament armament = shot.Mover?.Armament;
-            if (armament == null) return;
+            
+            if (armament == null) 
+                return;
 
             _effectsApplier.ApplyEffectsOnTarget(
                 shot.Context.Source,
@@ -105,6 +107,7 @@ namespace Abilities.Runtime.Impact
         private void DestroyArmament(Shot shot)
         {
             Armament armament = shot.Mover?.Armament;
+            
             if (armament != null)
                 Object.Destroy(armament.gameObject);
         }

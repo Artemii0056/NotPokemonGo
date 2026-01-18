@@ -24,6 +24,8 @@ namespace Abilities.Runtime
         private readonly IQteService _qteService;
         private readonly Dictionary<Shot, Entry> _active = new();
 
+        public int ActiveCount => _active.Count;
+
         public QteBinder(IQteService qteService)
         {
             _qteService = qteService;

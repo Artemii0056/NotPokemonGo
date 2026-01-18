@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Abilities.Runtime
 {
@@ -16,7 +15,7 @@ namespace Abilities.Runtime
             _finishRequested = false;
         }
 
-        public IDisposable Acquire(string tag = null)
+        public IDisposable Acquire()
         {
             _tokens++;
             return new Token(this);
@@ -26,13 +25,16 @@ namespace Abilities.Runtime
 
         private void Release()
         {
-            _tokens = Math.Max(0, _tokens - 1);
+            if (_tokens > 0)
+                _tokens--;
         }
 
         private sealed class Token : IDisposable
         {
             private PhaseFinishGate _gate;
+
             public Token(PhaseFinishGate gate) => _gate = gate;
+
             public void Dispose()
             {
                 if (_gate == null) return;

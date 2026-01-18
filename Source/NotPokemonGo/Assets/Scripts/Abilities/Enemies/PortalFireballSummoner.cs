@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
+using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
 using QTESystem;
@@ -28,7 +29,7 @@ namespace Abilities.Enemies
         private UnitAnimatorTrigger _animatorTrigger;
         private AnimatorController _animatorController;
 
-        private bool _animationPlaying;
+        private bool _waitingFinish;
 
         private Unit _target;
         private Unit _source;
@@ -66,11 +67,18 @@ namespace Abilities.Enemies
             _animatorTrigger = source.AnimatorTrigger;
             _animatorController = source.AnimatorController;
 
+            _animatorController.Signal += OnAnimSignal;
+
             _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
         }
 
-        public void Stop() =>
-            _coroutineRunner.StopCoroutine(_currentRoutine);
+        public void Stop()
+        {
+            if (_currentRoutine != null)
+                _coroutineRunner.StopCoroutine(_currentRoutine);
+
+            Cleanup();
+        }
 
         private IEnumerator ExecuteAllParts()
         {
@@ -136,7 +144,7 @@ namespace Abilities.Enemies
             _animatorTrigger.SetPhase(phase);
             _animatorTrigger.SetTarget(_target);
 
-            yield return WaitForAnimation();
+            yield return WaitForPhaseFinish();
         }
 
         private void FinishAbility()
@@ -144,22 +152,29 @@ namespace Abilities.Enemies
             //_animatorTrigger.ClearParticles();
             _animatorController.Play(Constants.BaseAnimations.Idle);
            // _source.AnimatorTrigger.AbilityPhaseService.ArmamentRequested -= OnArmamentRequested;
+            Cleanup();
             Finished?.Invoke(this);
         }
 
-        private IEnumerator WaitForAnimation()
+        private IEnumerator WaitForPhaseFinish()
         {
-            _animationPlaying = true;
-
-            void OnFinished() =>
-                FinishAnimation();
-
-            //_animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
-          //  _animatorController.Finished -= OnFinished;
+            _waitingFinish = true;
+            yield return new WaitWhile(() => _waitingFinish);
         }
 
-        private void FinishAnimation() =>
-            _animationPlaying = false;
+        private void OnAnimSignal(int id)
+        {
+            if (PhaseSignalUtil.FromInt(id) == PhaseSignal.Finish)
+                _waitingFinish = false;
+        }
+
+        private void Cleanup()
+        {
+            if (_animatorController != null)
+                _animatorController.Signal -= OnAnimSignal;
+
+            _waitingFinish = false;
+            _currentRoutine = null;
+        }
     }
 }

@@ -18,10 +18,11 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
+      WaitForExternalCompletion: 0
       <PhaseType>k__BackingField: 1
       ParticleSystemBySpawnType: []
       SignalActions:
-      - Signal: 0
+      - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
@@ -34,19 +35,22 @@ MonoBehaviour:
           <Statuses>k__BackingField: []
           <EffectInfo>k__BackingField: []
           <ParticleSystem>k__BackingField: {fileID: 0}
-        SpawnParticle: 0
-        ParticleOwner: 0
-        ParticleSpawnType: 0
         ParticlePrefab: {fileID: 0}
+        ParticleSpawnType: 0
+        ParticleOwner: 0
         MoveCommand: 1
+        MoveMode: 1
+        CustomPoint: {x: 0, y: 0, z: 0}
         MoveDuration: 1
         MoveDelay: 1
         StopDistance: 0.5
-        UseJump: 1
         JumpPower: 5
         NumJumps: 1
+        CameraCommand: 0
+        CameraBlendTimeout: 0.75
     - AnimationClip: {fileID: 4184958765663452149, guid: 60a407d1b0580b6408ad3a7a395f5d12, type: 3}
       QteType: 0
+      WaitForExternalCompletion: 0
       <PhaseType>k__BackingField: 0
       ParticleSystemBySpawnType:
       - ParticleSpawnType: 1
@@ -67,25 +71,28 @@ MonoBehaviour:
           - Type: 0
             TargetType: 1
             DamageType: 1
-            Value: 10
+            Value: -10
           <ParticleSystem>k__BackingField: {fileID: 0}
-        SpawnParticle: 0
-        ParticleOwner: 0
-        ParticleSpawnType: 0
         ParticlePrefab: {fileID: 0}
+        ParticleSpawnType: 0
+        ParticleOwner: 0
         MoveCommand: 0
+        MoveMode: 1
+        CustomPoint: {x: 0, y: 0, z: 0}
         MoveDuration: 0
         MoveDelay: 0
         StopDistance: 0
-        UseJump: 0
         JumpPower: 0
         NumJumps: 0
+        CameraCommand: 0
+        CameraBlendTimeout: 0.75
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
+      WaitForExternalCompletion: 0
       <PhaseType>k__BackingField: 2
       ParticleSystemBySpawnType: []
       SignalActions:
-      - Signal: 0
+      - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
@@ -98,17 +105,19 @@ MonoBehaviour:
           <Statuses>k__BackingField: []
           <EffectInfo>k__BackingField: []
           <ParticleSystem>k__BackingField: {fileID: 0}
-        SpawnParticle: 0
-        ParticleOwner: 0
-        ParticleSpawnType: 0
         ParticlePrefab: {fileID: 0}
+        ParticleSpawnType: 0
+        ParticleOwner: 0
         MoveCommand: 2
+        MoveMode: 1
+        CustomPoint: {x: 0, y: 0, z: 0}
         MoveDuration: 1
         MoveDelay: 1
         StopDistance: 0.5
-        UseJump: 1
         JumpPower: 1
         NumJumps: 1
+        CameraCommand: 0
+        CameraBlendTimeout: 0.75
     <Interruptibility>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
