@@ -21,7 +21,8 @@ namespace Abilities.Runtime
             return new Token(this);
         }
 
-        public void RequestFinish() => _finishRequested = true;
+        public void RequestFinish() => 
+            _finishRequested = true;
 
         private void Release()
         {
@@ -33,11 +34,14 @@ namespace Abilities.Runtime
         {
             private PhaseFinishGate _gate;
 
-            public Token(PhaseFinishGate gate) => _gate = gate;
+            public Token(PhaseFinishGate gate) => 
+                _gate = gate;
 
             public void Dispose()
             {
-                if (_gate == null) return;
+                if (_gate == null) 
+                    return;
+                
                 _gate.Release();
                 _gate = null;
             }

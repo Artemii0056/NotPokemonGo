@@ -4,9 +4,6 @@ using Units.AnimationControllers;
 
 namespace Abilities.Runtime
 {
-    /// <summary>
-    /// Контекст выполнения способности. Содержит текущее состояние проигрывания.
-    /// </summary>
     public sealed class AbilityContext
     {
         public Unit Source { get; internal set; }

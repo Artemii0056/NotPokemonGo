@@ -27,6 +27,8 @@ namespace Abilities.Bennet
                     new FinishSignalPolicy()
                 });
         }
+        
+        public Interruptibility Interruptibility => _impl.Interruptibility;
 
         public event Action<IAbilityHandler> Finished
         {
@@ -34,8 +36,10 @@ namespace Abilities.Bennet
             remove => _impl.Finished -= value;
         }
 
-        public void Play(Unit source, Unit target) => _impl.Play(source, target);
-        public void Stop() => _impl.Stop();
-        public Interruptibility Interruptibility => _impl.Interruptibility;
+        public void Play(Unit source, Unit target) => 
+            _impl.Play(source, target);
+        
+        public void Stop() => 
+            _impl.Stop();
     }
 }

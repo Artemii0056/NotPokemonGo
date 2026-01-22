@@ -72,8 +72,8 @@ namespace Abilities
                         new IAbilityPolicy[]
                         {
                             new FinishSignalPolicy(),
-                            //new QtePhasePolicy(_qteService),
                             new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier)
+                            //new QtePhasePolicy(_qteService)
                         });
 
                     _abilityHandler.Finished += Continue;

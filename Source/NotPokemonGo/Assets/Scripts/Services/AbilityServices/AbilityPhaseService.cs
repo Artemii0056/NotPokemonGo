@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Abilities.Configs;
-using Abilities.Signals;
 using Abilities.Runtime;
-using Cameras;
+using Abilities.Signals;
+using Armaments;
+using Armaments.Spawner;
 using Castaments;
 using DefaultNamespace;
+using QTESystem;
 using Services.AbilityServices.Executors;
 using Services.Audio;
 using TimeServices;
@@ -14,13 +16,14 @@ using Units.Movement;
 
 namespace Services.AbilityServices
 {
-    /// <summary>
-    /// Listens for phase signals and triggers configured actions.
-    /// </summary>
     public sealed class AbilityPhaseService
     {
         private readonly PhaseFinishGate _finishGate = new();
         private readonly List<IPhaseSignalActionExecutor> _executors;
+
+        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IEffectsApplier _effectsApplier;
+        private readonly IQteService _qteService;
 
         private AbilityPhase _currentPhase;
 
@@ -31,80 +34,60 @@ namespace Services.AbilityServices
             ITargetSelector targetSelector,
             IParticleSpawner particleSpawner,
             IUnitMover unitMover,
-            ICameraService camera, 
-            IAudioService audio, 
+            ICameraService camera,
+            IAudioService audio,
             ITimeService time)
         {
-            // The goal here is to keep AbilityPhaseService slim and open for extension.
-            // To add new mechanics: add a new executor, not a new "HasX" branch here.
             _executors = new List<IPhaseSignalActionExecutor>
             {
                 new ParticleActionExecutor(particleSpawner),
-                new SoundActionExecutor(audio),   
-                new TimeEffectExecutor(time),   
+                new SoundActionExecutor(audio),
+                new TimeEffectExecutor(time),
                 new CameraActionExecutor(camera),
                 new MoveActionExecutor(unitMover),
                 new ArmamentActionExecutor(targetSelector, req => ArmamentRequested?.Invoke(req)),
                 new CastamentActionExecutor(targetSelector, castamentApplicator)
             };
         }
+        
+        //Должна быть какая-то очередность выполнения экзекьюторов? 
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
         {
             if (phase == null || source == null || target == null)
                 return;
 
-            // Reset finish aggregation when phase changes.
-            if (!ReferenceEquals(_currentPhase, phase))
+            if (ReferenceEquals(_currentPhase, phase) == false)
             {
                 _currentPhase = phase;
                 _finishGate.Reset();
             }
 
             var actions = phase.SignalActions;
+            
             if (actions == null || actions.Count == 0)
                 return;
 
-            bool anyAsync = false;
-
             for (int i = 0; i < actions.Count; i++)
             {
-                var action = actions[i];
-                if (action == null) continue;
-                if (action.Signal != signal) continue;
+                PhaseSignalAction action = actions[i];
+                
+                if (action == null) 
+                    continue;
+                
+                if (action.Signal != signal) 
+                    continue;
 
-                for (int e = 0; e < _executors.Count; e++)
+                for (int index = 0; index < _executors.Count; index++)
                 {
-                    var executor = _executors[e];
-                    if (!executor.CanExecute(action))
+                    IPhaseSignalActionExecutor executor = _executors[index];
+                    
+                    if (executor.CanExecute(action) == false)
                         continue;
-
-                    anyAsync |= executor.Execute(
-                        phase,
-                        action,
-                        source,
-                        target,
-                        _finishGate,
-                        () => TryCompleteFinish(source));
+                    
+                    executor.Execute(phase, action, source, target, _finishGate);
                 }
             }
-
-            if (anyAsync)
-            {
-                _finishGate.RequestFinish();
-                TryCompleteFinish(source);
-            }
-        }
-
-        private void TryCompleteFinish(Unit source)
-        {
-            if (!_finishGate.CanFinish)
-                return;
-
-            // Reset first, then emit, to avoid re-entrancy issues.
-            _finishGate.Reset();
-
-            source?.AnimatorController?.FlagSignal((int)PhaseSignal.Finish);
         }
     }
 }

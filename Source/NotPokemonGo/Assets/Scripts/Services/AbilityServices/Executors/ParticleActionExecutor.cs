@@ -10,12 +10,11 @@ namespace Services.AbilityServices.Executors
     {
         private readonly IParticleSpawner _particleSpawner;
 
-        public ParticleActionExecutor(IParticleSpawner particleSpawner)
-        {
+        public ParticleActionExecutor(IParticleSpawner particleSpawner) => 
             _particleSpawner = particleSpawner;
-        }
 
-        public bool CanExecute(PhaseSignalAction action) => action != null && action.HasParticle;
+        public bool CanExecute(PhaseSignalAction action) => 
+            action != null && action.HasParticle;
 
         public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
         {
@@ -23,6 +22,7 @@ namespace Services.AbilityServices.Executors
                 return false;
 
             var owner = action.ParticleOwner == ParticleOwner.Source ? source : target;
+            
             if (owner == null)
                 return false;
 

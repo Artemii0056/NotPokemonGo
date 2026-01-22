@@ -9,27 +9,17 @@ using Abilities.Runtime.Policies;
 using Abilities.Signals;
 using Services;
 using Units;
-using Units.AnimationControllers;
 using UnityEngine;
 
 namespace Abilities.Runtime
 {
-    /// <summary>
-    /// Эталонный AbilityHandler через композицию:
-    /// - проигрывает Parts -> Phases
-    /// - таймлайн = анимация
-    /// - завершение фазы = AND по всем IAbilityPolicy.CanFinishPhase
-    ///
-    /// Любые особенности (QTE, живущие дольше фазы снаряды, особые правила stop и т.д.)
-    /// добавляются политиками, без наследования.
-    /// </summary>
     public sealed class ComposedPhasedAbilityHandler : IAbilityHandler
     {
         private readonly ICoroutineRunner _runner;
         private readonly List<AbilityPart> _parts;
         private readonly List<IAbilityPolicy> _policies;
 
-        private readonly AbilityContext _ctx = new();
+        private readonly AbilityContext _context = new();
         private Coroutine _routine;
         private bool _waitingPhaseFinish;
 
@@ -49,16 +39,15 @@ namespace Abilities.Runtime
 
         public void Play(Unit source, Unit target)
         {
-            _ctx.Source = source;
-            _ctx.Target = target;
-            _ctx.AnimatorTrigger = source.AnimatorTrigger;
-            _ctx.Animator = source.AnimatorController;
+            _context.Source = source;
+            _context.Target = target;
+            _context.AnimatorTrigger = source.AnimatorTrigger;
+            _context.Animator = source.AnimatorController;
 
-            foreach (var p in _policies)
-                p.OnAbilityStart(_ctx);
+            foreach (IAbilityPolicy abilityPolicy in _policies)
+                abilityPolicy.OnAbilityStart(_context);
 
-            // Один подписчик на всю способность.
-            _ctx.Animator.Signal += OnAnimSignal;
+            _context.Animator.Signal += OnAnimSignal;
 
             _routine = _runner.StartCoroutine(RunAllParts());
         }
@@ -87,16 +76,16 @@ namespace Abilities.Runtime
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
-            _ctx.CurrentPhase = phase;
+            _context.CurrentPhase = phase;
 
-            _ctx.AnimatorTrigger.SetTarget(_ctx.Target);
-            _ctx.AnimatorTrigger.SetPhase(phase);
+            _context.AnimatorTrigger.SetTarget(_context.Target);
+            _context.AnimatorTrigger.SetPhase(phase);
 
-            foreach (var p in _policies)
-                p.OnPhaseStart(_ctx, phase);
+            foreach (IAbilityPolicy policy in _policies)
+                policy.OnPhaseStart(_context, phase);
 
             _waitingPhaseFinish = true;
-            _ctx.Animator.Play(phase.AnimationCashName);
+            _context.Animator.Play(phase.AnimationCashName);
 
             yield return new WaitWhile(() => _waitingPhaseFinish);
         }
@@ -104,42 +93,42 @@ namespace Abilities.Runtime
         private void OnAnimSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
+            
             if (signal == PhaseSignal.None)
                 return;
 
-            foreach (var p in _policies)
-                p.OnSignal(_ctx, signal);
+            foreach (var policy in _policies)
+                policy.OnSignal(_context, signal);
 
             TryFinishPhase();
         }
 
         private void TryFinishPhase()
         {
-            if (_ctx.CurrentPhase == null)
+            if (_context.CurrentPhase == null)
                 return;
 
-            // AND по всем политикам.
-            if (_policies.All(p => p.CanFinishPhase(_ctx, _ctx.CurrentPhase)))
+            if (_policies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase)))
                 _waitingPhaseFinish = false;
         }
 
         private void OnAbilityFinished()
         {
-            if (_ctx.Animator != null)
-                _ctx.Animator.Play(Constants.BaseAnimations.Idle);
+            if (_context.Animator != null)
+                _context.Animator.Play(Constants.BaseAnimations.Idle);
         }
 
         private void Cleanup()
         {
-            if (_ctx.Animator != null)
-                _ctx.Animator.Signal -= OnAnimSignal;
+            if (_context.Animator != null)
+                _context.Animator.Signal -= OnAnimSignal;
 
-            foreach (var p in _policies)
-                p.OnAbilityStop(_ctx);
+            foreach (var policy in _policies)
+                policy.OnAbilityStop(_context);
 
             _routine = null;
             _waitingPhaseFinish = false;
-            _ctx.CurrentPhase = null;
+            _context.CurrentPhase = null;
         }
     }
 }

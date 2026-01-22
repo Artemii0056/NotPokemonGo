@@ -72,9 +72,13 @@ public sealed class CinemachineCameraService : ICameraService
         {
             get
             {
-                if (_instance != null) return _instance;
+                if (_instance != null) 
+                    return _instance;
+                
                 var go = new GameObject("[CameraServiceRunner]");
+                
                 DontDestroyOnLoad(go);
+                
                 _instance = go.AddComponent<CameraServiceRunner>();
                 return _instance;
             }
@@ -93,7 +97,6 @@ public sealed class CinemachineCameraService : ICameraService
         {
             float t = 0f;
 
-            // Ждём, пока Cinemachine обновится
             yield return null;
 
             while (brain != null && brain.ActiveBlend != null && t < timeout)
@@ -105,4 +108,12 @@ public sealed class CinemachineCameraService : ICameraService
             onComplete?.Invoke();
         }
     }
+}
+
+public enum CameraCommand
+{
+    None,
+FocusOnSource,
+FocusOnTarget,
+Reset,
 }

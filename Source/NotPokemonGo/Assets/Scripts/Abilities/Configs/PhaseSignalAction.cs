@@ -6,8 +6,17 @@ using UnityEngine;
 
 namespace Abilities.Configs
 {
-    public enum ParticleOwner { Source = 0, Target = 1 }
-    public enum MoveMode { Move = 0, Jump = 1 }
+    public enum ParticleOwner
+    {
+        Source = 0,
+        Target = 1
+    }
+
+    public enum MoveMode
+    {
+        Move = 0,
+        Jump = 1
+    }
 
     public enum MoveCommand
     {
@@ -17,56 +26,51 @@ namespace Abilities.Configs
         ToCustomPoint = 3,
     }
 
-    public enum CameraCommand
+    public enum TimeEffectType
     {
         None = 0,
-        FocusOnSource = 1,
-        FocusOnTarget = 2,
-        Reset = 3,
+        HitStop = 1,
+        SlowMo = 2
     }
-
+    
     [Serializable]
     public sealed class PhaseSignalAction
     {
         public PhaseSignal Signal;
 
-        [Header("Targeting")]
-        public TargetMode TargetMode = TargetMode.Single;
+        [Header("Targeting")] public TargetMode TargetMode = TargetMode.Single;
 
         [Header("Armament / Castament (optional)")]
         public ArmamentSetup ArmamentSetup;
+
         public CastamentSetup CastamentSetup;
 
-        [Header("Particles (optional)")]
-        public ParticleSystem ParticlePrefab;
+        [Header("Particles (optional)")] public ParticleSystem ParticlePrefab;
         public ParticleSpawnType ParticleSpawnType = ParticleSpawnType.Default;
         public ParticleOwner ParticleOwner = ParticleOwner.Source;
 
-        [Header("Movement (optional)")]
-        public MoveCommand MoveCommand = MoveCommand.None;
+        [Header("Movement (optional)")] public MoveCommand MoveCommand = MoveCommand.None;
         public MoveMode MoveMode = MoveMode.Jump;
+
         [Tooltip("World-space destination for MoveCommand.ToCustomPoint")]
         public Vector3 CustomPoint;
+
         public float MoveDuration = 0.35f;
         public float MoveDelay = 0.0f;
         public float StopDistance = 1.5f;
         public float JumpPower = 1.0f;
         public int NumJumps = 1;
 
-        [Header("Camera (optional)")]
-        public CameraCommand CameraCommand = CameraCommand.None;
+        [Header("Camera (optional)")] public CameraCommand CameraCommand = CameraCommand.None;
         public float CameraBlendTimeout = 0.75f; // защита от “вечного бленда”
-        
-        [Header("Sound (optional)")]
-        public AudioClip SfxClip;
+
+        [Header("Sound (optional)")] public AudioClip SfxClip;
         [Range(0f, 1f)] public float SfxVolume = 1f;
+
         [Tooltip("If true -> 2D sound, else -> 3D at owner position")]
         public bool Sfx2D = true;
         
-        public enum TimeEffectType { None = 0, HitStop = 1, SlowMo = 2 }
-
-        [Header("Time Effect (optional)")]
-        public TimeEffectType TimeEffect = TimeEffectType.None;
+        [Header("Time Effect (optional)")] public TimeEffectType TimeEffect = TimeEffectType.None;
         public float TimeScale = 0.1f;
         public float TimeDuration = 0.08f;
 

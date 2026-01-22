@@ -9,9 +9,6 @@ using Units;
 
 namespace Abilities.Enemies
 {
-    /// <summary>
-    /// Базовая атака врага: проигрывает фазы по данным и ждёт Finish.
-    /// </summary>
     public sealed class BaseEnemyAttack : IAbilityHandler
     {
         private readonly ComposedPhasedAbilityHandler _impl;
@@ -33,8 +30,13 @@ namespace Abilities.Enemies
             remove => _impl.Finished -= value;
         }
 
-        public void Play(Unit source, Unit target) => _impl.Play(source, target);
-        public void Stop() => _impl.Stop();
-        public Interruptibility Interruptibility => _impl.Interruptibility;
+        public void Play(Unit source, Unit target) => 
+            _impl.Play(source, target);
+        
+        public void Stop() => 
+            _impl.Stop();
+        
+        public Interruptibility Interruptibility => 
+            _impl.Interruptibility;
     }
 }

@@ -36,6 +36,8 @@ namespace Units
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
         public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
+        public int Id { get; private set;  }
+
         public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
 
         public event Action Ticked;

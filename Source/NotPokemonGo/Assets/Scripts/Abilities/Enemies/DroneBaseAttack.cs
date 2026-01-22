@@ -9,9 +9,6 @@ using Units;
 
 namespace Abilities.Enemies
 {
-    /// <summary>
-    /// Атака дрона — тот же фазовый проигрыватель.
-    /// </summary>
     public sealed class DroneBaseAttack : IAbilityHandler
     {
         private readonly ComposedPhasedAbilityHandler _impl;
@@ -21,7 +18,10 @@ namespace Abilities.Enemies
             _impl = new ComposedPhasedAbilityHandler(
                 abilityModel,
                 coroutineRunner,
-                new IAbilityPolicy[] { new FinishSignalPolicy() });
+                new IAbilityPolicy[]
+                {
+                    new FinishSignalPolicy() 
+                });
         }
 
         public event Action<IAbilityHandler> Finished
@@ -30,8 +30,13 @@ namespace Abilities.Enemies
             remove => _impl.Finished -= value;
         }
 
-        public void Play(Unit source, Unit target) => _impl.Play(source, target);
-        public void Stop() => _impl.Stop();
-        public Interruptibility Interruptibility => _impl.Interruptibility;
+        public void Play(Unit source, Unit target) => 
+            _impl.Play(source, target);
+        
+        public void Stop() => 
+            _impl.Stop();
+        
+        public Interruptibility Interruptibility => 
+            _impl.Interruptibility;
     }
 }

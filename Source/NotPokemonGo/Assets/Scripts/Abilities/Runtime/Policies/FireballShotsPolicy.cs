@@ -16,7 +16,7 @@ namespace Abilities.Runtime.Policies
         private readonly QteBinder _qteBinder;
         private readonly IShotImpactResolver _impactResolver;
 
-        private AbilityContext _ctx;
+        private AbilityContext _context;
 
         private AbilityPhase _activePhase;
         private bool _finishSeenForActivePhase;
@@ -44,11 +44,12 @@ namespace Abilities.Runtime.Policies
                 startShot: StartShot);
         }
 
-        public override void OnAbilityStart(AbilityContext ctx)
+        public override void OnAbilityStart(AbilityContext context)
         {
-            _ctx = ctx;
+            _context = context;
 
-            var phaseService = ctx?.AnimatorTrigger?.PhaseService;
+            AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
+            
             if (phaseService != null)
                 phaseService.ArmamentRequested += OnArmamentRequested;
         }
@@ -75,7 +76,7 @@ namespace Abilities.Runtime.Policies
             _qteBinder.CleanupAll();
             _shotTracker.CleanupAll();
 
-            _ctx = null;
+            _context = null;
             _activePhase = null;
             _finishSeenForActivePhase = false;
         }
@@ -99,15 +100,15 @@ namespace Abilities.Runtime.Policies
             return true;
         }
 
-        private void OnArmamentRequested(ArmamentRequest req)
+        private void OnArmamentRequested(ArmamentRequest request)
         {
-            foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(req))
+            foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(request))
             {
-                var mover = _armamentSpawner.Create(ctx);
+                IArmamentMover mover = _armamentSpawner.Create(ctx);
 
-                var shot = new Shot(req.Phase, ctx, mover)
+                Shot shot = new Shot(request.Phase, ctx, mover)
                 {
-                    RequiresQte = req.Phase.QteType != QTESystem.QteType.Unknown
+                    RequiresQte = request.Phase.QteType != QteType.Unknown
                 };
 
                 StartShot(shot);
@@ -133,12 +134,12 @@ namespace Abilities.Runtime.Policies
             _qteBinder.UnbindOnReach(shot);
             _impactResolver.Resolve(shot);
 
-            var ctx = _ctx;
+            AbilityContext context = _context;
             
-            if (ctx == null)
+            if (context == null)
                 return;
 
-            var shotPhase = shot.Phase;
+            AbilityPhase shotPhase = shot.Phase;
 
             if (shotPhase != null
                 && shotPhase == _activePhase
@@ -147,7 +148,7 @@ namespace Abilities.Runtime.Policies
             {
                 if (_shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0)
                 {
-                    ctx.Animator?.FlagSignal((int)PhaseSignal.Finish);
+                    context.Animator?.FlagSignal((int)PhaseSignal.Finish);
                 }
             }
         }

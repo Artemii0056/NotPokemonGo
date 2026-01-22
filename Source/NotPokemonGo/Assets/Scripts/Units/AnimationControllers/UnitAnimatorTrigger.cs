@@ -10,32 +10,35 @@ namespace Units.AnimationControllers
         public AbilityPhaseService PhaseService { get; }
 
         private readonly Unit _unit;
-        private readonly AnimatorController _anim;
+        private readonly AnimatorController _animatorController;
 
         private AbilityPhase _phase;
         private Unit _target;
 
-        public UnitAnimatorTrigger(Unit unit, AnimatorController anim, AbilityPhaseService phaseService)
+        public UnitAnimatorTrigger(Unit unit, AnimatorController animatorController, AbilityPhaseService phaseService)
         {
             _unit = unit;
-            _anim = anim;
+            _animatorController = animatorController;
             PhaseService = phaseService;
 
-            _anim.Signal += OnSignal;
+            _animatorController.Signal += OnSignal;
         }
 
-        public void Dispose()
-        {
-            _anim.Signal -= OnSignal;
-        }
+        public void Dispose() => 
+            _animatorController.Signal -= OnSignal;
 
-        public void SetTarget(Unit target) => _target = target;
-        public void SetPhase(AbilityPhase phase) => _phase = phase;
+        public void SetTarget(Unit target) => 
+            _target = target;
+        
+        public void SetPhase(AbilityPhase phase) =>
+            _phase = phase;
 
         private void OnSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
-            if (signal == PhaseSignal.None) return;
+            
+            if (signal == PhaseSignal.None)
+                return;
 
             if (_phase == null || _unit == null || _target == null)
                 return;

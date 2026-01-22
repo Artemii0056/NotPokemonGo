@@ -11,12 +11,11 @@ namespace Services.AbilityServices.Executors
     {
         private readonly IUnitMover _unitMover;
 
-        public MoveActionExecutor(IUnitMover unitMover)
-        {
+        public MoveActionExecutor(IUnitMover unitMover) => 
             _unitMover = unitMover;
-        }
 
-        public bool CanExecute(PhaseSignalAction action) => action != null && action.HasMove;
+        public bool CanExecute(PhaseSignalAction action) => 
+            action != null && action.HasMove;
 
         public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
         {
@@ -25,8 +24,8 @@ namespace Services.AbilityServices.Executors
 
             Vector3 dest = ResolveMoveDestination(action, source, target);
 
-            float duration = Mathf.Max(0.01f, action.MoveDuration);
-            float delay = Mathf.Max(0f, action.MoveDelay);
+            float duration = source.AnimatorController.GetAnimationLength();
+            float delay = 0;
 
             var token = finishGate.Acquire();
 
@@ -42,22 +41,24 @@ namespace Services.AbilityServices.Executors
             }
             else
             {
-                _unitMover.JumpTo(
-                    source.transform,
-                    dest,
-                    duration,
-                    Mathf.Max(0f, action.JumpPower),
-                    Mathf.Max(1, action.NumJumps),
-                    delay,
-                    OnComplete);
+                _unitMover.MoveTo(source.transform, dest, duration, delay, OnComplete);
+                
+                // _unitMover.JumpTo(
+                //     source.transform,
+                //     dest,
+                //     duration,
+                //     Mathf.Max(0f, action.JumpPower),
+                //     Mathf.Max(1, action.NumJumps),
+                //     delay,
+                //     OnComplete);
             }
 
             return true;
         }
 
-        private static Vector3 ResolveMoveDestination(PhaseSignalAction a, Unit source, Unit target)
+        private static Vector3 ResolveMoveDestination(PhaseSignalAction phase, Unit source, Unit target)
         {
-            switch (a.MoveCommand)
+            switch (phase.MoveCommand)
             {
                 case MoveCommand.ToTargetStopPoint:
                 {
@@ -67,18 +68,19 @@ namespace Services.AbilityServices.Executors
                     Vector3 from = source.transform.position;
                     Vector3 to = target.transform.position;
                     Vector3 dir = to - from;
+                    
                     if (dir.sqrMagnitude < 0.0001f)
                         return from;
 
                     dir.Normalize();
-                    return to - dir * Mathf.Max(0f, a.StopDistance);
+                    return to - dir * Mathf.Max(0f, phase.StopDistance);
                 }
 
                 case MoveCommand.ToStartPosition:
                     return source.StartPosition;
 
                 case MoveCommand.ToCustomPoint:
-                    return a.CustomPoint;
+                    return phase.CustomPoint;
 
                 default:
                     return source.transform.position;

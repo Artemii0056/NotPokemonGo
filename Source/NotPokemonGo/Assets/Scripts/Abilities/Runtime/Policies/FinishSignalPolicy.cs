@@ -3,9 +3,6 @@ using Abilities.Signals;
 
 namespace Abilities.Runtime.Policies
 {
-    /// <summary>
-    /// Базовое правило: фаза может завершиться только после получения PhaseSignal.Finish.
-    /// </summary>
     public sealed class FinishSignalPolicy : AbilityPolicyBase
     {
         private bool _finishReceived;

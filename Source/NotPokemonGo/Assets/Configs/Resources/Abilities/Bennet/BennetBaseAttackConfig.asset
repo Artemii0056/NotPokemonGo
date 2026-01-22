@@ -19,8 +19,6 @@ MonoBehaviour:
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
       WaitForExternalCompletion: 0
-      <PhaseType>k__BackingField: 1
-      ParticleSystemBySpawnType: []
       SignalActions:
       - Signal: 10
         TargetMode: 0
@@ -46,15 +44,17 @@ MonoBehaviour:
         StopDistance: 0.5
         JumpPower: 5
         NumJumps: 1
-        CameraCommand: 0
+        CameraCommand: 1
         CameraBlendTimeout: 0.75
+        SfxClip: {fileID: 0}
+        SfxVolume: 1
+        Sfx2D: 1
+        TimeEffect: 0
+        TimeScale: 0.1
+        TimeDuration: 0.08
     - AnimationClip: {fileID: 4184958765663452149, guid: 60a407d1b0580b6408ad3a7a395f5d12, type: 3}
       QteType: 0
       WaitForExternalCompletion: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 1
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
       SignalActions:
       - Signal: 10
         TargetMode: 0
@@ -86,11 +86,15 @@ MonoBehaviour:
         NumJumps: 0
         CameraCommand: 0
         CameraBlendTimeout: 0.75
+        SfxClip: {fileID: 0}
+        SfxVolume: 1
+        Sfx2D: 1
+        TimeEffect: 0
+        TimeScale: 0.1
+        TimeDuration: 0.08
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
       WaitForExternalCompletion: 0
-      <PhaseType>k__BackingField: 2
-      ParticleSystemBySpawnType: []
       SignalActions:
       - Signal: 10
         TargetMode: 0
@@ -116,8 +120,14 @@ MonoBehaviour:
         StopDistance: 0.5
         JumpPower: 1
         NumJumps: 1
-        CameraCommand: 0
+        CameraCommand: 3
         CameraBlendTimeout: 0.75
+        SfxClip: {fileID: 0}
+        SfxVolume: 1
+        Sfx2D: 1
+        TimeEffect: 0
+        TimeScale: 0.1
+        TimeDuration: 0.08
     <Interruptibility>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
@@ -125,7 +135,7 @@ MonoBehaviour:
   - <StatsType>k__BackingField: 1
     Value: 2
   - <StatsType>k__BackingField: 2
-    Value: 2
+    Value: 0
   - <StatsType>k__BackingField: 3
     Value: 1
   <Interruptibility>k__BackingField: 0

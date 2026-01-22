@@ -11,7 +11,9 @@ namespace Units.Movement
 
         public void MoveTo(Transform transform, Vector3 target, float duration, float delay = 0f, Action onComplete = null)
         {
-            if (transform == null) { Stop(); return; }
+            if (transform == null)
+                throw new NullReferenceException("transform is null");
+            
             Stop();
 
             if (duration <= 0f)
@@ -35,9 +37,11 @@ namespace Units.Movement
                 });
         }
 
-        public void JumpTo(Transform transform, Vector3 target, float duration, float jumpPower = 1f, int numJumps = 1, float delay = 0f, Action onComplete = null)
+        public void JumpTo(Transform transform, Vector3 target, float duration, float jumpPower = 0f, int numJumps = 1, float delay = 0f, Action onComplete = null)
         {
-            if (transform == null) { Stop(); return; }
+            if (transform == null)
+                throw new NullReferenceException("transform is null");
+            
             Stop();
 
             if (duration <= 0f)
@@ -53,7 +57,7 @@ namespace Units.Movement
 
             _tween = transform.DOJump(target, jumpPower, Mathf.Max(1, numJumps), duration)
                 .SetDelay(Mathf.Max(0f, delay))
-                .SetEase(Ease.InQuad)
+                .SetEase(Ease.Linear)
                 .OnKill(Clear)
                 .OnComplete(() =>
                 {
@@ -62,13 +66,14 @@ namespace Units.Movement
                 });
         }
 
-        public void Stop()
+        private void Stop()
         {
             if (_tween != null)
             {
                 _tween.Kill();
                 _tween = null;
             }
+            
             IsMoving = false;
         }
 

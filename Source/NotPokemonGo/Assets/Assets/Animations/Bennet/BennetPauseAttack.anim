@@ -41802,3 +41802,10 @@ AnimationClip:
     floatParameter: 0
     intParameter: 10
     messageOptions: 0
+  - time: 1.4
+    functionName: FlagSignal
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 99
+    messageOptions: 0
