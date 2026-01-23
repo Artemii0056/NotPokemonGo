@@ -19,10 +19,15 @@ MonoBehaviour:
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       ArmamentSetup:
         <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
+        <EffectInfo>k__BackingField:
+        - Type: 0
+          TargetType: 1
+          DamageType: 1
+          Value: 2
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -37,11 +42,16 @@ MonoBehaviour:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
+        <EffectInfo>k__BackingField:
+        - Type: 0
+          TargetType: 1
+          DamageType: 1
+          Value: 15
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
       QteType: 0
@@ -55,8 +65,9 @@ MonoBehaviour:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentView>k__BackingField: {fileID: 0}
+        <ArmamentPrefab>k__BackingField: {fileID: 0}
         <MoveSpeed>k__BackingField: 0
+        <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -66,6 +77,7 @@ MonoBehaviour:
       CameraActionType: 0
       <PhaseType>k__BackingField: 2
       ParticleSystemBySpawnType: []
+    <Interruptibility>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 1
@@ -75,3 +87,4 @@ MonoBehaviour:
     Value: 2
   - <StatsType>k__BackingField: 3
     Value: 1
+  <Interruptibility>k__BackingField: 0

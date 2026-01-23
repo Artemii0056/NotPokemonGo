@@ -27,8 +27,10 @@ namespace Castaments
 
         public void Apply(CastamentSetup setup, Unit source, params Unit[] targets)
         {
+            Debug.Log("bEFORE foreach");
             foreach (var target in targets)
             {
+                Debug.Log("in foreach");
                 List<EffectInfo> effects = CreateEffects(setup.EffectsSetup);
                 List<Status> statuses = CreateStatuses(setup.Statuses, source, target);
 
@@ -41,6 +43,7 @@ namespace Castaments
                     effect.Play();
                 }
             }
+            Debug.Log("after foreach");
         }
 
 

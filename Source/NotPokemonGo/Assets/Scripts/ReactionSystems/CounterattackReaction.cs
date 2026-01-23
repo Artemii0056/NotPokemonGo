@@ -13,14 +13,15 @@ namespace ReactionSystems
 
         public bool CanReact(ReactionContext context)
         {
-            if (context.Effect.Type != EffectType.Damage)
-                return false;
-            
-            if (context.Effect.DamageType != DamageType.Physical)
-                return false;
-            
-            return context.Target.AbilityModels.Exists(a =>
-                a.AbilityType == AbilityType.CounterAttack && a.IsReady());
+            // if (context.Effect.Type != EffectType.Damage)
+            //     return false;
+            //
+            // if (context.Effect.DamageType != DamageType.Physical)
+            //     return false;
+            //
+            // return context.Target.AbilityModels.Exists(a =>
+            //     a.AbilityType == AbilityType.CounterAttack && a.IsReady());
+            return false;
         }
 
         public void React(ReactionContext context)
