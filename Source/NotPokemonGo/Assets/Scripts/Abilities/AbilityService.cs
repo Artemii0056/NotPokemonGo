@@ -72,7 +72,7 @@ namespace Abilities
                         _coroutineRunner,
                         new IAbilityPolicy[]
                         {
-                            new FinishSignalPolicy(),
+                            //new FinishSignalPolicy(),
                             new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier)
                         });
 

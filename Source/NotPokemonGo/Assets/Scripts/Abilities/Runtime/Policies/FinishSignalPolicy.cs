@@ -3,7 +3,7 @@ using Abilities.Signals;
 
 namespace Abilities.Runtime.Policies
 {
-    public sealed class FinishSignalPolicy : AbilityPolicyBase
+    public sealed class FinishSignalPolicy : AbilityPolicyBase //TODO Delete
     {
         private bool _finishReceived;
 

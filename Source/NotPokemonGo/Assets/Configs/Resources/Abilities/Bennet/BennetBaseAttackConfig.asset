@@ -128,14 +128,13 @@ MonoBehaviour:
         TimeEffect: 0
         TimeScale: 0.1
         TimeDuration: 0.08
-    <Interruptibility>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 1
   - <StatsType>k__BackingField: 1
     Value: 2
   - <StatsType>k__BackingField: 2
-    Value: 0
+    Value: 2
   - <StatsType>k__BackingField: 3
     Value: 1
   <Interruptibility>k__BackingField: 0

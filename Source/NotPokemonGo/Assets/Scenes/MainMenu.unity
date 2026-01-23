@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 7
+    m_Style: 1
     m_Time: 0.75
     m_CustomCurve:
       serializedVersion: 2
