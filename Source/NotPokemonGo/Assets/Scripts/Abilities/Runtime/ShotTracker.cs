@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Abilities.General;
 using Armaments;
 
 namespace Abilities.Runtime
@@ -20,8 +19,11 @@ namespace Abilities.Runtime
 
         public void Register(Shot shot, Action<Shot> onLaunched, Action<Shot> onReached)
         {
-            if (shot == null) throw new ArgumentNullException(nameof(shot));
-            if (shot.Mover == null) throw new ArgumentException("Shot.Mover is null", nameof(shot));
+            if (shot == null) 
+                throw new ArgumentNullException(nameof(shot));
+            
+            if (shot.Mover == null) 
+                throw new ArgumentException("Shot.Mover is null", nameof(shot));
 
             var mover = shot.Mover;
 
@@ -41,7 +43,8 @@ namespace Abilities.Runtime
 
         private void HandleLaunched(IArmamentMover mover)
         {
-            if (mover == null) return;
+            if (mover == null) 
+                return;
 
             if (_entries.TryGetValue(mover, out var entry))
                 entry.OnLaunched?.Invoke(entry.Shot);
@@ -49,12 +52,12 @@ namespace Abilities.Runtime
 
         private void HandleReached(IArmamentMover mover)
         {
-            if (mover == null) return;
+            if (mover == null) 
+                return;
 
             if (!_entries.TryGetValue(mover, out var entry))
                 return;
 
-            // сначала авто-release, чтобы даже при исключении в onReached не протечь
             Release(mover);
 
             entry.OnReached?.Invoke(entry.Shot);
@@ -62,13 +65,16 @@ namespace Abilities.Runtime
 
         public void Release(Shot shot)
         {
-            if (shot?.Mover == null) return;
+            if (shot?.Mover == null) 
+                return;
+            
             Release(shot.Mover);
         }
 
         public void Release(IArmamentMover mover)
         {
-            if (mover == null) return;
+            if (mover == null) 
+                return;
 
             if (!_entries.Remove(mover))
                 return;

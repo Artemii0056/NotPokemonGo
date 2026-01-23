@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.Runtime;
 using Abilities.Signals;
-using Armaments;
-using Armaments.Spawner;
 using Castaments;
 using DefaultNamespace;
-using QTESystem;
 using Services.AbilityServices.Executors;
 using Services.Audio;
 using TimeServices;
@@ -21,11 +18,10 @@ namespace Services.AbilityServices
         private readonly PhaseFinishGate _finishGate = new();
         private readonly List<IPhaseSignalActionExecutor> _executors;
 
-        private readonly IArmamentSpawner _armamentSpawner;
-        private readonly IEffectsApplier _effectsApplier;
-        private readonly IQteService _qteService;
-
         private AbilityPhase _currentPhase;
+
+        // Handler задаёт сюда TryFinishPhase
+        private Action _requestFinishCheck;
 
         public event Action<ArmamentRequest> ArmamentRequested;
 
@@ -40,7 +36,7 @@ namespace Services.AbilityServices
         {
             _executors = new List<IPhaseSignalActionExecutor>
             {
-                new ParticleActionExecutor(particleSpawner),
+                new ParticleActionExecutor(particleSpawner), //Паттерн Команда - Undo
                 new SoundActionExecutor(audio),
                 new TimeEffectExecutor(time),
                 new CameraActionExecutor(camera),
@@ -49,8 +45,12 @@ namespace Services.AbilityServices
                 new CastamentActionExecutor(targetSelector, castamentApplicator)
             };
         }
-        
-        //Должна быть какая-то очередность выполнения экзекьюторов? 
+
+        public void BindFinishCheck(Action requestFinishCheck) =>
+            _requestFinishCheck = requestFinishCheck;
+
+        public void RequestFinishCheck() =>
+            TryCompleteFinish();
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
         {
@@ -60,34 +60,44 @@ namespace Services.AbilityServices
             if (ReferenceEquals(_currentPhase, phase) == false)
             {
                 _currentPhase = phase;
-                _finishGate.Reset();
+                _finishGate.Reset(TryCompleteFinish);
             }
 
             var actions = phase.SignalActions;
-            
+
             if (actions == null || actions.Count == 0)
                 return;
 
             for (int i = 0; i < actions.Count; i++)
             {
                 PhaseSignalAction action = actions[i];
-                
-                if (action == null) 
-                    continue;
-                
-                if (action.Signal != signal) 
+
+                if (action == null || action.Signal != signal)
                     continue;
 
                 for (int index = 0; index < _executors.Count; index++)
                 {
                     IPhaseSignalActionExecutor executor = _executors[index];
-                    
+
                     if (executor.CanExecute(action) == false)
                         continue;
-                    
-                    executor.Execute(phase, action, source, target, _finishGate);
+
+                    executor.Execute(phase, action, source, target, _finishGate, TryCompleteFinish);
                 }
             }
+
+            TryCompleteFinish();
+        }
+
+        private void TryCompleteFinish()
+        {
+            if (_currentPhase == null)
+                return;
+
+            if (!_finishGate.IsOpen)
+                return;
+
+            _requestFinishCheck?.Invoke();
         }
     }
 }

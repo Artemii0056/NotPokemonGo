@@ -9,10 +9,8 @@ namespace Services.AbilityServices.Executors
     {
         private readonly ITimeService _time;
 
-        public TimeEffectExecutor(ITimeService time)
-        {
+        public TimeEffectExecutor(ITimeService time) => 
             _time = time;
-        }
 
         public bool CanExecute(PhaseSignalAction action)
             => action != null && action.HasTimeEffect;
@@ -31,7 +29,6 @@ namespace Services.AbilityServices.Executors
                 return false;
             }
 
-            // Не блокируем фазу: это "juice".
             _time.HitStop(action.TimeScale, action.TimeDuration);
 
             onComplete?.Invoke();

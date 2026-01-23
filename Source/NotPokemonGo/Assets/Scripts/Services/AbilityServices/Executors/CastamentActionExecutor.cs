@@ -17,7 +17,8 @@ namespace Services.AbilityServices.Executors
             _castamentApplicator = castamentApplicator;
         }
 
-        public bool CanExecute(PhaseSignalAction action) => action != null && action.HasCastament;
+        public bool CanExecute(PhaseSignalAction action) => 
+            action != null && action.HasCastament;
 
         public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
         {
@@ -25,6 +26,7 @@ namespace Services.AbilityServices.Executors
                 return false;
 
             var targets = _targetSelector.GetTargets(action.TargetMode, target);
+            
             if (targets == null || targets.Count == 0)
                 return false;
 

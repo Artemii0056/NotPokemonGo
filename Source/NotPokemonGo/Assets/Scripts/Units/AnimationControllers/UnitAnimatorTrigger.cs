@@ -5,7 +5,7 @@ using Services.AbilityServices;
 
 namespace Units.AnimationControllers
 {
-    public sealed class UnitAnimatorTrigger : IDisposable
+    public sealed class UnitAnimatorTrigger : IDisposable //TODO Кто же это? 
     {
         public AbilityPhaseService PhaseService { get; }
 

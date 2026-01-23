@@ -2,7 +2,7 @@
 
 namespace Abilities.Signals
 {
-    public enum PhaseSignal
+    public enum PhaseSignal //TODO Подумать над названием - id/type и т.д.ф
     {
         None = 0,
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Abilities.Configs;
 using Cinemachine;
 using Services;
 using Units;

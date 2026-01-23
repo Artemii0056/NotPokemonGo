@@ -2,7 +2,7 @@
 using Armaments;
 using QTESystem.TestQTE;
 
-namespace Abilities.General
+namespace Abilities.Runtime
 {
     public sealed class Shot
     {

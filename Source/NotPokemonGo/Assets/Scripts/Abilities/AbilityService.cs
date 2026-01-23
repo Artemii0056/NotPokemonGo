@@ -5,6 +5,7 @@ using Abilities.Bennet;
 using Abilities.Enemies;
 using Abilities.MV;
 using Abilities.Runtime;
+using Abilities.Runtime.Impact;
 using Abilities.Runtime.Policies;
 using Armaments;
 using Armaments.Spawner;
@@ -13,7 +14,6 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using QTESystem;
 using Services;
-using Units.Movement;
 using UnityEngine;
 using Unit = Units.Unit;
 
@@ -25,7 +25,7 @@ namespace Abilities
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IQteService _qteService;
         private readonly IEffectsApplier _effectsApplier;
-        private readonly IArmamentViewFactory _viewFactory;
+        private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IArmamentSpawner _armamentSpawner;
 
         private Battlefield _battlefield;
@@ -43,13 +43,14 @@ namespace Abilities
             IQteService qteService,
             IBattleStateMachine battleStateMachine,
             IEffectsApplier effectsApplier, 
-            IArmamentViewFactory viewFactory, IArmamentSpawner armamentSpawner)
+            IArmamentViewFactory armamentViewFactory, 
+            IArmamentSpawner armamentSpawner)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
             _battleStateMachine = battleStateMachine;
             _effectsApplier = effectsApplier;
-            _viewFactory = viewFactory;
+            _armamentViewFactory = armamentViewFactory;
             _armamentSpawner = armamentSpawner;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
@@ -73,7 +74,6 @@ namespace Abilities
                         {
                             new FinishSignalPolicy(),
                             new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier)
-                            //new QtePhasePolicy(_qteService)
                         });
 
                     _abilityHandler.Finished += Continue;
@@ -115,7 +115,14 @@ namespace Abilities
                     break;
 
                 case AbilityType.BaseAttack:
-                    _abilityHandler = new BennetBaseAttack(abilityModel, _coroutineRunner);
+                    _abilityHandler = new ComposedPhasedAbilityHandler(
+                        abilityModel,
+                        _coroutineRunner,
+                        new IAbilityPolicy[]
+                        {
+                            new FinishSignalPolicy(),
+                        });
+                    
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -128,7 +135,14 @@ namespace Abilities
                     break;
 
                 case AbilityType.DroneBaseAttack:
-                    _abilityHandler = new DroneBaseAttack(abilityModel, _coroutineRunner);
+                    _abilityHandler = new ComposedPhasedAbilityHandler(
+                        abilityModel,
+                        _coroutineRunner,
+                        new IAbilityPolicy[]
+                        {
+                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
+                        });
+                    
                     _abilityHandler.Play(source, target);
                     _activeAbilityHandlers.Add(_abilityHandler);
                     _abilityHandler.Finished += Continue;
@@ -138,7 +152,7 @@ namespace Abilities
                     throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
 
-            source.RememberAbility(_abilityHandler);
+            source.RememberAbility(_abilityHandler); //TODO Говно. Сделать отдельный слой
         }
 
         public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)

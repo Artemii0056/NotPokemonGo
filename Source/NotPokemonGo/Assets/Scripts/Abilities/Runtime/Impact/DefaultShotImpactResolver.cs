@@ -1,5 +1,4 @@
 ﻿using System;
-using Abilities.General;
 using Armaments;
 using Armaments.Spawner;
 using QTESystem.TestQTE;
@@ -92,7 +91,6 @@ namespace Abilities.Runtime.Impact
 
             ArmamentSetup setup = original.Context.Setup;
 
-            // отражение всегда прямое (как ты хотел)
             ArmamentContext context = new ArmamentContext(newSource, newTarget, setup, ArmamentFlyingType.Direct);
             IArmamentMover mover = _armamentSpawner.Create(context);
 

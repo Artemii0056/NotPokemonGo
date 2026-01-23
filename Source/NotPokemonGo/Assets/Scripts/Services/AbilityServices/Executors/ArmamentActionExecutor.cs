@@ -2,6 +2,7 @@ using System;
 using Abilities.Configs;
 using Abilities.Runtime;
 using Units;
+using UnityEngine;
 
 namespace Services.AbilityServices.Executors
 {
@@ -16,16 +17,21 @@ namespace Services.AbilityServices.Executors
             _raise = raise;
         }
 
-        public bool CanExecute(PhaseSignalAction action) => 
-            action != null && action.HasArmament;
+        public bool CanExecute(PhaseSignalAction action)
+        {
+            Debug.Log("CanExecute");
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
+            return action != null && action.HasArmament;
+        }
+
+        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target,
+            PhaseFinishGate finishGate, Action tryCompleteFinish)
         {
             if (_targetSelector == null || _raise == null)
                 return false;
 
             var targets = _targetSelector.GetTargets(action.TargetMode, target);
-            
+
             if (targets == null || targets.Count == 0)
                 return false;
 

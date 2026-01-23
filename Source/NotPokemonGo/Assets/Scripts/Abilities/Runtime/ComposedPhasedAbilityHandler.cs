@@ -44,6 +44,9 @@ namespace Abilities.Runtime
             _context.AnimatorTrigger = source.AnimatorTrigger;
             _context.Animator = source.AnimatorController;
 
+            if (_context.AnimatorTrigger != null)
+                _context.AnimatorTrigger.PhaseService.BindFinishCheck(TryFinishPhase);
+
             foreach (IAbilityPolicy abilityPolicy in _policies)
                 abilityPolicy.OnAbilityStart(_context);
 
@@ -93,7 +96,7 @@ namespace Abilities.Runtime
         private void OnAnimSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
-            
+
             if (signal == PhaseSignal.None)
                 return;
 
@@ -122,6 +125,9 @@ namespace Abilities.Runtime
         {
             if (_context.Animator != null)
                 _context.Animator.Signal -= OnAnimSignal;
+
+            if (_context.AnimatorTrigger != null)
+                _context.AnimatorTrigger.PhaseService.BindFinishCheck(null);
 
             foreach (var policy in _policies)
                 policy.OnAbilityStop(_context);

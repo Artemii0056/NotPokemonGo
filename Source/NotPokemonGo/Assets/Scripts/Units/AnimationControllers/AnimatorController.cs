@@ -10,12 +10,14 @@ namespace Units.AnimationControllers
 
         public event Action<int> Signal;
 
-        private void Awake() => _animator = GetComponent<Animator>();
+        private void Awake() => 
+            _animator = GetComponent<Animator>();
 
-        public void Play(int stateHash) => _animator.Play(stateHash, 0, 0f);
+        public void Play(int stateHash) => 
+            _animator.Play(stateHash, 0, 0f);
 
-        // Animation Event -> FlagSignal(<int>)
-        public void FlagSignal(int id) => Signal?.Invoke(id);
+        public void FlagSignal(int id) => 
+            Signal?.Invoke(id);
 
         public float GetAnimationLength()
         {

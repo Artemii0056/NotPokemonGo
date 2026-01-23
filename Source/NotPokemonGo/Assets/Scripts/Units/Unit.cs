@@ -97,7 +97,7 @@ namespace Units
 
         public void ChangeStatValue(float value, StatType statType)
         {
-            Debug.Log(statType + " " + value);
+            //Debug.Log(statType + " " + value);
             _stats[statType].SetValue(value);
         }
 

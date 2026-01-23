@@ -1,45 +1,34 @@
-using Abilities.Configs;
-using Abilities.Runtime.Impact;
+﻿using Abilities.Configs;
+using Abilities.Runtime.Policies;
 using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
-using QTESystem;
 using Services.AbilityServices;
 
-namespace Abilities.Runtime.Policies
+namespace Abilities.Runtime.Impact
 {
-    public sealed class FireballShotsPolicy : AbilityPolicyBase
+    public sealed class SimpleShotsPolicy : AbilityPolicyBase
     {
         private readonly IArmamentSpawner _armamentSpawner;
         private readonly IShotImpactResolver _impactResolver;
         private readonly ShotTracker _shotTracker = new();
-        private readonly QteBinder _qteBinder;
 
         private AbilityContext _context;
 
         private AbilityPhase _activePhase;
         private bool _finishSeenForActivePhase;
 
-        public FireballShotsPolicy(
-            IQteService qteService,
+        public SimpleShotsPolicy(
             IArmamentSpawner armamentSpawner,
-            IEffectsApplier effectsApplier)
+            IEffectsApplier effectsApplier,
+            ImpactPolicy policyOverride = null)
         {
             _armamentSpawner = armamentSpawner;
-            _qteBinder = new QteBinder(qteService);
-
-            var policy = new ImpactPolicy
-            {
-                NoQteAction = ImpactAction.ApplyEffectsAndDestroy,
-                OnFail = ImpactAction.ApplyEffectsAndDestroy,
-                OnNormal = ImpactAction.DestroyOnly,
-                OnPerfect = ImpactAction.ReflectToSourceAndDestroy
-            };
 
             _impactResolver = new DefaultShotImpactResolver(
                 effectsApplier,
                 armamentSpawner,
-                policy,
+                policyOverride,
                 startShot: StartShot);
         }
 
@@ -48,7 +37,7 @@ namespace Abilities.Runtime.Policies
             _context = context;
 
             AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
-
+            
             if (phaseService != null)
                 phaseService.ArmamentRequested += OnArmamentRequested;
         }
@@ -68,11 +57,10 @@ namespace Abilities.Runtime.Policies
         public override void OnAbilityStop(AbilityContext ctx)
         {
             var phaseService = ctx?.AnimatorTrigger?.PhaseService;
-
+            
             if (phaseService != null)
                 phaseService.ArmamentRequested -= OnArmamentRequested;
 
-            _qteBinder.CleanupAll();
             _shotTracker.CleanupAll();
 
             _context = null;
@@ -93,7 +81,7 @@ namespace Abilities.Runtime.Policies
                 if (!phase.WaitForExternalCompletion)
                     return true;
 
-                return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
+                return _shotTracker.ActiveCount == 0;
             }
 
             return true;
@@ -103,11 +91,12 @@ namespace Abilities.Runtime.Policies
         {
             foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(request))
             {
-                IArmamentMover mover = _armamentSpawner.Create(ctx);
+                var mover = _armamentSpawner.Create(ctx);
 
-                Shot shot = new Shot(request.Phase, ctx, mover)
+                var shot = new Shot(request.Phase, ctx, mover)
                 {
-                    RequiresQte = request.Phase.QteType != QteType.Unknown
+                    RequiresQte = false,
+                    QteResult = null
                 };
 
                 StartShot(shot);
@@ -116,25 +105,16 @@ namespace Abilities.Runtime.Policies
 
         private void StartShot(Shot shot)
         {
-            _shotTracker.Register(shot, OnShotLaunched, OnShotReached);
+            _shotTracker.Register(shot, onLaunched: null, onReached: OnShotReached);
             shot.Mover.Move();
-        }
-
-        private void OnShotLaunched(Shot shot)
-        {
-            _qteBinder.BindOnLaunch(
-                shot,
-                qteTarget: shot.Context.Target,
-                timeoutPolicy: QteTimeoutPolicy.TreatAsFail);
         }
 
         private void OnShotReached(Shot shot)
         {
-            _qteBinder.UnbindOnReach(shot);
             _impactResolver.Resolve(shot);
 
             AbilityContext context = _context;
-
+            
             if (context == null)
                 return;
 
@@ -145,10 +125,8 @@ namespace Abilities.Runtime.Policies
                 && shotPhase.WaitForExternalCompletion
                 && _finishSeenForActivePhase)
             {
-                if (_shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0)
-                {
+                if (_shotTracker.ActiveCount == 0)
                     context.Animator?.FlagSignal((int)PhaseSignal.Finish);
-                }
             }
         }
     }

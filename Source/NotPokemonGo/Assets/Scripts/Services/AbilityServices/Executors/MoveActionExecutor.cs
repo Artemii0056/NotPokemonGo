@@ -32,7 +32,6 @@ namespace Services.AbilityServices.Executors
             void OnComplete()
             {
                 token.Dispose();
-                tryCompleteFinish?.Invoke();
             }
 
             if (action.MoveMode == MoveMode.Move)

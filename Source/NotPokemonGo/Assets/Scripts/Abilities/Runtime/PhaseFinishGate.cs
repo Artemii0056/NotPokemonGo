@@ -4,44 +4,46 @@ namespace Abilities.Runtime
 {
     public sealed class PhaseFinishGate
     {
-        private int _tokens;
-        private bool _finishRequested;
+        private int _counter;
+        private Action _tryCompleteFinish;
 
-        public bool CanFinish => _finishRequested && _tokens <= 0;
-
-        public void Reset()
+        public void Reset(Action tryCompleteFinish)
         {
-            _tokens = 0;
-            _finishRequested = false;
+            _counter = 0;
+            _tryCompleteFinish = tryCompleteFinish;
         }
 
         public IDisposable Acquire()
         {
-            _tokens++;
-            return new Token(this);
+            _counter++;
+            return new Releaser(this);
         }
 
-        public void RequestFinish() => 
-            _finishRequested = true;
+        public bool IsOpen => _counter == 0;
 
         private void Release()
         {
-            if (_tokens > 0)
-                _tokens--;
+            _counter--;
+
+            if (_counter < 0)
+                _counter = 0;
+
+            if (_counter == 0)
+                _tryCompleteFinish?.Invoke();
         }
 
-        private sealed class Token : IDisposable
+        private sealed class Releaser : IDisposable
         {
             private PhaseFinishGate _gate;
 
-            public Token(PhaseFinishGate gate) => 
+            public Releaser(PhaseFinishGate gate) => 
                 _gate = gate;
 
             public void Dispose()
             {
-                if (_gate == null) 
+                if (_gate == null)
                     return;
-                
+
                 _gate.Release();
                 _gate = null;
             }
