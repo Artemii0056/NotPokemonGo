@@ -16,26 +16,25 @@ namespace Abilities.Runtime
     public sealed class ComposedPhasedAbilityHandler : IAbilityHandler
     {
         private readonly ICoroutineRunner _runner;
-        private readonly List<AbilityPart> _parts;
         private readonly List<IAbilityPolicy> _policies;
 
         private readonly AbilityContext _context = new();
         private Coroutine _routine;
         private bool _waitingPhaseFinish;
 
-        public Interruptibility Interruptibility { get; }
         public event Action<IAbilityHandler> Finished;
 
         public ComposedPhasedAbilityHandler(
-            AbilityModel model,
+            AbilityModel abilityModel,
             ICoroutineRunner runner,
             IEnumerable<IAbilityPolicy> policies)
         {
-            _runner = runner;
-            _parts = model.Parts;
-            Interruptibility = model.Interruptibility;
+            CurrentAbility = abilityModel ?? throw new ArgumentNullException(nameof(abilityModel));
+            _runner = runner ?? throw new ArgumentNullException(nameof(runner));
             _policies = policies?.ToList() ?? new List<IAbilityPolicy>();
         }
+
+        public AbilityModel CurrentAbility { get; }
 
         public void Play(Unit source, Unit target)
         {
@@ -65,7 +64,7 @@ namespace Abilities.Runtime
 
         private IEnumerator RunAllParts()
         {
-            foreach (var part in _parts)
+            foreach (var part in CurrentAbility.Parts)
             {
                 foreach (var phase in part.AbilityPhases)
                     yield return ExecutePhase(phase);

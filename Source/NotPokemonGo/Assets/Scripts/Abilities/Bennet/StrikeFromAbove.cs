@@ -18,14 +18,18 @@ namespace Abilities.Bennet
 
         public StrikeFromAbove(ICoroutineRunner currentRoutine, AbilityModel abilityModel)
         {
+            CurrentAbility =  abilityModel;
+            
             _impl = new ComposedPhasedAbilityHandler(
-                abilityModel,
+                CurrentAbility,
                 currentRoutine,
                 new IAbilityPolicy[]
                 {
                     new FinishSignalPolicy()
                 });
         }
+
+        public AbilityModel CurrentAbility { get; }
 
         public event Action<IAbilityHandler> Finished
         {
@@ -35,6 +39,5 @@ namespace Abilities.Bennet
 
         public void Play(Unit source, Unit target) => _impl.Play(source, target);
         public void Stop() => _impl.Stop();
-        public Interruptibility Interruptibility => _impl.Interruptibility;
     }
 }

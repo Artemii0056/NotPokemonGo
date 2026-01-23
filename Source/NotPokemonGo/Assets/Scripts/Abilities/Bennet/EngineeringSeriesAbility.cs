@@ -20,8 +20,10 @@ namespace Abilities.Bennet
 
         public EngineeringSeriesAbility(AbilityModel abilityModel, ICoroutineRunner coroutineRunner, IQteService qteService)
         {
+            CurrentAbility = abilityModel;
+            
             _impl = new ComposedPhasedAbilityHandler(
-                abilityModel,
+                CurrentAbility,
                 coroutineRunner,
                 new IAbilityPolicy[]
                 {
@@ -29,6 +31,8 @@ namespace Abilities.Bennet
                     new QtePhasePolicy(qteService)
                 });
         }
+
+        public AbilityModel CurrentAbility { get; }
 
         public event Action<IAbilityHandler> Finished
         {
@@ -38,6 +42,5 @@ namespace Abilities.Bennet
 
         public void Play(Unit source, Unit target) => _impl.Play(source, target);
         public void Stop() => _impl.Stop();
-        public Interruptibility Interruptibility => _impl.Interruptibility;
     }
 }

@@ -18,9 +18,7 @@ namespace Abilities.Bennet
         private readonly ICoroutineRunner _coroutineRunner;
         private AnimatorController _anim;
         private UnitAnimatorTrigger _trigger;
-
-        private readonly List<AbilityPart> _parts;
-
+        
         private Unit _target;
         private Unit _source;
 
@@ -29,17 +27,16 @@ namespace Abilities.Bennet
         private bool _waitingFinish;
 
         public event Action<IAbilityHandler> Finished;
-        public Interruptibility Interruptibility { get; }
 
         public Counterattack(
             ICoroutineRunner currentRoutine,
             AbilityModel abilityModel)
         {
             _coroutineRunner = currentRoutine;
-            _parts = abilityModel.Parts;
-            
-            Interruptibility = abilityModel.Interruptibility;
+            CurrentAbility = abilityModel;
         }
+        
+        public AbilityModel CurrentAbility { get; }
 
         public void Play(Unit source, Unit target) 
         {
@@ -71,7 +68,7 @@ namespace Abilities.Bennet
             _waitingFinish = false;
             _coroutine = null;
         }
-
+        
         private void OnTargetHealthChanged(float arg1, float arg2)
         {
             _source.HealthChanged -= OnTargetHealthChanged;
@@ -80,9 +77,9 @@ namespace Abilities.Bennet
 
         private IEnumerator ExecuteAllParts()
         {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
+            for (int partIndex = 0; partIndex < CurrentAbility.Parts.Count; partIndex++)
             {
-                var part = _parts[partIndex];
+                var part = CurrentAbility.Parts[partIndex];
 
                 for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
                 {

@@ -15,14 +15,18 @@ namespace Abilities.Enemies
 
         public BaseEnemyAttack(ICoroutineRunner runner, AbilityModel model)
         {
+            CurrentAbility = model;
+
             _impl = new ComposedPhasedAbilityHandler(
-                model,
+                CurrentAbility,
                 runner,
                 new IAbilityPolicy[]
                 {
                     new FinishSignalPolicy()
                 });
         }
+
+        public AbilityModel CurrentAbility { get; }
 
         public event Action<IAbilityHandler> Finished
         {
@@ -35,8 +39,5 @@ namespace Abilities.Enemies
         
         public void Stop() => 
             _impl.Stop();
-        
-        public Interruptibility Interruptibility => 
-            _impl.Interruptibility;
     }
 }

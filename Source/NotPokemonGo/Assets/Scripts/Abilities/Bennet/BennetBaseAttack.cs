@@ -16,6 +16,7 @@ namespace Abilities.Bennet
     {
         private readonly ComposedPhasedAbilityHandler _impl;
 
+
         public BennetBaseAttack(AbilityModel model, ICoroutineRunner runner)
         {
             _impl = new ComposedPhasedAbilityHandler(
@@ -28,7 +29,9 @@ namespace Abilities.Bennet
                 });
         }
         
-        public Interruptibility Interruptibility => _impl.Interruptibility;
+        public AbilityModel CurrentAbility { get; }
+
+        public Interruptibility Interruptibility => _impl.CurrentAbility.Interruptibility;
 
         public event Action<IAbilityHandler> Finished
         {

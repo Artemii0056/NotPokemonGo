@@ -15,8 +15,10 @@ namespace Abilities.Enemies
 
         public DroneBaseAttack(AbilityModel abilityModel, ICoroutineRunner coroutineRunner)
         {
+            CurrentAbility = abilityModel;
+            
             _impl = new ComposedPhasedAbilityHandler(
-                abilityModel,
+                CurrentAbility,
                 coroutineRunner,
                 new IAbilityPolicy[]
                 {
@@ -24,6 +26,8 @@ namespace Abilities.Enemies
                 });
         }
 
+        public AbilityModel CurrentAbility { get; }
+        
         public event Action<IAbilityHandler> Finished
         {
             add => _impl.Finished += value;
@@ -35,8 +39,5 @@ namespace Abilities.Enemies
         
         public void Stop() => 
             _impl.Stop();
-        
-        public Interruptibility Interruptibility => 
-            _impl.Interruptibility;
     }
 }
