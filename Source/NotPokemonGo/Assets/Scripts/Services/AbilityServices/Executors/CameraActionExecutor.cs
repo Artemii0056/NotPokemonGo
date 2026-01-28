@@ -1,6 +1,5 @@
 using System;
 using Abilities.Configs;
-using Abilities.Runtime;
 using Units;
 
 namespace Services.AbilityServices.Executors
@@ -15,15 +14,25 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasCamera;
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
+        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (_camera == null)
                 return false;
 
             var token = finishGate.Acquire();
 
-            void OnComplete() => 
+            bool done = false;
+
+            void OnComplete()
+            {
+                if (done) 
+                    return;
+                
+                done = true;
+
                 token.Dispose();
+                tryCompleteFinish?.Invoke();
+            }
 
             _camera.Play(action.CameraCommand, source, target, action.CameraBlendTimeout, OnComplete);
             return true;

@@ -20,7 +20,7 @@ namespace Services.AbilityServices.Executors
             PhaseSignalAction action,
             Unit source,
             Unit target,
-            PhaseFinishGate gate,
+            PhaseGate gate,
             System.Action onComplete)
         {
             if (_time == null)

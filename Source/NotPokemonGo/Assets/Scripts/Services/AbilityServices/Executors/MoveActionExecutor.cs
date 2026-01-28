@@ -1,6 +1,7 @@
 using System;
 using Abilities.Configs;
 using Abilities.Runtime;
+using Abilities.Signals;
 using Units;
 using Units.Movement;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasMove;
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseFinishGate finishGate, Action tryCompleteFinish)
+        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (_unitMover == null || source == null)
                 return false;
@@ -29,14 +30,24 @@ namespace Services.AbilityServices.Executors
 
             var token = finishGate.Acquire();
 
+            bool done = false;
+
             void OnComplete()
             {
+                if (done) 
+                    return;
+                
+                done = true;
+
+                source.AnimatorController?.FlagSignal((int)PhaseSignal.Finish);
+                
                 token.Dispose();
+                tryCompleteFinish?.Invoke(); // ✅ перепроверить завершение
             }
 
             if (action.MoveMode == MoveMode.Move)
             {
-                _unitMover.MoveTo(source.transform, dest, duration, delay, OnComplete);
+                _unitMover.MoveTo(source.transform, dest, 0.75f, delay, OnComplete);
             }
             else
             {

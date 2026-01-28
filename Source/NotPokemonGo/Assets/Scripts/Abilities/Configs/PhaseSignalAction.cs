@@ -57,7 +57,7 @@ namespace Abilities.Configs
 
         public float MoveDuration = 0.35f;
         public float MoveDelay = 0.0f;
-        public float StopDistance = 1.5f;
+        public float StopDistance = 10f;
         public float JumpPower = 1.0f;
         public int NumJumps = 1;
 

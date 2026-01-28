@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Abilities.Configs;
-using Abilities.Runtime;
 using Abilities.Signals;
 using Castaments;
 using DefaultNamespace;
@@ -15,7 +14,7 @@ namespace Services.AbilityServices
 {
     public sealed class AbilityPhaseService
     {
-        private readonly PhaseFinishGate _finishGate = new();
+        private readonly PhaseGate _finishGate = new();
         private readonly List<IPhaseSignalActionExecutor> _executors;
 
         private AbilityPhase _currentPhase;
@@ -60,7 +59,7 @@ namespace Services.AbilityServices
             if (ReferenceEquals(_currentPhase, phase) == false)
             {
                 _currentPhase = phase;
-                _finishGate.Reset(TryCompleteFinish);
+                _finishGate.Reset();
             }
 
             var actions = phase.SignalActions;

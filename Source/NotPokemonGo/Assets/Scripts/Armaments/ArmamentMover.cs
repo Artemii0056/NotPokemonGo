@@ -7,14 +7,14 @@ namespace Armaments
 {
     public class ArmamentMover : IArmamentMover
     {
-        public Armament Armament { get; private set; }
-        public float Duration { get; private set; }
-
         public event Action<IArmamentMover> Launched;
         public event Action<IArmamentMover> Reached;
 
         public ArmamentMover(Armament armament) =>
             Armament = armament;
+        
+        public Armament Armament { get; private set; }
+        public float Duration { get; private set; }
 
         public void Move()
         {
@@ -39,20 +39,18 @@ namespace Armaments
 
         private void PlayDirectFlight()
         {
-            float duration = 1f;
-            Duration = duration;
+            Duration = 1f;
 
             Launched?.Invoke(this);
 
-            Armament.transform.DOMove(Armament.Target.transform.position, duration)
+            Armament.transform.DOMove(Armament.Target.transform.position, Duration)
                 .SetEase(Ease.Linear)
                 .OnComplete(() => Reached?.Invoke(this));
         }
 
         private void PlayArcFlight()
         {
-            float duration = 1f;
-            Duration = duration;
+            Duration = 1f;
             float arcWidth = 3f;
             float arcHeight = 2f;
 
@@ -73,7 +71,7 @@ namespace Armaments
 
             Vector3[] path = { start, control, end };
 
-            Armament.transform.DOPath(path, duration, PathType.CatmullRom)
+            Armament.transform.DOPath(path, Duration, PathType.CatmullRom)
                 .OnStart(() => Launched?.Invoke(this))
                 .SetEase(Ease.InExpo)
                 .OnComplete(() => Reached?.Invoke(this));
@@ -81,14 +79,13 @@ namespace Armaments
 
         private void PlayLaserFlight()
         {
-            float duration = .05f;
-            Duration = duration;
+            Duration =  .05f;
 
             Launched?.Invoke(this);
 
             DOTween.Sequence()
-                .Append(Armament.transform.DOMove(Armament.Target.transform.position, duration).SetEase(Ease.Linear))
-                .AppendInterval(0.25f)
+                .Append(Armament.transform.DOMove(Armament.Target.transform.position, Duration).SetEase(Ease.Linear))
+                .AppendInterval(Armament.Setup.Duration) //TODO Вот это влияет на продолжительность линии
                 .OnComplete(() => Reached?.Invoke(this));
         }
     }

@@ -22,6 +22,7 @@ namespace Units.AnimationControllers
         public float GetAnimationLength()
         {
             var clips = _animator.GetCurrentAnimatorClipInfo(0);
+            
             if (clips.Length > 0 && clips[0].clip != null)
                 return clips[0].clip.length;
 

@@ -279,7 +279,7 @@ PrefabInstance:
       objectReference: {fileID: 1257303622648830399}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].spawnType
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitAnimatorController>k__BackingField
@@ -292,7 +292,7 @@ PrefabInstance:
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].Transforms.Array.data[0]
       value: 
-      objectReference: {fileID: 5640003224069785080}
+      objectReference: {fileID: 1088908277079693953}
     - target: {fileID: 8218181868472811484, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -323,6 +323,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7641723094764520206}
   m_SourcePrefab: {fileID: 100100000, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+--- !u!4 &1088908277079693953 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6040854845062619438, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+  m_PrefabInstance: {fileID: 6686149135419505583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4475051893624697171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7121152851703139068, guid: 029465657e3f55e4b8627e6431c90181, type: 3}

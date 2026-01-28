@@ -14,7 +14,7 @@ namespace Services.AbilityServices.Executors
             PhaseSignalAction action,
             Unit source,
             Unit target,
-            PhaseFinishGate finishGate,
+            PhaseGate finishGate,
             Action tryCompleteFinish = null);
     }
 }

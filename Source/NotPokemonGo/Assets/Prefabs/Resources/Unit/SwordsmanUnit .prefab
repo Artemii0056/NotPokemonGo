@@ -250,11 +250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6040854845062619438, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 1.461
       objectReference: {fileID: 0}
     - target: {fileID: 6040854845062619438, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: -0.117
       objectReference: {fileID: 0}
     - target: {fileID: 6272663069519567012, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_Center.y
@@ -322,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: AbilityAnimationControllerBase
@@ -333,9 +333,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6803579719754832547}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[0].spawnType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitAnimatorController>k__BackingField
       value: 
       objectReference: {fileID: 6803579719754832547}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[0].Transforms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[0].Transforms.Array.data[0]
+      value: 
+      objectReference: {fileID: 8818895281217809721}
     - target: {fileID: 7621851038953921409, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -477,6 +489,11 @@ Transform:
 --- !u!4 &5432754278248351467 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7121152851703139068, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+  m_PrefabInstance: {fileID: 3005712884073008151}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8818895281217809721 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6040854845062619438, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
   m_PrefabInstance: {fileID: 3005712884073008151}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7618325141814385356

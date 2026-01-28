@@ -32,6 +32,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 19820166, guid: 9dbcebaf26ad0df41ad5a91995b5c1e1, type: 3}
           <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: 18c037540559b454f927a15cf5c3d090, type: 3}
           <MoveSpeed>k__BackingField: 5
+          <Duration>k__BackingField: 0.25
           <FlyingType>k__BackingField: 2
         CastamentSetup:
           <Statuses>k__BackingField: []

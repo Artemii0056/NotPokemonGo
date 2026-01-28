@@ -14,6 +14,10 @@
         BaseAttack,
         CounterAttack,
         DroneBaseAttack,
-        Default
+        Default,
+        
+        LumaBaseAttack,
+        LumaAttackWithStaff,
+        LumaIceStone
     }
 }

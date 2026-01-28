@@ -73,7 +73,8 @@ namespace Abilities
                         new IAbilityPolicy[]
                         {
                             //new FinishSignalPolicy(),
-                            new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier)
+                            new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier),
+                            new PortalVfxPolicy(abilityModel, ParticleSpawnType.Middle)
                         });
 
                     _abilityHandler.Finished += Continue;
@@ -149,7 +150,19 @@ namespace Abilities
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
+                    _abilityHandler = new ComposedPhasedAbilityHandler(
+                        abilityModel,
+                        _coroutineRunner,
+                        new IAbilityPolicy[]
+                        {
+                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
+                        });
+                    
+                    _abilityHandler.Play(source, target);
+                    _activeAbilityHandlers.Add(_abilityHandler);
+                    _abilityHandler.Finished += Continue;
+                    break;
+                    //throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
 
             source.RememberAbility(_abilityHandler); //TODO Говно. Сделать отдельный слой

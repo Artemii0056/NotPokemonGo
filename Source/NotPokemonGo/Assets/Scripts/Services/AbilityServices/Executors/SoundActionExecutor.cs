@@ -1,5 +1,4 @@
 ﻿using Abilities.Configs;
-using Abilities.Runtime;
 using Services.Audio;
 using Units;
 
@@ -22,7 +21,7 @@ namespace Services.AbilityServices.Executors
             PhaseSignalAction action,
             Unit source,
             Unit target,
-            PhaseFinishGate gate,
+            PhaseGate gate,
             System.Action onComplete)
         {
             // Сразу завершаем: звук не должен блокировать фазу.

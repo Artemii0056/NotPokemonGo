@@ -1,6 +1,5 @@
 using System;
 using Abilities.Configs;
-using Abilities.Runtime;
 using Units;
 using UnityEngine;
 
@@ -25,7 +24,7 @@ namespace Services.AbilityServices.Executors
         }
 
         public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target,
-            PhaseFinishGate finishGate, Action tryCompleteFinish)
+            PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (_targetSelector == null || _raise == null)
                 return false;

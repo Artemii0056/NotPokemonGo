@@ -8,5 +8,6 @@
         Archer = 3,
         Bennet = 4,
         Drone = 5,
+        Luma = 6,
     }
 }

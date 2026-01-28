@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
+  m_Name: BaseAttack
+  m_EditorClassIdentifier: 
+  <AbilityType>k__BackingField: 13
+  <Icon>k__BackingField: {fileID: 21300000, guid: 2a2dedd1a8f760a488f378ee87e99c88, type: 3}
+  <Parts>k__BackingField:
+  - <AbilityPhases>k__BackingField:
+    - AnimationClip: {fileID: -203655887218126122, guid: 2d4a96f3c91fb4a45ba620e5b9e0dc3a, type: 3}
+      QteType: 0
+      WaitForExternalCompletion: 0
+      SignalActions:
+      - Signal: 10
+        TargetMode: 0
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 2
+            Value: 1
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 1
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        ParticlePrefab: {fileID: 0}
+        ParticleSpawnType: 0
+        ParticleOwner: 0
+        MoveCommand: 0
+        MoveMode: 0
+        CustomPoint: {x: 0, y: 0, z: 0}
+        MoveDuration: 0
+        MoveDelay: 0
+        StopDistance: 0
+        JumpPower: 0
+        NumJumps: 0
+        CameraCommand: 0
+        CameraBlendTimeout: 0
+        SfxClip: {fileID: 0}
+        SfxVolume: 0
+        Sfx2D: 0
+        TimeEffect: 0
+        TimeScale: 0
+        TimeDuration: 0
+  <AbilityStatSetup>k__BackingField:
+  - <StatsType>k__BackingField: 0
+    Value: 0
+  - <StatsType>k__BackingField: 1
+    Value: 0
+  - <StatsType>k__BackingField: 2
+    Value: 0
+  - <StatsType>k__BackingField: 3
+    Value: 0
+  <Interruptibility>k__BackingField: 0
