@@ -41,8 +41,8 @@ namespace Services.AbilityServices.Executors
 
                 source.AnimatorController?.FlagSignal((int)PhaseSignal.Finish);
                 
-                token.Dispose();
-                tryCompleteFinish?.Invoke(); // ✅ перепроверить завершение
+                // token.Dispose();
+                // tryCompleteFinish?.Invoke(); // ✅ перепроверить завершение
             }
 
             if (action.MoveMode == MoveMode.Move)

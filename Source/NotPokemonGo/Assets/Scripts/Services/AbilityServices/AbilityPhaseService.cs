@@ -9,6 +9,7 @@ using Services.Audio;
 using TimeServices;
 using Units;
 using Units.Movement;
+using UnityEngine;
 
 namespace Services.AbilityServices
 {
@@ -19,7 +20,6 @@ namespace Services.AbilityServices
 
         private AbilityPhase _currentPhase;
 
-        // Handler задаёт сюда TryFinishPhase
         private Action _requestFinishCheck;
 
         public event Action<ArmamentRequest> ArmamentRequested;
@@ -45,14 +45,19 @@ namespace Services.AbilityServices
             };
         }
 
-        public void BindFinishCheck(Action requestFinishCheck) =>
+        public void BindFinishCheck(Action requestFinishCheck)
+        {
             _requestFinishCheck = requestFinishCheck;
+            Debug.Log("Binding finish check");
+        }
 
         public void RequestFinishCheck() =>
             TryCompleteFinish();
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
         {
+            Debug.Log("OnSignal");
+            
             if (phase == null || source == null || target == null)
                 return;
 
@@ -81,7 +86,9 @@ namespace Services.AbilityServices
                     if (executor.CanExecute(action) == false)
                         continue;
 
-                    executor.Execute(phase, action, source, target, _finishGate, TryCompleteFinish);
+                    Debug.Log("OnSignal");
+                    Debug.Log("Executing action: " + executor.GetType().Name);
+                    executor.Execute(phase, action, source, target, _finishGate);
                 }
             }
 
@@ -93,8 +100,10 @@ namespace Services.AbilityServices
             if (_currentPhase == null)
                 return;
 
-            if (!_finishGate.IsOpen)
-                return;
+            // if (!_finishGate.IsOpen)
+            //     return;
+            
+            Debug.Log("!!!!!");
 
             _requestFinishCheck?.Invoke();
         }

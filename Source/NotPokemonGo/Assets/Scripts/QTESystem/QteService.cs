@@ -33,20 +33,20 @@ namespace QTESystem
             _timeService = timeService;
         }
         
-        public TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration)
-        {
-            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
-
-            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
-
-            view.Construct(target, _timeService);
-
-            TimingBarQte barView = (TimingBarQte)view;
-            barView.SetDuration(duration);
-            _objectResolver.Inject(view);
-
-            return barView;
-        }
+        // public TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration)
+        // {
+        //     QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
+        //
+        //     QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
+        //
+        //     view.Construct(target, _timeService);
+        //
+        //     TimingBarQte barView = (TimingBarQte)view;
+        //     barView.SetDuration(duration);
+        //     _objectResolver.Inject(view);
+        //
+        //     return barView;
+        // }
 
         public void Start(QteType qteType, Unit target)
         {
@@ -79,9 +79,6 @@ namespace QTESystem
         
         public IQteSession StartSession(QteType qteType, Unit target, float duration)
         {
-            // if (qteType == QteType.Unknown)
-            //     return NullQteSession.Instance;
-
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
             QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);

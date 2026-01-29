@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UI.QTE;
 using UnityEngine;
@@ -6,58 +7,95 @@ using UnityEngine.UI;
 
 namespace QTESystem.TestQTE
 {
-    public class TripleTap : MonoBehaviour
+    public class TripleTap : QteButtonView, IHasQteDuration, IProvidesQteResult
     {
         [SerializeField] private List<RadialQte> _radialQtes;
         [SerializeField] private Button _button;
+        [SerializeField] private float _delay = 0.7f;
         
+        private WaitForSeconds _spawnDelay;
+
+
         private int _currentRadialQte;
-        
+
         private int _successRadialQte;
+        private int _failedRadialQte;
 
         private void OnEnable()
         {
             _button.onClick.AddListener(OnClick);
 
             foreach (var radial in _radialQtes)
-            {
-                radial.Successed += OnSucсess;
-            }
-        }
-
-        private void OnSucсess(QteButtonView obj)
-        {
-            _successRadialQte++;
-            
-            Debug.Log(_successRadialQte);
+                radial.ResultAction += OnQteResult;
         }
 
         private void OnDisable()
         {
             _button.onClick.RemoveListener(OnClick);
+
+            foreach (var radial in _radialQtes)
+                radial.ResultAction -= OnQteResult;
         }
 
         private void Start()
         {
+            _spawnDelay = new WaitForSeconds(_delay);
+            
             StartCoroutine(PlayCoroutine());
             _currentRadialQte = 0;
         }
 
-        private void OnClick()
+        public void SetDuration(float duration)
         {
-            _radialQtes[_currentRadialQte].Check();
-            
-            _currentRadialQte++;
+            _delay = duration / _radialQtes.Count;
         }
 
-        public IEnumerator PlayCoroutine()
+        private void OnQteResult(QteResult result, QteButtonView view)
+        {
+            if (result == QteResult.Perfect)
+                _successRadialQte++;
+            else if (result == QteResult.Fail)
+                _failedRadialQte++;
+
+            view.gameObject.SetActive(false);
+
+            if (_successRadialQte + _failedRadialQte == _radialQtes.Count)
+                Check();
+        }
+
+        private void OnClick()
+        {
+            if (_currentRadialQte >= _radialQtes.Count)
+            {
+                Check();
+                return;
+            }
+
+            _radialQtes[_currentRadialQte++].Check();
+        }
+
+        private void Check()
+        {
+            if (_successRadialQte == _radialQtes.Count)
+                OnReached?.Invoke(QteResult.Perfect);
+            else if (_successRadialQte < _radialQtes.Count && _successRadialQte > 0)
+                OnReached?.Invoke(QteResult.Normal);
+            else
+                OnReached?.Invoke(QteResult.Fail);
+        }
+
+        private IEnumerator PlayCoroutine()
         {
             for (int i = 0; i < _radialQtes.Count; i++)
             {
                 _radialQtes[i].gameObject.SetActive(true);
 
-                yield return new WaitForSeconds(0.7f);
+                yield return _spawnDelay;
             }
         }
+
+        public override event Action<QteButtonView> Successed;
+        public override event Action<QteButtonView> Invalided;
+        public event Action<QteResult> OnReached;
     }
 }

@@ -1,4 +1,5 @@
 using Abilities.Configs;
+using QTESystem.TestQTE;
 using Units;
 using Units.AnimationControllers;
 
@@ -13,5 +14,7 @@ namespace Abilities.Runtime
         public AnimatorController Animator { get; internal set; }
 
         public AbilityPhase CurrentPhase { get; internal set; }
+        
+        public QteResult QteResult { get; internal set; }
     }
 }

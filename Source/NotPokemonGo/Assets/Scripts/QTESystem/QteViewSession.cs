@@ -26,12 +26,15 @@ namespace QTESystem
             _view.Invalided += OnInvalided;
 
             _resultProvider = view as IProvidesQteResult;
+            
             if (_resultProvider != null)
                 _resultProvider.OnReached += OnResulted;
         }
 
         private void OnResulted(QteResult result)
         {
+            Debug.Log("QteViewSession.OnResulted");
+            
             // Продвинутый QTE сам сказал точный результат
             Complete(result);
         }
@@ -51,7 +54,8 @@ namespace QTESystem
 
         private void Complete(QteResult result)
         {
-            if (IsCompleted) return;
+            if (IsCompleted) 
+                return;
 
             IsCompleted = true;
             Result = result;
@@ -60,7 +64,9 @@ namespace QTESystem
 
         public void Dispose()
         {
-            if (_disposed) return;
+            if (_disposed) 
+                return;
+            
             _disposed = true;
 
             if (_resultProvider != null)

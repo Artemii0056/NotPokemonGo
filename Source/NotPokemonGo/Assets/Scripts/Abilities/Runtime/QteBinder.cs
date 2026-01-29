@@ -39,7 +39,7 @@ namespace Abilities.Runtime
             if (_active.ContainsKey(shot))
                 return;
 
-            var session = _qteService.StartSession(shot.Phase.QteType, qteTarget, shot.Mover.Duration);
+            IQteSession session = _qteService.StartSession(shot.Phase.QteType, qteTarget, shot.Mover.Duration);
 
             session.Completed += r => shot.QteResult = r;
 

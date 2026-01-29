@@ -9,12 +9,6 @@ using Services.AbilityServices;
 
 namespace Abilities.Runtime.Policies
 {
-    /// <summary>
-    /// Универсальная политика для армаментных фаз.
-    /// - Подписывается на ArmamentRequested
-    /// - Спавнит выстрелы, вешает QTE при необходимости
-    /// - Управляет завершением фазы (WaitForExternalCompletion + все шоты/QTE отработали)
-    /// </summary>
     public sealed class ArmamentShotsPolicy : AbilityPolicyBase
     {
         private readonly IArmamentSpawner _armamentSpawner;

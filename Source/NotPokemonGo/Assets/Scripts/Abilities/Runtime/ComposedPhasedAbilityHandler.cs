@@ -102,7 +102,10 @@ namespace Abilities.Runtime
             foreach (var policy in _policies)
                 policy.OnSignal(_context, signal);
 
-            TryFinishPhase();
+            Debug.Log("OnAnimSignal");
+            
+            _context.AnimatorTrigger?.PhaseService.RequestFinishCheck();
+            //TryFinishPhase();
         }
 
         private void TryFinishPhase()
@@ -122,6 +125,8 @@ namespace Abilities.Runtime
 
         private void Cleanup()
         {
+            //_isActive = false;
+
             if (_context.Animator != null)
                 _context.Animator.Signal -= OnAnimSignal;
 

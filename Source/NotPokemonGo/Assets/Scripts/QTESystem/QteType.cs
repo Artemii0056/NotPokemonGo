@@ -7,7 +7,8 @@ namespace QTESystem
         SliderBack = 6,
         SliderForward = 7,
         PressedButton = 8,
-        TimingBar = 9
+        TimingBar = 9,
+        TripleTap = 10
         //SliderPingPong = 6,
     }
 }

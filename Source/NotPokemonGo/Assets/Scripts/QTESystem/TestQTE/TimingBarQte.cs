@@ -23,16 +23,8 @@ namespace QTESystem.TestQTE
         {
             _isRun = true;
 
-            // _partTimingBar.Play();
-            // _partTimingBar.Finished += OnPartFinished;
-            
             _timingBar.Play(_duration);
             _timingBar.Result += OnResult;
-        }
-
-        public void InitializeTime(float time)
-        {
-            _duration = time;
         }
 
         private void Update()
@@ -53,19 +45,7 @@ namespace QTESystem.TestQTE
         private void OnResult(QteResult result) => 
             OnReached?.Invoke(result);
 
-        private void OnPartFinished()
-        {
-            _partTimingBar.Finished -= OnPartFinished;
-            _partTimingBar.DeactivateCursor();
-            _timingBar.Play(_duration);
-
-            _timingBar.Result += OnResult;
-        }
-
-        public void SetDuration(float duration)
-        {
+        public void SetDuration(float duration) => 
             _duration = duration;
-        }
-
     }
 }

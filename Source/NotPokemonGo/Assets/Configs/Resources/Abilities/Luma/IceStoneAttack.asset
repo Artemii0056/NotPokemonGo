@@ -15,7 +15,44 @@ MonoBehaviour:
   <AbilityType>k__BackingField: 15
   <Icon>k__BackingField: {fileID: 21300000, guid: 4e99b63fe0f6bc445927853a648dd622, type: 3}
   <Parts>k__BackingField:
-  - <AbilityPhases>k__BackingField: []
+  - <AbilityPhases>k__BackingField:
+    - AnimationClip: {fileID: 0}
+      QteType: 0
+      WaitForExternalCompletion: 0
+      SignalActions:
+      - Signal: 0
+        TargetMode: 0
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+          <Duration>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        ParticlePrefab: {fileID: 0}
+        ParticleSpawnType: 0
+        ParticleOwner: 0
+        MoveCommand: 0
+        MoveMode: 0
+        CustomPoint: {x: 0, y: 0, z: 0}
+        MoveDuration: 0
+        MoveDelay: 0
+        StopDistance: 0
+        JumpPower: 0
+        NumJumps: 0
+        CameraCommand: 0
+        CameraBlendTimeout: 0
+        SfxClip: {fileID: 0}
+        SfxVolume: 0
+        Sfx2D: 0
+        TimeEffect: 0
+        TimeScale: 0
+        TimeDuration: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 0

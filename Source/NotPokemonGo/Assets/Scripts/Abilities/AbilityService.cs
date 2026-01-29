@@ -99,6 +99,21 @@ namespace Abilities
                     break;
                 case AbilityType.BaseAbility:
                     break;
+                
+                case AbilityType.LumaAttackWithStaff:
+                    _abilityHandler = new ComposedPhasedAbilityHandler(
+                        abilityModel,
+                        _coroutineRunner,
+                        new IAbilityPolicy[]
+                        {
+                            new QteResultPolicy(_qteService),
+                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
+                        });
+                    
+                    _abilityHandler.Play(source, target);
+                    _activeAbilityHandlers.Add(_abilityHandler);
+                    _abilityHandler.Finished += Continue;
+                    break;
 
                 case AbilityType.EngineeringSeries:
                     _abilityHandler =
