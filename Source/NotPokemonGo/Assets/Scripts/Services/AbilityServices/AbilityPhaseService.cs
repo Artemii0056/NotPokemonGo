@@ -20,7 +20,14 @@ namespace Services.AbilityServices
 
         private AbilityPhase _currentPhase;
 
+        // handler binds TryFinishPhase сюда
         private Action _requestFinishCheck;
+
+        // защита от спама/поздних коллбеков
+        private bool _finishRequested;
+        private int _phaseVersion;
+        
+        private int _lastRequestFrame = -1;
 
         public event Action<ArmamentRequest> ArmamentRequested;
 
@@ -35,7 +42,7 @@ namespace Services.AbilityServices
         {
             _executors = new List<IPhaseSignalActionExecutor>
             {
-                new ParticleActionExecutor(particleSpawner), //Паттерн Команда - Undo
+                new ParticleActionExecutor(particleSpawner),
                 new SoundActionExecutor(audio),
                 new TimeEffectExecutor(time),
                 new CameraActionExecutor(camera),
@@ -48,50 +55,78 @@ namespace Services.AbilityServices
         public void BindFinishCheck(Action requestFinishCheck)
         {
             _requestFinishCheck = requestFinishCheck;
-            Debug.Log("Binding finish check");
         }
 
-        public void RequestFinishCheck() =>
-            TryCompleteFinish();
+        /// <summary>
+        /// ВАЖНО: вызывать на старте каждой фазы ДО policy.OnPhaseStart.
+        /// Иначе policy может взять токен, а потом первый OnSignal сделает Reset и "сотрёт" pending.
+        /// </summary>
+        public void BeginPhase(AbilityPhase phase)
+        {
+            _currentPhase = phase;
+            _finishGate.Reset();
+
+            _finishRequested = false;
+            _phaseVersion++;
+        }
+
+        /// <summary>
+        /// Политики (например QTE) могут удерживать фазу токеном.
+        /// </summary>
+        public IDisposable AcquireFinishToken(string tag = null)
+        {
+            var t = _finishGate.Acquire(tag);
+            Debug.Log($"[Gate] AcquireFinishToken tag={tag} -> {(t == null ? "NULL" : t.GetType().Name)} pending={_finishGate.Pending}");
+            return t;
+        }
+
+        public void RequestFinishCheck() => TryCompleteFinish();
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
         {
-            Debug.Log("OnSignal");
-            
             if (phase == null || source == null || target == null)
                 return;
 
-            if (ReferenceEquals(_currentPhase, phase) == false)
-            {
-                _currentPhase = phase;
-                _finishGate.Reset();
-            }
+            // ✅ Никаких Reset тут. Если сигнал пришёл не по текущей фазе — игнорируем.
+            if (!ReferenceEquals(_currentPhase, phase))
+                return;
 
             var actions = phase.SignalActions;
-
             if (actions == null || actions.Count == 0)
+            {
+                TryCompleteFinish();
                 return;
+            }
 
             for (int i = 0; i < actions.Count; i++)
             {
-                PhaseSignalAction action = actions[i];
-
+                var action = actions[i];
                 if (action == null || action.Signal != signal)
                     continue;
 
-                for (int index = 0; index < _executors.Count; index++)
+                for (int j = 0; j < _executors.Count; j++)
                 {
-                    IPhaseSignalActionExecutor executor = _executors[index];
-
-                    if (executor.CanExecute(action) == false)
+                    var executor = _executors[j];
+                    if (!executor.CanExecute(action))
                         continue;
 
-                    Debug.Log("OnSignal");
-                    Debug.Log("Executing action: " + executor.GetType().Name);
-                    executor.Execute(phase, action, source, target, _finishGate);
+                    int capturedVersion = _phaseVersion;
+
+                    executor.Execute(
+                        phase, action, source, target,
+                        _finishGate,
+                        () =>
+                        {
+                            // поздний коллбек от прошлой фазы — игнор
+                            if (capturedVersion != _phaseVersion)
+                                return;
+
+                            TryCompleteFinish();
+                        });
                 }
             }
 
+            // Можно оставить: дешево, gate/finishRequested защитят от спама
             TryCompleteFinish();
         }
 
@@ -100,12 +135,21 @@ namespace Services.AbilityServices
             if (_currentPhase == null)
                 return;
 
-            // if (!_finishGate.IsOpen)
-            //     return;
-            
-            Debug.Log("!!!!!");
+            // Gate — главный фильтр
+            if (!_finishGate.IsOpen)
+                return;
 
-            _requestFinishCheck?.Invoke();
+            var cb = _requestFinishCheck;
+            if (cb == null)
+                return;
+
+            // Не чаще 1 раза в кадр (чтобы не спамить, но позволить "дозреть" условиям policy)
+            if (_lastRequestFrame == Time.frameCount)
+                return;
+
+            _lastRequestFrame = Time.frameCount;
+            cb.Invoke();
         }
+
     }
 }

@@ -1,42 +1,84 @@
-﻿using Abilities.Signals;
+﻿using System;
+using Abilities.Configs;
+using Abilities.Runtime;
+using Abilities.Runtime.Policies;
+using Abilities.Signals;
 using QTESystem;
 using QTESystem.TestQTE;
 using UnityEngine;
 
-namespace Abilities.Runtime.Policies
+public class QteResultPolicy : AbilityPolicyBase
 {
-    public class QteResultPolicy : AbilityPolicyBase
+    private readonly IQteService _qteService;
+
+    private AbilityContext _context;
+    private IQteSession _qteSession;
+
+    private IDisposable _gateToken;
+    private bool _startedThisPhase;
+
+    public QteResultPolicy(IQteService qteService)
     {
-        private readonly IQteService _qteService;
-        private AbilityContext _context;
-        private IQteSession _qteSession;
+        _qteService = qteService;
+    }
 
-        public QteResultPolicy(IQteService qteService) => 
-            _qteService = qteService;
+    public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
+    {
+        _context = ctx;
+        _startedThisPhase = false;
 
-        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
+        _qteSession = null;
+
+        // ❌ НЕ dispose здесь — токен этой фазы
+        _gateToken = null;
+
+        if (phase.QteType != QteType.Unknown)
         {
-            if (ctx.CurrentPhase.QteType == QteType.Unknown)
-            {
-                _context.Animator?.FlagSignal((int)PhaseSignal.Finish);
-                return;
-            }
-            
-            _context = ctx;
-
-            _qteSession= _qteService.StartSession(_context.CurrentPhase.QteType, ctx.Source,2.1f);
-
-            _qteSession.Completed += Cancel;
+            _gateToken = ctx.AnimatorTrigger.PhaseService.AcquireFinishToken("QTE");
+            Debug.Log("[QTE] Gate token ACQUIRED");
         }
+    }
 
-        private void Cancel(QteResult qteResult)
-        {
-            Debug.Log(qteResult + " Cancel");
-            
-            _qteSession.Completed -= Cancel;
-            
-            _context.QteResult = qteResult;
-            _context.Animator?.FlagSignal((int)PhaseSignal.Finish);
-        }
+    public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
+    {
+        if (_startedThisPhase)
+            return;
+
+        if (ctx.CurrentPhase.QteType == QteType.Unknown)
+            return;
+
+        _startedThisPhase = true;
+
+        _qteSession = _qteService.StartSession(
+            ctx.CurrentPhase.QteType,
+            ctx.Source,
+            2.1f
+        );
+
+        _qteSession.Completed += OnCompleted;
+    }
+
+    private void OnCompleted(QteResult result)
+    {
+        Debug.Log($"[QTE] Completed={result} disposingToken={_gateToken!=null}");
+        Debug.Log($"[QTE] Completed with {result}");
+
+        _qteSession.Completed -= OnCompleted;
+        _context.QteResult = result;
+
+        // ✅ ТУТ мы гарантированно освобождаем gate
+        _gateToken.Dispose();
+        _gateToken = null;
+
+        _context.AnimatorTrigger.PhaseService.RequestFinishCheck();
+    }
+
+    public override void OnAbilityStop(AbilityContext ctx)
+    {
+        _gateToken?.Dispose();
+        _gateToken = null;
+
+        _qteSession = null;
+        _context = null;
     }
 }

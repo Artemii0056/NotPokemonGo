@@ -14,9 +14,7 @@ namespace Abilities.Runtime.Impact
         private readonly ShotTracker _shotTracker = new();
 
         private AbilityContext _context;
-
         private AbilityPhase _activePhase;
-        private bool _finishSeenForActivePhase;
 
         public SimpleShotsPolicy(
             IArmamentSpawner armamentSpawner,
@@ -36,8 +34,7 @@ namespace Abilities.Runtime.Impact
         {
             _context = context;
 
-            AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
-            
+            var phaseService = context?.AnimatorTrigger?.PhaseService;
             if (phaseService != null)
                 phaseService.ArmamentRequested += OnArmamentRequested;
         }
@@ -45,19 +42,11 @@ namespace Abilities.Runtime.Impact
         public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
         {
             _activePhase = phase;
-            _finishSeenForActivePhase = false;
-        }
-
-        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
-        {
-            if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
-                _finishSeenForActivePhase = true;
         }
 
         public override void OnAbilityStop(AbilityContext ctx)
         {
             var phaseService = ctx?.AnimatorTrigger?.PhaseService;
-            
             if (phaseService != null)
                 phaseService.ArmamentRequested -= OnArmamentRequested;
 
@@ -65,26 +54,27 @@ namespace Abilities.Runtime.Impact
 
             _context = null;
             _activePhase = null;
-            _finishSeenForActivePhase = false;
         }
 
+        /// <summary>
+        /// ✅ НИКАКОЙ зависимости от Finish-сигнала.
+        /// ✅ НИКАКОЙ булки WaitForExternalCompletion.
+        /// Логика простая:
+        /// - если в фазе нет armament-действий → policy не блокирует
+        /// - если armament-действия есть → ждём, пока все шоты завершатся (ActiveCount == 0)
+        /// </summary>
         public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
         {
             if (phase == null)
                 return true;
 
-            if (phase == _activePhase)
-            {
-                if (!_finishSeenForActivePhase)
-                    return false;
+            if (phase != _activePhase)
+                return true;
 
-                if (!phase.WaitForExternalCompletion)
-                    return true;
+            if (!PhaseHasArmament(phase))
+                return true;
 
-                return _shotTracker.ActiveCount == 0;
-            }
-
-            return true;
+            return _shotTracker.ActiveCount == 0;
         }
 
         private void OnArmamentRequested(ArmamentRequest request)
@@ -113,21 +103,30 @@ namespace Abilities.Runtime.Impact
         {
             _impactResolver.Resolve(shot);
 
-            AbilityContext context = _context;
-            
+            var context = _context;
             if (context == null)
                 return;
 
-            AbilityPhase shotPhase = shot.Phase;
+            // Если это шот текущей фазы — после его завершения можно попросить перепроверку.
+            // (TryCompleteFinish rate-limited 1/кадр — спама не будет)
+            if (shot.Phase != null && shot.Phase == _activePhase)
+                context.AnimatorTrigger?.PhaseService?.RequestFinishCheck();
+        }
 
-            if (shotPhase != null
-                && shotPhase == _activePhase
-                && shotPhase.WaitForExternalCompletion
-                && _finishSeenForActivePhase)
+        private static bool PhaseHasArmament(AbilityPhase phase)
+        {
+            var actions = phase.SignalActions;
+            if (actions == null)
+                return false;
+
+            for (int i = 0; i < actions.Count; i++)
             {
-                if (_shotTracker.ActiveCount == 0)
-                    context.Animator?.FlagSignal((int)PhaseSignal.Finish);
+                var a = actions[i];
+                if (a != null && a.HasArmament)
+                    return true;
             }
+
+            return false;
         }
     }
 }

@@ -46,10 +46,11 @@ namespace Abilities.Runtime
             if (_context.AnimatorTrigger != null)
                 _context.AnimatorTrigger.PhaseService.BindFinishCheck(TryFinishPhase);
 
-            foreach (IAbilityPolicy abilityPolicy in _policies)
-                abilityPolicy.OnAbilityStart(_context);
+            foreach (var policy in _policies)
+                policy.OnAbilityStart(_context);
 
-            _context.Animator.Signal += OnAnimSignal;
+            if (_context.Animator != null)
+                _context.Animator.Signal += OnAnimSignal;
 
             _routine = _runner.StartCoroutine(RunAllParts());
         }
@@ -72,7 +73,6 @@ namespace Abilities.Runtime
 
             OnAbilityFinished();
             Finished?.Invoke(this);
-
             Cleanup();
         }
 
@@ -83,7 +83,11 @@ namespace Abilities.Runtime
             _context.AnimatorTrigger.SetTarget(_context.Target);
             _context.AnimatorTrigger.SetPhase(phase);
 
-            foreach (IAbilityPolicy policy in _policies)
+            // ✅ КРИТИЧНО: BeginPhase ДО policy.OnPhaseStart
+            // чтобы policies (QTE) могли взять gate token и он не был "сброшен" первым OnSignal.
+            _context.AnimatorTrigger.PhaseService.BeginPhase(phase);
+
+            foreach (var policy in _policies)
                 policy.OnPhaseStart(_context, phase);
 
             _waitingPhaseFinish = true;
@@ -95,25 +99,25 @@ namespace Abilities.Runtime
         private void OnAnimSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
-
             if (signal == PhaseSignal.None)
                 return;
 
             foreach (var policy in _policies)
                 policy.OnSignal(_context, signal);
 
-            Debug.Log("OnAnimSignal");
-            
+            // ✅ Не пытаемся завершать фазу напрямую.
+            // Просто просим PhaseService перепроверить (gate решит).
             _context.AnimatorTrigger?.PhaseService.RequestFinishCheck();
-            //TryFinishPhase();
         }
 
         private void TryFinishPhase()
         {
-            if (_context.CurrentPhase == null)
-                return;
+            if (_context.CurrentPhase == null) return;
 
-            if (_policies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase)))
+            bool can = _policies.All(p => p.CanFinishPhase(_context, _context.CurrentPhase));
+            Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationCashName} can={can}");
+
+            if (can)
                 _waitingPhaseFinish = false;
         }
 
@@ -125,8 +129,6 @@ namespace Abilities.Runtime
 
         private void Cleanup()
         {
-            //_isActive = false;
-
             if (_context.Animator != null)
                 _context.Animator.Signal -= OnAnimSignal;
 

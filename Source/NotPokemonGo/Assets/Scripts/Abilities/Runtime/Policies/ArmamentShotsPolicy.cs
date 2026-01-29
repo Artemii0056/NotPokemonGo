@@ -86,9 +86,6 @@ namespace Abilities.Runtime.Policies
                 if (!_finishSeenForActivePhase)
                     return false;
 
-                if (!phase.WaitForExternalCompletion)
-                    return true;
-
                 bool noShots = _shotTracker.ActiveCount == 0;
                 bool noQte = !_useQte && _qteBinder.ActiveCount == 0;
 
@@ -148,7 +145,6 @@ namespace Abilities.Runtime.Policies
 
             if (shotPhase != null
                 && shotPhase == _activePhase
-                && shotPhase.WaitForExternalCompletion
                 && _finishSeenForActivePhase)
             {
                 bool noShots = _shotTracker.ActiveCount == 0;

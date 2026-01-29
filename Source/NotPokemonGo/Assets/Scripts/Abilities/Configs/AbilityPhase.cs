@@ -15,7 +15,6 @@ namespace Abilities.Configs
         public AnimationClip AnimationClip;
 
         public QteType QteType;
-        public bool WaitForExternalCompletion;
 
         public List<PhaseSignalAction> SignalActions = new List<PhaseSignalAction>();
 

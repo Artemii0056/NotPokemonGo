@@ -90,9 +90,6 @@ namespace Abilities.Runtime.Policies
                 if (!_finishSeenForActivePhase)
                     return false;
 
-                if (!phase.WaitForExternalCompletion)
-                    return true;
-
                 return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
             }
 
@@ -142,7 +139,6 @@ namespace Abilities.Runtime.Policies
 
             if (shotPhase != null
                 && shotPhase == _activePhase
-                && shotPhase.WaitForExternalCompletion
                 && _finishSeenForActivePhase)
             {
                 if (_shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0)
