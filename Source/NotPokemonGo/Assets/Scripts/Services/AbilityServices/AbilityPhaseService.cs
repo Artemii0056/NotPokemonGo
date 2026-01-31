@@ -139,7 +139,8 @@ namespace Services.AbilityServices
             if (!_finishGate.IsOpen)
                 return;
 
-            var cb = _requestFinishCheck;
+            Action cb = _requestFinishCheck;
+            
             if (cb == null)
                 return;
 

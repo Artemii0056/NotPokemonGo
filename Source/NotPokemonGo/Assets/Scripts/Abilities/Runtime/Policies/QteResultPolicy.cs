@@ -52,7 +52,7 @@ public class QteResultPolicy : AbilityPolicyBase
         _qteSession = _qteService.StartSession(
             ctx.CurrentPhase.QteType,
             ctx.Source,
-            2.1f
+            1.2f
         );
 
         _qteSession.Completed += OnCompleted;

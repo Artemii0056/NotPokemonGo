@@ -141,6 +141,7 @@ namespace Abilities.Runtime.Policies
 
             if (context == null)
                 return;
+            
             AbilityPhase shotPhase = shot.Phase;
 
             if (shotPhase != null

@@ -99,6 +99,7 @@ namespace Abilities.Runtime
         private void OnAnimSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
+            
             if (signal == PhaseSignal.None)
                 return;
 
@@ -112,9 +113,11 @@ namespace Abilities.Runtime
 
         private void TryFinishPhase()
         {
-            if (_context.CurrentPhase == null) return;
+            if (_context.CurrentPhase == null) 
+                return;
 
             bool can = _policies.All(p => p.CanFinishPhase(_context, _context.CurrentPhase));
+            
             Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationCashName} can={can}");
 
             if (can)

@@ -55,6 +55,11 @@ namespace QTESystem.TestQTE
             _circle.color = _targetColor;
         }
 
+        public void SetTargetTime(float targetTime)
+        {
+            _targetTime = targetTime;
+        }
+
         public void Check()
         {
             if (_circle.transform.localScale.x <= _halfCircleScale.x)

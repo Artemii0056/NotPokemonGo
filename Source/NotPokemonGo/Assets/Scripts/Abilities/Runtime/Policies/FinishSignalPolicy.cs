@@ -12,6 +12,12 @@ namespace Abilities.Runtime.Policies
 
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
+            if (ctx.CurrentPhase.SignalActions[0].MoveCommand == MoveCommand.None)
+            {
+                _finishReceived = true;
+                return;
+            }
+            
             if (signal == PhaseSignal.Finish)
                 _finishReceived = true;
         }

@@ -35,6 +35,7 @@ namespace Abilities.Runtime.Impact
             _context = context;
 
             var phaseService = context?.AnimatorTrigger?.PhaseService;
+            
             if (phaseService != null)
                 phaseService.ArmamentRequested += OnArmamentRequested;
         }

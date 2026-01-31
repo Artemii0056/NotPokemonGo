@@ -15,7 +15,6 @@ namespace QTESystem.TestQTE
         
         private WaitForSeconds _spawnDelay;
 
-
         private int _currentRadialQte;
 
         private int _successRadialQte;
@@ -39,6 +38,8 @@ namespace QTESystem.TestQTE
 
         private void Start()
         {
+            Debug.Log(_delay);
+            
             _spawnDelay = new WaitForSeconds(_delay);
             
             StartCoroutine(PlayCoroutine());
@@ -47,7 +48,7 @@ namespace QTESystem.TestQTE
 
         public void SetDuration(float duration)
         {
-            _delay = duration / _radialQtes.Count;
+            _delay = duration / _radialQtes.Count; 
         }
 
         private void OnQteResult(QteResult result, QteButtonView view)
@@ -88,6 +89,7 @@ namespace QTESystem.TestQTE
         {
             for (int i = 0; i < _radialQtes.Count; i++)
             {
+                _radialQtes[i].SetTargetTime(_delay*2);
                 _radialQtes[i].gameObject.SetActive(true);
 
                 yield return _spawnDelay;

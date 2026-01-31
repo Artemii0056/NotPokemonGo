@@ -85,15 +85,31 @@ namespace Abilities.Runtime.Policies
             if (phase == null)
                 return true;
 
-            if (phase == _activePhase)
-            {
-                if (!_finishSeenForActivePhase)
-                    return false;
+            if (!PhaseHasArmament(phase))
+                return true;
+            
+            if (!_finishSeenForActivePhase)
+                return false;
 
-                return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
+            return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
+        }
+        
+        private static bool PhaseHasArmament(AbilityPhase phase)
+        {
+            var actions = phase.SignalActions;
+            
+            if (actions == null)
+                return false;
+
+            for (int i = 0; i < actions.Count; i++)
+            {
+                var a = actions[i];
+                
+                if (a != null && a.HasArmament)
+                    return true;
             }
 
-            return true;
+            return false;
         }
 
         private void OnArmamentRequested(ArmamentRequest request)

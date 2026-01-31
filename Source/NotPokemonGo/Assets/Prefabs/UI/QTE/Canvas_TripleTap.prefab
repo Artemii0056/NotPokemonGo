@@ -418,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2420243817494311107
 RectTransform:
   m_ObjectHideFlags: 0
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 7564228419228594212}
   _circle: {fileID: 1438765293790209275}
-  _targetTime: 3
+  _targetTime: 1000
   _currentTime: 0
   _targetColor: {r: 1, g: 0.2028302, b: 0.2028302, a: 0.5372549}
 --- !u!1 &2320256863950758705
@@ -473,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9032656642835272874
 RectTransform:
   m_ObjectHideFlags: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4345139637044728074}
   _circle: {fileID: 5959671247387530157}
-  _targetTime: 3
+  _targetTime: 0.8
   _currentTime: 0
   _targetColor: {r: 1, g: 0.2028302, b: 0.2028302, a: 0.5372549}
 --- !u!1 &2390155270003270341
@@ -662,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2543695746200021188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -698,7 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8411676236557822395}
   _circle: {fileID: 5625909179385457373}
-  _targetTime: 3
+  _targetTime: 1000
   _currentTime: 0
   _targetColor: {r: 1, g: 0.2028302, b: 0.2028302, a: 0.5372549}
 --- !u!1 &3502091350433245504

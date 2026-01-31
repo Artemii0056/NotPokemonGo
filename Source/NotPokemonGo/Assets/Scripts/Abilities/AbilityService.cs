@@ -72,7 +72,7 @@ namespace Abilities
                         _coroutineRunner,
                         new IAbilityPolicy[]
                         {
-                            //new FinishSignalPolicy(),
+                            //new FinishSignalPolicy(), //Так то можно попробовать сюда закинуть выход, но только если фаза... Не мувмент???
                             new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier),
                             new PortalVfxPolicy(abilityModel, ParticleSpawnType.Middle)
                         });
@@ -136,7 +136,7 @@ namespace Abilities
                         _coroutineRunner,
                         new IAbilityPolicy[]
                         {
-                            new FinishSignalPolicy(),
+                            //new FinishSignalPolicy(),
                         });
                     
                     _abilityHandler.Play(source, target);

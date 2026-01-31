@@ -1,4 +1,5 @@
-﻿using Abilities.MV;
+﻿using Abilities.Configs;
+using Abilities.MV;
 using Units;
 using UnityEngine;
 
@@ -37,6 +38,11 @@ namespace Abilities.Runtime.Policies
 
             _instance = Object.Instantiate(_portalPrefab, anchorPoint.position, Quaternion.identity, anchorPoint);
             _instance.Play();
+        }
+
+        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
+        {
+            return true;
         }
 
         public override void OnAbilityStop(AbilityContext ctx)
