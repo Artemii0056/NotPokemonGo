@@ -3,7 +3,72 @@ guid: a1e848794dcba7740a7ce412d1979f01
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_blue_d_mtl
+    second: {fileID: 2100000, guid: 255b9b2f6b2262f4dbc276c24dc26b35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_blue_l_mtl
+    second: {fileID: 2100000, guid: 5755374aa24e09043a977b501a0973c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_corset_mtl
+    second: {fileID: 2100000, guid: 0797e877c7be5544e89b2cf4dbbfe34e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_eye_mtl
+    second: {fileID: 2100000, guid: ea5b3485f325a9a43a364a975bf501ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_gold_mtl
+    second: {fileID: 2100000, guid: 68bb25d6bdbe0a54186fa2718a8717e5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_hair_mtl
+    second: {fileID: 2100000, guid: d51ff1b405cc0fa41b1fa8b195b26966, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_lambert7
+    second: {fileID: 2100000, guid: 4cf80b6053bb00a4c9f186c98215a0b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_leather_mtl
+    second: {fileID: 2100000, guid: e60ca166a0c85d44e9ce1b48a6ce105d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_lips_mtl
+    second: {fileID: 2100000, guid: 34bce5fe8cc52c149ae21fcbb732e3bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_metal_l_mtl
+    second: {fileID: 2100000, guid: 561bb1959c438764cb31c069da2b14d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_pants_mtl
+    second: {fileID: 2100000, guid: 1501dbe558d75ab4cb22be964607fe4c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_skin_mtl
+    second: {fileID: 2100000, guid: e5d84e8c63ede1c4fb862c1d0bb5a604, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface1
+    second: {fileID: 2100000, guid: c79138755f965c249acd0f9861d2e9b2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
