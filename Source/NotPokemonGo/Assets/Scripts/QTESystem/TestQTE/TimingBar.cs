@@ -79,14 +79,14 @@ namespace QTESystem.TestQTE
             _tween?.Kill();
         }
 
-        private void OnValidate()
-        {
-            if (_okZoneImage != null && _perfectZoneImage != null)
-                SetupZones();
-
-            if (_cursor != null)
-                SetCursor(_timer);
-        }
+        // private void OnValidate()
+        // {
+        //     if (_okZoneImage != null && _perfectZoneImage != null)
+        //         SetupZones();
+        //
+        //     if (_cursor != null)
+        //         SetCursor(_timer);
+        // }
 
         private void SetupZones()
         {
