@@ -1,6 +1,5 @@
 ﻿using System;
-using UI.BaseUI;
-using UI.BaseUI.Presenters;
+using UI.BaseUI.Interfaces;
 
 namespace UI.DodgeUI
 {

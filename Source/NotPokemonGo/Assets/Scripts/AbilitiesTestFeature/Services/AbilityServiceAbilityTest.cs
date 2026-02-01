@@ -54,10 +54,10 @@ namespace AbilitiesTestFeature.Services
 			switch (abilityType)
 			{
 				case AbilityType.FireBall:
-					_abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService);
-					_abilityHandler.Play(source, target);
-					_activeAbilityHandlers.Add(_abilityHandler);
-					_abilityHandler.Finished += Continue;
+					// _abilityHandler = new PortalFireballSummoner(_coroutineRunner, abilityModel, _qteService);
+					// _abilityHandler.Play(source, target);
+					// _activeAbilityHandlers.Add(_abilityHandler);
+					// _abilityHandler.Finished += Continue;
 					break;
 
 				case AbilityType.FrostBall:

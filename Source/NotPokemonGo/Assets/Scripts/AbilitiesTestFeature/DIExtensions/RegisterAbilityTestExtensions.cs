@@ -38,7 +38,6 @@ namespace AbilitiesTestFeature.DIExtensions
 			builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
 			builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
 			builder.Register<ICastamentApplicator, CastamentApplicator>(Lifetime.Singleton);
-			builder.Register<IArmamentApplicator, ArmamentApplicator>(Lifetime.Singleton);
 			builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
 			builder.Register<IQteService, QteService>(Lifetime.Singleton);
 			builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);

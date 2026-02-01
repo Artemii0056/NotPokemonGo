@@ -2,12 +2,14 @@
 using Armaments;
 using Battlefields;
 using Castaments;
+using DefaultNamespace;
 using Effects;
 using Platoons;
 using QTESystem;
 using ReactionSystems;
 using Services;
 using Services.AssetManagement;
+using Services.Audio;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
@@ -34,11 +36,9 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IStatusResolver, StatusResolver>(Lifetime.Singleton);
 			builder.Register<IStatusManager, StatusManager>(Lifetime.Singleton);
 			builder.Register<ICastamentApplicator, CastamentApplicator>(Lifetime.Singleton);
-			builder.Register<IArmamentApplicator, ArmamentApplicator>(Lifetime.Singleton);
 			builder.Register<IRaycastService, RaycastService>(Lifetime.Singleton);
 			builder.Register<IQteService, QteService>(Lifetime.Singleton);
 			builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);
-            
 			builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
 			builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
@@ -62,6 +62,9 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
 			
 			builder.Register<UIService>(Lifetime.Singleton).AsImplementedInterfaces();
+			
+			builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);
+			builder.Register<IAudioService, AudioService>(Lifetime.Singleton);
 			
 			return builder;
 		}

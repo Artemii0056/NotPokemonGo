@@ -43,10 +43,6 @@ namespace Infrastructure.DI.DIExtensions
 				.AsImplementedInterfaces()
 				.AsSelf();
                 
-			builder.Register<PlayerDodgeState>(Lifetime.Singleton)
-				.AsImplementedInterfaces()
-				.AsSelf();
-			
 			return  builder;
 		}
 	}
