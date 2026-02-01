@@ -1,145 +1,106 @@
+using System;
 using DG.Tweening;
-using QTESystem.TestQTE;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimingBar : MonoBehaviour
+namespace QTESystem.TestQTE
 {
-   [Header("References")]
-    [SerializeField] private RectTransform bar;
-    [SerializeField] private RectTransform cursor;
-
-    [SerializeField] private Image failLeft;
-    [SerializeField] private Image okZone;
-    [SerializeField] private Image perfectZone;
-    [SerializeField] private Image failRight;
-
-    [Header("Difficulty")]
-    [SerializeField] private QTEDifficulty difficulty;
-
-    [Header("Input")]
-    [SerializeField] private KeyCode inputKey = KeyCode.Space;
-
-    private Tween cursorTween;
-    private float barWidth;
-
-    private float perfectMin;
-    private float perfectMax;
-    private float okMin;
-    private float okMax;
-
-    private bool active;
-
-    private void Start()
+    public class TimingBar : MonoBehaviour
     {
-        barWidth = bar.rect.width;
-        SetupZones();
-        StartQTE();
-    }
+        [Header("References")] 
+        [SerializeField] private RectTransform _cursor;
 
-    private void Update()
-    {
-        if (!active) return;
+        [SerializeField] private RectTransform _bar;
 
-        if (Input.GetKeyDown(inputKey))
+        [SerializeField] private Image _okZoneImage;
+        [SerializeField] private Image _perfectZoneImage;
+
+        private Tween _tween;
+        private float _timer;
+
+        [SerializeField] private QteDifficulty Difficulty;
+
+        public Action<QteResult> Result;
+
+        public void Play(float duration)
         {
-            Evaluate();
+            _cursor.gameObject.SetActive(true);
+            SetCursor(0);
+            StartQte(duration);
         }
-    }
 
-    // ---------------------------
-    // QTE LOGIC
-    // ---------------------------
-
-    public void StartQTE()
-    {
-        active = true;
-
-        float left = -barWidth / 2f;
-        float right = barWidth / 2f;
-
-        cursor.anchoredPosition = new Vector2(left, 0);
-
-        cursorTween?.Kill();
-        cursorTween = cursor
-            .DOAnchorPosX(right, difficulty.duration)
-            .SetEase(Ease.Linear)
-            .SetLoops(difficulty.pingPong ? -1 : 1, LoopType.Yoyo);
-    }
-
-    public void StopQTE()
-    {
-        active = false;
-        cursorTween?.Kill();
-    }
-
-    private void Evaluate()
-    {
-        StopQTE();
-
-        float pos = GetNormalizedCursorPosition();
-
-        if (pos >= perfectMin && pos <= perfectMax)
+        private void StartQte(float duration)
         {
-            Debug.Log("⭐ PERFECT");
+            _timer = 0f;
+
+            _tween?.Kill();
+            _tween = DOTween.To(
+                () => _timer,
+                SetCursor,
+                1f,
+                duration
+            ).SetEase(Ease.Linear);
         }
-        else if (pos >= okMin && pos <= okMax)
+
+        private void StopQte() =>
+            _tween?.Kill();
+
+        private void SetCursor(float value)
         {
-            Debug.Log("✔ OK");
+            _timer = value;
+
+            float difficultyDuration = Difficulty.duration / 2;
+
+            _cursor.anchorMin = new Vector2(_timer, difficultyDuration);
+            _cursor.anchorMax = new Vector2(_timer, difficultyDuration);
         }
-        else
+
+        public void Evaluate()
         {
-            Debug.Log("❌ FAIL");
+            StopQte();
+
+            if (_timer >= Difficulty.PerfectStart && _timer <= Difficulty.PerfectEnd)
+            {
+                Result.Invoke(QteResult.Perfect);
+                return;
+            }
+
+            if (_timer >= Difficulty.OkStart && _timer <= Difficulty.OkEnd)
+            {
+                Result.Invoke(QteResult.Normal);
+                return;
+            }
+
+            Result.Invoke(QteResult.Fail);
         }
-    }
 
-    // ---------------------------
-    // ZONES
-    // ---------------------------
+        private void OnDisable()
+        {
+            _tween?.Kill();
+        }
 
-    private void SetupZones()
-    {
-        float perfectWidth = barWidth * difficulty.perfectSize;
-        float okWidth = barWidth * difficulty.okSize;
+        // private void OnValidate()
+        // {
+        //     if (_okZoneImage != null && _perfectZoneImage != null)
+        //         SetupZones();
+        //
+        //     if (_cursor != null)
+        //         SetCursor(_timer);
+        // }
 
-        // PERFECT
-        perfectZone.rectTransform.sizeDelta =
-            new Vector2(perfectWidth, bar.rect.height);
+        private void SetupZones()
+        {
+            SetZone(_okZoneImage.rectTransform, Difficulty.OkStart, Difficulty.OkEnd);
+            SetZone(_perfectZoneImage.rectTransform, Difficulty.PerfectStart, Difficulty.PerfectEnd);
+        }
 
-        // OK
-        okZone.rectTransform.sizeDelta =
-            new Vector2(okWidth, bar.rect.height);
-
-        // FAIL
-        float failWidth = (barWidth - okWidth) / 2f;
-        failLeft.rectTransform.sizeDelta =
-            new Vector2(failWidth, bar.rect.height);
-        failRight.rectTransform.sizeDelta =
-            new Vector2(failWidth, bar.rect.height);
-
-        // Positions
-        perfectZone.rectTransform.anchoredPosition = Vector2.zero;
-        okZone.rectTransform.anchoredPosition = Vector2.zero;
-
-        failLeft.rectTransform.anchoredPosition =
-            new Vector2(-barWidth / 2f + failWidth / 2f, 0);
-        failRight.rectTransform.anchoredPosition =
-            new Vector2(barWidth / 2f - failWidth / 2f, 0);
-
-        // Normalized windows
-        float perfectHalf = difficulty.perfectSize / 2f;
-        float okHalf = difficulty.okSize / 2f;
-
-        perfectMin = 0.5f - perfectHalf;
-        perfectMax = 0.5f + perfectHalf;
-
-        okMin = 0.5f - okHalf;
-        okMax = 0.5f + okHalf;
-    }
-
-    private float GetNormalizedCursorPosition()
-    {
-        float x = cursor.anchoredPosition.x;
-        return Mathf.InverseLerp(-barWidth / 2f, barWidth / 2f, x);
+        private void SetZone(RectTransform zone, float start, float end)
+        {
+            zone.SetParent(_bar, false);
+            zone.anchorMin = new Vector2(start, 0f);
+            zone.anchorMax = new Vector2(end, 1f);
+            zone.offsetMin = Vector2.zero;
+            zone.offsetMax = Vector2.zero;
+        }
     }
 }

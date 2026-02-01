@@ -1,146 +1,43 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Abilities.Bennet;
 using Abilities.Configs;
 using Abilities.MV;
+using Abilities.Runtime;
+using Abilities.Runtime.Policies;
 using Services;
 using Units;
-using Units.AnimationControllers;
-using UnityEngine;
 
 namespace Abilities.Enemies
 {
-    public class BaseEnemyAttack : IAbilityHandler
+    public sealed class BaseEnemyAttack : IAbilityHandler
     {
-        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly ComposedPhasedAbilityHandler _impl;
 
-        private UnitAnimatorTrigger _animatorTrigger;
-        private UnitAnimatorController _animatorController;
-
-        private bool _animationPlaying;
-
-        private Vector3 _startPosition;
-
-        private readonly List<AbilityPart> _parts;
-        private Unit _source;
-        private Unit _target;
-
-        private Coroutine _currentRoutine;
-
-        public BaseEnemyAttack(
-            ICoroutineRunner coroutineRunner,
-            AbilityModel abilityModel)
+        public BaseEnemyAttack(ICoroutineRunner runner, AbilityModel model)
         {
-            _coroutineRunner = coroutineRunner;
-            Interruptibility = abilityModel.Interruptibility;
-            _parts = abilityModel.Parts;
-        }
-        
-        public Interruptibility Interruptibility { get; }
+            CurrentAbility = model;
 
-        public event Action<IAbilityHandler> Finished;
-
-        public void Play(Unit source, Unit target)
-        {
-            _target = target;
-            _source = source;
-
-            _animatorTrigger = source.AnimatorTrigger;
-            _animatorController = source.UnitAnimatorController;
-
-            _startPosition = _source.transform.position;
-            _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
-        }
-
-        public void Stop()
-        {
-            _coroutineRunner.StopCoroutine(_currentRoutine);
-            //FinishAbility(); //???
-        }
-
-
-        private IEnumerator ExecuteAllParts()
-        {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
-            {
-                var part = _parts[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
+            _impl = new ComposedPhasedAbilityHandler(
+                CurrentAbility,
+                runner,
+                new IAbilityPolicy[]
                 {
-                    var phase = part.AbilityPhases[phaseIndex];
-
-                    yield return ExecutePhase(phase);
-                }
-            }
-
-            FinishAbility();
+                    new FinishSignalPolicy()
+                });
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        public AbilityModel CurrentAbility { get; }
+
+        public event Action<IAbilityHandler> Finished
         {
-            _animatorTrigger.SetTarget(_target);
-            _animatorTrigger.SetPhase(phase);
-            _animatorController.Play(phase.AnimationCashName);
-
-            switch (phase.PhaseType)
-            {
-                case PhaseType.IsMovementPhase:
-                    yield return MoveUnit(_source,
-                        CalculateTargetPosition(_source.transform.position, _target.transform.position));
-                    break;
-
-                case PhaseType.IsReturnPhase:
-                    yield return MoveUnit(_source, _startPosition);
-                    break;
-
-                default:
-                    yield return WaitForAnimation();
-                    break;
-            }
+            add => _impl.Finished += value;
+            remove => _impl.Finished -= value;
         }
 
-        private void FinishAbility()
-        {
-            _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke(this);
-        }
-
-        private IEnumerator WaitForAnimation()
-        {
-            _animationPlaying = true;
-
-            void OnFinished() =>
-                FinishAnimation();
-
-            _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
-        }
-
-        private Vector3 CalculateTargetPosition(Vector3 start, Vector3 target)
-        {
-            float stopDistance = 1.5f;
-            Vector3 direction = (target - start).normalized;
-            return target - direction * stopDistance;
-        }
-
-        private void FinishAnimation() =>
-            _animationPlaying = false;
-
-        private IEnumerator MoveUnit(Unit unit, Vector3 targetPosition, float offset = 0)
-        {
-            const float Speed = 4f;
-
-            while (Vector3.Distance(unit.transform.position, targetPosition) > offset)
-            {
-                unit.transform.position = Vector3.MoveTowards(
-                    unit.transform.position,
-                    targetPosition,
-                    Speed * Time.deltaTime);
-
-                yield return null;
-            }
-        }
+        public void Play(Unit source, Unit target) => 
+            _impl.Play(source, target);
+        
+        public void Stop() => 
+            _impl.Stop();
     }
 }

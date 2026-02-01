@@ -29,15 +29,18 @@ MonoBehaviour:
         <EffectInfo>k__BackingField:
         - Type: 0
           TargetType: 1
-          DamageType: 1
-          Value: 2
+          DamageType: 0
+          Value: 5
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
       QteType: 0
-      CameraActionType: 0
+      CameraActionType: 3
       <PhaseType>k__BackingField: 1
       ParticleSystemBySpawnType: []
-    - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
+      SignalActions: []
+    <Interruptibility>k__BackingField: 0
+  - <AbilityPhases>k__BackingField:
+    - AnimationClip: {fileID: -7613877585152370162, guid: 7305028b0ed2ed44e8a06ff2a8d99c04, type: 3}
       ArmamentSetup:
         <Statuses>k__BackingField: []
         <EffectInfo>k__BackingField: []
@@ -47,178 +50,82 @@ MonoBehaviour:
         <FlyingType>k__BackingField: 0
       CastamentSetup:
         <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
+        <EffectInfo>k__BackingField: []
         <ParticleSystem>k__BackingField: {fileID: 0}
       TargetMode: 0
       QteType: 0
-      CameraActionType: 1
+      CameraActionType: 0
       <PhaseType>k__BackingField: 0
       ParticleSystemBySpawnType: []
-    - AnimationClip: {fileID: 4184958765663452149, guid: 60a407d1b0580b6408ad3a7a395f5d12, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 5
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 1
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: 6293009406459376138, guid: 476fdcd5b3041044a816df9c996aefac, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 2
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: -5901897548518405306, guid: 53e6716d1a11c28418ae0600241d1bd7, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 1
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: 6293009406459376138, guid: 476fdcd5b3041044a816df9c996aefac, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 2
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: -5901897548518405306, guid: 53e6716d1a11c28418ae0600241d1bd7, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 2
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: 6293009406459376138, guid: 476fdcd5b3041044a816df9c996aefac, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 1
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
-    - AnimationClip: {fileID: 1161127487310778050, guid: ba2ff58382872ea4dae284a65fbe79a2, type: 3}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-        <ArmamentPrefab>k__BackingField: {fileID: 0}
-        <MoveSpeed>k__BackingField: 0
-        <FlyingType>k__BackingField: 0
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
-      QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 0
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 2
-        ParticleSystem: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
+      SignalActions:
+      - Signal: 10
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 1
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        TargetMode: 0
+      - Signal: 11
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 1
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        TargetMode: 0
+      - Signal: 12
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 1
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        TargetMode: 0
+      - Signal: 13
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 0}
+          <MoveSpeed>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 1
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        TargetMode: 0
     <Interruptibility>k__BackingField: 0
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: cc157d0dd4441f94bbc53e0b98f12428, type: 2}
@@ -242,6 +149,7 @@ MonoBehaviour:
       CameraActionType: 3
       <PhaseType>k__BackingField: 2
       ParticleSystemBySpawnType: []
+      SignalActions: []
     <Interruptibility>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
@@ -249,7 +157,7 @@ MonoBehaviour:
   - <StatsType>k__BackingField: 1
     Value: 2
   - <StatsType>k__BackingField: 2
-    Value: 2
+    Value: 0
   - <StatsType>k__BackingField: 3
     Value: 1
   <Interruptibility>k__BackingField: 0

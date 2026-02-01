@@ -10,7 +10,7 @@ using VContainer.Unity;
 
 namespace UI.BattleUpgrages
 {
-    public class BattleUpgradePanelPresenter : IStartable
+    public class BattleUpgradePanelPresenter : IStartable //TODO Дропнуть
     {
         private BattleUpgradePanel _battleUpgradePanel;
         private IStaticDataService _staticDataService;

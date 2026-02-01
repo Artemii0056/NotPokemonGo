@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ebe5cc6d824e1f938b3d4f7a55acf2, type: 3}
   m_Name: BennetStrikeFromeAbove
   m_EditorClassIdentifier: 
-  <AbilityType>k__BackingField: 8
+  <AbilityType>k__BackingField: 2
   <Icon>k__BackingField: {fileID: 21300000, guid: dc5e651c689fe1e4b8e7a5fc57edda0a, type: 3}
   <Parts>k__BackingField:
   - <AbilityPhases>k__BackingField:

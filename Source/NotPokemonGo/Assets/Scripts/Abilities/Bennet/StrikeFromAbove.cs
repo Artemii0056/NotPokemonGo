@@ -1,103 +1,43 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Abilities.Configs;
 using Abilities.MV;
-using Infrastructure;
+using Abilities.Runtime;
+using Abilities.Runtime.Policies;
 using Services;
 using Units;
-using Units.AnimationControllers;
-using UnityEngine;
 
 namespace Abilities.Bennet
 {
-    public class StrikeFromAbove : IAbilityHandler
+    /// <summary>
+    /// Удар сверху. Реализован через стандартный фазовый проигрыватель.
+    /// (Если потребуется особая логика — переопредели ExecutePhase.)
+    /// </summary>
+    public sealed class StrikeFromAbove : IAbilityHandler
     {
-        private readonly List<AbilityPart> _parts;
-        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly ComposedPhasedAbilityHandler _impl;
 
-        private Coroutine _currentRoutine;
-        private UnitAnimatorController _animatorController;
-        private UnitAnimatorTrigger _animatorTrigger;
-
-        private bool _animationPlaying;
-
-        public event Action<IAbilityHandler> Finished;
-
-        public StrikeFromAbove(
-            ICoroutineRunner currentRoutine,
-            AbilityModel abilityModel)
+        public StrikeFromAbove(ICoroutineRunner currentRoutine, AbilityModel abilityModel)
         {
-            _coroutineRunner = currentRoutine;
-
-            _parts = abilityModel.Parts;
+            CurrentAbility =  abilityModel;
             
-            Interruptibility = abilityModel.Interruptibility;
-        }
-        
-        public Interruptibility Interruptibility { get; }
-
-        public void Play(Unit source, Unit target)
-        {
-            _animatorController = source.UnitAnimatorController;
-            _animatorTrigger = source.AnimatorTrigger;
-
-            _currentRoutine = _coroutineRunner.StartCoroutine(ExecuteAllParts());
-        }
-
-        public void Stop()
-        {
-            _coroutineRunner.StopCoroutine(_currentRoutine);
-        }
-
-        private IEnumerator ExecuteAllParts()
-        {
-            for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
-            {
-                var part = _parts[partIndex];
-
-                for (int phaseIndex = 0; phaseIndex < part.AbilityPhases.Count; phaseIndex++)
+            _impl = new ComposedPhasedAbilityHandler(
+                CurrentAbility,
+                currentRoutine,
+                new IAbilityPolicy[]
                 {
-                    var phase = part.AbilityPhases[phaseIndex];
-
-                    yield return ExecutePhase(phase);
-                }
-            }
-
-            FinishAbility();
+                    new FinishSignalPolicy()
+                });
         }
 
-        private IEnumerator ExecutePhase(AbilityPhase phase)
+        public AbilityModel CurrentAbility { get; }
+
+        public event Action<IAbilityHandler> Finished
         {
-            _animatorTrigger.SetPhase(phase);
-            _animatorController.Play(phase.AnimationCashName);
-
-            switch (phase.PhaseType)
-            {
-                default:
-                    yield return WaitForAnimation();
-                    break;
-            }
+            add => _impl.Finished += value;
+            remove => _impl.Finished -= value;
         }
 
-        private IEnumerator WaitForAnimation()
-        {
-            _animationPlaying = true;
-
-            void OnFinished() => FinishAnimation();
-
-            _animatorController.Finished += OnFinished;
-            yield return new WaitWhile(() => _animationPlaying);
-            _animatorController.Finished -= OnFinished;
-        }
-
-        private void FinishAnimation() =>
-            _animationPlaying = false;
-
-        private void FinishAbility()
-        {
-            _animatorController.Play(Constants.BaseAnimations.Idle);
-            Finished?.Invoke(this);
-        }
+        public void Play(Unit source, Unit target) => _impl.Play(source, target);
+        public void Stop() => _impl.Stop();
     }
 }

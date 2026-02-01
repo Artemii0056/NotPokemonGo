@@ -17,29 +17,46 @@ MonoBehaviour:
   <Parts>k__BackingField:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: d751c0ca96b55554c99ccccb70ce2fd7, type: 2}
-      ArmamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField:
-        - Type: 0
-          TargetType: 1
-          DamageType: 0
-          Value: 5
-        <ParticleSystem>k__BackingField: {fileID: 19846080, guid: bf925c9cc58251043b219c9f169cfc03, type: 3}
-        <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: 18c037540559b454f927a15cf5c3d090, type: 3}
-        <MoveSpeed>k__BackingField: 3
-        <FlyingType>k__BackingField: 2
-      CastamentSetup:
-        <Statuses>k__BackingField: []
-        <EffectInfo>k__BackingField: []
-        <ParticleSystem>k__BackingField: {fileID: 0}
-      TargetMode: 0
       QteType: 0
-      CameraActionType: 0
-      <PhaseType>k__BackingField: 3
-      ParticleSystemBySpawnType:
-      - ParticleSpawnType: 0
-        ParticleSystem: {fileID: 19846080, guid: bf925c9cc58251043b219c9f169cfc03, type: 3}
-    <Interruptibility>k__BackingField: 0
+      WaitForExternalCompletion: 0
+      SignalActions:
+      - Signal: 10
+        TargetMode: 0
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 2
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 19820166, guid: 9dbcebaf26ad0df41ad5a91995b5c1e1, type: 3}
+          <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: 18c037540559b454f927a15cf5c3d090, type: 3}
+          <MoveSpeed>k__BackingField: 5
+          <Duration>k__BackingField: 0.25
+          <FlyingType>k__BackingField: 2
+        CastamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField: []
+          <ParticleSystem>k__BackingField: {fileID: 0}
+        ParticlePrefab: {fileID: 19820166, guid: 9dbcebaf26ad0df41ad5a91995b5c1e1, type: 3}
+        ParticleSpawnType: 3
+        ParticleOwner: 0
+        MoveCommand: 0
+        MoveMode: 0
+        CustomPoint: {x: 0, y: 0, z: 0}
+        MoveDuration: 0
+        MoveDelay: 0
+        StopDistance: 0
+        JumpPower: 0
+        NumJumps: 0
+        CameraCommand: 0
+        CameraBlendTimeout: 0
+        SfxClip: {fileID: 8300000, guid: b7a210df23bd255428bdf4def67109f2, type: 3}
+        SfxVolume: 1
+        Sfx2D: 0
+        TimeEffect: 0
+        TimeScale: 0
+        TimeDuration: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 1

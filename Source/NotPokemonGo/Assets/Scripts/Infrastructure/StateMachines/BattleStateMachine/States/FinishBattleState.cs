@@ -19,9 +19,9 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public void Enter(UnitActionPayload battlefield)
         {
             _unitActionPayload = battlefield;
-            _battleUpgradePanelPresenter.Enable(battlefield.UnitSorce.UnitType);
-
-            _battleUpgradePanelPresenter.UpgradeSelected += OnUpgradeSelected;
+            // _battleUpgradePanelPresenter.Enable(battlefield.UnitSorce.UnitType);
+            //
+            // _battleUpgradePanelPresenter.UpgradeSelected += OnUpgradeSelected;
         }
 
         private void OnUpgradeSelected()
@@ -31,8 +31,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Exit()
         {
-            _battleUpgradePanelPresenter.UpgradeSelected -= OnUpgradeSelected;
-            _battleUpgradePanelPresenter.Disable();
+            // _battleUpgradePanelPresenter.UpgradeSelected -= OnUpgradeSelected;
+            // _battleUpgradePanelPresenter.Disable();
         }
     }
 }

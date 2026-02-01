@@ -18,7 +18,7 @@ namespace Units
     {
         [SerializeField] private List<AbilityAnchor> abilityAnchors;
 
-        [field: SerializeField] public UnitAnimatorController UnitAnimatorController { get; private set; }
+        [field: SerializeField] public AnimatorController AnimatorController { get; private set; }
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
         public Transform abilityPos;
@@ -28,13 +28,15 @@ namespace Units
         private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
 
-        public Vector3 StartPosition { get; private set;  }
+        public Vector3 StartPosition { get; private set; }
         public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         public PlatoonType PlatoonType { get; private set; }
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilityModels => _abilityModels.ToList();
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
         public Dictionary<StatType, StatSetup> Stats => new(_stats);
+
+        public int Id { get; private set;  }
 
         public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
 
@@ -48,9 +50,11 @@ namespace Units
         public event Action<float, float> HealthChanged;
 
         public event Action<Unit> Death;
-        
+
         public IAbilityHandler AbilityHandler { get; private set; }
-        
+        public Vector3 FireballSpawnPoint { get; set; } = Vector3.one;
+
+
         public void Construct(
             List<StatConfig> statConfig,
             PlatoonType platoonType)
@@ -64,7 +68,7 @@ namespace Units
                 stat.CurrentValueChanged += OnStatValueChanged;
 
             HealthChanged?.Invoke(GetStat(StatType.Health), GetStat(StatType.MaxHealth));
-            
+
             StartPosition = transform.position;
         }
 
@@ -87,12 +91,15 @@ namespace Units
             foreach (StatSetup stat in _stats.Values)
                 stat.CurrentValueChanged -= OnStatValueChanged;
         }
-        
-        public float GetStat(StatType statType) => 
+
+        public float GetStat(StatType statType) =>
             _stats[statType].CurrentValue;
 
-        public void ChangeStatValue(float value, StatType statType) => 
+        public void ChangeStatValue(float value, StatType statType)
+        {
+            //Debug.Log(statType + " " + value);
             _stats[statType].SetValue(value);
+        }
 
         public void AddStatus(Status status)
         {
@@ -121,7 +128,7 @@ namespace Units
             Ticked?.Invoke();
         }
 
-        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger) => 
+        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger) =>
             AnimatorTrigger = unitAnimatorTrigger;
 
         private void TickAbilities()
@@ -155,14 +162,22 @@ namespace Units
                 case StatType.Health:
                     HealthChanged?.Invoke(value, GetStat(StatType.MaxHealth));
                     break;
-                
+
                 case StatType.CurrentAgility:
                     AgilityChanged?.Invoke(value, GetStat(StatType.MaxAgility));
                     break;
             }
         }
 
-        public void RememberAbility(IAbilityHandler activeAbilityHandlers) => 
+        public void RememberAbility(IAbilityHandler activeAbilityHandlers) =>
             AbilityHandler = activeAbilityHandlers;
+
+        public void CaptureStartPosition()
+            => StartPosition = transform.position;
+            
+        public void SetStartPosition(Vector3 pos)
+        {
+            StartPosition = pos;
+        }
     }
 }

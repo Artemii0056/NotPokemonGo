@@ -7,48 +7,57 @@ namespace Armaments
 {
     public class ArmamentMover : IArmamentMover
     {
-        public event Action<Armament, ArmamentMover> Reached;
+        public event Action<IArmamentMover> Launched;
+        public event Action<IArmamentMover> Reached;
 
-        public void Move(Armament armament, ArmamentFlyingType type)
+        public ArmamentMover(Armament armament) =>
+            Armament = armament;
+        
+        public Armament Armament { get; private set; }
+        public float Duration { get; private set; }
+
+        public void Move()
         {
-            switch (type)
+            switch (Armament.FlyingType)
             {
                 case ArmamentFlyingType.Arc:
-                    PlayArcFlight(armament);
+                    PlayArcFlight();
                     break;
 
                 case ArmamentFlyingType.Direct:
-                    PlayDirectFlight(armament);
+                    PlayDirectFlight();
                     break;
 
                 case ArmamentFlyingType.Laser:
-                    PlayLaserFlight(armament);
+                    PlayLaserFlight();
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void PlayDirectFlight(Armament armament)
+        private void PlayDirectFlight()
         {
-            float duration = 1f;
+            Duration = 1f;
 
-            armament.transform.DOMove(armament.Target.transform.position, duration)
+            Launched?.Invoke(this);
+
+            Armament.transform.DOMove(Armament.Target.transform.position, Duration)
                 .SetEase(Ease.Linear)
-                .OnComplete(() => Reached?.Invoke(armament, this));
+                .OnComplete(() => Reached?.Invoke(this));
         }
 
-        private void PlayArcFlight(Armament armament)
+        private void PlayArcFlight()
         {
-            float duration = 1f;
+            Duration = 1f;
             float arcWidth = 3f;
             float arcHeight = 2f;
 
             bool leftArc = Random.Range(0, 2) == 1;
 
-            Vector3 start = armament.transform.position;
-            Vector3 end = armament.Target.transform.position;
+            Vector3 start = Armament.transform.position;
+            Vector3 end = Armament.Target.transform.position;
 
             Vector3 mid = (start + end) / 2;
 
@@ -62,27 +71,22 @@ namespace Armaments
 
             Vector3[] path = { start, control, end };
 
-            armament.transform.DOPath(path, duration, PathType.CatmullRom)
-                .SetDelay(0.25f)
+            Armament.transform.DOPath(path, Duration, PathType.CatmullRom)
+                .OnStart(() => Launched?.Invoke(this))
                 .SetEase(Ease.InExpo)
-                .OnComplete(() =>
-                {
-                    Reached?.Invoke(armament, this);
-                });
+                .OnComplete(() => Reached?.Invoke(this));
         }
 
-        private void PlayLaserFlight(Armament armament)
+        private void PlayLaserFlight()
         {
-            float duration = .05f;
-            
+            Duration =  .05f;
+
+            Launched?.Invoke(this);
+
             DOTween.Sequence()
-                .Append(
-                    armament.transform
-                        .DOMove(armament.Target.transform.position, duration)
-                        .SetEase(Ease.Linear)
-                )
-                .AppendInterval(0.25f)
-                .OnComplete(() => Reached?.Invoke(armament, this));
+                .Append(Armament.transform.DOMove(Armament.Target.transform.position, Duration).SetEase(Ease.Linear))
+                .AppendInterval(Armament.Setup.Duration) //TODO Вот это влияет на продолжительность линии
+                .OnComplete(() => Reached?.Invoke(this));
         }
     }
 }

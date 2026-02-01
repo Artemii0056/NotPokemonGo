@@ -1,49 +1,141 @@
-﻿using Abilities.Configs;
-using Armaments;
+﻿using System;
+using System.Collections.Generic;
+using Abilities.Configs;
+using Abilities.Signals;
 using Castaments;
-using ReactionSystems;
+using DefaultNamespace;
+using Services.AbilityServices.Executors;
+using Services.Audio;
+using TimeServices;
 using Units;
+using Units.Movement;
 using UnityEngine;
 
 namespace Services.AbilityServices
 {
-    public class AbilityPhaseService
+    public sealed class AbilityPhaseService
     {
-        private readonly ICastamentApplicator _castamentApplicator;
-        private readonly IArmamentApplicator _armamentApplicator;
-        private readonly ITargetSelector _targetSelector;
-        private readonly IReactionService _reactionService;
+        private readonly PhaseGate _finishGate = new();
+        private readonly List<IPhaseSignalActionExecutor> _executors;
+
+        private AbilityPhase _currentPhase;
+
+        private Action _requestFinishCheck;
+
+        private bool _finishRequested;
+        private int _phaseVersion;
+        
+        private int _lastRequestFrame = -1;
+
+        public event Action<ArmamentRequest> ArmamentRequested;
 
         public AbilityPhaseService(
             ICastamentApplicator castamentApplicator,
-            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
-            IReactionService reactionService)
+            IParticleSpawner particleSpawner,
+            IUnitMover unitMover,
+            ICameraService camera,
+            IAudioService audio,
+            ITimeService time)
         {
-            _castamentApplicator = castamentApplicator;
-            _armamentApplicator = armamentApplicator;
-            _targetSelector = targetSelector;
-            _reactionService = reactionService;
+            _executors = new List<IPhaseSignalActionExecutor>
+            {
+                new ParticleActionExecutor(particleSpawner),
+                new SoundActionExecutor(audio),
+                new TimeEffectExecutor(time),
+                new CameraActionExecutor(camera),
+                new MoveActionExecutor(unitMover),
+                new ArmamentActionExecutor(targetSelector, req => ArmamentRequested?.Invoke(req)),
+                new CastamentActionExecutor(targetSelector, castamentApplicator)
+            };
         }
 
-        public void OnNext(AbilityPhase phase, Unit source, Unit target)
+        public void BindFinishCheck(Action requestFinishCheck)
         {
-            var setup = phase.CastamentSetup;
+            _requestFinishCheck = requestFinishCheck;
+        }
 
-            if (setup.HasSetupData)
+        public void BeginPhase(AbilityPhase phase)
+        {
+            _currentPhase = phase;
+            _finishGate.Reset();
+
+            _finishRequested = false;
+            _phaseVersion++;
+        }
+
+        public IDisposable AcquireFinishToken(string tag = null)
+        {
+            var t = _finishGate.Acquire(tag);
+            Debug.Log($"[Gate] AcquireFinishToken tag={tag} -> {(t == null ? "NULL" : t.GetType().Name)} pending={_finishGate.Pending}");
+            return t;
+        }
+
+        public void RequestFinishCheck() => TryCompleteFinish();
+
+        public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
+        {
+            if (phase == null || source == null || target == null)
+                return;
+
+            if (!ReferenceEquals(_currentPhase, phase))
+                return;
+
+            var actions = phase.SignalActions;
+            if (actions == null || actions.Count == 0)
             {
-                var context = new ReactionContext(source, target, setup.EffectsSetup[0], phase);
-                _reactionService.TryReact(context);
+                TryCompleteFinish();
                 return;
             }
 
-            if (phase.ArmamentSetup.HasSetupData)
-                _armamentApplicator.Apply(phase.ArmamentSetup, phase.ArmamentSetup.FlyingType, source, 
-                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+            for (int i = 0; i < actions.Count; i++)
+            {
+                var action = actions[i];
+                if (action == null || action.Signal != signal)
+                    continue;
 
-            if (phase.CastamentSetup.HasSetupData)
-                _castamentApplicator.Apply(phase.CastamentSetup, source, 
-                    _targetSelector.GetTargets(phase.TargetMode, target).ToArray());
+                for (int j = 0; j < _executors.Count; j++)
+                {
+                    var executor = _executors[j];
+                    if (!executor.CanExecute(action))
+                        continue;
+
+                    int capturedVersion = _phaseVersion;
+
+                    executor.Execute(
+                        phase, action, source, target,
+                        _finishGate,
+                        () =>
+                        {
+                            if (capturedVersion != _phaseVersion)
+                                return;
+
+                            TryCompleteFinish();
+                        });
+                }
+            }
+
+            TryCompleteFinish();
+        }
+
+        private void TryCompleteFinish()
+        {
+            if (_currentPhase == null)
+                return;
+
+            if (!_finishGate.IsOpen)
+                return;
+
+            Action cb = _requestFinishCheck;
+            
+            if (cb == null)
+                return;
+
+            if (_lastRequestFrame == Time.frameCount)
+                return;
+
+            _lastRequestFrame = Time.frameCount;
+            cb.Invoke();
         }
     }
 }

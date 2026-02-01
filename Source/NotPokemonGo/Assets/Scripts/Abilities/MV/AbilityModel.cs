@@ -26,7 +26,6 @@ namespace Abilities.MV
         
         public List<AbilityPart> Parts { get; private set; }
         
-       // public List<AbilityPhase> Phases { get; private set; }
         
         public float Cost => _stats[AbilityStatType.Cost].Value; 
 

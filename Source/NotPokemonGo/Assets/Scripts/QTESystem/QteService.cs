@@ -32,30 +32,14 @@ namespace QTESystem
             _timeService = timeService;
         }
 
-        public (QteButtonView, QtePhasePresenter) StartSimple(QteType qteType, Unit target)
-        {
-            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
-
-            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
-
-            view.Construct(target, _timeService);
-
-            _objectResolver.Inject(view);
-
-            QtePhasePresenter qtePhasePresenter = new QtePhasePresenter(view);
-            qtePhasePresenter.Enable();
-
-            return (view, qtePhasePresenter);
-        }
-
         public void Start(QteType qteType, Unit target)
         {
             QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
 
-            _coroutineRunner.StartCoroutine(StartQte(qteConfig, target));
+            _coroutineRunner.StartCoroutine(PlayQte(qteConfig, target));
         }
 
-        private IEnumerator StartQte(QteConfig qteConfig, Unit target)
+        private IEnumerator PlayQte(QteConfig qteConfig, Unit target) //TODO Передавать время работы QTE? 
         {
             QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
 
@@ -75,6 +59,21 @@ namespace QTESystem
             }
 
             Completed?.Invoke(true);
+        }
+        
+        public IQteSession StartSession(QteType qteType, Unit target, float duration)
+        {
+            QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
+
+            QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
+
+            view.Construct(target, _timeService);
+            _objectResolver.Inject(view);
+
+            if (view is IHasQteDuration durationView)
+                durationView.SetDuration(duration);
+
+            return new QteViewSession(view);
         }
     }
 }

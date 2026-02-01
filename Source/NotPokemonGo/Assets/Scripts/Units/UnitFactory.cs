@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Armaments;
+using Armaments.Spawner;
 using Castaments;
 using Characters;
+using DefaultNamespace;
 using Platoons;
 using ReactionSystems;
-using Services.StaticDataServices;
+using Services;
+using Services.AbilityServices;
+using Services.Audio;
 using Stats;
+using TimeServices;
 using UI;
 using UI.Sliders;
 using Units.AnimationControllers;
+using Units.Movement;
 using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -20,36 +25,36 @@ namespace Units
     public class UnitFactory : IUnitFactory
     {
         private readonly IObjectResolver _objectResolver;
-        private readonly IParticleSystemFactory _particleSystemFactory;
-        private readonly IAbilityProvider _abilityProvider;
-        private readonly IStaticDataService _staticDataService;
         private readonly ICastamentApplicator _castamentApplicator;
-        private readonly IArmamentApplicator _armamentApplicator;
         private readonly ITargetSelector _targetSelector;
         private readonly IReactionService _reactionService;
+        private readonly IParticleSpawner _particleSpawner;
+        private readonly ICameraService _cameraService;
+        private readonly IAudioService _audioService;
+        private readonly ITimeService _timeService;
+        
 
         public UnitFactory(
             IObjectResolver objectResolver,
-            IParticleSystemFactory particleSystemFactory,
-            IAbilityProvider abilityProvider,
-            IStaticDataService staticDataService,
             ICastamentApplicator castamentApplicator,
-            IArmamentApplicator armamentApplicator,
             ITargetSelector targetSelector,
-            IAbilityService abilityService, 
-            IReactionService reactionService)
+            IAbilityService abilityService,
+            IReactionService reactionService,
+            IArmamentSpawner spawner,
+            IParticleSpawner particleSpawner,
+            ICameraService cameraService, 
+            IAudioService audioService) // <-- добавил
         {
             _objectResolver = objectResolver;
-            _particleSystemFactory = particleSystemFactory;
-            _abilityProvider = abilityProvider;
-            _staticDataService = staticDataService;
             _castamentApplicator = castamentApplicator;
-            _armamentApplicator = armamentApplicator;
             _targetSelector = targetSelector;
             _reactionService = reactionService;
-            
-            _reactionService.Register(new ReflectFireballReaction(_armamentApplicator)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
-            _reactionService.Register(new CounterattackReaction(abilityService)); //TODO ВЫПЫЛИТЬ ОТСЮДА! 
+            _particleSpawner = particleSpawner;
+            _cameraService = cameraService;
+            _audioService = audioService;
+
+            _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
+            _reactionService.Register(new CounterattackReaction(abilityService));
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -60,15 +65,12 @@ namespace Units
 
             unit.transform.SetParent(parentPosition, false);
             
-            UnitAnimatorController controller = unit.UnitAnimatorController;
+            AnimatorController controller = unit.AnimatorController;
 
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,
                 controller,
-                _castamentApplicator,
-                _armamentApplicator,
-                _targetSelector, 
-                _reactionService);
+                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(), _cameraService, _audioService, _timeService));
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 

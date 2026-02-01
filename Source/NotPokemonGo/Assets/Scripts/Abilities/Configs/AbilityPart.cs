@@ -8,6 +8,5 @@ namespace Abilities.Configs
     public class AbilityPart
     {
         [field: SerializeField] public List<AbilityPhase> AbilityPhases { get; private set; }
-        [field: SerializeField] public Interruptibility Interruptibility { get; private set; }
     }
 }
