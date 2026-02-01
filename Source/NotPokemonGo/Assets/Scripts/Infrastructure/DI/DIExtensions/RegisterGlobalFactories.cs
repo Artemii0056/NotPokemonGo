@@ -1,10 +1,14 @@
 ﻿using Armaments;
+using Armaments.Spawner;
 using Battlefields;
+using DefaultNamespace;
+using Effects.Factory;
 using Platoons;
 using Services.BattleUnitContainers;
 using Services.StatesServices;
 using Services.SystemFactoryServices;
 using Statuses;
+using Statuses.Factory;
 using UI.Factory;
 using Units;
 using VContainer;
@@ -24,7 +28,11 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IArmamentViewFactory, ArmamentViewFactory>(Lifetime.Singleton);
 			builder.Register<IStatusFactory, StatusFactory>(Lifetime.Singleton);
 			builder.Register<ISystemFactory, SystemFactory>(Lifetime.Singleton);
-			
+			builder.Register<IEffectInfoFactory, EffectInfoFactory>(Lifetime.Singleton);
+			builder.Register<IStatusesFactory, StatusesFactory>(Lifetime.Singleton);
+			builder.Register<IArmamentSpawner, ArmamentSpawner>(Lifetime.Singleton);
+			builder.Register<IParticleSpawner, ParticleSpawner>(Lifetime.Singleton);
+
 			return  builder;
 		}
 	}

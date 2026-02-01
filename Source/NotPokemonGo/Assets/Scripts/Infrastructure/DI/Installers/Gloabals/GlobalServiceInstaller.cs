@@ -26,7 +26,7 @@ namespace Infrastructure.DI.Installers.Gloabals
 		public override void Install(IContainerBuilder builder)
 		{
 			builder
-				.RegisterGlobalGameStateMachine()
+				.RegisterGameStateMachine()
 				.RegisterGlobalFactories()
 				.RegisterGlobalUIStates()
 				.RegisterGlobalUserInterface(_abilitiesPanel, _battleUpgradePanel);

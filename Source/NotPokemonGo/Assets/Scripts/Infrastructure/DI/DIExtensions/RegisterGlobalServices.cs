@@ -1,5 +1,6 @@
 ﻿using Abilities;
 using Armaments;
+using Armaments.Spawner;
 using Battlefields;
 using Castaments;
 using DefaultNamespace;
@@ -65,6 +66,7 @@ namespace Infrastructure.DI.DIExtensions
 			
 			builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);
 			builder.Register<IAudioService, AudioService>(Lifetime.Singleton);
+			builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
 			
 			return builder;
 		}

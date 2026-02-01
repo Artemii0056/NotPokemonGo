@@ -7,7 +7,7 @@ namespace Infrastructure.DI.DIExtensions
 {
 	public static partial class ContainerBuilderExtensions
 	{
-		public static IContainerBuilder RegisterGlobalGameStateMachine(this IContainerBuilder builder)
+		public static IContainerBuilder RegisterGameStateMachine(this IContainerBuilder builder)
 		{
 			builder.Register<IGameStateMachine, GameStateMachine>(Lifetime.Singleton);
 			
