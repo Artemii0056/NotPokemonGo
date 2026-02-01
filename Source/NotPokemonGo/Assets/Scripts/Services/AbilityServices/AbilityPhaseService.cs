@@ -20,10 +20,8 @@ namespace Services.AbilityServices
 
         private AbilityPhase _currentPhase;
 
-        // handler binds TryFinishPhase сюда
         private Action _requestFinishCheck;
 
-        // защита от спама/поздних коллбеков
         private bool _finishRequested;
         private int _phaseVersion;
         
@@ -57,10 +55,6 @@ namespace Services.AbilityServices
             _requestFinishCheck = requestFinishCheck;
         }
 
-        /// <summary>
-        /// ВАЖНО: вызывать на старте каждой фазы ДО policy.OnPhaseStart.
-        /// Иначе policy может взять токен, а потом первый OnSignal сделает Reset и "сотрёт" pending.
-        /// </summary>
         public void BeginPhase(AbilityPhase phase)
         {
             _currentPhase = phase;
@@ -70,9 +64,6 @@ namespace Services.AbilityServices
             _phaseVersion++;
         }
 
-        /// <summary>
-        /// Политики (например QTE) могут удерживать фазу токеном.
-        /// </summary>
         public IDisposable AcquireFinishToken(string tag = null)
         {
             var t = _finishGate.Acquire(tag);
@@ -87,7 +78,6 @@ namespace Services.AbilityServices
             if (phase == null || source == null || target == null)
                 return;
 
-            // ✅ Никаких Reset тут. Если сигнал пришёл не по текущей фазе — игнорируем.
             if (!ReferenceEquals(_currentPhase, phase))
                 return;
 
@@ -117,7 +107,6 @@ namespace Services.AbilityServices
                         _finishGate,
                         () =>
                         {
-                            // поздний коллбек от прошлой фазы — игнор
                             if (capturedVersion != _phaseVersion)
                                 return;
 
@@ -126,7 +115,6 @@ namespace Services.AbilityServices
                 }
             }
 
-            // Можно оставить: дешево, gate/finishRequested защитят от спама
             TryCompleteFinish();
         }
 
@@ -135,7 +123,6 @@ namespace Services.AbilityServices
             if (_currentPhase == null)
                 return;
 
-            // Gate — главный фильтр
             if (!_finishGate.IsOpen)
                 return;
 
@@ -144,13 +131,11 @@ namespace Services.AbilityServices
             if (cb == null)
                 return;
 
-            // Не чаще 1 раза в кадр (чтобы не спамить, но позволить "дозреть" условиям policy)
             if (_lastRequestFrame == Time.frameCount)
                 return;
 
             _lastRequestFrame = Time.frameCount;
             cb.Invoke();
         }
-
     }
 }

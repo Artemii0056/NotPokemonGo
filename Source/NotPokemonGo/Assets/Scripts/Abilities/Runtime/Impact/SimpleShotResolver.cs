@@ -1,6 +1,5 @@
 ﻿using Abilities.Configs;
 using Abilities.Runtime.Policies;
-using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
 using Services.AbilityServices;
@@ -48,6 +47,7 @@ namespace Abilities.Runtime.Impact
         public override void OnAbilityStop(AbilityContext ctx)
         {
             var phaseService = ctx?.AnimatorTrigger?.PhaseService;
+            
             if (phaseService != null)
                 phaseService.ArmamentRequested -= OnArmamentRequested;
 
@@ -57,13 +57,6 @@ namespace Abilities.Runtime.Impact
             _activePhase = null;
         }
 
-        /// <summary>
-        /// ✅ НИКАКОЙ зависимости от Finish-сигнала.
-        /// ✅ НИКАКОЙ булки WaitForExternalCompletion.
-        /// Логика простая:
-        /// - если в фазе нет armament-действий → policy не блокирует
-        /// - если armament-действия есть → ждём, пока все шоты завершатся (ActiveCount == 0)
-        /// </summary>
         public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
         {
             if (phase == null)
@@ -108,8 +101,6 @@ namespace Abilities.Runtime.Impact
             if (context == null)
                 return;
 
-            // Если это шот текущей фазы — после его завершения можно попросить перепроверку.
-            // (TryCompleteFinish rate-limited 1/кадр — спама не будет)
             if (shot.Phase != null && shot.Phase == _activePhase)
                 context.AnimatorTrigger?.PhaseService?.RequestFinishCheck();
         }

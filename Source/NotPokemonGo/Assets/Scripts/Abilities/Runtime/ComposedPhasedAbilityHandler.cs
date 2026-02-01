@@ -83,8 +83,6 @@ namespace Abilities.Runtime
             _context.AnimatorTrigger.SetTarget(_context.Target);
             _context.AnimatorTrigger.SetPhase(phase);
 
-            // ✅ КРИТИЧНО: BeginPhase ДО policy.OnPhaseStart
-            // чтобы policies (QTE) могли взять gate token и он не был "сброшен" первым OnSignal.
             _context.AnimatorTrigger.PhaseService.BeginPhase(phase);
 
             foreach (var policy in _policies)
@@ -106,8 +104,6 @@ namespace Abilities.Runtime
             foreach (var policy in _policies)
                 policy.OnSignal(_context, signal);
 
-            // ✅ Не пытаемся завершать фазу напрямую.
-            // Просто просим PhaseService перепроверить (gate решит).
             _context.AnimatorTrigger?.PhaseService.RequestFinishCheck();
         }
 

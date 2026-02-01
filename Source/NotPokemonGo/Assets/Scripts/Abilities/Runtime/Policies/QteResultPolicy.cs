@@ -29,7 +29,6 @@ public class QteResultPolicy : AbilityPolicyBase
 
         _qteSession = null;
 
-        // ❌ НЕ dispose здесь — токен этой фазы
         _gateToken = null;
 
         if (phase.QteType != QteType.Unknown)
@@ -66,7 +65,6 @@ public class QteResultPolicy : AbilityPolicyBase
         _qteSession.Completed -= OnCompleted;
         _context.QteResult = result;
 
-        // ✅ ТУТ мы гарантированно освобождаем gate
         _gateToken.Dispose();
         _gateToken = null;
 

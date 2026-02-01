@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using QTESystem.TestQTE;
 using Services;
 using Services.StaticDataServices;
 using TimeServices;
@@ -32,21 +31,6 @@ namespace QTESystem
             _objectResolver = objectResolver;
             _timeService = timeService;
         }
-        
-        // public TimingBarQte PlayTimingBar(QteType qteType, Unit target, float duration)
-        // {
-        //     QteConfig qteConfig = _staticDataService.GetQteConfig(qteType);
-        //
-        //     QteButtonView view = Object.Instantiate(qteConfig.QteButtonView);
-        //
-        //     view.Construct(target, _timeService);
-        //
-        //     TimingBarQte barView = (TimingBarQte)view;
-        //     barView.SetDuration(duration);
-        //     _objectResolver.Inject(view);
-        //
-        //     return barView;
-        // }
 
         public void Start(QteType qteType, Unit target)
         {

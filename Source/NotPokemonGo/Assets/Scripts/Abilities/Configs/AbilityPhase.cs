@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Armaments;
-using Cameras;
-using Castaments;
 using QTESystem;
-using Units;
 using UnityEngine;
 
 namespace Abilities.Configs
