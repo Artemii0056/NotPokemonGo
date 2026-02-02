@@ -1,6 +1,5 @@
 ﻿using Abilities.Configs;
 using Abilities.Runtime.Policies;
-using Armaments;
 using Effects;
 using Services.AbilityServices;
 using Spawners.Spawner;
@@ -109,13 +108,15 @@ namespace Abilities.Runtime.Impact
         private static bool PhaseHasArmament(AbilityPhase phase)
         {
             var actions = phase.SignalActions;
+            
             if (actions == null)
                 return false;
 
             for (int i = 0; i < actions.Count; i++)
             {
-                var a = actions[i];
-                if (a != null && a.HasArmament)
+                PhaseSignalAction action = actions[i];
+                
+                if (action != null && action.HasArmament)
                     return true;
             }
 

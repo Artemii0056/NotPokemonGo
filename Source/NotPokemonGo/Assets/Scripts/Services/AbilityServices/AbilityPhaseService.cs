@@ -83,6 +83,7 @@ namespace Services.AbilityServices
                 return;
 
             var actions = phase.SignalActions;
+            
             if (actions == null || actions.Count == 0)
             {
                 TryCompleteFinish();
@@ -92,12 +93,14 @@ namespace Services.AbilityServices
             for (int i = 0; i < actions.Count; i++)
             {
                 var action = actions[i];
+                
                 if (action == null || action.Signal != signal)
                     continue;
 
                 for (int j = 0; j < _executors.Count; j++)
                 {
                     var executor = _executors[j];
+                    
                     if (!executor.CanExecute(action))
                         continue;
 
