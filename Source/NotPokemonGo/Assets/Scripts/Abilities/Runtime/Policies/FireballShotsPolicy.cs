@@ -66,7 +66,6 @@ namespace Abilities.Runtime.Policies
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
             Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
-
             
             if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
                 _finishSeenForActivePhase = true;
