@@ -1,4 +1,4 @@
-﻿namespace QteSystem.TestQte
+﻿namespace QteSystem.TestQTE
 {
     public enum QteResult
     {

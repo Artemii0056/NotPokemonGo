@@ -12,8 +12,6 @@ namespace Characters
         [SerializeField] private UnitSelectionPanel _unselectedPanel;
 
         public UnitItemConfig UnitItemConfig { get; private set; }
-        //энам
-        //вью
 
         public bool IsFree { get; private set; } = true;
 

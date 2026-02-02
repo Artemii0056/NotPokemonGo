@@ -1,6 +1,6 @@
 ﻿using Abilities;
 using Armaments;
-using Armaments.Spawner;
+using Armaments.Movers;
 using Battlefields;
 using Castaments;
 using Effects;

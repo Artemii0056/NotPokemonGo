@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Armaments;
+using Armaments.Movers;
 
 namespace Abilities.Runtime
 {
@@ -91,6 +92,7 @@ namespace Abilities.Runtime
             _entries.Clear();
         }
 
-        public void Dispose() => CleanupAll();
+        public void Dispose() => 
+            CleanupAll();
     }
 }

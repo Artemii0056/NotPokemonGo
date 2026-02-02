@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QteSystem.TestQte
+namespace QteSystem.TestQTE
 {
     public class TimingBar : MonoBehaviour
     {

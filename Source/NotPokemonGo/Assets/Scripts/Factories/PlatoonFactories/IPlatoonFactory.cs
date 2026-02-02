@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Characters;
+using Platoons;
 using UI.SpawnPositions;
 using Units;
 using UnityEngine;
 
-namespace Platoons
+namespace Factories.PlatoonFactories
 {
     public interface IPlatoonFactory
     {

@@ -2,7 +2,7 @@
 using Abilities.Configs;
 using Abilities.Signals;
 using QteSystem;
-using QteSystem.TestQte;
+using QteSystem.TestQTE;
 using UnityEngine;
 
 namespace Abilities.Runtime.Policies

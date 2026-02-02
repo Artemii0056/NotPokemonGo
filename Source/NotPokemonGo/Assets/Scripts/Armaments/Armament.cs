@@ -9,8 +9,6 @@ namespace Armaments
 {
     public class Armament : MonoBehaviour
     {
-        [field: SerializeField] public ParticleSystem _particleSystemPrefab;
-
         private List<EffectInfo> _effectInfo;
         private List<Status> _statuses;
 
@@ -29,15 +27,6 @@ namespace Armaments
             Target = target;
             Setup = setup;
             FlyingType =flyingType;
-        }
-
-        private void Start()
-        {
-            if (_particleSystemPrefab == null)
-                return;
-            
-            var parcticle = Instantiate(_particleSystemPrefab, transform);
-            parcticle.Play();
         }
     }
 }

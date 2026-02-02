@@ -15,7 +15,7 @@ namespace Platoons
             _platoons.Add(platoon2);
         }
 
-        public List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target) //Сюда передать и таргет сразу 
+        public List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target) 
         {
             Platoon targetPlatoon;
         

@@ -1,4 +1,7 @@
-﻿namespace Armaments.Spawner
+﻿using Armaments;
+using Armaments.Movers;
+
+namespace Spawners.Spawner
 {
     public interface IArmamentSpawner
     {

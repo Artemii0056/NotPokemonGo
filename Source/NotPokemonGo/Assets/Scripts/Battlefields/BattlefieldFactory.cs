@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Characters;
 using Characters.Configs;
-using Infrastructure;
+using Factories.PlatoonFactories;
 using LevelSetting;
 using Platoons;
 using Services.BattleUnitContainers;
 using Services.StaticDataServices;
 using Statuses.Services;
 using UI.SpawnPositions;
-using Units;
 using UnityEngine;
 
 namespace Battlefields

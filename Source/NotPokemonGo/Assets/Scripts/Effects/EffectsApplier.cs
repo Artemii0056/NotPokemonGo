@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Effects;
 using Statuses;
 using Statuses.Services;
 using Units;
 
-namespace Armaments
+namespace Effects
 {
     public class EffectsApplier : IEffectsApplier 
     {

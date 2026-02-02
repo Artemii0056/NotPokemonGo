@@ -1,5 +1,5 @@
 ﻿using System;
-using QteSystem.TestQte;
+using QteSystem.TestQTE;
 
 namespace QteSystem
 {

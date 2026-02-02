@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Armaments
+namespace Armaments.Movers
 {
     public class ArmamentMover : IArmamentMover
     {

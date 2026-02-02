@@ -1,4 +1,8 @@
-﻿namespace Armaments.Spawner
+﻿using Armaments;
+using Armaments.Movers;
+using Factories.ArmamentViewFactories;
+
+namespace Spawners.Spawner
 {
     public class ArmamentSpawner : IArmamentSpawner
     {

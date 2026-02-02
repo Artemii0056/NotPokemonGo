@@ -1,4 +1,6 @@
-﻿namespace Armaments
+﻿using Armaments;
+
+namespace Factories.ArmamentViewFactories
 {
     public interface IArmamentViewFactory
     {

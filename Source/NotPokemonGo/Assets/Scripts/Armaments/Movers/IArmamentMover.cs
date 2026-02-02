@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Armaments
+namespace Armaments.Movers
 {
 	public interface IArmamentMover 
 	{

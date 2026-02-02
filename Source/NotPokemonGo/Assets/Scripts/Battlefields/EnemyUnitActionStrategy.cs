@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Abilities;
 using Abilities.MV;
-using Infrastructure.StateMachines.BattleStateMachine;
-using Infrastructure.StateMachines.BattleStateMachine.States;
 using Units;
 using UnityEngine;
 using VContainer;
@@ -45,10 +43,7 @@ namespace Battlefields
             _sourceProvider.Discard(); //Todo Сбрасываться должен в стейтмашине 
         }
 
-        private void Attack(List<Unit> targets) //Имеем несколько проблем. 1 - именно тут рандомится враг, хотя абилка может наносить атаку по разным таргетам.
-                                                //2 - Изменяет стейт. Этого тут не должно происходить. Только если "включить стейт ходьбы врага"
-                                                //3 - работает с абилити сервисом. Нужно эту логику разбить. Враг просто ходит - выбирает способность, которую применит и все, дальше уже логика способности
-                                                //4 -  
+        private void Attack(List<Unit> targets) 
         {
             foreach (AbilityModel abilityModel in _source.AbilityModels)
             {

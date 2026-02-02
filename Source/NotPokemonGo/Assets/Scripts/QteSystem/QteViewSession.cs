@@ -1,5 +1,5 @@
 ﻿using System;
-using QteSystem.TestQte;
+using QteSystem.TestQTE;
 using UI.QTE;
 using UnityEngine;
 using Object = UnityEngine.Object;

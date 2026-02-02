@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Armaments;
 using Effects;
 using Effects.Factory;
 using Statuses;
 using Statuses.Factory;
 using UnityEngine;
 
-namespace Armaments
+namespace Factories.ArmamentViewFactories
 {
     public class ArmamentViewFactory : IArmamentViewFactory
     {

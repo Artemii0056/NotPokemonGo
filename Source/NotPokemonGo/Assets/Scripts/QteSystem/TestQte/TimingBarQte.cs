@@ -2,7 +2,7 @@
 using UI.QTE;
 using UnityEngine;
 
-namespace QteSystem.TestQte
+namespace QteSystem.TestQTE
 {
     public class TimingBarQte : QteButtonView, IHasQteDuration, IProvidesQteResult
     {

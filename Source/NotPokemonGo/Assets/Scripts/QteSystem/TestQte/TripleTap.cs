@@ -5,7 +5,7 @@ using UI.QTE;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QteSystem.TestQte
+namespace QteSystem.TestQTE
 {
     public class TripleTap : QteButtonView, IHasQteDuration, IProvidesQteResult
     {
