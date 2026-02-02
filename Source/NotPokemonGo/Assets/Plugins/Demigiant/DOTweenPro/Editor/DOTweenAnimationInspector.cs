@@ -7,7 +7,6 @@ using DG.DemiEditor;
 using DG.DOTweenEditor.Core;
 using DG.DOTweenEditor.UI;
 using DG.Tweening;
-using Plugins.Demigiant.DOTween.Modules;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;

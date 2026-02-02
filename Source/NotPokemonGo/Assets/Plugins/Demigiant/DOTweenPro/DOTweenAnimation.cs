@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
-using Plugins.Demigiant.DOTween.Modules;
 using UnityEngine;
 using UnityEngine.UI;
 #if false // TEXTMESHPRO_MARKER
