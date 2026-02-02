@@ -1,10 +1,10 @@
 ﻿using System;
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 using UI.QTE;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace QTESystem
+namespace QteSystem
 {
     public sealed class QteViewSession : IQteSession
     {

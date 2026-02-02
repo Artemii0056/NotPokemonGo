@@ -1,7 +1,7 @@
 ﻿using System;
 using Armaments;
 using Armaments.Spawner;
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 using Units;
 using Object = UnityEngine.Object;
 

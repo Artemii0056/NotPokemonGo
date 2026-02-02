@@ -7,7 +7,7 @@ using Characters.Configs;
 using DodgeSystem.Configs;
 using Infrastructure;
 using LevelSetting;
-using QTESystem;
+using QteSystem;
 using Services.AssetManagement;
 using Statuses;
 using UI;

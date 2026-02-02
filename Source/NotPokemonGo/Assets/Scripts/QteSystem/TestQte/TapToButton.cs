@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QTESystem.TestQTE
+namespace QteSystem.TestQte
 {
     public class TapToButton : MonoBehaviour
     {

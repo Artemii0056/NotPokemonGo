@@ -1,7 +1,7 @@
 ﻿using System;
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 
-namespace QTESystem
+namespace QteSystem
 {
     public interface IProvidesQteResult
     {

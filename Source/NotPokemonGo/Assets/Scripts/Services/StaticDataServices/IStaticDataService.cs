@@ -5,7 +5,7 @@ using Characters;
 using Characters.Configs;
 using DodgeSystem.Configs;
 using LevelSetting;
-using QTESystem;
+using QteSystem;
 using Statuses;
 using UI;
 using UI.SpawnPositions;

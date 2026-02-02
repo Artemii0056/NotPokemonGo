@@ -9,7 +9,7 @@ using UnityEngine;
 using VContainer;
 using Object = UnityEngine.Object;
 
-namespace QTESystem
+namespace QteSystem
 {
     public class QteService : IQteService
     {

@@ -5,7 +5,7 @@ using Battlefields;
 using Castaments;
 using Effects;
 using Platoons;
-using QTESystem;
+using QteSystem;
 using ReactionSystems;
 using Services;
 using Services.AssetManagement;

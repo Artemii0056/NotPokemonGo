@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QTESystem.TestQTE
+namespace QteSystem.TestQte
 {
     public class QteSwipeHandler : MonoBehaviour
     {

@@ -8,7 +8,7 @@ using Abilities.MV;
 using AbilitiesTestFeature.BattleStates;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine;
-using QTESystem;
+using QteSystem;
 using Services;
 using Units;
 using UnityEngine;

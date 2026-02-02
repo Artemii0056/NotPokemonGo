@@ -3,7 +3,7 @@ using Abilities.Configs;
 using Abilities.MV;
 using Abilities.Runtime;
 using Abilities.Runtime.Policies;
-using QTESystem;
+using QteSystem;
 using Services;
 using Units;
 

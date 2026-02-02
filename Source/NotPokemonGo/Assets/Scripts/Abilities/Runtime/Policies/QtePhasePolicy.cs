@@ -1,5 +1,5 @@
 using Abilities.Configs;
-using QTESystem;
+using QteSystem;
 
 namespace Abilities.Runtime.Policies
 {

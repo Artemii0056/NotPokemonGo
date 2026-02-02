@@ -1,4 +1,4 @@
-﻿namespace QTESystem
+﻿namespace QteSystem
 {
     public interface IHasQteDuration
     {

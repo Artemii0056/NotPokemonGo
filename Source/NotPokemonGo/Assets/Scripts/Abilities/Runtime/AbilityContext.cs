@@ -1,5 +1,5 @@
 using Abilities.Configs;
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 using Units;
 using Units.AnimationControllers;
 

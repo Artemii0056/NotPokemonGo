@@ -1,10 +1,9 @@
 ﻿using System;
-using Stats;
 using UI.QTE;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QTESystem.TestQTE
+namespace QteSystem.TestQte
 {
     public class TapToButtonManager : QteButtonView
     {

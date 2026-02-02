@@ -1,4 +1,4 @@
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 using UnityEngine;
 
 namespace QteQteTester

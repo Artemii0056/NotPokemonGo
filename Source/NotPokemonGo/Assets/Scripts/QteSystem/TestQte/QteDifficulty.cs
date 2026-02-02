@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace QTESystem.TestQTE
+namespace QteSystem.TestQte
 {
     [Serializable]
     public class QteDifficulty 

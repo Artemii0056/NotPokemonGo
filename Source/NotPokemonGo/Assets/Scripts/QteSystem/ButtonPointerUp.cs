@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace QTESystem
+namespace QteSystem
 {
     public class ButtonPointerUp : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {

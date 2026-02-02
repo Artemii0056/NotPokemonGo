@@ -12,7 +12,7 @@ using Armaments.Spawner;
 using Battlefields;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
-using QTESystem;
+using QteSystem;
 using Services;
 using UnityEngine;
 using Unit = Units.Unit;

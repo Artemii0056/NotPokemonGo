@@ -4,7 +4,7 @@ using Abilities.Runtime.Impact;
 using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
-using QTESystem;
+using QteSystem;
 using Services.AbilityServices;
 
 namespace Abilities.Runtime.Policies
@@ -102,7 +102,7 @@ namespace Abilities.Runtime.Policies
                 IArmamentMover mover = _armamentSpawner.Create(ctx);
 
                 bool phaseHasQte = _useQte && request.Phase != null &&
-                                   request.Phase.QteType != QTESystem.QteType.Unknown;
+                                   request.Phase.QteType != QteType.Unknown;
 
                 Shot shot = new Shot(request.Phase, ctx, mover)
                 {

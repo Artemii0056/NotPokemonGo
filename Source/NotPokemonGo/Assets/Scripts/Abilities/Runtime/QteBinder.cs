@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using QTESystem;
-using QTESystem.TestQTE;
+using QteSystem;
+using QteSystem.TestQte;
 using Units;
 
 namespace Abilities.Runtime

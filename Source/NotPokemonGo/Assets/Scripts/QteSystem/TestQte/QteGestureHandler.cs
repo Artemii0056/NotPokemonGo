@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using QteQteTester;
 using UnityEngine;
 
-namespace QTESystem.TestQTE
+namespace QteSystem.TestQte
 {
     public class QteGestureHandler : MonoBehaviour
     {

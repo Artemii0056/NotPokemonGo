@@ -1,8 +1,8 @@
 ﻿using System;
 using Abilities.Configs;
 using Abilities.Signals;
-using QTESystem;
-using QTESystem.TestQTE;
+using QteSystem;
+using QteSystem.TestQte;
 using UnityEngine;
 
 namespace Abilities.Runtime.Policies

@@ -3,7 +3,7 @@ using Abilities.Runtime.Impact;
 using Abilities.Signals;
 using Armaments;
 using Armaments.Spawner;
-using QTESystem;
+using QteSystem;
 using Services.AbilityServices;
 
 namespace Abilities.Runtime.Policies

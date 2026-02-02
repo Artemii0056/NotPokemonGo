@@ -1,6 +1,6 @@
 ﻿using Abilities.Configs;
 using Armaments;
-using QTESystem.TestQTE;
+using QteSystem.TestQte;
 
 namespace Abilities.Runtime
 {

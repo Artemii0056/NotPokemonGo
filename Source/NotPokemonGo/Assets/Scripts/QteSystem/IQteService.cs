@@ -1,6 +1,6 @@
 using Units;
 
-namespace QTESystem
+namespace QteSystem
 {
     public interface IQteService
     {

@@ -1,7 +1,7 @@
 ﻿using UI.QTE;
 using UnityEngine;
 
-namespace QTESystem
+namespace QteSystem
 {
     [CreateAssetMenu(fileName = nameof(QteConfig), menuName = "Config/" + nameof(QteConfig))]
     public class QteConfig : ScriptableObject 
