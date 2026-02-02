@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Epic_Toon_FX.Demo.Scripts
+namespace Assets.Particles.Epic_Toon_FX.Demo.Scripts
 {
 
 public class ETFXButtonScript : MonoBehaviour

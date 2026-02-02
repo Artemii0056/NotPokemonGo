@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace FlatKit {
+namespace Assets.FlatKit.Demos.Common.Scripts.Motion {
     public class LinearMotion : MonoBehaviour {
         public enum TranslationMode {
             Off,

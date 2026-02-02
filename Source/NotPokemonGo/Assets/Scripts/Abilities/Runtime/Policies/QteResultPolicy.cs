@@ -1,82 +1,83 @@
 ﻿using System;
 using Abilities.Configs;
-using Abilities.Runtime;
-using Abilities.Runtime.Policies;
 using Abilities.Signals;
 using QTESystem;
 using QTESystem.TestQTE;
 using UnityEngine;
 
-public class QteResultPolicy : AbilityPolicyBase
+namespace Abilities.Runtime.Policies
 {
-    private readonly IQteService _qteService;
-
-    private AbilityContext _context;
-    private IQteSession _qteSession;
-
-    private IDisposable _gateToken;
-    private bool _startedThisPhase;
-
-    public QteResultPolicy(IQteService qteService)
+    public class QteResultPolicy : AbilityPolicyBase
     {
-        _qteService = qteService;
-    }
+        private readonly IQteService _qteService;
 
-    public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
-    {
-        _context = ctx;
-        _startedThisPhase = false;
+        private AbilityContext _context;
+        private IQteSession _qteSession;
 
-        _qteSession = null;
+        private IDisposable _gateToken;
+        private bool _startedThisPhase;
 
-        _gateToken = null;
-
-        if (phase.QteType != QteType.Unknown)
+        public QteResultPolicy(IQteService qteService)
         {
-            _gateToken = ctx.AnimatorTrigger.PhaseService.AcquireFinishToken("QTE");
-            Debug.Log("[QTE] Gate token ACQUIRED");
+            _qteService = qteService;
         }
-    }
 
-    public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
-    {
-        if (_startedThisPhase)
-            return;
+        public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
+        {
+            _context = ctx;
+            _startedThisPhase = false;
 
-        if (ctx.CurrentPhase.QteType == QteType.Unknown)
-            return;
+            _qteSession = null;
 
-        _startedThisPhase = true;
+            _gateToken = null;
 
-        _qteSession = _qteService.StartSession(
-            ctx.CurrentPhase.QteType,
-            ctx.Source,
-            1.2f
-        );
+            if (phase.QteType != QteType.Unknown)
+            {
+                _gateToken = ctx.AnimatorTrigger.PhaseService.AcquireFinishToken("QTE");
+                Debug.Log("[QTE] Gate token ACQUIRED");
+            }
+        }
 
-        _qteSession.Completed += OnCompleted;
-    }
+        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
+        {
+            if (_startedThisPhase)
+                return;
 
-    private void OnCompleted(QteResult result)
-    {
-        Debug.Log($"[QTE] Completed={result} disposingToken={_gateToken!=null}");
-        Debug.Log($"[QTE] Completed with {result}");
+            if (ctx.CurrentPhase.QteType == QteType.Unknown)
+                return;
 
-        _qteSession.Completed -= OnCompleted;
-        _context.QteResult = result;
+            _startedThisPhase = true;
 
-        _gateToken.Dispose();
-        _gateToken = null;
+            _qteSession = _qteService.StartSession(
+                ctx.CurrentPhase.QteType,
+                ctx.Source,
+                1.2f
+            );
 
-        _context.AnimatorTrigger.PhaseService.RequestFinishCheck();
-    }
+            _qteSession.Completed += OnCompleted;
+        }
 
-    public override void OnAbilityStop(AbilityContext ctx)
-    {
-        _gateToken?.Dispose();
-        _gateToken = null;
+        private void OnCompleted(QteResult result)
+        {
+            Debug.Log($"[QTE] Completed={result} disposingToken={_gateToken!=null}");
+            Debug.Log($"[QTE] Completed with {result}");
 
-        _qteSession = null;
-        _context = null;
+            _qteSession.Completed -= OnCompleted;
+            _context.QteResult = result;
+
+            _gateToken.Dispose();
+            _gateToken = null;
+
+            _context.AnimatorTrigger.PhaseService.RequestFinishCheck();
+        }
+
+        public override void OnAbilityStop(AbilityContext ctx)
+        {
+            _gateToken?.Dispose();
+            _gateToken = null;
+
+            _qteSession = null;
+            _context = null;
+        }
     }
 }

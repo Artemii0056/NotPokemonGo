@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Epic_Toon_FX.Demo.Scripts.VFX_Library
+namespace Assets.Particles.Epic_Toon_FX.Demo.Scripts.VFX_Library
 {
 	public class ParticleEffectsLibrary : MonoBehaviour {
 		public static ParticleEffectsLibrary GlobalAccess;

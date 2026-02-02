@@ -2,6 +2,7 @@
 using Abilities.Signals;
 using Armaments;
 using Castaments;
+using Services.Cameras;
 using UnityEngine;
 
 namespace Abilities.Configs

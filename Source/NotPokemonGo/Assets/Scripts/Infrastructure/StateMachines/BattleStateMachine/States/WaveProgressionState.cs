@@ -5,6 +5,7 @@ using LevelSetting;
 using Platoons;
 using Services;
 using Services.BattleSessionService;
+using Services.LevelProgress;
 using UnityEngine;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States

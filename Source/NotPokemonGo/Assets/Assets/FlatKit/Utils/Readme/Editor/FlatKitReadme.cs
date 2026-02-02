@@ -8,7 +8,7 @@ using PackageInfo = UnityEditor.PackageManager.PackageInfo;
 // ReSharper disable UnusedMember.Local
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace FlatKit {
+namespace Assets.FlatKit.Utils.Readme.Editor {
 #if FLAT_KIT_DEV
 [CreateAssetMenu(fileName = "Readme", menuName = "FlatKit/Internal/Readme", order = 0)]
 #endif // FLAT_KIT_DEV

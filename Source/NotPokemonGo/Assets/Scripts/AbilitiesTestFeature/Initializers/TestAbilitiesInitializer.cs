@@ -3,13 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
-public class TestAbilitiesInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
+namespace AbilitiesTestFeature.Initializers
 {
-	private const string TestAbilitiesSceneName = "TestAbilities";
-	
-	public void Initialize()
+	public class TestAbilitiesInitializer : MonoBehaviour, IInitializable, ICoroutineRunner
 	{
-		if (SceneManager.GetActiveScene().name != TestAbilitiesSceneName)	
-			SceneManager.LoadScene(TestAbilitiesSceneName);
+		private const string TestAbilitiesSceneName = "TestAbilities";
+	
+		public void Initialize()
+		{
+			if (SceneManager.GetActiveScene().name != TestAbilitiesSceneName)	
+				SceneManager.LoadScene(TestAbilitiesSceneName);
+		}
 	}
 }

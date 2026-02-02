@@ -1,5 +1,4 @@
 ﻿using AbilitiesTestFeature.Services;
-using AbilitiesTestFeature.UI;
 using AbilitiesTestFeature.UI.Presenters;
 using AbilitiesTestFeature.UI.Views;
 using Infrastructure.StateMachines.BattleStateMachine;
@@ -7,28 +6,31 @@ using Services.UIServices;
 using UnityEngine;
 using VContainer;
 
-public class UIAbilityTestInitializer : MonoBehaviour
+namespace AbilitiesTestFeature.Initializers
 {
-	[SerializeField] private AbilityTestPanel _abilityTestPanel;
+	public class UIAbilityTestInitializer : MonoBehaviour
+	{
+		[SerializeField] private AbilityTestPanel _abilityTestPanel;
 	
-	private IPresenterRegistrar _presenterRegistrar;
+		private IPresenterRegistrar _presenterRegistrar;
 
-	[Inject]
-	private void Construct(
-		IPresenterRegistrar presenterRegistrar, 
-		IBattlefieldProvider battlefieldProvider,
-		IBattleStateMachine battleStateMachine)
-	{
-		_presenterRegistrar = presenterRegistrar;
-		_presenterRegistrar.RegisterPresenter<IAbilityTestPresenter>(
-			new AbilityTestPresenter(
-				_abilityTestPanel,
-				battlefieldProvider,
-				battleStateMachine));
-	}
+		[Inject]
+		private void Construct(
+			IPresenterRegistrar presenterRegistrar, 
+			IBattlefieldProvider battlefieldProvider,
+			IBattleStateMachine battleStateMachine)
+		{
+			_presenterRegistrar = presenterRegistrar;
+			_presenterRegistrar.RegisterPresenter<IAbilityTestPresenter>(
+				new AbilityTestPresenter(
+					_abilityTestPanel,
+					battlefieldProvider,
+					battleStateMachine));
+		}
 
-	private void OnDestroy()
-	{
-		_presenterRegistrar.UnregisterPresenter<IAbilityTestPresenter>();
+		private void OnDestroy()
+		{
+			_presenterRegistrar.UnregisterPresenter<IAbilityTestPresenter>();
+		}
 	}
 }

@@ -3,23 +3,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using DG.DemiEditor;
 using DG.DOTweenEditor.Core;
 using DG.DOTweenEditor.UI;
 using DG.Tweening;
-using DG.Tweening.Core;
+using Plugins.Demigiant.DOTween.Modules;
 using UnityEditor;
 using UnityEngine;
-using DOTweenSettings = DG.Tweening.Core.DOTweenSettings;
-#if true // UI_MARKER
 using UnityEngine.UI;
-#endif
+using DOTweenSettings = DG.Tweening.Core.DOTweenSettings;
 #if false // TEXTMESHPRO_MARKER
     using TMPro;
 #endif
 
-namespace DG.DOTweenEditor
+namespace Plugins.Demigiant.DOTweenPro.Editor
 {
     [CustomEditor(typeof(DOTweenAnimation))]
     public class DOTweenAnimationInspector : ABSAnimationInspector

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Epic_Toon_FX.Demo.Scripts
+namespace Assets.Particles.Epic_Toon_FX.Demo.Scripts
 {
 
 public class ETFXTarget : MonoBehaviour

@@ -1,7 +1,6 @@
-﻿using Services.Audio;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Services.AudioServices
 {
     public sealed class AudioService : IAudioService
     {

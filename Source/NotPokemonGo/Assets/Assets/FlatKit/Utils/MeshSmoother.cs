@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace FlatKit {
+namespace Assets.FlatKit.Utils {
 public static class MeshSmoother {
     private const int SmoothNormalUVChannel = 2;
 

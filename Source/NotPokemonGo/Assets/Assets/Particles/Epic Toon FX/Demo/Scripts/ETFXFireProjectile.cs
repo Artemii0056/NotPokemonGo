@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Epic_Toon_FX.Demo.Scripts
+namespace Assets.Particles.Epic_Toon_FX.Demo.Scripts
 {
     public class ETFXFireProjectile : MonoBehaviour
     {

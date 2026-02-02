@@ -5,7 +5,9 @@ using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
 using Infrastructure.StateMachines.States.Interfaces;
 using Services;
+using Services.LevelProgress;
 using Services.SceneServices;
+using UI;
 using UI.Factory;
 using UnityEngine;
 

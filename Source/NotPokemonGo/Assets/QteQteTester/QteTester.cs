@@ -1,14 +1,18 @@
+using QTESystem.TestQTE;
 using UnityEngine;
 
-public class QteTester : MonoBehaviour
+namespace QteQteTester
 {
-    public QteSwipeHandler qte;
-
-    void Start()
+    public class QteTester : MonoBehaviour
     {
-        qte.OnSwipeResult = success =>
+        public QteSwipeHandler qte;
+
+        void Start()
         {
-            Debug.Log("QTE Result: " + (success ? "SUCCESS" : "FAIL"));
-        };
+            qte.OnSwipeResult = success =>
+            {
+                Debug.Log("QTE Result: " + (success ? "SUCCESS" : "FAIL"));
+            };
+        }
     }
 }

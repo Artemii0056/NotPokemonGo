@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Assets.Epic_Toon_FX.Demo.Scripts.VFX_Library
+namespace Assets.Particles.Epic_Toon_FX.Demo.Scripts.VFX_Library
 {
 	public enum ButtonTypes {
 		NotDefined,

@@ -1,5 +1,6 @@
 ﻿using System;
 using AbilitiesTestFeature.DIExtensions;
+using AbilitiesTestFeature.Initializers;
 using Infrastructure.DI.DIExtensions;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;

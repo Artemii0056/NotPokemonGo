@@ -1,19 +1,21 @@
-﻿using AbilitiesTestFeature;
-using AbilitiesTestFeature.BattleStates;
+﻿using AbilitiesTestFeature.BattleStates;
 using Infrastructure.StateMachines.BattleStateMachine;
 using UnityEngine;
 using VContainer;
 
-public class SceneAbilityTestInitializer : MonoBehaviour
+namespace AbilitiesTestFeature.Initializers
 {
-	[SerializeField] private AbilitiesTestFeatureConfig _abilitiesTestFeatureConfig;
-
-	private IBattleStateMachine _battleStateMachine;
-
-	[Inject]
-	private void Construct(IBattleStateMachine battleStateMachine)
+	public class SceneAbilityTestInitializer : MonoBehaviour
 	{
-		_battleStateMachine = battleStateMachine;
-		_battleStateMachine.Enter<CreateBattlfieldAbilityTestState, AbilitiesTestFeatureConfig>(_abilitiesTestFeatureConfig);
+		[SerializeField] private AbilitiesTestFeatureConfig _abilitiesTestFeatureConfig;
+
+		private IBattleStateMachine _battleStateMachine;
+
+		[Inject]
+		private void Construct(IBattleStateMachine battleStateMachine)
+		{
+			_battleStateMachine = battleStateMachine;
+			_battleStateMachine.Enter<CreateBattlfieldAbilityTestState, AbilitiesTestFeatureConfig>(_abilitiesTestFeatureConfig);
+		}
 	}
 }

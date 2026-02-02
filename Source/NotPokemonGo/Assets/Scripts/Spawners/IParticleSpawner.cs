@@ -1,8 +1,7 @@
 ﻿using Units;
-using Units.AnimationControllers;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Spawners
 {
     public interface IParticleSpawner
     {

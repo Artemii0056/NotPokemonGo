@@ -1,8 +1,7 @@
 ﻿using System;
-using Abilities.Configs;
 using Units;
 
-namespace Services
+namespace Services.Cameras
 {
     public interface ICameraService
     {

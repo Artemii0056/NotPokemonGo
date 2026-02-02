@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace FlatKit {
+namespace Assets.FlatKit.Utils.Readme.Editor {
 public static class NetworkManager {
     private static UnityWebRequest _request;
 

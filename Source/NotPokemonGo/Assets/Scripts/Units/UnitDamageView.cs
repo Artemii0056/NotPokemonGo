@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using Effects;
+using Plugins.Demigiant.DOTween.Modules;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

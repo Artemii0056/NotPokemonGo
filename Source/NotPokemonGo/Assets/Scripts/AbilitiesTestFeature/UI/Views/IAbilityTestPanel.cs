@@ -1,7 +1,7 @@
 ﻿using System;
 using UI.BaseUI.Interfaces;
 
-namespace AbilitiesTestFeature.UI
+namespace AbilitiesTestFeature.UI.Views
 {
 	public interface IAbilityTestPanel : IView
 	{

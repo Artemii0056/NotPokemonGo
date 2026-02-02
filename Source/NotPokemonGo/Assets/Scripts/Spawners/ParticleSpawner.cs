@@ -2,7 +2,7 @@
 using Abilities;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Spawners
 {
     public sealed class ParticleSpawner : IParticleSpawner
     {
@@ -35,8 +35,11 @@ namespace DefaultNamespace
 
         public void Clear(Units.Unit owner)
         {
-            if (owner == null) return;
-            if (!_spawned.TryGetValue(owner, out var list)) return;
+            if (owner == null) 
+                return;
+            
+            if (!_spawned.TryGetValue(owner, out var list))
+                return;
 
             for (int i = list.Count - 1; i >= 0; i--)
             {
@@ -52,6 +55,7 @@ namespace DefaultNamespace
                 return map;
 
             map = new Dictionary<ParticleSpawnType, AbilityAnchor>();
+            
             foreach (var anchor in unit.AbilityAnchors)
             {
                 if (!map.TryAdd(anchor.spawnType, anchor))

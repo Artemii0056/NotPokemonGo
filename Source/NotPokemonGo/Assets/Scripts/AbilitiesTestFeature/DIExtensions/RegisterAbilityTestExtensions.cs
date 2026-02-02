@@ -12,6 +12,7 @@ using Services.AssetManagement;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
+using Services.LevelProgress;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StaticDataServices;

@@ -1,6 +1,6 @@
 ﻿using UI.BaseUI.Interfaces;
 
-namespace UI.BaseUI.Views
+namespace UI.BaseUI.Implemenation
 {
 	public class Presenter <T> : IPresenter where T : IView
 	{

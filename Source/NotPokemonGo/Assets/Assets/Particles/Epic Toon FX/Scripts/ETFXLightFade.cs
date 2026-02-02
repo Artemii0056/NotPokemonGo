@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Epic_Toon_FX.Scripts
+namespace Assets.Particles.Epic_Toon_FX.Scripts
 {
     public class ETFXLightFade : MonoBehaviour
     {

@@ -1,7 +1,6 @@
-﻿using Infrastructure.StateMachines;
-using Infrastructure.StateMachines.BattleStateMachine.States;
+﻿using Infrastructure.StateMachines.BattleStateMachine.States;
 
-namespace Services
+namespace Services.LevelProgress
 {
     public interface ILevelProgressService
     {
