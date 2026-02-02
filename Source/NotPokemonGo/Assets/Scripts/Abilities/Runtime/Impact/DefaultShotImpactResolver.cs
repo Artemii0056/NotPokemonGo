@@ -5,6 +5,8 @@ using Effects;
 using QteSystem.TestQTE;
 using Spawners.Spawner;
 using Units;
+using UnityEditor.Rendering;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Abilities.Runtime.Impact
@@ -38,6 +40,8 @@ namespace Abilities.Runtime.Impact
             switch (action)
             {
                 case ImpactAction.ApplyEffectsAndDestroy:
+                    Debug.Log("12321");
+                    
                     ApplyEffects(shot);
                     DestroyArmament(shot);
                     break;
@@ -47,7 +51,7 @@ namespace Abilities.Runtime.Impact
                     break;
 
                 case ImpactAction.ReflectToSourceAndDestroy:
-                    Reflect(shot);
+                   Reflect(shot); //Вот  этот за переключение фаз отвечает? 
                     DestroyArmament(shot);
                     break;
 

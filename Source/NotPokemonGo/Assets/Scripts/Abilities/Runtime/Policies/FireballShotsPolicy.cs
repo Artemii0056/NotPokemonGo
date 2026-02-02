@@ -7,6 +7,8 @@ using Effects;
 using QteSystem;
 using Services.AbilityServices;
 using Spawners.Spawner;
+using UnityEditor.Rendering;
+using UnityEngine;
 
 namespace Abilities.Runtime.Policies
 {
@@ -63,6 +65,9 @@ namespace Abilities.Runtime.Policies
 
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
+            Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
+
+            
             if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
                 _finishSeenForActivePhase = true;
         }
@@ -84,30 +89,32 @@ namespace Abilities.Runtime.Policies
 
         public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
         {
+            Debug.Log(_shotTracker.ActiveCount + " " + _qteBinder.ActiveCount + " ON FINISH     ");
+            
             if (phase == null)
                 return true;
 
             if (!PhaseHasArmament(phase))
                 return true;
-            
+
             if (!_finishSeenForActivePhase)
                 return false;
 
             return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
         }
-        
+
         private static bool PhaseHasArmament(AbilityPhase phase)
         {
             var actions = phase.SignalActions;
-            
+
             if (actions == null)
                 return false;
 
             for (int i = 0; i < actions.Count; i++)
             {
-                var a = actions[i];
-                
-                if (a != null && a.HasArmament)
+                PhaseSignalAction action = actions[i];
+
+                if (action != null && action.HasArmament)
                     return true;
             }
 

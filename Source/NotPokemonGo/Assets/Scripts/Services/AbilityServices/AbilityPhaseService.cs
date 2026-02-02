@@ -132,10 +132,10 @@ namespace Services.AbilityServices
             if (cb == null)
                 return;
 
-            if (_lastRequestFrame == Time.frameCount)
-                return;
+            // if (_lastRequestFrame == Time.frameCount)
+            //     return;
 
-            _lastRequestFrame = Time.frameCount;
+            //_lastRequestFrame = Time.frameCount;
             cb.Invoke();
         }
     }

@@ -1,7 +1,6 @@
 using System;
 using Abilities.Configs;
 using Units;
-using UnityEngine;
 
 namespace Services.AbilityServices.Executors
 {
@@ -18,8 +17,6 @@ namespace Services.AbilityServices.Executors
 
         public bool CanExecute(PhaseSignalAction action)
         {
-            Debug.Log( action.HasArmament + " hasArmament");
-
             return action != null && action.HasArmament;
         }
 
@@ -34,8 +31,6 @@ namespace Services.AbilityServices.Executors
             if (targets == null || targets.Count == 0)
                 return false;
 
-            Debug.Log("Execute");
-            
             _raise(new ArmamentRequest(phase, action, source, targets.ToArray()));
             return false;
         }

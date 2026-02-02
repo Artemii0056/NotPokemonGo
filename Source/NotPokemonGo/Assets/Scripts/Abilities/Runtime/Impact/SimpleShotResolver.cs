@@ -99,11 +99,11 @@ namespace Abilities.Runtime.Impact
             _impactResolver.Resolve(shot);
 
             var context = _context;
+            
             if (context == null)
                 return;
 
-            if (shot.Phase != null && shot.Phase == _activePhase)
-                context.AnimatorTrigger?.PhaseService?.RequestFinishCheck();
+            context.AnimatorTrigger?.PhaseService?.RequestFinishCheck();
         }
 
         private static bool PhaseHasArmament(AbilityPhase phase)

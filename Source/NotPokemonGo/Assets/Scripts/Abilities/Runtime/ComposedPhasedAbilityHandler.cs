@@ -114,7 +114,7 @@ namespace Abilities.Runtime
 
             bool can = _policies.All(p => p.CanFinishPhase(_context, _context.CurrentPhase));
             
-            Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationCashName} can={can}");
+            Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can}");
 
             if (can)
                 _waitingPhaseFinish = false;
