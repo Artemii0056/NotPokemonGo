@@ -52,8 +52,6 @@ namespace Units
         public event Action<Unit> Death;
 
         public IAbilityHandler AbilityHandler { get; private set; }
-        public Vector3 FireballSpawnPoint { get; set; } = Vector3.one;
-        private int _id;
 
         public void Construct(
             List<StatConfig> statConfig,

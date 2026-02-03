@@ -1,6 +1,6 @@
 ﻿namespace Units
 {
-    public class SourceProvider : ISourceProvider
+    public class SourceProvider : ISourceProvider //TODO Delete?
     {
         public Unit Source { get; private set; }
 

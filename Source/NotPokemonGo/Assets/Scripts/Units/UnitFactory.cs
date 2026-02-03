@@ -46,7 +46,7 @@ namespace Units
             IParticleSpawner particleSpawner,
             ICameraService cameraService, 
             IIdService  idService,
-            IAudioService audioService) // <-- добавил
+            IAudioService audioService)
         {
             _objectResolver = objectResolver;
             _castamentApplicator = castamentApplicator;

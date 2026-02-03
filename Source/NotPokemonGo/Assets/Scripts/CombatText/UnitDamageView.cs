@@ -16,8 +16,7 @@ namespace Units
 		[SerializeField] private Image _damageImage;
 		[SerializeField] private Image _healImage;
 
-		[Header("Anim settings")] [SerializeField]
-		private float _popScale = 1.1f;
+		[Header("Anim settings")] [SerializeField] private float _popScale = 1.1f;
 
 		[SerializeField] private float _popDuration = 0.4f;
 		[SerializeField] private float _shrinkScale = 0.3f;
