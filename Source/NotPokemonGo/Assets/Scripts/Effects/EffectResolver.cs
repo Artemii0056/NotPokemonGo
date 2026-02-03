@@ -19,7 +19,6 @@ namespace Effects
 
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
-            Debug.Log("ApplyEffect without unit");
             target.ChangeStatValue(effect.Value, effect.TargetType);
         }
 

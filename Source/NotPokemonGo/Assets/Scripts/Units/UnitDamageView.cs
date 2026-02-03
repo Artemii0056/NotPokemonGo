@@ -15,13 +15,13 @@ namespace Units
 		[SerializeField] private Image _healImage;
 
 		[Header("Anim settings")] [SerializeField]
-		private float _popScale = 1.1f; // +10%
+		private float _popScale = 1.1f;
 
 		[SerializeField] private float _popDuration = 0.4f;
-		[SerializeField] private float _shrinkScale = 0.3f; // -70% => 30%
+		[SerializeField] private float _shrinkScale = 0.3f;
 		[SerializeField] private float _shrinkDuration = 1.5f;
 		[SerializeField] private float _moveUpDuration = 1.5f;
-		[SerializeField] private float _moveUpPixels = 60f; // подбери под свой Canvas
+		[SerializeField] private float _moveUpPixels = 60f;
 
 		private IEffectResolver _resolver;
 
@@ -66,6 +66,8 @@ namespace Units
 		private void OnEffectApplayed(Unit source, Unit target, float effectValue, EffectInfo effectInfo)
 		{
 			Debug.Log("OnEffectApplayed");
+			Debug.Log($"source = {source.UnitType}");
+			Debug.Log($"source = {target.UnitType}");
 			_damageText.enabled = true;
 			_damageText.text = $"{effectValue}";
 
