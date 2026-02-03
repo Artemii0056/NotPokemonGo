@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: dee45c2fc34aa6a4a87d11d3324f7f2a
+guid: 637c27981bc2f274c83baf574a45d272
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
   fontSize: 16
-  forceTextureCase: 0
+  forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - DemonCubicBlock NKP Tile
+  - Olde Britannian
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

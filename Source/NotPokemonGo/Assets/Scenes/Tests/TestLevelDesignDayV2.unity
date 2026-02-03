@@ -448,14 +448,14 @@ RectTransform:
   m_GameObject: {fileID: 69783407}
   m_LocalRotation: {x: 0.24358347, y: 0.6638276, z: -0.24358347, w: 0.6638276}
   m_LocalPosition: {x: 0, y: 0, z: 18.93}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 139019362}
   m_LocalEulerAnglesHint: {x: 40.3, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.9, y: 3.87}
+  m_AnchoredPosition: {x: 30.98, y: 3.83}
   m_SizeDelta: {x: 30, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69783409
@@ -478,15 +478,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <sprite index=0><sprite index=0><sprite index=0><sprite index=0><sprite
-    index=0><sprite index=0><sprite index=0><sprite index=0><sprite index=0><sprite
-    index=0><sprite index=0><sprite index=0><sprite index=0><sprite index=0><sprite
-    index=0><sprite index=0><sprite index=0><sprite index=0><sprite index=0><sprite
-    index=0><sprite index=0><sprite index=0><sprite index=0><sprite index=0><sprite
-    index=0><sprite index=0><sprite index=0><sprite index=0>asdasdsad
+  m_text: 'dsaf asdfs  ffdsf dsfds hfdgd fhfgh fdsgasadfdsaf asdfs  ffdsf dsfds '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
+  m_sharedMaterial: {fileID: -4315975041709399475, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -510,15 +505,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.45
+  m_fontSize: 6.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 1
+  m_fontSizeMin: 0.56
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -575,7 +570,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
+  - {fileID: -4315975041709399475, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3820,14 +3815,14 @@ RectTransform:
   m_GameObject: {fileID: 534530397}
   m_LocalRotation: {x: -0.24358279, y: 0.6638295, z: -0.24358423, w: -0.6638257}
   m_LocalPosition: {x: 0, y: 0, z: 19}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 139019362}
   m_LocalEulerAnglesHint: {x: 40.3, y: 270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22.4, y: 3.87}
+  m_AnchoredPosition: {x: 22.26, y: 3.88}
   m_SizeDelta: {x: 30, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534530399
@@ -3850,18 +3845,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sample textSample textSample textSample textSample textSample textSample
-    textSample textSample textSample textSample textSample textSample text
+  m_text: 'dsaf asdfs  ffdsf dsfds hfdgd fhfgh fdsgasadfdsaf asdfs  ffdsf dsfds '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
+  m_sharedMaterial: {fileID: -4315975041709399475, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4284703587
+  m_fontColor: {r: 0.3886792, g: 0.3886792, b: 0.3886792, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3878,14 +3872,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.3
+  m_fontSize: 6.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3943,7 +3937,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: e1e90db6dbfad324496c1c56db1834e3, type: 2}
+  - {fileID: -4315975041709399475, guid: 168eab4f508bb2b4393fc93d176f9837, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7977,7 +7971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &888432608
 MonoBehaviour:
   m_ObjectHideFlags: 0
