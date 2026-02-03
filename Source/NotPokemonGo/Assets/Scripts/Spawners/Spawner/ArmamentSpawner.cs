@@ -15,9 +15,7 @@ namespace Spawners.Spawner
         {
             Armament armament = _viewFactory.Create(context);
             
-            IArmamentMover mover = new ArmamentMover(armament);
-
-            return mover;
+            return  new ArmamentMover(armament);
         }
     }
 }

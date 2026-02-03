@@ -18,7 +18,6 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: -1953017291097611811, guid: 9b4eb48d0d5a1ef459acce3fb2494439, type: 3}
       QteType: 0
-      WaitForExternalCompletion: 0
       SignalActions:
       - Signal: 10
         TargetMode: 0
@@ -40,7 +39,7 @@ MonoBehaviour:
         MoveCommand: 1
         MoveMode: 0
         CustomPoint: {x: 0, y: 0, z: 0}
-        MoveDuration: 1
+        MoveDuration: 0.75
         MoveDelay: 1
         StopDistance: 1
         JumpPower: 5
@@ -53,16 +52,15 @@ MonoBehaviour:
         TimeEffect: 0
         TimeScale: 0.1
         TimeDuration: 0.08
-    - AnimationClip: {fileID: 7400000, guid: f73fc88b8f0148b4b87d83324df314c0, type: 2}
+    - AnimationClip: {fileID: 3822591109426768289, guid: 7282e18170c836147a63e8c94de4f6ec, type: 3}
       QteType: 0
-      WaitForExternalCompletion: 0
       SignalActions:
       - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
           <EffectInfo>k__BackingField: []
-          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ParticleSystem>k__BackingField: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
           <ArmamentPrefab>k__BackingField: {fileID: 0}
           <MoveSpeed>k__BackingField: 0
           <Duration>k__BackingField: 0
@@ -75,7 +73,7 @@ MonoBehaviour:
             DamageType: 1
             Value: -10
           <ParticleSystem>k__BackingField: {fileID: 0}
-        ParticlePrefab: {fileID: 19834362, guid: b5b59464775457e4b919073aebf11851, type: 3}
+        ParticlePrefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
         ParticleSpawnType: 1
         ParticleOwner: 0
         MoveCommand: 0
@@ -96,7 +94,6 @@ MonoBehaviour:
         TimeDuration: 0.08
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
-      WaitForExternalCompletion: 0
       SignalActions:
       - Signal: 10
         TargetMode: 0
@@ -118,8 +115,8 @@ MonoBehaviour:
         MoveCommand: 2
         MoveMode: 1
         CustomPoint: {x: 0, y: 0, z: 0}
-        MoveDuration: 1
-        MoveDelay: 1
+        MoveDuration: 0.5
+        MoveDelay: 0.25
         StopDistance: 0.5
         JumpPower: 1
         NumJumps: 1

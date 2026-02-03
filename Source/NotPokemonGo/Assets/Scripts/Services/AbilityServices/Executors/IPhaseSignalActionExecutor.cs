@@ -8,7 +8,7 @@ namespace Services.AbilityServices.Executors
     {
         bool CanExecute(PhaseSignalAction action);
 
-        bool Execute(
+        void Execute(
             AbilityPhase phase,
             PhaseSignalAction action,
             Unit source,

@@ -18,7 +18,6 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 877cfa3476e954c4b8f29c76746d793a, type: 2}
       QteType: 0
-      WaitForExternalCompletion: 0
       SignalActions:
       - Signal: 20
         TargetMode: 0
@@ -28,6 +27,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 0}
           <MoveSpeed>k__BackingField: 0
+          <Duration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []
@@ -55,9 +55,8 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       QteType: 9
-      WaitForExternalCompletion: 1
       SignalActions:
-      - Signal: 30
+      - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
@@ -69,6 +68,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
           <MoveSpeed>k__BackingField: 3
+          <Duration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []
@@ -96,9 +96,8 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       QteType: 9
-      WaitForExternalCompletion: 1
       SignalActions:
-      - Signal: 30
+      - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
@@ -110,6 +109,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
           <MoveSpeed>k__BackingField: 3
+          <Duration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []
@@ -137,9 +137,8 @@ MonoBehaviour:
   - <AbilityPhases>k__BackingField:
     - AnimationClip: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
       QteType: 9
-      WaitForExternalCompletion: 1
       SignalActions:
-      - Signal: 30
+      - Signal: 10
         TargetMode: 0
         ArmamentSetup:
           <Statuses>k__BackingField: []
@@ -151,6 +150,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
           <MoveSpeed>k__BackingField: 3
+          <Duration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []

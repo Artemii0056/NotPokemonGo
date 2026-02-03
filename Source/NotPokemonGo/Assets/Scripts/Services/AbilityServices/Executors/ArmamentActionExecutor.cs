@@ -20,19 +20,19 @@ namespace Services.AbilityServices.Executors
             return action != null && action.HasArmament;
         }
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target,
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target,
             PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (_targetSelector == null || _raise == null)
-                return false;
+                return;
 
             var targets = _targetSelector.GetTargets(action.TargetMode, target);
 
             if (targets == null || targets.Count == 0)
-                return false;
+                return;
 
             _raise(new ArmamentRequest(phase, action, source, targets.ToArray()));
-            return false;
+            return;
         }
     }
 }

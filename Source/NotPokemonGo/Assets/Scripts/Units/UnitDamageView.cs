@@ -40,7 +40,7 @@ namespace Units
 		{
 			_resolver = resolver;
 			_resolver.EffectApllayed += OnEffectApplayed;
-			Debug.Log("UnitDamageView initialized");
+			//Debug.Log("UnitDamageView initialized");
 		}
 
 		private void Awake()
@@ -65,7 +65,7 @@ namespace Units
 
 		private void OnEffectApplayed(Unit source, Unit target, float effectValue, EffectInfo effectInfo)
 		{
-			Debug.Log("OnEffectApplayed");
+			//Debug.Log("OnEffectApplayed");
 			_damageText.enabled = true;
 			_damageText.text = $"{effectValue}";
 
@@ -84,7 +84,7 @@ namespace Units
 
 		private void PlayFlyAnim(Image activeIcon)
 		{
-			Debug.Log("PlayFlyAnim");
+			//Debug.Log("PlayFlyAnim");
 			// если уже летит — убиваем и сбрасываем в базу (иначе “улетит в космос” от накопления)
 			_seq?.Kill();
 

@@ -112,9 +112,9 @@ namespace Abilities.Runtime
             if (_context.CurrentPhase == null) 
                 return;
 
-            bool can = _policies.All(p => p.CanFinishPhase(_context, _context.CurrentPhase));
+            bool can = _policies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase));
             
-            Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can}");
+           // Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can}");
 
             if (can)
                 _waitingPhaseFinish = false;

@@ -23,10 +23,7 @@ namespace Services.AbilityServices
 
         private Action _requestFinishCheck;
 
-        private bool _finishRequested;
         private int _phaseVersion;
-        
-        private int _lastRequestFrame = -1;
 
         public event Action<ArmamentRequest> ArmamentRequested;
 
@@ -61,7 +58,6 @@ namespace Services.AbilityServices
             _currentPhase = phase;
             _finishGate.Reset();
 
-            _finishRequested = false;
             _phaseVersion++;
         }
 
@@ -135,10 +131,6 @@ namespace Services.AbilityServices
             if (cb == null)
                 return;
 
-            // if (_lastRequestFrame == Time.frameCount)
-            //     return;
-
-            //_lastRequestFrame = Time.frameCount;
             cb.Invoke();
         }
     }

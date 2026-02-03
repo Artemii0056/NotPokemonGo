@@ -15,18 +15,18 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasParticle;
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (action.ParticlePrefab == null)
-                return false;
+                return;
 
             var owner = action.ParticleOwner == ParticleOwner.Source ? source : target;
             
             if (owner == null)
-                return false;
+                return;
 
             _particleSpawner.Spawn(owner, action.ParticleSpawnType, action.ParticlePrefab);
-            return false;
+            return;
         }
     }
 }

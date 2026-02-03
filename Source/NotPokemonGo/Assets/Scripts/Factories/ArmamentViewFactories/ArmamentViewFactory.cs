@@ -27,7 +27,7 @@ namespace Factories.ArmamentViewFactories
             List<Status> statuses = _statusesFactory.Create(context.Setup.Statuses,  context.Source, context.Target);
 
             Armament armament = Object.Instantiate(context.Setup.ArmamentPrefab, context.Source.abilityPos.position, Quaternion.identity);
-            armament.Initialize(effects,  statuses,  context.Source, context.Target, context.Setup, context.Setup.FlyingType);
+            armament.Initialize(effects,  statuses,  context.Source, context.Target, context.Setup, context.FlyingType);
             
             return armament;
         }

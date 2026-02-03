@@ -16,7 +16,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action)
             => action != null && action.HasSound;
 
-        public bool Execute(
+        public void Execute(
             AbilityPhase phase,
             PhaseSignalAction action,
             Unit source,
@@ -28,7 +28,7 @@ namespace Services.AbilityServices.Executors
             if (_audio == null)
             {
                 onComplete?.Invoke();
-                return false;
+                return ;
             }
 
             if (action.Sfx2D)
@@ -42,7 +42,7 @@ namespace Services.AbilityServices.Executors
             }
 
             onComplete?.Invoke();
-            return false;
+            return;
         }
     }
 }

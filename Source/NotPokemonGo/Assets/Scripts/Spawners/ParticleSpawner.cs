@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using Abilities;
+using Units;
 using UnityEngine;
 
 namespace Spawners
 {
     public sealed class ParticleSpawner : IParticleSpawner
     {
-        private readonly Dictionary<Units.Unit, Dictionary<ParticleSpawnType, AbilityAnchor>> _anchorsCache = new();
-        private readonly Dictionary<Units.Unit, List<ParticleSystem>> _spawned = new();
+        private readonly Dictionary<Unit, Dictionary<ParticleSpawnType, AbilityAnchor>> _anchorsCache = new();
+        private readonly Dictionary<Unit, List<ParticleSystem>> _spawned = new();
 
         public void Spawn(Units.Unit owner, ParticleSpawnType spawnType, ParticleSystem prefab)
         {
-            if (owner == null || prefab == null) return;
+            if (owner == null || prefab == null) 
+                return;
 
-            var anchors = GetOrBuildAnchors(owner);
+            Dictionary<ParticleSpawnType, AbilityAnchor> anchors = GetOrBuildAnchors(owner);
 
             if (!anchors.TryGetValue(spawnType, out var anchor) || anchor.Transforms == null || anchor.Transforms.Count == 0)
             {
@@ -21,19 +23,20 @@ namespace Spawners
                 return;
             }
 
-            var point = anchor.Transforms[0];
-            var ps = Object.Instantiate(prefab, point.position, Quaternion.identity, point);
+            Transform point = anchor.Transforms[0];
+            ParticleSystem ps = Object.Instantiate(prefab, point.position, Quaternion.identity);
             ps.Play();
 
-            if (!_spawned.TryGetValue(owner, out var list))
+            if (!_spawned.TryGetValue(owner, out List<ParticleSystem> list))
             {
                 list = new List<ParticleSystem>(8);
                 _spawned[owner] = list;
             }
+            
             list.Add(ps);
         }
 
-        public void Clear(Units.Unit owner)
+        public void Clear(Unit owner)
         {
             if (owner == null) 
                 return;
@@ -44,12 +47,15 @@ namespace Spawners
             for (int i = list.Count - 1; i >= 0; i--)
             {
                 var ps = list[i];
-                if (ps != null) Object.Destroy(ps.gameObject);
+                
+                if (ps != null) 
+                    Object.Destroy(ps.gameObject);
+                
                 list.RemoveAt(i);
             }
         }
 
-        private Dictionary<ParticleSpawnType, AbilityAnchor> GetOrBuildAnchors(Units.Unit unit)
+        private Dictionary<ParticleSpawnType, AbilityAnchor> GetOrBuildAnchors(Unit unit)
         {
             if (_anchorsCache.TryGetValue(unit, out var map))
                 return map;

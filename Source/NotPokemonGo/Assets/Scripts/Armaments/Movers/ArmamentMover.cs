@@ -39,7 +39,7 @@ namespace Armaments.Movers
 
         private void PlayDirectFlight()
         {
-            Duration = 1f;
+            Duration = .5f;
 
             Launched?.Invoke(this);
 

@@ -11,7 +11,7 @@ namespace Effects
 
         public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
         {
-            Debug.Log("ApplyEffect");
+           // Debug.Log("ApplyEffect");
             float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
             EffectApllayed?.Invoke(source, target, finalValue, effect);
             target.ChangeStatValue(finalValue, effect.TargetType);
@@ -19,7 +19,7 @@ namespace Effects
 
         public void ApplyEffect(Unit target, EffectInfo effect)
         {
-            Debug.Log("ApplyEffect without unit");
+           // Debug.Log("ApplyEffect without unit");
             target.ChangeStatValue(effect.Value, effect.TargetType);
         }
 

@@ -1,13 +1,11 @@
 using Abilities.Configs;
 using Abilities.Runtime.Impact;
 using Abilities.Signals;
-using Armaments;
 using Armaments.Movers;
 using Effects;
 using QteSystem;
 using Services.AbilityServices;
 using Spawners.Spawner;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 namespace Abilities.Runtime.Policies
@@ -65,7 +63,7 @@ namespace Abilities.Runtime.Policies
 
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
-            Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
+           // Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
             
             if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
                 _finishSeenForActivePhase = true;
@@ -88,8 +86,6 @@ namespace Abilities.Runtime.Policies
 
         public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
         {
-            Debug.Log(_shotTracker.ActiveCount + " " + _qteBinder.ActiveCount + " ON FINISH     ");
-            
             if (phase == null)
                 return true;
 

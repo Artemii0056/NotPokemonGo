@@ -24,15 +24,5 @@ namespace Armaments
             FlyingType = flyingType;
             Parent = parent;
         }
-
-        public ArmamentContext CreateReflected(Unit newTarget)
-        {
-            return new ArmamentContext(
-                source: Target,
-                target: newTarget,
-                setup: Setup,
-                flyingType: ArmamentFlyingType.Direct,
-                parent: this);
-        }
     }
 }

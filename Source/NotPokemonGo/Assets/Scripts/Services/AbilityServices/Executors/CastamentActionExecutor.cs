@@ -19,18 +19,18 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasCastament;
 
-        public bool Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
         {
             if (_targetSelector == null || _castamentApplicator == null)
-                return false;
+                return;
 
             var targets = _targetSelector.GetTargets(action.TargetMode, target);
             
             if (targets == null || targets.Count == 0)
-                return false;
+                return;
 
             _castamentApplicator.Apply(action.CastamentSetup, source, targets.ToArray());
-            return false;
+            return;
         }
     }
 }

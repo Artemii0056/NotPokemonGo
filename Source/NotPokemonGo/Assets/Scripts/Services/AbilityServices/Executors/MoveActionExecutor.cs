@@ -16,7 +16,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) =>
             action != null && action.HasMove;
 
-        public bool Execute(
+        public void Execute(
             AbilityPhase phase,
             PhaseSignalAction action,
             Unit source,
@@ -25,12 +25,10 @@ namespace Services.AbilityServices.Executors
             Action tryCompleteFinish)
         {
             if (_unitMover == null || source == null)
-                return false;
+                return;
 
             Vector3 dest = ResolveMoveDestination(action, source, target);
 
-            // ⚠️ В идеале duration берёшь из action/клипа. Пока оставим как у тебя.
-            float duration = source.AnimatorController.GetAnimationLength();
             float delay = 0f;
 
             var token = finishGate.Acquire($"MoveActionExecutor phase={phase.AnimationCashName}");
@@ -38,28 +36,23 @@ namespace Services.AbilityServices.Executors
 
             void OnComplete()
             {
-                if (done) 
+                if (done)
                     return;
-                
+
                 done = true;
 
-                // ✅ Никаких FlagSignal(Finish) из кода.
-                // ✅ Движение просто говорит "я закончил" через Gate.
                 token.Dispose();
                 tryCompleteFinish?.Invoke();
             }
 
             if (action.MoveMode == MoveMode.Move)
             {
-                _unitMover.MoveTo(source.transform, dest, 0.75f, delay, OnComplete);
+                _unitMover.MoveTo(source.transform, dest, action.MoveDuration, delay, OnComplete);
             }
-            else
+            else if (action.MoveMode == MoveMode.Jump)
             {
-                _unitMover.MoveTo(source.transform, dest, duration, delay, OnComplete);
-                // _unitMover.JumpTo(... OnComplete);
+                _unitMover.MoveTo(source.transform, dest, action.MoveDuration, delay, OnComplete);
             }
-
-            return true;
         }
 
         private static Vector3 ResolveMoveDestination(PhaseSignalAction phase, Unit source, Unit target)

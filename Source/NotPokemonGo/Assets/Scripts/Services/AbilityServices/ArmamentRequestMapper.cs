@@ -8,20 +8,27 @@ namespace Services.AbilityServices
     {
         public static IEnumerable<ArmamentContext> EnumerateContexts(ArmamentRequest req)
         {
-            if (req.Source == null) yield break;
+            if (req.Source == null) 
+                yield break;
 
-            var setup = req.Setup;
-            if (setup == null || !setup.HasSetupData) yield break;
+            ArmamentSetup setup = req.Setup;
+            
+            if (setup == null || !setup.HasSetupData) 
+                yield break;
 
-            var targets = req.Targets;
-            if (targets == null || targets.Length == 0) yield break;
+            Unit[] targets = req.Targets;
+            
+            if (targets == null || targets.Length == 0) 
+                yield break;
 
             for (int i = 0; i < targets.Length; i++)
             {
-                Unit t = targets[i];
-                if (t == null) continue;
+                Unit target = targets[i];
+                
+                if (target == null) 
+                    continue;
 
-                yield return new ArmamentContext(req.Source, t, setup, setup.FlyingType);
+                yield return new ArmamentContext(req.Source, target, setup, setup.FlyingType);
             }
         }
     }

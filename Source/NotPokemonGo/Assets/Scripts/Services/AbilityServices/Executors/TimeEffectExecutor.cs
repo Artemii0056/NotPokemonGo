@@ -15,7 +15,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action)
             => action != null && action.HasTimeEffect;
 
-        public bool Execute(
+        public void Execute(
             AbilityPhase phase,
             PhaseSignalAction action,
             Unit source,
@@ -26,13 +26,13 @@ namespace Services.AbilityServices.Executors
             if (_time == null)
             {
                 onComplete?.Invoke();
-                return false;
+                return;
             }
 
             _time.HitStop(action.TimeScale, action.TimeDuration);
 
             onComplete?.Invoke();
-            return false;
+            return;
         }
     }
 }
