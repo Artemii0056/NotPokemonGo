@@ -3,7 +3,22 @@ guid: d42fc1a6891ed5d4f98f24d0404216dc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Glow_01
+    second: {fileID: 2100000, guid: 9d8c7bc0291ea46609bd39a48f613b99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_LowPoly_MAIN_01
+    second: {fileID: 2100000, guid: 953e71ae084a94b128e87ff9e90548da, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: T_ColorAtlas_LowPoly_01
+    second: {fileID: 2800000, guid: b611430b5304b9f41a966598e24b4b8e, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
