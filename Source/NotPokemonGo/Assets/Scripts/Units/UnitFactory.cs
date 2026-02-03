@@ -10,6 +10,7 @@ using ReactionSystems;
 using Services;
 using Services.AbilityServices;
 using Services.Audio;
+using Services.IdServices;
 using Stats;
 using TimeServices;
 using UI;
@@ -30,6 +31,7 @@ namespace Units
         private readonly IReactionService _reactionService;
         private readonly IParticleSpawner _particleSpawner;
         private readonly ICameraService _cameraService;
+        private readonly IIdService _idService;
         private readonly IAudioService _audioService;
         private readonly ITimeService _timeService;
         
@@ -43,6 +45,7 @@ namespace Units
             IArmamentSpawner spawner,
             IParticleSpawner particleSpawner,
             ICameraService cameraService, 
+            IIdService  idService,
             IAudioService audioService) // <-- добавил
         {
             _objectResolver = objectResolver;
@@ -51,6 +54,7 @@ namespace Units
             _reactionService = reactionService;
             _particleSpawner = particleSpawner;
             _cameraService = cameraService;
+            _idService = idService;
             _audioService = audioService;
 
             _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
@@ -74,7 +78,7 @@ namespace Units
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 
-            unit.Construct(config.Stats,  platoonType);
+            unit.Construct(config.Stats,  platoonType, _idService.GetNextId());
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
@@ -94,7 +98,7 @@ namespace Units
 
             unit.transform.SetParent(parentPosition, false);
             
-            unit.Construct(stats, platoonType);
+            unit.Construct(stats, platoonType, _idService.GetNextId());
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {

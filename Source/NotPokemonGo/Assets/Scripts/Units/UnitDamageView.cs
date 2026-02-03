@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using Effects;
+using Services.IdServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Units
 {
 	public class UnitDamageView : MonoBehaviour
 	{
+		[SerializeField] private Unit _unit;
 		[SerializeField] private TextMeshProUGUI _damageText;
 		[SerializeField] private Image _damageImage;
 		[SerializeField] private Image _healImage;
@@ -23,8 +25,6 @@ namespace Units
 		[SerializeField] private float _moveUpDuration = 1.5f;
 		[SerializeField] private float _moveUpPixels = 60f;
 
-		private IEffectResolver _resolver;
-
 		private Vector3 _textBaseScale;
 		private Vector3 _iconBaseScale;
 		private Vector2 _textBasePos;
@@ -34,15 +34,15 @@ namespace Units
 		private RectTransform _iconRt;
 
 		private Sequence _seq;
-
+		private UnitViewRegistry _registry;
+		
 		[Inject]
-		private void Initializer(IEffectResolver resolver)
+		private void Initialize(UnitViewRegistry registry, IIdService idService)
 		{
-			_resolver = resolver;
-			_resolver.EffectApllayed += OnEffectApplayed;
-			Debug.Log("UnitDamageView initialized");
+			_registry = registry;
+			_registry.Register(_unit, this);
 		}
-
+		
 		private void Awake()
 		{
 			_textRt = _damageText.rectTransform;
@@ -50,25 +50,14 @@ namespace Units
 			_textBaseScale = _textRt.localScale;
 			_textBasePos = _textRt.anchoredPosition;
 
-			// Иконка будет меняться (damage/heal), базу позы/скейла возьмём у damageImage как эталон
 			_iconRt = _damageImage.rectTransform;
 			_iconBaseScale = _iconRt.localScale;
 			_iconBasePos = _iconRt.anchoredPosition;
 		}
-
-		private void OnDestroy()
+		
+		public void Play(float effectValue, EffectInfo effectInfo)
 		{
-			_resolver.EffectApllayed -= OnEffectApplayed;
-
-			_seq?.Kill();
-		}
-
-		private void OnEffectApplayed(Unit source, Unit target, float effectValue, EffectInfo effectInfo)
-		{
-			Debug.Log("OnEffectApplayed");
-			Debug.Log($"source = {source.UnitType}");
-			Debug.Log($"source = {target.UnitType}");
-			_damageText.enabled = true;
+			_damageText.gameObject.SetActive(true);
 			_damageText.text = $"{effectValue}";
 
 			Image activeIcon = effectInfo.Type switch
@@ -78,15 +67,20 @@ namespace Units
 				_ => throw new ArgumentOutOfRangeException()
 			};
 
-			_damageImage.enabled = (activeIcon == _damageImage);
-			_healImage.enabled = (activeIcon == _healImage);
+			_damageImage.gameObject.SetActive(activeIcon == _damageImage);
+			_healImage.gameObject.SetActive(activeIcon == _healImage);
 
 			PlayFlyAnim(activeIcon);
+		}
+		
+		private void OnDestroy()
+		{
+			_registry.Unregister(_unit);
+			_seq?.Kill();
 		}
 
 		private void PlayFlyAnim(Image activeIcon)
 		{
-			Debug.Log("PlayFlyAnim");
 			// если уже летит — убиваем и сбрасываем в базу (иначе “улетит в космос” от накопления)
 			_seq?.Kill();
 
@@ -100,7 +94,7 @@ namespace Units
 			iconRt.anchoredPosition = _iconBasePos;
 
 			// (опционально) убедимся что активная иконка включена
-			activeIcon.enabled = true;
+			activeIcon.gameObject.SetActive(true);
 
 			Vector3 popTextScale = _textBaseScale * _popScale;
 			Vector3 popIconScale = _iconBaseScale * _popScale;
@@ -128,8 +122,8 @@ namespace Units
 			// В конце можно отключать иконку, а текст оставлять/тоже скрывать — как хочешь.
 			_seq.OnComplete(() =>
 			{
-				activeIcon.enabled = false;
-				_damageText.enabled = false;
+				activeIcon.gameObject.SetActive(false);
+				_damageText.gameObject.SetActive(false);
 			});
 		}
 	}

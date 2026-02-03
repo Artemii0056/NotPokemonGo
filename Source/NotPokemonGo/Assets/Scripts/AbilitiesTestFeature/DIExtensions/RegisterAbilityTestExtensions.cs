@@ -12,6 +12,8 @@ using Services.AssetManagement;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
+using Services.EffectViewServices;
+using Services.IdServices;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StaticDataServices;
@@ -65,6 +67,10 @@ namespace AbilitiesTestFeature.DIExtensions
 			builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
 
 			builder.Register<UIService>(Lifetime.Singleton).AsImplementedInterfaces();
+			builder.Register<IIdService, IdService>(Lifetime.Singleton);
+
+			builder.Register<EffectViewService>(Lifetime.Singleton);			
+			builder.Register<UnitViewRegistry>(Lifetime.Singleton);
 
 			return builder;
 		}

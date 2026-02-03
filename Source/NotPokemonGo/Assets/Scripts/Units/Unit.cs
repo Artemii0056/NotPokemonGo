@@ -53,12 +53,14 @@ namespace Units
 
         public IAbilityHandler AbilityHandler { get; private set; }
         public Vector3 FireballSpawnPoint { get; set; } = Vector3.one;
-
+        private int _id;
 
         public void Construct(
             List<StatConfig> statConfig,
-            PlatoonType platoonType)
+            PlatoonType platoonType,
+            int id)
         {
+            Id = id;
             PlatoonType = platoonType;
 
             foreach (var statSetup in statConfig)
@@ -74,8 +76,10 @@ namespace Units
 
         public void Construct(
             Dictionary<StatType, StatSetup> stats,
-            PlatoonType platoonType)
+            PlatoonType platoonType,
+            int id)
         {
+            Id = id;
             _stats = stats;
 
             PlatoonType = platoonType;

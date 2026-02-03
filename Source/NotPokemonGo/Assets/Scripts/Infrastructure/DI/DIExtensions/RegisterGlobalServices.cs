@@ -14,6 +14,8 @@ using Services.Audio;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
+using Services.EffectViewServices;
+using Services.IdServices;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StaticDataServices;
@@ -67,7 +69,10 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);
 			builder.Register<IAudioService, AudioService>(Lifetime.Singleton);
 			builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
+			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
+			builder.Register<UnitViewRegistry>(Lifetime.Singleton);
+			builder.Register<EffectViewService>(Lifetime.Singleton);
 			return builder;
 		}
 	}
