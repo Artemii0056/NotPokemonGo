@@ -1,19 +1,21 @@
 ﻿using Abilities;
 using Armaments;
-using Armaments.Movers;
+using Armaments.Spawner;
 using Battlefields;
 using Castaments;
+using DefaultNamespace;
 using Effects;
 using Platoons;
-using QteSystem;
+using QTESystem;
 using ReactionSystems;
 using Services;
 using Services.AssetManagement;
-using Services.AudioServices;
+using Services.Audio;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
-using Services.LevelProgress;
+using Services.EffectViewServices;
+using Services.IdServices;
 using Services.RaycastServices;
 using Services.SceneServices;
 using Services.StaticDataServices;
@@ -67,7 +69,10 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);
 			builder.Register<IAudioService, AudioService>(Lifetime.Singleton);
 			builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
+			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
+			builder.Register<UnitViewRegistry>(Lifetime.Singleton);
+			builder.Register<EffectViewService>(Lifetime.Singleton);
 			return builder;
 		}
 	}

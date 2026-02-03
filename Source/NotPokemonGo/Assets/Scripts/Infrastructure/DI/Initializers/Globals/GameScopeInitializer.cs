@@ -1,8 +1,8 @@
 ﻿using System;
 using Infrastructure.StateMachines.GlobalStateMachine;
 using Infrastructure.StateMachines.GlobalStateMachine.States;
-using Infrastructure.StateMachines.States;
 using Services;
+using Services.EffectViewServices;
 using Services.InputServices;
 using UnityEngine;
 using VContainer;
@@ -16,7 +16,7 @@ namespace Infrastructure.DI.Initializers.Globals
         private IInputReader _inputReader;
 
         [Inject]
-        public void Construct(IGameStateMachine gameStateMachine)
+        public void Construct(IGameStateMachine gameStateMachine, EffectViewService effectViewService)
         {
             _gameStateMachine = gameStateMachine;
         }

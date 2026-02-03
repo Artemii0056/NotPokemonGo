@@ -7,22 +7,15 @@ namespace Effects
 {
     public class EffectResolver : IEffectResolver
     {
-        public event Action<Unit, Unit, float, EffectInfo> EffectApllayed;
+        public event Action<EffectDataPayload> EffectApplied;
 
-        public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
+        public void ApplyEffect(Unit source, Unit target, EffectInfo effect)
         {
-           // Debug.Log("ApplyEffect");
-            float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
-            EffectApllayed?.Invoke(source, target, finalValue, effect);
+            float finalValue = CalculateStatModification(source, target, effect.TargetType, effect.Type, effect.Value); 
             target.ChangeStatValue(finalValue, effect.TargetType);
+            EffectApplied?.Invoke(new EffectDataPayload(source, target, finalValue, effect));
         }
-
-        public void ApplyEffect(Unit target, EffectInfo effect)
-        {
-           // Debug.Log("ApplyEffect without unit");
-            target.ChangeStatValue(effect.Value, effect.TargetType);
-        }
-
+        
         private float CalculateStatModification(
             Unit source,
             Unit target,
@@ -91,6 +84,22 @@ namespace Effects
             }
 
             return finalValue;
+        }
+        
+        
+        public struct EffectDataPayload
+        {
+            public EffectDataPayload(Unit source, Unit target, float finalValue, EffectInfo effect)
+            {
+                Source = source;
+                Target = target;
+                FinalValue = finalValue;
+                Effect = effect;
+            }
+            public Unit Source { get; }
+            public Unit Target { get; }
+            public float FinalValue { get; }
+            public EffectInfo Effect { get; }
         }
     }
 }

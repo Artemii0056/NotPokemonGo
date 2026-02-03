@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Dark grey
-    second: {fileID: 2100000, guid: 04dce1955d5e4c9459337cd5a69116d4, type: 2}
+    second: {fileID: 2100000, guid: a5ccd6caa3f06df449991594bc168240, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -21,6 +21,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
