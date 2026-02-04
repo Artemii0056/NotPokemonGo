@@ -22,18 +22,18 @@ namespace UI
             _unit = unit;
             _unit.StatusAdded += OnStatusAdded;
             _unit.StatusRemoved += OnStatusRemoved;
-            _unit.AgilityChanged += OnAgilityChanged;
-            _unit.HealthChanged += OnHealthChanged;
+           // _unit.AgilityChanged += OnAgilityChanged;
+            //_unit.HealthChanged += OnHealthChanged;
             _unit.Ticked += OnTicked;
             _unit.Death += OnUnitDead;
         }
 
         private void OnDestroy()
         {
-            _unit.HealthChanged -= OnHealthChanged;
+            //_unit.HealthChanged -= OnHealthChanged;
             _unit.StatusRemoved -= OnStatusRemoved;
             _unit.StatusAdded -= OnStatusAdded;
-            _unit.AgilityChanged -= OnAgilityChanged;
+            //_unit.AgilityChanged -= OnAgilityChanged;
             _unit.Death -= OnUnitDead;
         }
 

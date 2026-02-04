@@ -113,11 +113,17 @@ namespace Units
         private void InitializeView(Unit unit)
         {
             UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
-            UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
-            UnitDamageView unitDamageView = unit.GetComponentInChildren<UnitDamageView>();
+             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
+             BillboardToCamera buildingToCamera = unit.GetComponentInChildren<BillboardToCamera>();
+             
+             UnitHudView unitHudView = unit.GetComponentInChildren<UnitHudView>();
+             unitHudView.Bind(unit);
+             
+            // UnitDamageView unitDamageView = unit.GetComponentInChildren<UnitDamageView>();
             _objectResolver.Inject(unitViewPanel);
-            _objectResolver.Inject(slidersView);
-            _objectResolver.Inject(unitDamageView);
+             _objectResolver.Inject(slidersView);
+             _objectResolver.Inject(buildingToCamera);
+            // _objectResolver.Inject(unitDamageView);
 
             unitViewPanel.Construct(unit);
         }

@@ -1,12 +1,10 @@
-using Services;
 using Services.Cameras;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace UI.Sliders
 {
-    public class UnitSliderView : MonoBehaviour
+    public class UnitSliderView : MonoBehaviour //TODO Delete
     {
         [SerializeField] private StatSliderView _agility;
         [SerializeField] private StatSliderView _health;

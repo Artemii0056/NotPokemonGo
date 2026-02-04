@@ -71,7 +71,7 @@ MonoBehaviour:
           - Type: 0
             TargetType: 1
             DamageType: 1
-            Value: -10
+            Value: 10
           <ParticleSystem>k__BackingField: {fileID: 0}
         ParticlePrefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
         ParticleSpawnType: 1

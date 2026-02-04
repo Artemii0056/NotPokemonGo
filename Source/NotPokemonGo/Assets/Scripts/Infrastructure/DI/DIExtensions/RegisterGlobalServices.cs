@@ -4,6 +4,7 @@ using Battlefields;
 using Castaments;
 using Effects;
 using Platoons;
+using Pools;
 using QteSystem;
 using ReactionSystems;
 using Services.AssetManagement;
@@ -69,8 +70,12 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
 			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
-			builder.Register<UnitViewRegistry>(Lifetime.Singleton);
-			builder.Register<EffectViewService>(Lifetime.Singleton);
+			builder.Register<UnitViewRegistry>(Lifetime.Singleton); //
+			//builder.Register<CombatTextPool>(Lifetime.Singleton);
+			//builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
+			
+			// builder.Register<CombatTextPool>(Lifetime.Singleton); //
+			// builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
 			return builder;
 		}
 	}

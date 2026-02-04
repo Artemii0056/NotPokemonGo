@@ -16,7 +16,7 @@ namespace Infrastructure.DI.Initializers.Globals
         private IInputReader _inputReader;
 
         [Inject]
-        public void Construct(IGameStateMachine gameStateMachine, EffectViewService effectViewService)
+        public void Construct(IGameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
         }
