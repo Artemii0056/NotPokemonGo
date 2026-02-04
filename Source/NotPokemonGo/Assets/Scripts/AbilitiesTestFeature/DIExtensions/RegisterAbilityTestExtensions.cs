@@ -69,7 +69,7 @@ namespace AbilitiesTestFeature.DIExtensions
 			builder.Register<UIService>(Lifetime.Singleton).AsImplementedInterfaces();
 			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 
-			builder.Register<CombatTextPresenter>(Lifetime.Singleton);			
+			//builder.Register<CombatTextPresenter>(Lifetime.Singleton);			
 			builder.Register<UnitViewRegistry>(Lifetime.Singleton);
 
 			return builder;

@@ -477,6 +477,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3928452381cc2f34d9f17f1ab485a1cd, type: 3}
+--- !u!224 &300379502 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1082719542954324646, guid: 41855a36f23503846bdabfb7d9e87d32, type: 3}
+  m_PrefabInstance: {fileID: 1304101303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &322311434
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,7 +1190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 824462040}
   - component: {fileID: 824462039}
-  - component: {fileID: 824462042}
+  - component: {fileID: 824462043}
   m_Layer: 0
   m_Name: SceneScope
   m_TagString: Untagged
@@ -1227,7 +1232,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &824462042
+--- !u!114 &824462043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1236,9 +1241,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 824462038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aa6b51669a046dd9115c7cb38d61963, type: 3}
+  m_Script: {fileID: 11500000, guid: 35d8ed8ddf03d0943a750a13d0e71ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _combatTextCanvas: {fileID: 300379502}
 --- !u!4 &834561160 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fdb2741262f04c54da53294860347853, type: 3}
@@ -1749,6 +1755,10 @@ PrefabInstance:
     - target: {fileID: 7134061575709858726, guid: 41855a36f23503846bdabfb7d9e87d32, type: 3}
       propertyPath: m_Name
       value: Canvas_CombatText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134061575709858726, guid: 41855a36f23503846bdabfb7d9e87d32, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

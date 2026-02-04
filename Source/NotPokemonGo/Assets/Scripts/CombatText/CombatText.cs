@@ -42,12 +42,12 @@ public sealed class CombatText : MonoBehaviour
         _damageIcon.gameObject.SetActive(type == EffectType.Damage);
         _healIcon.gameObject.SetActive(type == EffectType.Heal);
 
+        var startPos = RectTransform.anchoredPosition;  
         RectTransform.localScale = _baseScale;
-        RectTransform.anchoredPosition = _basePos;
 
         Vector3 pop = _baseScale * _popScale;
         Vector3 shrink = _baseScale * _shrinkScale;
-        Vector2 up = _basePos + Vector2.up * _moveUpPixels;
+        Vector2 up = startPos + Vector2.up * _moveUpPixels;
 
         _seq = DOTween.Sequence();
         _seq.Append(RectTransform.DOScale(pop, _popDuration).SetEase(Ease.OutBack));

@@ -34,7 +34,7 @@ namespace Units
         private readonly IIdService _idService;
         private readonly IAudioService _audioService;
         private readonly ITimeService _timeService;
-        
+
 
         public UnitFactory(
             IObjectResolver objectResolver,
@@ -44,8 +44,8 @@ namespace Units
             IReactionService reactionService,
             IArmamentSpawner spawner,
             IParticleSpawner particleSpawner,
-            ICameraService cameraService, 
-            IIdService  idService,
+            ICameraService cameraService,
+            IIdService idService,
             IAudioService audioService)
         {
             _objectResolver = objectResolver;
@@ -68,17 +68,18 @@ namespace Units
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
 
             unit.transform.SetParent(parentPosition, false);
-            
+
             AnimatorController controller = unit.AnimatorController;
 
             UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
                 unit,
                 controller,
-                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(), _cameraService, _audioService, _timeService));
+                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(),
+                    _cameraService, _audioService, _timeService));
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 
-            unit.Construct(config.Stats,  platoonType, _idService.GetNextId());
+            unit.Construct(config.Stats, platoonType, _idService.GetNextId());
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
@@ -89,15 +90,16 @@ namespace Units
 
             return unit;
         }
-        
-        public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config,  PlatoonType platoonType, Dictionary<StatType, StatSetup> stats)
+
+        public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType,
+            Dictionary<StatType, StatSetup> stats)
         {
             Vector3 posotion = new Vector3(spawnPosition.x, spawnPosition.y + 1, spawnPosition.z);
 
             Unit unit = Object.Instantiate(config.Prefab, posotion, Quaternion.identity);
 
             unit.transform.SetParent(parentPosition, false);
-            
+
             unit.Construct(stats, platoonType, _idService.GetNextId());
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
@@ -113,16 +115,16 @@ namespace Units
         private void InitializeView(Unit unit)
         {
             UnitViewPanel unitViewPanel = unit.GetComponentInChildren<UnitViewPanel>();
-             UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
-             BillboardToCamera buildingToCamera = unit.GetComponentInChildren<BillboardToCamera>();
-             
-             UnitHudView unitHudView = unit.GetComponentInChildren<UnitHudView>();
-             unitHudView.Bind(unit);
-             
+            UnitSliderView slidersView = unit.GetComponentInChildren<UnitSliderView>();
+            BillboardToCamera buildingToCamera = unit.GetComponentInChildren<BillboardToCamera>();
+
+            UnitHudView unitHudView = unit.GetComponentInChildren<UnitHudView>();
+            unitHudView.Bind(unit);
+
             // UnitDamageView unitDamageView = unit.GetComponentInChildren<UnitDamageView>();
             _objectResolver.Inject(unitViewPanel);
-             _objectResolver.Inject(slidersView);
-             _objectResolver.Inject(buildingToCamera);
+            _objectResolver.Inject(slidersView);
+            _objectResolver.Inject(buildingToCamera);
             // _objectResolver.Inject(unitDamageView);
 
             unitViewPanel.Construct(unit);

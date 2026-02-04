@@ -3,37 +3,56 @@ using UnityEngine;
 
 namespace Pools
 {
-    public sealed class CombatTextPool : MonoBehaviour
+    public sealed class CombatTextPool : ICombatTextPool
     {
         private readonly CombatText _prefab;
         private readonly Stack<CombatText> _stack = new();
+        private readonly Transform _stashRoot;
 
         public CombatTextPool(CombatText prefab, int prewarm = 10)
         {
             _prefab = prefab;
+
+            Debug.Log(_prefab == null);
             
+            var go = new GameObject("[Pool] CombatText");
+            
+            go.SetActive(false);
+            _stashRoot = go.transform;
+
             for (int i = 0; i < prewarm; i++)
-                _stack.Push(Object.Instantiate(_prefab));
+            {
+                var v = Object.Instantiate(_prefab, _stashRoot, false);
+                v.gameObject.SetActive(false);
+                _stack.Push(v);
+            }
         }
 
         public CombatText Get(RectTransform parent)
         {
-            CombatText combatText = _stack.Count > 0 ? _stack.Pop() : Object.Instantiate(_prefab);
-            Debug.Log($"[CombatTextPool] Rent: active={combatText.gameObject.activeSelf}, parent={parent.name}");
+            while (_stack.Count > 0)
+            {
+                var v = _stack.Pop();
+                
+                if (v != null) 
+                {
+                    v.transform.SetParent(parent, false);
+                    v.gameObject.SetActive(true);
+                    return v;
+                }
+            }
 
-            combatText.transform.SetParent(parent, false);
-            
-            Debug.Log($"[CombatTextPool] After parent: {combatText.transform.parent?.name}, scale={combatText.RectTransform.localScale}");
-
-            combatText.gameObject.SetActive(true);
-            
-            return combatText;
+            var created = Object.Instantiate(_prefab, parent, false);
+            created.gameObject.SetActive(true);
+            return created;
         }
+
 
         public void Return(CombatText view)
         {
+            if (view == null) return;
             view.gameObject.SetActive(false);
-            view.transform.SetParent(null, false);
+            view.transform.SetParent(_stashRoot, false);
             _stack.Push(view);
         }
     }

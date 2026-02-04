@@ -7,6 +7,7 @@ using Infrastructure.DI.Scopes;
 using Services.InputServices;
 using UI.Ability;
 using UI.BattleUpgrages;
+using Units;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -30,7 +31,7 @@ namespace Infrastructure.DI.Installers.Gloabals
 				.RegisterGameStateMachine()
 				.RegisterGlobalFactories()
 				.RegisterGlobalUIStates()
-				.RegisterGlobalUserInterface(_abilitiesPanel, _battleUpgradePanel);
+				.RegisterGlobalUserInterface(_abilitiesPanel, _battleUpgradePanel );
 
 			builder.RegisterComponent(_inputReader).AsImplementedInterfaces();
 

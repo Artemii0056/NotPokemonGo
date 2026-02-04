@@ -30,6 +30,8 @@ namespace Services.StaticDataServices
         private List<LevelConfig> _levelConfigs;
         private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
 
+        public CombatText CombatTextPrefab { get; private set;  }
+
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
 
@@ -45,7 +47,13 @@ namespace Services.StaticDataServices
             LoadQteConfigs();
             LoadLevelConfigs();
             LoadDodgeConfigs();
+            LoadCombatText();
             // ConfigurateTargetModesForAbilities();
+        }
+
+        private void LoadCombatText()
+        {
+            CombatTextPrefab = _resourceLoader.Load<CombatText>("Canvases/Status/CombatText");
         }
 
         public List<LevelConfig> GetLevelConfigs() => 

@@ -24,6 +24,7 @@ namespace Services.StaticDataServices
         List< LevelConfig> GetLevelConfigs();
         UnitSkinItemView UnitSkinItemViewPrefab { get; }
         CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
+        CombatText CombatTextPrefab { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
         DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
     }

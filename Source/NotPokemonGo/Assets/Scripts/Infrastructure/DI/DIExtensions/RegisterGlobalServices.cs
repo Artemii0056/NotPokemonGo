@@ -71,11 +71,9 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
 			builder.Register<UnitViewRegistry>(Lifetime.Singleton); //
-			//builder.Register<CombatTextPool>(Lifetime.Singleton);
-			//builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
 			
-			// builder.Register<CombatTextPool>(Lifetime.Singleton); //
-			// builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
+			//builder.Register<ICombatTextPool, CombatTextPool>(Lifetime.Singleton);//
+			//builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
 			return builder;
 		}
 	}
