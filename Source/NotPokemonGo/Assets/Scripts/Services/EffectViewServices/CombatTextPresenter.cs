@@ -1,6 +1,7 @@
 ﻿using System;
 using Effects;
 using Pools;
+using Services.Cameras;
 using UnityEngine;
 
 namespace Services.EffectViewServices
@@ -18,12 +19,12 @@ namespace Services.EffectViewServices
             IEffectResolver resolver,
             ICombatTextPool pool,
             RectTransform popupsRoot,
-            Camera camera)
+            ICameraProvider provider)
         {
             _resolver = resolver;
             _pool = pool;
             _popupsRoot = popupsRoot;
-            _camera = Camera.main;
+            _camera = provider.Camera;
             
             _resolver.EffectApplied += OnEffectApplied;
             Debug.Log("[CombatTextPresenter] Started");
@@ -42,8 +43,6 @@ namespace Services.EffectViewServices
 
         private void OnEffectApplied(EffectResolver.EffectDataPayload payload)
         {
-            Debug.Log("[CombatTextPresenter] EffectApplied");
-            
             if (payload.Target == null) 
                 return;
             

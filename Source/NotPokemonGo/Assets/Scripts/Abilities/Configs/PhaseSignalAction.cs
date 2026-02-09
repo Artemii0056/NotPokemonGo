@@ -53,6 +53,10 @@ namespace Abilities.Configs
         public float TimeScale = 0.1f;
         public float TimeDuration = 0.08f;
 
+        public float ShakeAmplitude;
+        public float ShakeFrequency;
+        public float ShakeDuration;
+
         public bool HasTimeEffect => TimeEffect != TimeEffectType.None;
 
         public bool HasSound => SfxClip != null;
@@ -63,5 +67,7 @@ namespace Abilities.Configs
         public bool HasParticle => ParticlePrefab != null;
         public bool HasMove => MoveCommand != MoveCommand.None;
         public bool HasCamera => CameraCommand != CameraCommand.None;
+
+        public bool HasShake => ShakeDuration > 0;
     }
 }

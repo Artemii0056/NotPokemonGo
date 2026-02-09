@@ -34,7 +34,8 @@ namespace Services.AbilityServices
             IUnitMover unitMover,
             ICameraService camera,
             IAudioService audio,
-            ITimeService time)
+            ITimeService time,
+            ICameraShakeService cameraShake)
         {
             _executors = new List<IPhaseSignalActionExecutor>
             {
@@ -44,7 +45,8 @@ namespace Services.AbilityServices
                 new CameraActionExecutor(camera),
                 new MoveActionExecutor(unitMover),
                 new ArmamentActionExecutor(targetSelector, req => ArmamentRequested?.Invoke(req)),
-                new CastamentActionExecutor(targetSelector, castamentApplicator)
+                new CastamentActionExecutor(targetSelector, castamentApplicator),
+                new CameraShakeActionExecutor(cameraShake)
             };
         }
 

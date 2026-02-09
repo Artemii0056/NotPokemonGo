@@ -50,7 +50,9 @@ namespace Pools
 
         public void Return(CombatText view)
         {
-            if (view == null) return;
+            if (view == null) 
+                return;
+            
             view.gameObject.SetActive(false);
             view.transform.SetParent(_stashRoot, false);
             _stack.Push(view);

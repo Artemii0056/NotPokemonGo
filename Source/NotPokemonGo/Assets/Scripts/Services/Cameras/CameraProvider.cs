@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 namespace Services.Cameras
@@ -5,5 +6,6 @@ namespace Services.Cameras
     public class CameraProvider : ICameraProvider
     {
         public Camera Camera { get; set; }
+        public CinemachineVirtualCamera VirtualCamera { get; set; }
     }
 }

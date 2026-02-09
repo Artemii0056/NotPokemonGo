@@ -70,10 +70,10 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IEffectsApplier, EffectsApplier>(Lifetime.Singleton);
 			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
+			builder.Register<ICameraShakeService, CameraShakeService>(Lifetime.Singleton);
+			
 			builder.Register<UnitViewRegistry>(Lifetime.Singleton); //
 			
-			//builder.Register<ICombatTextPool, CombatTextPool>(Lifetime.Singleton);//
-			//builder.Register<CombatTextPresenter>(Lifetime.Singleton); //
 			return builder;
 		}
 	}

@@ -44,7 +44,7 @@ MonoBehaviour:
         StopDistance: 1
         JumpPower: 5
         NumJumps: 1
-        CameraCommand: 0
+        CameraCommand: 1
         CameraBlendTimeout: 0.75
         SfxClip: {fileID: 0}
         SfxVolume: 1
@@ -52,6 +52,9 @@ MonoBehaviour:
         TimeEffect: 0
         TimeScale: 0.1
         TimeDuration: 0.08
+        ShakeAmplitude: 0
+        ShakeFrequency: 0
+        ShakeDuration: 0
     - AnimationClip: {fileID: 3822591109426768289, guid: 7282e18170c836147a63e8c94de4f6ec, type: 3}
       QteType: 0
       SignalActions:
@@ -92,6 +95,9 @@ MonoBehaviour:
         TimeEffect: 0
         TimeScale: 0.1
         TimeDuration: 0.08
+        ShakeAmplitude: 1.5
+        ShakeFrequency: 3
+        ShakeDuration: 1
     - AnimationClip: {fileID: 7400000, guid: b65791bf3083d0c4d906fa288f7eea1e, type: 2}
       QteType: 0
       SignalActions:
@@ -128,6 +134,9 @@ MonoBehaviour:
         TimeEffect: 0
         TimeScale: 0.1
         TimeDuration: 0.08
+        ShakeAmplitude: 0
+        ShakeFrequency: 0
+        ShakeDuration: 0
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 1

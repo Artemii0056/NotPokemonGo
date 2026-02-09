@@ -34,6 +34,7 @@ namespace Units
         private readonly IIdService _idService;
         private readonly IAudioService _audioService;
         private readonly ITimeService _timeService;
+        private readonly ICameraShakeService _cameraShakeService;
 
 
         public UnitFactory(
@@ -46,7 +47,8 @@ namespace Units
             IParticleSpawner particleSpawner,
             ICameraService cameraService,
             IIdService idService,
-            IAudioService audioService)
+            IAudioService audioService, 
+            ICameraShakeService cameraShakeService)
         {
             _objectResolver = objectResolver;
             _castamentApplicator = castamentApplicator;
@@ -56,6 +58,7 @@ namespace Units
             _cameraService = cameraService;
             _idService = idService;
             _audioService = audioService;
+            _cameraShakeService = cameraShakeService;
 
             _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
             _reactionService.Register(new CounterattackReaction(abilityService));
@@ -75,7 +78,7 @@ namespace Units
                 unit,
                 controller,
                 new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(),
-                    _cameraService, _audioService, _timeService));
+                    _cameraService, _audioService, _timeService, _cameraShakeService));
 
             unit.SetAnimationTrigger(unitAnimatorTrigger);
 
