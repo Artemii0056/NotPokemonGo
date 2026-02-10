@@ -1,4 +1,5 @@
 ﻿using Units;
+using UnityEngine;
 
 namespace Armaments
 {
@@ -8,6 +9,7 @@ namespace Armaments
         public Unit Target { get; }
         public ArmamentSetup Setup { get; }
         public ArmamentFlyingType FlyingType { get; }
+        public Transform SpawnPosition { get; }
 
         public ArmamentContext? Parent { get; }
 
@@ -15,13 +17,15 @@ namespace Armaments
             Unit source,
             Unit target,
             ArmamentSetup setup,
-            ArmamentFlyingType flyingType,
+            ArmamentFlyingType flyingType, 
+            Transform spawnPosition, 
             ArmamentContext parent = null)
         {
             Source = source;
             Target = target;
             Setup = setup;
             FlyingType = flyingType;
+            SpawnPosition = spawnPosition;
             Parent = parent;
         }
     }

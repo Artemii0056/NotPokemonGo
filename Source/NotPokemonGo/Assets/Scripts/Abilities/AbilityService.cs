@@ -80,8 +80,9 @@ namespace Abilities
                         new IAbilityPolicy[]
                         {
                             //new FinishSignalPolicy(), //Так то можно попробовать сюда закинуть выход, но только если фаза... Не мувмент???
-                            new FireballShotsPolicy(_qteService, _armamentSpawner, _effectsApplier),
-                            new PortalVfxPolicy(abilityModel, ParticleSpawnType.Middle)
+                            new VolleyComposerPolicy(_armamentSpawner),
+                            //new VolleyRunnerPolicy(_qteService, _coroutineRunner)
+                            //new PortalVfxPolicy(abilityModel, ParticleSpawnType.Middle)
                         });
 
                     _abilityHandler.Finished += Continue;

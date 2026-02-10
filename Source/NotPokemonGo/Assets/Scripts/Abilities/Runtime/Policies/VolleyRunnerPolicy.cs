@@ -1,42 +1,71 @@
-﻿using Abilities.Configs;
+﻿using System.Collections;
+using Abilities.Configs;
 using Abilities.Runtime.Impact;
 using Abilities.Signals;
 using Armaments.Movers;
 using QteSystem;
-using Services.AbilityServices;
-using Spawners.Spawner;
+using Services;
+using UnityEngine;
 
 namespace Abilities.Runtime.Policies
 {
-    public class
-        VolleyPolicy : AbilityPolicyBase //Логика класса. При сигнале создается несколько фаерболов над головой у держаетля.
+    public class VolleyRunnerPolicy : AbilityPolicyBase
     {
-        private readonly IAbilityService _abilityService;
-        private readonly IShotImpactResolver _shotImpactResolver;
-        private readonly IQteService _qteService;
-        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IShotImpactResolver _impactResolver;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly ShotTracker _shotTracker = new();
         private readonly QteBinder _qteBinder;
-        private readonly ShotTracker _shotTracker;
 
         private AbilityContext _context;
 
-        private ArmamentRequest _armamentRequest;
         private AbilityPhase _activePhase;
         private bool _finishSeenForActivePhase;
 
-        public VolleyPolicy(
-            IAbilityService abilityService,
-            IShotImpactResolver shotImpactResolver,
-            ShotTracker shotTracker,
+        private Coroutine _coroutine;
+
+        private int _currentCount;
+
+        public VolleyRunnerPolicy(
             IQteService qteService,
-            IArmamentSpawner armamentSpawner)
+           // IArmamentSpawner armamentSpawner,
+           // IEffectsApplier effectsApplier,
+            ICoroutineRunner coroutineRunner)
         {
-            _abilityService = abilityService;
-            _shotImpactResolver = shotImpactResolver;
+            _coroutineRunner = coroutineRunner;
             _qteBinder = new QteBinder(qteService);
-            _shotTracker = shotTracker;
-            _qteService = qteService;
-            _armamentSpawner = armamentSpawner;
+
+            var policy = new ImpactPolicy
+            {
+                NoQteAction = ImpactAction.ApplyEffectsAndDestroy,
+                OnFail = ImpactAction.ApplyEffectsAndDestroy,
+                OnNormal = ImpactAction.DestroyOnly,
+                OnPerfect = ImpactAction.ReflectToSourceAndDestroy
+            };
+
+            // _impactResolver = new DefaultShotImpactResolver(
+            //     effectsApplier,
+            //     armamentSpawner,
+            //     policy,
+            //     startShot: StartShot);
+        }
+
+        public override void OnAbilityStart(AbilityContext context)
+        {
+            if (context.Movers.Count == 0)
+                return;
+
+            _context = context;
+
+            _coroutine = _coroutineRunner.StartCoroutine(Start());
+
+            //Запуск корутиины? 
+
+            // AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
+            //
+            // if (phaseService != null)
+            //     phaseService.ArmamentRequested += OnArmamentRequested; 
+
+            //Вот тут вопросики. По идее, нужно получить только старт и запустить корутину
         }
 
         public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
@@ -45,32 +74,26 @@ namespace Abilities.Runtime.Policies
             _finishSeenForActivePhase = false;
         }
 
-        public override void OnAbilityStart(AbilityContext context)
+        private IEnumerator Start()
         {
-            _context = context;
-
-            AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
-
-            if (phaseService != null)
-                phaseService.ArmamentRequested += OnArmamentRequested;
-        }
-
-        private void OnArmamentRequested(ArmamentRequest request)
-        {
-            _armamentRequest = request;
-
-            for (int i = 0; i < 3; i++)
+            while (_context.Movers.Count > 0)
             {
-                foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(request))
-                {
-                    IArmamentMover mover = _armamentSpawner.Create(ctx);
+                IArmamentMover mover = _context.Movers[0];
 
-                    _context.Movers.Add(mover);
-                }
+                Shot reflected = new Shot(_activePhase, mover.Armament.Context, mover)
+                {
+                    RequiresQte = false
+                };
+
+                StartShot(reflected);
+
+                Debug.Log("Start");
+
+                yield return new WaitForSeconds(0.2f);
             }
         }
 
-        public override void OnSignal(AbilityContext ctx, PhaseSignal signal) //Тут должна запуститься корутина? 
+        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
             // Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
 
@@ -78,15 +101,12 @@ namespace Abilities.Runtime.Policies
                 _finishSeenForActivePhase = true;
         }
 
-        // private void OnArmamentRequested(ArmamentRequest request) => 
-        //     _armamentRequest = request;
-
         public override void OnAbilityStop(AbilityContext ctx)
         {
-            var phaseService = ctx?.AnimatorTrigger?.PhaseService;
-
-            if (phaseService != null)
-                phaseService.ArmamentRequested -= OnArmamentRequested;
+            // var phaseService = ctx?.AnimatorTrigger?.PhaseService;
+            //
+            // if (phaseService != null)
+            //     phaseService.ArmamentRequested -= OnArmamentRequested;
 
             _qteBinder.CleanupAll();
             _shotTracker.CleanupAll();
@@ -144,8 +164,10 @@ namespace Abilities.Runtime.Policies
 
         private void OnShotReached(Shot shot)
         {
+            Debug.Log(++_currentCount + " OnShotReached");
+            
             _qteBinder.UnbindOnReach(shot);
-            _shotImpactResolver.Resolve(shot);
+            //_impactResolver.Resolve(shot);
 
             AbilityContext context = _context;
 

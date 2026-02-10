@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Abilities.Runtime;
 using Armaments;
 using Effects;
 using Effects.Factory;
@@ -21,13 +22,13 @@ namespace Factories.ArmamentViewFactories
             _effectInfoFactory = effectInfoFactory;
         }
 
-        public Armament Create(ArmamentContext context)
+        public Armament Create(ArmamentContext context, Transform transform)
         {
             List<EffectInfo> effects = _effectInfoFactory.Create(context.Setup.EffectsSetup);
             List<Status> statuses = _statusesFactory.Create(context.Setup.Statuses,  context.Source, context.Target);
 
-            Armament armament = Object.Instantiate(context.Setup.ArmamentPrefab, context.Source.abilityPos.position, Quaternion.identity);
-            armament.Initialize(effects,  statuses,  context.Source, context.Target, context.Setup, context.FlyingType);
+            Armament armament = Object.Instantiate(context.Setup.ArmamentPrefab, transform.position, Quaternion.identity);
+            armament.Initialize(effects,  statuses, context );
             
             return armament;
         }

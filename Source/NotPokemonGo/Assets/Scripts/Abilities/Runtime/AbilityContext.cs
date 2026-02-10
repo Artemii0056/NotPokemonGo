@@ -19,6 +19,6 @@ namespace Abilities.Runtime
         
         public QteResult QteResult { get; internal set; }
         
-        public List<IArmamentMover> Movers { get; internal set; }
+        public List<IArmamentMover> Movers  = new List<IArmamentMover>();
     }
 }

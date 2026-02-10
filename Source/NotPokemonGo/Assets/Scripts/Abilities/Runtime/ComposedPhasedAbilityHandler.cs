@@ -92,6 +92,8 @@ namespace Abilities.Runtime
             _context.Animator.Play(phase.AnimationCashName);
 
             yield return new WaitWhile(() => _waitingPhaseFinish);
+            
+            Debug.Log("ExecutePhase");
         }
 
         private void OnAnimSignal(int id)

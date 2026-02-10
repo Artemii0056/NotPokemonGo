@@ -17,11 +17,11 @@ namespace ReactionSystems
 
         public void React(ReactionContext context)
         {
-            ArmamentContext armamentContext =
-                new ArmamentContext(context.Target, context.Source, context.Armament.Setup, ArmamentFlyingType.Direct);
-            
-            IArmamentMover mover = _spawner.Create(armamentContext);
-            mover.Move();
+            // ArmamentContext armamentContext =
+            //     new ArmamentContext(context.Target, context.Source, context.Armament.Setup, ArmamentFlyingType.Direct);
+            //
+            // IArmamentMover mover = _spawner.Create(armamentContext);
+            // mover.Move();
         }
     }
 }

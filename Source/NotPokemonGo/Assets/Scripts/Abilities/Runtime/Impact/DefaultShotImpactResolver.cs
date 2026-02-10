@@ -86,14 +86,14 @@ namespace Abilities.Runtime.Impact
                 armament.Effects);
         }
 
-        private void Reflect(Shot original)
+        private void Reflect(Shot original) //Это уже отражение
         {
             Unit newSource = original.Context.Target;
             Unit newTarget = original.Context.Source;
 
             ArmamentSetup setup = original.Context.Setup;
 
-            ArmamentContext context = new ArmamentContext(newSource, newTarget, setup, ArmamentFlyingType.Direct, original.Context);
+            ArmamentContext context = new ArmamentContext(newSource, newTarget, setup, ArmamentFlyingType.Direct,newSource.abilityPos, original.Context); //TODO Сюда нужно точку спавна передать? 
             IArmamentMover mover = _armamentSpawner.Create(context);
 
             Shot reflected = new Shot(original.Phase, context, mover)

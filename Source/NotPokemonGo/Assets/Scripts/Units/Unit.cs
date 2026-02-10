@@ -22,7 +22,7 @@ namespace Units
         [field: SerializeField] public UnitType UnitType { get; private set; }
 
         public Transform abilityPos;
-        public List<Transform> AbilitiesPositions { get; private set; }
+        public List<Transform> AbilitiesPositions;
         public CinemachineVirtualCamera virtualCamera;
 
         private List<Status> _imposedStatuses = new List<Status>(); // отдельный сервис

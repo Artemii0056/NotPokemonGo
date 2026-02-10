@@ -13,7 +13,7 @@ namespace Spawners.Spawner
 
         public IArmamentMover Create(ArmamentContext context)
         {
-            Armament armament = _viewFactory.Create(context);
+            Armament armament = _viewFactory.Create(context, context.SpawnPosition);
             
             return  new ArmamentMover(armament);
         }

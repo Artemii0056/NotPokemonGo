@@ -1,13 +1,19 @@
 ﻿using System.Collections.Generic;
 using Armaments;
 using Units;
+using UnityEngine;
 
 namespace Services.AbilityServices
 {
     public static class ArmamentRequestMapper
     {
-        public static IEnumerable<ArmamentContext> EnumerateContexts(ArmamentRequest req)
+        public static IEnumerable<ArmamentContext> EnumerateContexts(ArmamentRequest req, Transform transform = null)
         {
+            Transform spawnPosition = transform;
+            
+            if (transform == null) 
+                spawnPosition = req.Source.abilityPos;
+            
             if (req.Source == null) 
                 yield break;
 
@@ -28,7 +34,7 @@ namespace Services.AbilityServices
                 if (target == null) 
                     continue;
 
-                yield return new ArmamentContext(req.Source, target, setup, setup.FlyingType);
+                yield return new ArmamentContext(req.Source, target, setup, setup.FlyingType,spawnPosition);
             }
         }
     }

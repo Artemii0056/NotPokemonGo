@@ -17,16 +17,18 @@ namespace Armaments
         public List<EffectInfo> Effects =>  _effectInfo.ToList();
         public List<Status> Statuses => _statuses.ToList();
         public ArmamentFlyingType FlyingType { get; private set; } = ArmamentFlyingType.Direct;
+        public ArmamentContext Context { get; private set; }
         public ArmamentSetup Setup { get;  private set; }
 
-        public void Initialize(List<EffectInfo> effectInfo, List<Status> statuses, Unit source, Unit target, ArmamentSetup setup, ArmamentFlyingType flyingType)
+        public void Initialize(List<EffectInfo> effectInfo, List<Status> statuses, ArmamentContext context)
         {
             _statuses = statuses;
             _effectInfo = effectInfo;
-            Source = source;
-            Target = target;
-            Setup = setup;
-            FlyingType =flyingType;
+            Source = context.Source;
+            Target = context.Target;
+            Setup = context.Setup;
+            FlyingType =context.FlyingType;
+            Context = context;
         }
     }
 }

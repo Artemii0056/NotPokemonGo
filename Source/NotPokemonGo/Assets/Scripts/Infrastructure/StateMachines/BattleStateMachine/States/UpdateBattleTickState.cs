@@ -21,7 +21,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         
         public void Enter(Battlefield battlefield)
         {
-            Debug.Log("Enter");
+           // Debug.Log("Enter");
             
             battlefield.Tick();
             _coroutineRunner.StartCoroutine(Delay(battlefield));
