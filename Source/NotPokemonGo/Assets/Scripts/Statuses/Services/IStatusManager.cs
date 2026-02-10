@@ -6,5 +6,6 @@
         void UnregisterStatus(Status status);
         void Tick();
         void RemoveInactive();
+        void TickTurn();
     }
 }

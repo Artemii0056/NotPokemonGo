@@ -1,6 +1,5 @@
 ﻿using System;
 using Effects;
-using UnityEngine.Serialization;
 
 namespace Statuses
 {

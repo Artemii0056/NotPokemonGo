@@ -11,9 +11,11 @@ using Effects;
 using Factories.ArmamentViewFactories;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
+using Platoons;
 using QteSystem;
 using Services;
 using Spawners.Spawner;
+using Statuses.Services;
 using UnityEngine;
 using Unit = Units.Unit;
 
@@ -27,6 +29,7 @@ namespace Abilities
         private readonly IEffectsApplier _effectsApplier;
         private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IStatusManager _statusManager;
 
         private Battlefield _battlefield;
 
@@ -38,13 +41,16 @@ namespace Abilities
 
         public event Action Finished;
 
+        private Unit _lastUnit;
+
         public AbilityService(
             ICoroutineRunner coroutineRunner,
             IQteService qteService,
             IBattleStateMachine battleStateMachine,
             IEffectsApplier effectsApplier, 
             IArmamentViewFactory armamentViewFactory, 
-            IArmamentSpawner armamentSpawner)
+            IArmamentSpawner armamentSpawner, 
+            IStatusManager statusManager)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
@@ -52,6 +58,7 @@ namespace Abilities
             _effectsApplier = effectsApplier;
             _armamentViewFactory = armamentViewFactory;
             _armamentSpawner = armamentSpawner;
+            _statusManager = statusManager;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -180,6 +187,8 @@ namespace Abilities
                     //throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
             }
 
+            _lastUnit = source;
+
             source.RememberAbility(_abilityHandler); //TODO Говно. Сделать отдельный слой
         }
 
@@ -207,6 +216,11 @@ namespace Abilities
 
             yield return new WaitForSeconds(0.5f);
 
+            if (_lastUnit.PlatoonType == PlatoonType.Heroes)
+            {
+                _statusManager.TickTurn();
+            }
+            
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
         }
     }

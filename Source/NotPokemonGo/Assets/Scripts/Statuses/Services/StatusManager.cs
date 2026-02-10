@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Statuses.Services
 {
@@ -42,6 +43,11 @@ namespace Statuses.Services
                 if (_statuses[i].IsEnded) 
                     UnregisterStatus(_statuses[i]);
             }
+        }
+
+        public void TickTurn()
+        {
+            Debug.Log("StatusManager::TickTurn");
         }
     }
 }

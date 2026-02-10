@@ -11,7 +11,9 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly ICoroutineRunner _coroutineRunner;
 
-        public UpdateBattleTickState(IBattleStateMachine battleStateMachine, ICoroutineRunner coroutineRunner)
+        public UpdateBattleTickState(
+            IBattleStateMachine battleStateMachine, 
+            ICoroutineRunner coroutineRunner)
         {
             _battleStateMachine = battleStateMachine;
             _coroutineRunner = coroutineRunner;
@@ -19,6 +21,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         
         public void Enter(Battlefield battlefield)
         {
+            Debug.Log("Enter");
+            
             battlefield.Tick();
             _coroutineRunner.StartCoroutine(Delay(battlefield));
         }

@@ -56,7 +56,7 @@ namespace Battlefields
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
-            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
+            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 
         }
 
         private void OnLeftMouseButtonPressed()

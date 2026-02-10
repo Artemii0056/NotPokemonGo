@@ -1,47 +1,48 @@
-using Abilities.Configs;
+﻿using Abilities.Configs;
 using Abilities.Runtime.Impact;
 using Abilities.Signals;
 using Armaments.Movers;
-using Effects;
 using QteSystem;
 using Services.AbilityServices;
 using Spawners.Spawner;
 
 namespace Abilities.Runtime.Policies
 {
-    public sealed class FireballShotsPolicy : AbilityPolicyBase
+    public class
+        VolleyPolicy : AbilityPolicyBase //Логика класса. При сигнале создается несколько фаерболов над головой у держаетля.
     {
+        private readonly IAbilityService _abilityService;
+        private readonly IShotImpactResolver _shotImpactResolver;
+        private readonly IQteService _qteService;
         private readonly IArmamentSpawner _armamentSpawner;
-        private readonly IShotImpactResolver _impactResolver;
-        private readonly ShotTracker _shotTracker = new();
-        private readonly QteBinder _qteBinder; 
+        private readonly QteBinder _qteBinder;
+        private readonly ShotTracker _shotTracker;
 
         private AbilityContext _context;
 
+        private ArmamentRequest _armamentRequest;
         private AbilityPhase _activePhase;
         private bool _finishSeenForActivePhase;
 
-        public FireballShotsPolicy(
+        public VolleyPolicy(
+            IAbilityService abilityService,
+            IShotImpactResolver shotImpactResolver,
+            ShotTracker shotTracker,
             IQteService qteService,
-            IArmamentSpawner armamentSpawner,
-            IEffectsApplier effectsApplier)
+            IArmamentSpawner armamentSpawner)
         {
-            _armamentSpawner = armamentSpawner;
+            _abilityService = abilityService;
+            _shotImpactResolver = shotImpactResolver;
             _qteBinder = new QteBinder(qteService);
+            _shotTracker = shotTracker;
+            _qteService = qteService;
+            _armamentSpawner = armamentSpawner;
+        }
 
-            var policy = new ImpactPolicy
-            {
-                NoQteAction = ImpactAction.ApplyEffectsAndDestroy,
-                OnFail = ImpactAction.ApplyEffectsAndDestroy,
-                OnNormal = ImpactAction.DestroyOnly,
-                OnPerfect = ImpactAction.ReflectToSourceAndDestroy
-            };
-
-            _impactResolver = new DefaultShotImpactResolver(
-                effectsApplier,
-                armamentSpawner,
-                policy,
-                startShot: StartShot);
+        public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
+        {
+            _activePhase = phase;
+            _finishSeenForActivePhase = false;
         }
 
         public override void OnAbilityStart(AbilityContext context)
@@ -54,19 +55,31 @@ namespace Abilities.Runtime.Policies
                 phaseService.ArmamentRequested += OnArmamentRequested;
         }
 
-        public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
+        private void OnArmamentRequested(ArmamentRequest request)
         {
-            _activePhase = phase;
-            _finishSeenForActivePhase = false;
+            _armamentRequest = request;
+
+            for (int i = 0; i < 3; i++)
+            {
+                foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(request))
+                {
+                    IArmamentMover mover = _armamentSpawner.Create(ctx);
+
+                    _context.Movers.Add(mover);
+                }
+            }
         }
 
-        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
+        public override void OnSignal(AbilityContext ctx, PhaseSignal signal) //Тут должна запуститься корутина? 
         {
-           // Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
-            
+            // Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
+
             if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
                 _finishSeenForActivePhase = true;
         }
+
+        // private void OnArmamentRequested(ArmamentRequest request) => 
+        //     _armamentRequest = request;
 
         public override void OnAbilityStop(AbilityContext ctx)
         {
@@ -115,21 +128,6 @@ namespace Abilities.Runtime.Policies
             return false;
         }
 
-        private void OnArmamentRequested(ArmamentRequest request)
-        {
-            foreach (var ctx in ArmamentRequestMapper.EnumerateContexts(request))
-            {
-                IArmamentMover mover = _armamentSpawner.Create(ctx);
-
-                Shot shot = new Shot(request.Phase, ctx, mover)
-                {
-                    RequiresQte = request.Phase.QteType != QteType.Unknown
-                };
-
-                StartShot(shot);
-            }
-        }
-
         private void StartShot(Shot shot)
         {
             _shotTracker.Register(shot, OnShotLaunched, OnShotReached);
@@ -147,7 +145,7 @@ namespace Abilities.Runtime.Policies
         private void OnShotReached(Shot shot)
         {
             _qteBinder.UnbindOnReach(shot);
-            _impactResolver.Resolve(shot);
+            _shotImpactResolver.Resolve(shot);
 
             AbilityContext context = _context;
 

@@ -100,7 +100,7 @@ namespace Abilities.Runtime.Impact
             {
                 RequiresQte = false
             };
-
+            
             _startShot?.Invoke(reflected);
         }
 

@@ -1,14 +1,21 @@
-﻿using Units;
+﻿using Effects;
+using Units;
 
 namespace Statuses
 {
-    /// <summary>
-    /// Сделать один Status. Не абстрактный класс
-    /// </summary>
-    public abstract class Status 
+    public class Status 
     {
-        public string Name { get; protected set; }
+        private readonly IEffectResolver _effectResolver;
 
+        public Status(StatusSetup setup, Unit source, Unit target, IEffectResolver effectResolver)
+        {
+            Setup = setup;
+            Source = source;
+            Target = target;
+            _effectResolver = effectResolver;
+        }
+        
+        public string Name { get; protected set; }
 
         public float TickCount { get; protected set; }
         public StatusSetup Setup { get; protected set; }
@@ -26,6 +33,8 @@ namespace Statuses
 
         public virtual void OnTick()
         {
+            EffectInfo damageInfo = new EffectInfo(Setup.EffectSetup.Value, Setup.EffectSetup.TargetType, Setup.EffectSetup.Type, Setup.EffectSetup.DamageType);
+            _effectResolver.ApplyEffect(Source,Target, damageInfo);
         }
 
         public virtual void OnExpire()
