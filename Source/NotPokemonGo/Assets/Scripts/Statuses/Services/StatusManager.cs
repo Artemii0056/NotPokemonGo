@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Statuses.Services
 {
     public class StatusManager : IStatusManager, IRealTimeTickService
-
     {
         private List<Status> _perTurn = new List<Status>();
         private List<Status> _perUnitTurn = new List<Status>();
@@ -37,25 +36,11 @@ namespace Statuses.Services
                 _perUnitTurn.Remove(status);
         }
 
-        public void TickTurn()
-        {
-            //Debug.Log("classic status tick");
+        public void TickTurn() => 
+            PerTurn(_perTurn);
 
-            if (_perTurn.Count <= 0)
-                return;
-
-            foreach (var status in _perTurn)
-                status.Tick();
-        }
-
-        public void TickUnitTurn()
-        {
-            if (_perUnitTurn.Count <= 0)
-                return;
-
-            foreach (var status in _perUnitTurn)
-                status.Tick();
-        }
+        public void TickUnitTurn() => 
+            PerTurn(_perUnitTurn);
 
         public void TickRealTime(float deltaTime)
         {
@@ -66,7 +51,7 @@ namespace Statuses.Services
             {
                 status.Tick();
 
-                if (status.IsEnded)
+                if (status.IsRealtimeEnded)
                 {
                     UnregisterStatus(status);
                     Debug.Log("Realtime tick ended");
@@ -76,9 +61,24 @@ namespace Statuses.Services
 
         public void RemoveInactive()
         {
-            RemoveInactiveIn(_perRealTime);
-            RemoveInactiveIn(_perTurn);
-            RemoveInactiveIn(_perUnitTurn);
+            // RemoveInactiveIn(_perRealTime);
+            // RemoveInactiveIn(_perTurn);
+            // RemoveInactiveIn(_perUnitTurn);
+        }
+        
+        private void PerTurn(List<Status> perUnitTurn)
+        {
+            if (perUnitTurn.Count <= 0)
+                return;
+
+            foreach (var status in perUnitTurn)
+            {
+                status.Tick();
+                status.OnTick();
+
+                if (status.IsEnded) 
+                    UnregisterStatus(status);
+            }
         }
 
         private void RemoveInactiveIn(List<Status> statuses)
@@ -90,7 +90,7 @@ namespace Statuses.Services
             {
                 var status = statuses[i];
 
-                if (status.IsEnded) 
+                if (status.IsEnded)
                     UnregisterStatus(status);
             }
         }

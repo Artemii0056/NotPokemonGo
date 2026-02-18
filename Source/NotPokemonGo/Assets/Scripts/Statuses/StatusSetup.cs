@@ -10,7 +10,7 @@ namespace Statuses
         public StatusType Type;
         public StatusUpdateType UpdateType;
 
-        public float TargetTime;
+        public float Duration;
         public float TickCount;
         
         public bool IsPermanent;

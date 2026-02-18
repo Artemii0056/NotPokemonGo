@@ -92,8 +92,6 @@ namespace Abilities.Runtime.Policies
 
                 yield return new WaitForSeconds(0.3f);
             }
-
-            //_qteSession.Dispose();
         }
 
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
@@ -111,7 +109,7 @@ namespace Abilities.Runtime.Policies
             _finishSeenForActivePhase = false;
         }
 
-        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
+        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase) //Попробовать сделать иначе. Кидать экшн в момент возможного окончания аблки. И из этой выпилить часть не нежного
         {
             if (phase == null)
                 return true;
@@ -125,6 +123,9 @@ namespace Abilities.Runtime.Policies
             if (canFinishPhase) 
                 _qteSession.Dispose();
             
+            Debug.Log(canFinishPhase);
+            Debug.Log($"{_shotTracker.ActiveCount} Count {canFinishPhase} ");
+            
             return canFinishPhase;
         }
 
@@ -134,7 +135,7 @@ namespace Abilities.Runtime.Policies
             shot.Mover.Move();
         }
 
-        private void OnShotReached(Shot shot)
+        private void OnShotReached(Shot shot) //Тут связь. Каждый раз, когда "долетел" можно пытаться закончить фазу 
         {
             _currentCount++;
 

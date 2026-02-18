@@ -19,7 +19,7 @@ MonoBehaviour:
     Value: 0
   Type: 8
   UpdateType: 0
-  TargetTime: 10
-  TickCount: 0.3
+  Duration: 0.3
+  TickCount: 0
   IsPermanent: 0
   IsRefreshed: 0

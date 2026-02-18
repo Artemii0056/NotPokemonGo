@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Armaments.Movers;
 
 namespace Abilities.Runtime
@@ -60,15 +61,7 @@ namespace Abilities.Runtime
 
             Release(mover);
 
-            entry.OnReached?.Invoke(entry.Shot);
-        }
-
-        public void Release(Shot shot)
-        {
-            if (shot?.Mover == null) 
-                return;
-            
-            Release(shot.Mover);
+            entry.OnReached?.Invoke(entry.Shot); //Вот тут рич и вызывается 
         }
 
         public void Release(IArmamentMover mover)
@@ -85,7 +78,7 @@ namespace Abilities.Runtime
 
         public void CleanupAll()
         {
-            foreach (var mover in new List<IArmamentMover>(_entries.Keys))
+            foreach (var mover in _entries.Keys.ToList())
                 Release(mover);
 
             _entries.Clear();
