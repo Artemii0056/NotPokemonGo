@@ -9,6 +9,7 @@
         PositiveSpeed = 4,
         NegativeSpeed = 5,
         Stun = 6,
-        Break = 7
+        Break = 7,
+        Bubble = 8,
     }
 }

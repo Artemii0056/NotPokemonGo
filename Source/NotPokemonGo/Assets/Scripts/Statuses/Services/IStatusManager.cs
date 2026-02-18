@@ -4,8 +4,8 @@
     {
         void RegisterStatus(Status status);
         void UnregisterStatus(Status status);
-        void Tick();
-        void RemoveInactive();
         void TickTurn();
+        void RemoveInactive();
+        void TickUnitTurn();
     }
 }

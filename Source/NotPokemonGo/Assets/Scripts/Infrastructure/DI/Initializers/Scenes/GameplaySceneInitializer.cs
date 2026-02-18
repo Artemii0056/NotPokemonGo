@@ -19,7 +19,7 @@ public class GameplaySceneInitializer : MonoBehaviour
     [Inject]
     public void Construct(ICameraProvider cameraProvider, IEffectResolver effectResolver, IStaticDataService staticDataService)
     {
-        Debug.Log("Loading CombatText");
+       // Debug.Log("Loading CombatText");
         
         _cameraProvider = cameraProvider;
         _cameraProvider.Camera = Camera.main;

@@ -18,27 +18,27 @@ namespace Abilities.Runtime.Policies
             _portalPrefab = ExtractPortalPrefab(model, spawnType);
         }
 
-        public override void OnAbilityStart(AbilityContext context)
-        {
-            if (_instance != null)
-                return;
-
-            if (_portalPrefab == null)
-                return;
-
-            Unit owner = context?.Source;
-            
-            if (owner == null)
-                return;
-
-            Transform anchorPoint = FindAnchorPoint(owner, _spawnType);
-            
-            if (anchorPoint == null)
-                return;
-
-            _instance = Object.Instantiate(_portalPrefab, anchorPoint.position, Quaternion.identity, anchorPoint);
-            _instance.Play();
-        }
+        // public override void OnAbilityStart(AbilityContext context)
+        // {
+        //     if (_instance != null)
+        //         return;
+        //
+        //     if (_portalPrefab == null)
+        //         return;
+        //
+        //     Unit owner = context?.Source;
+        //     
+        //     if (owner == null)
+        //         return;
+        //
+        //     Transform anchorPoint = FindAnchorPoint(owner, _spawnType);
+        //     
+        //     if (anchorPoint == null)
+        //         return;
+        //
+        //     _instance = Object.Instantiate(_portalPrefab, anchorPoint.position, Quaternion.identity, anchorPoint);
+        //     _instance.Play();
+        // }
 
         public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
         {

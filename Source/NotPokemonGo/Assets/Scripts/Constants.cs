@@ -27,7 +27,9 @@ public static class Constants
         public const string CharacterConfigsPath = "Characters";
         public const string LevelConfigsPath = "LevelConfig";
         public const string AbilitiesPanelPath = "Abilities/AbilitiesPanel_Canvas";
-        public const string QteConfigs = "QTE";
+        public const string QteConfigsPath = "QTE";
+        public const string StatusConfigsPath = "Statuses";
+        public const string CombatTextPath = "Canvases/Status/CombatText";
         public const string DodgeView = "Canvases/Dodges/DodgePanel";
         public const string DodgeConfigPath = "Dodges";
     }
@@ -43,6 +45,7 @@ public static class Constants
         public static int Idle = Animator.StringToHash(nameof(Idle));
         public static int Death = Animator.StringToHash(nameof(Death));
         public static int Dodge = Animator.StringToHash(nameof(Dodge));
-        public static int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
+        public static int TakeDamage = Animator.StringToHash(nameof(TakeDamage)); 
+        public static int Break = Animator.StringToHash(nameof(Break)); 
     }
 }

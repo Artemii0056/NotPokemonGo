@@ -44,16 +44,6 @@ namespace Abilities.Runtime.Policies
                 startShot: StartShot);
         }
 
-        public override void OnAbilityStart(AbilityContext context)
-        {
-            _context = context;
-
-            AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
-
-            if (phaseService != null)
-                phaseService.ArmamentRequested += OnArmamentRequested;
-        }
-
         public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
         {
             _activePhase = phase;

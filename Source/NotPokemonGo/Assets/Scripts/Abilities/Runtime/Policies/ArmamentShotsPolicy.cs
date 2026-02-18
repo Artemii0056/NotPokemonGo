@@ -41,7 +41,7 @@ namespace Abilities.Runtime.Policies
                 StartShot);
         }
 
-        public override void OnAbilityStart(AbilityContext context)
+        public override void  OnAbilityStart(AbilityContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
 

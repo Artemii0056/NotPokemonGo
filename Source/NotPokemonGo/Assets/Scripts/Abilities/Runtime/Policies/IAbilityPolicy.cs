@@ -5,6 +5,7 @@ namespace Abilities.Runtime.Policies
 {
     public interface IAbilityPolicy
     {
+        bool CanUseAbility(AbilityContext ctx);
         void OnAbilityStart(AbilityContext context);
         void OnAbilityStop(AbilityContext ctx);
         void OnPhaseStart(AbilityContext ctx, AbilityPhase phase);

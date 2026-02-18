@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Armaments;
 using Effects;
 using Effects.Factory;
 using Statuses;
@@ -29,9 +28,9 @@ namespace Castaments
             foreach (var target in targets)
             {
                 List<EffectInfo> effects = _effectInfoFactory.Create(setup.EffectsSetup);
-                List<Status> statuses = _statusesFactory.Create(setup.Statuses, source, target);
+                List<Status> statuses = _statusesFactory.Create(setup.Statuses, target);
 
-                _effectsApplier.ApplyEffectsOnTarget(source, target, statuses, effects);
+                _effectsApplier.ApplyEffectsOnTarget( target, statuses, effects);
             }
         }
     }

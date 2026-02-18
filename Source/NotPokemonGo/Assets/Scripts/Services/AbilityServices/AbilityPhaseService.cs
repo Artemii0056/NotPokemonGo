@@ -70,7 +70,8 @@ namespace Services.AbilityServices
             return t;
         }
 
-        public void RequestFinishCheck() => TryCompleteFinish();
+        public void RequestFinishCheck() => 
+            TryCompleteFinish();
 
         public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
         {

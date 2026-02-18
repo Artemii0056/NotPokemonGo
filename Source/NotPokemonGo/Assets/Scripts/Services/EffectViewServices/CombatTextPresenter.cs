@@ -27,7 +27,7 @@ namespace Services.EffectViewServices
             _camera = provider.Camera;
             
             _resolver.EffectApplied += OnEffectApplied;
-            Debug.Log("[CombatTextPresenter] Started");
+           // Debug.Log("[CombatTextPresenter] Started");
         }
 
         // public void Start()
@@ -41,7 +41,7 @@ namespace Services.EffectViewServices
             _resolver.EffectApplied -= OnEffectApplied;
         }
 
-        private void OnEffectApplied(EffectResolver.EffectDataPayload payload)
+        private void OnEffectApplied(EffectDataPayload payload)
         {
             if (payload.Target == null) 
                 return;

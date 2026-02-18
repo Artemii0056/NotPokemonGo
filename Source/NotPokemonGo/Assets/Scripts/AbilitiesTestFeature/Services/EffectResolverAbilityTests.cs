@@ -7,38 +7,25 @@ namespace AbilitiesTestFeature.Services
 { 
 	public class EffectResolverAbilityTests : IEffectResolver
 	{
-		public event Action<EffectResolver.EffectDataPayload> EffectApplied;
+		public event Action<EffectDataPayload> EffectApplied;
 
 
-		public void ApplyEffect(Unit source, Unit target, EffectInfo effect) 
+		public void ApplyEffect(Unit target, EffectInfo effect) 
 		{
 			if (target.GetStat(StatType.Invulnerability) != 0)
 				return;
 			
-			float finalValue = CalculateStatModification(source,target, effect.TargetType, effect.Type, effect.Value); 
-			EffectApplied?.Invoke(new EffectResolver.EffectDataPayload(source, target, finalValue, effect));
+			float finalValue = CalculateStatModification(target, effect.TargetType, effect.Type); 
+			EffectApplied?.Invoke(new EffectDataPayload(target, finalValue, effect));
 			target.ChangeStatValue(finalValue, effect.TargetType);
 		}
 		
 		private float CalculateStatModification(
-			Unit source,
 			Unit target,
 			StatType targetStat,
-			EffectType effectType,
-			float baseValue)
+			EffectType effectType)
 		{
-			float qteModificator = source.GetStat(StatType.QteDamageModifier);
-			
-			float finalValue;
-
-			if (qteModificator > 0)
-			{
-				finalValue = baseValue * (qteModificator + 1);
-			}
-			else
-			{
-				finalValue = baseValue;
-			}
+			float finalValue = 0;
 
 			switch (targetStat)
 			{
@@ -65,16 +52,6 @@ namespace AbilitiesTestFeature.Services
 						default:
 							throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
 					}
-
-
-					// if (baseValue < 0)
-					// {
-					//     // Damage: учитывать броню
-					//     float armor = target.GetStat(StatType.ArmorChance);
-					//     finalValue = -Math.Min(0, baseValue); //TODO Добавить броню!!!
-					//     
-					//     Debug.Log(finalValue);
-					// }
 					break;
 
 				case StatType.AgilityRestoreSpeed:

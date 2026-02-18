@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Abilities;
 using Units;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Spawners
 {
     public sealed class ParticleSpawner : IParticleSpawner
     {
-        private readonly Dictionary<Unit, Dictionary<ParticleSpawnType, AbilityAnchor>> _anchorsCache = new();
         private readonly Dictionary<Unit, List<ParticleSystem>> _spawned = new();
+        private readonly Dictionary<Unit, Dictionary<ParticleSpawnType, AbilityAnchor>> _anchorsCache = new();
 
-        public void Spawn(Units.Unit owner, ParticleSpawnType spawnType, ParticleSystem prefab)
+        public void Spawn(Unit owner, ParticleSpawnType spawnType, ParticleSystem prefab)
         {
             if (owner == null || prefab == null) 
-                return;
+                throw new NullReferenceException();
 
             Dictionary<ParticleSpawnType, AbilityAnchor> anchors = GetOrBuildAnchors(owner);
 
@@ -31,6 +33,24 @@ namespace Spawners
             {
                 list = new List<ParticleSystem>(8);
                 _spawned[owner] = list;
+            }
+            
+            list.Add(ps);
+        }
+
+        public void Spawn(Unit target, ParticleSystem prefab)
+        {
+            if (target == null || prefab == null) 
+                throw new NullReferenceException();
+            
+            ParticleSystem ps = Object.Instantiate(prefab, target.transform.position, Quaternion.identity);
+           // ps.gameObject.transform.localScale = target.transform.localScale;
+            ps.Play();
+            
+            if (_spawned.TryGetValue(target, out List<ParticleSystem> list) == false)
+            {
+                list = new List<ParticleSystem>(8);
+                _spawned[target] = list;
             }
             
             list.Add(ps);

@@ -22,6 +22,8 @@ namespace Abilities.Runtime
         private Coroutine _routine;
         private bool _waitingPhaseFinish;
 
+        private List<IAbilityPolicy> _activePolicies;
+
         public event Action<IAbilityHandler> Finished;
 
         public ComposedPhasedAbilityHandler(
@@ -32,6 +34,7 @@ namespace Abilities.Runtime
             CurrentAbility = abilityModel ?? throw new ArgumentNullException(nameof(abilityModel));
             _runner = runner ?? throw new ArgumentNullException(nameof(runner));
             _policies = policies?.ToList() ?? new List<IAbilityPolicy>();
+            _activePolicies = new List<IAbilityPolicy>();
         }
 
         public AbilityModel CurrentAbility { get; }
@@ -78,6 +81,8 @@ namespace Abilities.Runtime
 
         private IEnumerator ExecutePhase(AbilityPhase phase)
         {
+            _activePolicies = new List<IAbilityPolicy>();
+            
             _context.CurrentPhase = phase;
 
             _context.AnimatorTrigger.SetTarget(_context.Target);
@@ -86,24 +91,28 @@ namespace Abilities.Runtime
             _context.AnimatorTrigger.PhaseService.BeginPhase(phase);
 
             foreach (var policy in _policies)
+            {
+                if (policy.CanUseAbility(_context) == false)
+                    continue;
+
+                _activePolicies.Add(policy);
                 policy.OnPhaseStart(_context, phase);
+            }
 
             _waitingPhaseFinish = true;
             _context.Animator.Play(phase.AnimationCashName);
 
             yield return new WaitWhile(() => _waitingPhaseFinish);
-            
-            Debug.Log("ExecutePhase");
         }
 
         private void OnAnimSignal(int id)
         {
             var signal = PhaseSignalUtil.FromInt(id);
-            
+
             if (signal == PhaseSignal.None)
                 return;
 
-            foreach (var policy in _policies)
+            foreach (var policy in _activePolicies)
                 policy.OnSignal(_context, signal);
 
             _context.AnimatorTrigger?.PhaseService.RequestFinishCheck();
@@ -111,13 +120,13 @@ namespace Abilities.Runtime
 
         private void TryFinishPhase()
         {
-            if (_context.CurrentPhase == null) 
+            if (_context.CurrentPhase == null)
                 return;
 
-            bool can = _policies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase));
-            
-           // Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can}");
+            bool can = _activePolicies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase));
 
+           //Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can} Count={_activePolicies.Count}");
+           
             if (can)
                 _waitingPhaseFinish = false;
         }
@@ -130,13 +139,11 @@ namespace Abilities.Runtime
 
         private void Cleanup()
         {
-            if (_context.Animator != null)
-                _context.Animator.Signal -= OnAnimSignal;
+            _context.Animator.Signal -= OnAnimSignal;
 
-            if (_context.AnimatorTrigger != null)
-                _context.AnimatorTrigger.PhaseService.BindFinishCheck(null);
+            _context.AnimatorTrigger.PhaseService.BindFinishCheck(null);
 
-            foreach (var policy in _policies)
+            foreach (var policy in _activePolicies)
                 policy.OnAbilityStop(_context);
 
             _routine = null;

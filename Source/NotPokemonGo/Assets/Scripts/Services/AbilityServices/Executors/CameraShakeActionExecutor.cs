@@ -27,7 +27,7 @@ namespace Services.AbilityServices.Executors
             if (_shakeService == null)
                 return ;
             
-            Debug.Log("Camera shake action executed");
+           // Debug.Log("Camera shake action executed");
 
             //var token = finishGate.Acquire();
             //bool done = false;

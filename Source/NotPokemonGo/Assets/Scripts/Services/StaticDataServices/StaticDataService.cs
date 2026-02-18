@@ -5,8 +5,8 @@ using Abilities.Configs;
 using Characters;
 using Characters.Configs;
 using DodgeSystem.Configs;
-using Infrastructure;
 using LevelSetting;
+using ParticleSystems;
 using QteSystem;
 using Services.AssetManagement;
 using Statuses;
@@ -19,18 +19,21 @@ namespace Services.StaticDataServices
     public class StaticDataService : IStaticDataService
     {
         private readonly IResourceLoader _resourceLoader;
- 
+
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
         private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
-        
+        private Dictionary<StatusType, StatusSetup> _statusSetups;
+
+        private ParticleSystemByStatusTypes _particleSystemByStatusType;
+
         private List<LevelConfig> _levelConfigs;
         private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
 
-        public CombatText CombatTextPrefab { get; private set;  }
+        public CombatText CombatTextPrefab { get; private set; }
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
@@ -48,16 +51,47 @@ namespace Services.StaticDataServices
             LoadLevelConfigs();
             LoadDodgeConfigs();
             LoadCombatText();
-            // ConfigurateTargetModesForAbilities();
+            LoadStatusSetups();
+            LoadParticleByStatusType();
+        }
+
+        private void LoadStatusSetups()
+        {
+            _statusSetups = Resources.LoadAll<StatusSetup>(Constants.AssetPath.StatusConfigsPath)
+                .ToDictionary(x => x.Type, x => x);
         }
 
         private void LoadCombatText()
         {
-            CombatTextPrefab = _resourceLoader.Load<CombatText>("Canvases/Status/CombatText");
+            CombatTextPrefab = _resourceLoader.Load<CombatText>(Constants.AssetPath.CombatTextPath);
         }
 
-        public List<LevelConfig> GetLevelConfigs() => 
+        private void LoadParticleByStatusType()
+        {
+            _particleSystemByStatusType = _resourceLoader.LoadScriptableObject<ParticleSystemByStatusTypes>("Statuses/ParticleSystemByStatusTypes");
+        }
+
+        public List<LevelConfig> GetLevelConfigs() =>
             _levelConfigs.ToList();
+
+        public StatusSetup GetStatusSetup(StatusType statusType)
+        {
+            if (_statusSetups.TryGetValue(statusType, out StatusSetup statusSetup))
+                return statusSetup;
+
+            throw new KeyNotFoundException($"No ability config found for mode {statusType}");
+        }
+
+        public ParticleSystem GetParticleByType(StatusType setupType)
+        {
+            foreach (SystemByStatusType type in _particleSystemByStatusType.PrticleSystemByStatusType)
+            {
+                if (type.StatusType == setupType)
+                    return type.ParticleSystem;
+            }
+
+            throw new KeyNotFoundException($"No particle found for mode {setupType}");
+        }
 
         public AbilityConfig GetAbilityConfig(AbilityType abilityType)
         {
@@ -66,7 +100,7 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
-        
+
         public Sprite GetStatusIcon(StatusType statusType)
         {
             if (_statusTypeIcons.TryGetValue(statusType, out StatusTypeIcon statusTypeIcon))
@@ -99,7 +133,7 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
 
-        public List<AbilityConfig> GetAllAbilityConfigs() => 
+        public List<AbilityConfig> GetAllAbilityConfigs() =>
             _abilityConfigs.Values.ToList();
 
         public QteConfig GetQteConfig(QteType abilityType)
@@ -117,18 +151,20 @@ namespace Services.StaticDataServices
 
         private void LoadQteConfigs()
         {
-            _qteConfigs = Resources.LoadAll<QteConfig>(Constants.AssetPath.QteConfigs)
+            _qteConfigs = Resources.LoadAll<QteConfig>(Constants.AssetPath.QteConfigsPath)
                 .ToDictionary(x => x.QteType, x => x);
         }
-        
-        public void LoadUnitSkinItemView() => 
+
+        public void LoadUnitSkinItemView() =>
             UnitSkinItemViewPrefab = _resourceLoader.Load<UnitSkinItemView>(Constants.AssetPath.CharacterSkinItemName);
 
         public CharactersCatalogStaticData LoadCharacterCatalogStaticDatas() =>
             _resourceLoader.LoadScriptableObject<CharactersCatalogStaticData>(Constants.AssetPath.CatalogPath);
-        
+
         private void LoadCharacterSelectionScreenPanel() =>
-            CharacterSelectionScreenContainer = _resourceLoader.Load<CharacterSelectionScreenContainer>(Constants.AssetPath.CharacterSelectionCanvasName);
+            CharacterSelectionScreenContainer =
+                _resourceLoader.Load<CharacterSelectionScreenContainer>(
+                    Constants.AssetPath.CharacterSelectionCanvasName);
 
         private void LoadUnitConfigs() =>
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
@@ -139,7 +175,7 @@ namespace Services.StaticDataServices
             _abilityConfigs = Resources.LoadAll<AbilityConfig>(Constants.AssetPath.AbilityConfigPath)
                 .ToDictionary(x => x.AbilityType, x => x);
         }
-        
+
         private void LoadDodgeConfigs()
         {
             _dodgeConfigs = Resources.LoadAll<DodgeConfig>(Constants.AssetPath.DodgeConfigPath)
@@ -154,7 +190,8 @@ namespace Services.StaticDataServices
 
         private void LoadPlatoonPositionContainer()
         {
-            _spawnPositionContainer = Resources.LoadAll<PlatoonSpawnContainer>(Constants.AssetPath.PlatoonContainersPath)
+            _spawnPositionContainer = Resources
+                .LoadAll<PlatoonSpawnContainer>(Constants.AssetPath.PlatoonContainersPath)
                 .ToDictionary(x => x.Count, x => x);
         }
     }

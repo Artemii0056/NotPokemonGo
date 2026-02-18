@@ -9,32 +9,27 @@ namespace Effects
     {
         public event Action<EffectDataPayload> EffectApplied;
 
-        public void ApplyEffect(Unit source, Unit target, EffectInfo effect)
+        public void ApplyEffect(Unit target, EffectInfo effect)
         {
-            float finalValue = CalculateStatModification(source, target, effect.TargetType, effect.Type, effect.Value); 
-            target.ChangeStatValue(finalValue, effect.TargetType);
-            EffectApplied?.Invoke(new EffectDataPayload(source, target, finalValue, effect));
+            float delta = CalculateStatModification(target, effect.TargetType, effect.Type, effect.Value);
+            
+            float newValue = target.GetStat(effect.TargetType) + delta;
+            
+            target.ChangeStatValue(newValue, effect.TargetType);
+
+            EffectApplied?.Invoke(new EffectDataPayload(target, delta, effect));
         }
         
         private float CalculateStatModification(
-            Unit source,
             Unit target,
             StatType targetStat,
             EffectType effectType,
-            float baseValue)
+            float value)
         {
-            float qteModificator = source.GetStat(StatType.QteDamageModifier);
+            float finalValue = 0;
 
-            float finalValue;
-
-            if (qteModificator > 0)
-            {
-                finalValue = baseValue * (qteModificator + 1);
-            }
-            else
-            {
-                finalValue = baseValue;
-            }
+            if (target.IsAlive == false)
+                return 0;
 
             switch (targetStat)
             {
@@ -42,64 +37,19 @@ namespace Effects
                     switch (effectType)
                     {
                         case EffectType.Damage:
-                            if (target.IsAlive)
-                            {
-                                finalValue = -finalValue;
-                               // target.UnitAnimatorController.Play(Constants.BaseAnimations.TakeDamage);
-                            }
-                            else
-                            {
-                                finalValue = 0;
-                            }
-
-                            // Debug.Log(finalValue);
-                            break;
+                            return -Mathf.Abs(value);
 
                         case EffectType.Heal:
-                            break;
+                            return Mathf.Abs(value);
 
                         default:
+                            Debug.Log(effectType);
                             throw new ArgumentOutOfRangeException(nameof(effectType), effectType, null);
                     }
-
-
-                    // if (baseValue < 0)
-                    // {
-                    //     // Damage: учитывать броню
-                    //     float armor = target.GetStat(StatType.ArmorChance);
-                    //     finalValue = -Math.Min(0, baseValue); //TODO Добавить броню!!!
-                    //     
-                    //     Debug.Log(finalValue);
-                    // }
-                    break;
-
-                case StatType.AgilityRestoreSpeed:
-                    break;
-
-                case StatType.ArmorChance:
-                    break;
-
-                case StatType.Mana:
-                    break;
             }
 
             return finalValue;
         }
         
-        
-        public struct EffectDataPayload
-        {
-            public EffectDataPayload(Unit source, Unit target, float finalValue, EffectInfo effect)
-            {
-                Source = source;
-                Target = target;
-                FinalValue = finalValue;
-                Effect = effect;
-            }
-            public Unit Source { get; }
-            public Unit Target { get; }
-            public float FinalValue { get; }
-            public EffectInfo Effect { get; }
-        }
     }
 }

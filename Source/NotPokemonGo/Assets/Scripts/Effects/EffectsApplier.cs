@@ -18,13 +18,13 @@ namespace Effects
             _statusResolver = statusResolver;
         }
 
-        public void ApplyEffectsOnTarget(Unit source, Unit target, List<Status> statuses, List<EffectInfo> effects)
+        public void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects)
         {
             foreach (var status in statuses)
                 _statusResolver.Resolve(status, target);
 
             foreach (var effectInfo in effects)
-                _effectResolver.ApplyEffect(source, target, effectInfo);
+                _effectResolver.ApplyEffect(target, effectInfo);
         }
     }
 }

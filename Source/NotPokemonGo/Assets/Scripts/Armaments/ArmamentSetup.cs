@@ -16,7 +16,7 @@ namespace Armaments
         [field: SerializeField] public ParticleSystem ParticleSystem { get; private set; }
         [field: SerializeField] public Armament ArmamentPrefab { get; private set; }
         [field: SerializeField] public float MoveSpeed { get; private set; }
-        [field: SerializeField] public float Duration { get; private set; }
+        [field: SerializeField] public float FlyDuration { get; private set; }
         [field: SerializeField] public ArmamentFlyingType FlyingType { get; private set; }
 
         public List<StatusSetup> StatusesSetup => Statuses.ToList();

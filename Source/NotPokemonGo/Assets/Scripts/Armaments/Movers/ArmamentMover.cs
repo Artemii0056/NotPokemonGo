@@ -85,7 +85,7 @@ namespace Armaments.Movers
 
             DOTween.Sequence()
                 .Append(Armament.transform.DOMove(Armament.Target.transform.position, Duration).SetEase(Ease.Linear))
-                .AppendInterval(Armament.Setup.Duration) //TODO Вот это влияет на продолжительность линии
+                .AppendInterval(Armament.Setup.FlyDuration) 
                 .OnComplete(() => Reached?.Invoke(this));
         }
     }

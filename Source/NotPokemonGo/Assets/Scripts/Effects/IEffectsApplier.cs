@@ -6,6 +6,6 @@ namespace Effects
 {
 	public interface IEffectsApplier
 	{
-		void ApplyEffectsOnTarget(Unit source, Unit target, List<Status> statuses, List<EffectInfo> effects);
+		void ApplyEffectsOnTarget(Unit target, List<Status> statuses, List<EffectInfo> effects);
 	}
 }

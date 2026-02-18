@@ -5,14 +5,6 @@ namespace Armaments
 {
     public sealed class ArmamentContext
     {
-        public Unit Source { get; }
-        public Unit Target { get; }
-        public ArmamentSetup Setup { get; }
-        public ArmamentFlyingType FlyingType { get; }
-        public Transform SpawnPosition { get; }
-
-        public ArmamentContext? Parent { get; }
-
         public ArmamentContext(
             Unit source,
             Unit target,
@@ -28,5 +20,12 @@ namespace Armaments
             SpawnPosition = spawnPosition;
             Parent = parent;
         }
+        
+        public Unit Source { get; }
+        public Unit Target { get; }
+        public ArmamentSetup Setup { get; }
+        public ArmamentFlyingType FlyingType { get; }
+        public Transform SpawnPosition { get; }
+        public ArmamentContext? Parent { get; }
     }
 }

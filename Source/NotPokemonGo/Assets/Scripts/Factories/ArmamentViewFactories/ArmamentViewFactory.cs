@@ -25,7 +25,7 @@ namespace Factories.ArmamentViewFactories
         public Armament Create(ArmamentContext context, Transform transform)
         {
             List<EffectInfo> effects = _effectInfoFactory.Create(context.Setup.EffectsSetup);
-            List<Status> statuses = _statusesFactory.Create(context.Setup.Statuses,  context.Source, context.Target);
+            List<Status> statuses = _statusesFactory.Create(context.Setup.Statuses,  context.Target);
 
             Armament armament = Object.Instantiate(context.Setup.ArmamentPrefab, transform.position, Quaternion.identity);
             armament.Initialize(effects,  statuses, context );

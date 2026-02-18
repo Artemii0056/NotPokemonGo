@@ -37,7 +37,7 @@ namespace Units
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
         public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
-        public int Id { get; private set;  }
+        public int Id { get; private set; }
 
         public bool IsAlive => _stats[StatType.Health].CurrentValue > 0;
 
@@ -97,6 +97,17 @@ namespace Units
 
         public float GetStat(StatType statType) =>
             _stats[statType].CurrentValue;
+
+        public bool HaveStatus(StatusType statusType)
+        {
+            foreach (Status status in _imposedStatuses)
+            {
+                if (statusType == status.Setup.Type)
+                    return true;
+            }
+
+            return false;
+        }
 
         public void ChangeStatValue(float value, StatType statType)
         {
@@ -175,9 +186,6 @@ namespace Units
         public void RememberAbility(IAbilityHandler activeAbilityHandlers) =>
             AbilityHandler = activeAbilityHandlers;
 
-        public void CaptureStartPosition()
-            => StartPosition = transform.position;
-            
         public void SetStartPosition(Vector3 pos)
         {
             StartPosition = pos;

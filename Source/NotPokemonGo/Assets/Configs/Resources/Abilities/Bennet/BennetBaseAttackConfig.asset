@@ -27,7 +27,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 0}
           <MoveSpeed>k__BackingField: 0
-          <Duration>k__BackingField: 0
+          <FlyDuration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []
@@ -66,7 +66,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
           <ArmamentPrefab>k__BackingField: {fileID: 0}
           <MoveSpeed>k__BackingField: 0
-          <Duration>k__BackingField: 0
+          <FlyDuration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []
@@ -109,7 +109,7 @@ MonoBehaviour:
           <ParticleSystem>k__BackingField: {fileID: 0}
           <ArmamentPrefab>k__BackingField: {fileID: 0}
           <MoveSpeed>k__BackingField: 0
-          <Duration>k__BackingField: 0
+          <FlyDuration>k__BackingField: 0
           <FlyingType>k__BackingField: 0
         CastamentSetup:
           <Statuses>k__BackingField: []

@@ -19,6 +19,7 @@ namespace Abilities.Runtime
             Phase = phase;
             Context = context;
             Mover = mover;
+            QteResult = QteSystem.TestQTE.QteResult.Default;
         }
     }
 }

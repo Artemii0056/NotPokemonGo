@@ -2,9 +2,16 @@
 using Abilities.Configs;
 using Abilities.Runtime.Impact;
 using Abilities.Signals;
+using Armaments;
 using Armaments.Movers;
+using Effects;
+using Platoons;
 using QteSystem;
 using Services;
+using Services.StaticDataServices;
+using Spawners.Spawner;
+using Statuses;
+using Statuses.Services;
 using UnityEngine;
 
 namespace Abilities.Runtime.Policies
@@ -13,8 +20,11 @@ namespace Abilities.Runtime.Policies
     {
         private readonly IShotImpactResolver _impactResolver;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IStatusFactory _statusFactory;
+        private readonly IQteService _qteService;
+        private readonly IStaticDataService _staticDataService;
+        private readonly IStatusResolver _statusResolver;
         private readonly ShotTracker _shotTracker = new();
-        private readonly QteBinder _qteBinder;
 
         private AbilityContext _context;
 
@@ -25,29 +35,26 @@ namespace Abilities.Runtime.Policies
 
         private int _currentCount;
 
+        private IQteSession _qteSession;
+
         public VolleyRunnerPolicy(
             IQteService qteService,
-           // IArmamentSpawner armamentSpawner,
-           // IEffectsApplier effectsApplier,
-            ICoroutineRunner coroutineRunner)
+            ICoroutineRunner coroutineRunner,
+            IEffectsApplier effectsApplier,
+            IArmamentSpawner armamentSpawner,
+            IStaticDataService staticDataService, IStatusFactory statusFactory, IStatusResolver statusResolver)
         {
+            _qteService = qteService;
             _coroutineRunner = coroutineRunner;
-            _qteBinder = new QteBinder(qteService);
+            _staticDataService = staticDataService;
+            _statusFactory = statusFactory;
+            _statusResolver = statusResolver;
 
-            var policy = new ImpactPolicy
-            {
-                NoQteAction = ImpactAction.ApplyEffectsAndDestroy,
-                OnFail = ImpactAction.ApplyEffectsAndDestroy,
-                OnNormal = ImpactAction.DestroyOnly,
-                OnPerfect = ImpactAction.ReflectToSourceAndDestroy
-            };
-
-            // _impactResolver = new DefaultShotImpactResolver(
-            //     effectsApplier,
-            //     armamentSpawner,
-            //     policy,
-            //     startShot: StartShot);
+            _impactResolver = new DefaultShotImpactResolver(effectsApplier, armamentSpawner, null, StartShot);
         }
+
+        public override bool CanUseAbility(AbilityContext ctx) =>
+            ctx.Movers.Count > 0;
 
         public override void OnAbilityStart(AbilityContext context)
         {
@@ -55,27 +62,22 @@ namespace Abilities.Runtime.Policies
                 return;
 
             _context = context;
-
-            _coroutine = _coroutineRunner.StartCoroutine(Start());
-
-            //Запуск корутиины? 
-
-            // AbilityPhaseService phaseService = context?.AnimatorTrigger?.PhaseService;
-            //
-            // if (phaseService != null)
-            //     phaseService.ArmamentRequested += OnArmamentRequested; 
-
-            //Вот тут вопросики. По идее, нужно получить только старт и запустить корутину
         }
 
         public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
         {
             _activePhase = phase;
             _finishSeenForActivePhase = false;
+
+            _context = ctx;
+
+            _coroutine = _coroutineRunner.StartCoroutine(Start());
         }
 
         private IEnumerator Start()
         {
+            _qteSession = _qteService.StartSession(_context.CurrentPhase.QteType, _context.Target, 100);
+
             while (_context.Movers.Count > 0)
             {
                 IArmamentMover mover = _context.Movers[0];
@@ -85,30 +87,23 @@ namespace Abilities.Runtime.Policies
                     RequiresQte = false
                 };
 
+                _context.Movers.Remove(mover);
                 StartShot(reflected);
 
-                Debug.Log("Start");
-
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.3f);
             }
+
+            //_qteSession.Dispose();
         }
 
         public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
         {
-            // Debug.Log($"[FireballShotsPolicy] signal={signal} phaseMatch={ctx.CurrentPhase == _activePhase}");
-
             if (signal == PhaseSignal.Finish && ctx != null && ctx.CurrentPhase == _activePhase)
                 _finishSeenForActivePhase = true;
         }
 
         public override void OnAbilityStop(AbilityContext ctx)
         {
-            // var phaseService = ctx?.AnimatorTrigger?.PhaseService;
-            //
-            // if (phaseService != null)
-            //     phaseService.ArmamentRequested -= OnArmamentRequested;
-
-            _qteBinder.CleanupAll();
             _shotTracker.CleanupAll();
 
             _context = null;
@@ -121,69 +116,37 @@ namespace Abilities.Runtime.Policies
             if (phase == null)
                 return true;
 
-            if (!PhaseHasArmament(phase))
-                return true;
-
             if (!_finishSeenForActivePhase)
                 return false;
 
-            return _shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0;
-        }
+            bool canFinishPhase = _shotTracker.ActiveCount == 0 &&
+                                 _currentCount >= 3;
 
-        private static bool PhaseHasArmament(AbilityPhase phase)
-        {
-            var actions = phase.SignalActions;
-
-            if (actions == null)
-                return false;
-
-            for (int i = 0; i < actions.Count; i++)
-            {
-                PhaseSignalAction action = actions[i];
-
-                if (action != null && action.HasArmament)
-                    return true;
-            }
-
-            return false;
+            if (canFinishPhase) 
+                _qteSession.Dispose();
+            
+            return canFinishPhase;
         }
 
         private void StartShot(Shot shot)
         {
-            _shotTracker.Register(shot, OnShotLaunched, OnShotReached);
+            _shotTracker.Register(shot, null, OnShotReached);
             shot.Mover.Move();
-        }
-
-        private void OnShotLaunched(Shot shot)
-        {
-            _qteBinder.BindOnLaunch(
-                shot,
-                qteTarget: shot.Context.Target,
-                timeoutPolicy: QteTimeoutPolicy.TreatAsFail);
         }
 
         private void OnShotReached(Shot shot)
         {
-            Debug.Log(++_currentCount + " OnShotReached");
-            
-            _qteBinder.UnbindOnReach(shot);
-            //_impactResolver.Resolve(shot);
+            _currentCount++;
 
-            AbilityContext context = _context;
+            _impactResolver.Resolve2(shot);
 
-            if (context == null)
-                return;
+            ArmamentContext armamentContext = shot.Context;
 
-            AbilityPhase shotPhase = shot.Phase;
-
-            if (shotPhase != null
-                && shotPhase == _activePhase
-                && _finishSeenForActivePhase)
+            if (armamentContext.Target.PlatoonType == PlatoonType.Enemies)
             {
-                if (_shotTracker.ActiveCount == 0 && _qteBinder.ActiveCount == 0)
-                {
-                    context.Animator?.FlagSignal((int)PhaseSignal.Finish);
-                }
+                StatusSetup statusSetup = _staticDataService.GetStatusSetup(StatusType.Stun);
+
+                _statusResolver.Resolve(_statusFactory.Create(statusSetup, armamentContext.Target), armamentContext.Target);
             }
         }
     }

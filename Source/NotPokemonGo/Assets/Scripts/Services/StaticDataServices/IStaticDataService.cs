@@ -27,5 +27,7 @@ namespace Services.StaticDataServices
         CombatText CombatTextPrefab { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
         DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
+        StatusSetup GetStatusSetup(StatusType statusType);
+        ParticleSystem GetParticleByType(StatusType setupType);
     }
 }

@@ -13,8 +13,6 @@ namespace Pools
         {
             _prefab = prefab;
 
-            Debug.Log(_prefab == null);
-            
             var go = new GameObject("[Pool] CombatText");
             
             go.SetActive(false);

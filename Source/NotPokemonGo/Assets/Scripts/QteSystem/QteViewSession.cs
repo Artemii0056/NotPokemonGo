@@ -1,7 +1,6 @@
 ﻿using System;
 using QteSystem.TestQTE;
 using UI.QTE;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace QteSystem
@@ -33,17 +32,11 @@ namespace QteSystem
 
         private void OnResulted(QteResult result)
         {
-            Debug.Log("QteViewSession.OnResulted");
-            
-            // Продвинутый QTE сам сказал точный результат
             Complete(result);
         }
 
         private void OnSuccessed(QteButtonView _)
         {
-            // Базовый QTE: успех => Normal
-            // (Если конкретный QTE умеет Perfect — он должен вызвать Resulted(Perfect),
-            // и мы сюда вообще не обязаны полагаться.)
             Complete(QteResult.Normal);
         }
 

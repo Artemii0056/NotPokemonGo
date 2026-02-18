@@ -14,7 +14,9 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using QteSystem;
 using Services;
+using Services.StaticDataServices;
 using Spawners.Spawner;
+using Statuses;
 using Statuses.Services;
 using UnityEngine;
 using Unit = Units.Unit;
@@ -30,6 +32,9 @@ namespace Abilities
         private readonly IArmamentViewFactory _armamentViewFactory;
         private readonly IArmamentSpawner _armamentSpawner;
         private readonly IStatusManager _statusManager;
+        private readonly IStaticDataService _staticDataService;
+        private readonly IStatusFactory _statusFactory;
+        private readonly IStatusResolver _statusResolver;
 
         private Battlefield _battlefield;
 
@@ -50,7 +55,9 @@ namespace Abilities
             IEffectsApplier effectsApplier, 
             IArmamentViewFactory armamentViewFactory, 
             IArmamentSpawner armamentSpawner, 
-            IStatusManager statusManager)
+            IStatusManager statusManager, 
+            IStatusFactory statusFactory, 
+            IStaticDataService staticDataService, IStatusResolver statusResolver)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
@@ -59,6 +66,9 @@ namespace Abilities
             _armamentViewFactory = armamentViewFactory;
             _armamentSpawner = armamentSpawner;
             _statusManager = statusManager;
+            _statusFactory = statusFactory;
+            _staticDataService = staticDataService;
+            _statusResolver = statusResolver;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -79,10 +89,8 @@ namespace Abilities
                         _coroutineRunner,
                         new IAbilityPolicy[]
                         {
-                            //new FinishSignalPolicy(), //Так то можно попробовать сюда закинуть выход, но только если фаза... Не мувмент???
                             new VolleyComposerPolicy(_armamentSpawner),
-                            //new VolleyRunnerPolicy(_qteService, _coroutineRunner)
-                            //new PortalVfxPolicy(abilityModel, ParticleSpawnType.Middle)
+                            new VolleyRunnerPolicy(_qteService, _coroutineRunner,_effectsApplier,  _armamentSpawner, _staticDataService, _statusFactory, _statusResolver)
                         });
 
                     _abilityHandler.Finished += Continue;
@@ -219,7 +227,7 @@ namespace Abilities
 
             if (_lastUnit.PlatoonType == PlatoonType.Heroes)
             {
-                _statusManager.TickTurn();
+                _statusManager.TickUnitTurn();
             }
             
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);

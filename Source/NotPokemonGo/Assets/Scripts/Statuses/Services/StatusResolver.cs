@@ -4,7 +4,7 @@ namespace Statuses.Services
 {
     public class StatusResolver : IStatusResolver
     {
-        private IStatusManager _statusManager;
+        private readonly IStatusManager _statusManager;
 
         public StatusResolver(IStatusManager statusManager) => 
             _statusManager = statusManager;

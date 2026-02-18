@@ -22,7 +22,7 @@ namespace Battlefields
 
         public void Tick()
         {
-            _statusManager.Tick();
+            _statusManager.TickTurn();
             _statusManager.RemoveInactive();
 
             EnemyPlatoon.Tick();

@@ -9,7 +9,7 @@ namespace QteSystem.TestQTE
         [SerializeField] private PartTimingBar _partTimingBar;  
         [SerializeField] private TimingBar _timingBar;
 
-        [SerializeField] private KeyCode _inputKey = KeyCode.Space;
+        [SerializeField] private KeyCode _inputKey = KeyCode.Space; //TODO Сервис
 
         private bool _isRun;
         private float _duration;

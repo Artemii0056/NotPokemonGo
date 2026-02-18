@@ -5,6 +5,6 @@ namespace Statuses.Factory
 {
     public interface IStatusesFactory
     {
-        List<Status> Create(IEnumerable<StatusSetup> setups, Unit source, Unit target);
+        List<Status> Create(IEnumerable<StatusSetup> setups, Unit target);
     }
 }

@@ -4,7 +4,9 @@ using Armaments.Movers;
 using Effects;
 using QteSystem.TestQTE;
 using Spawners.Spawner;
+using Statuses;
 using Units;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Abilities.Runtime.Impact
@@ -16,6 +18,8 @@ namespace Abilities.Runtime.Impact
         private readonly ImpactPolicy _policy;
         private readonly Action<Shot> _startShot;
 
+        private int _currentCount;
+
         public DefaultShotImpactResolver(
             IEffectsApplier effectsApplier,
             IArmamentSpawner armamentSpawner,
@@ -26,6 +30,34 @@ namespace Abilities.Runtime.Impact
             _armamentSpawner = armamentSpawner;
             _policy = policy ?? new ImpactPolicy();
             _startShot = startShot;
+
+            _currentCount = 0;
+        }
+
+        public void Resolve2(Shot shot)
+        {
+            if (shot == null)
+                return;
+
+            Unit target = shot.Context.Target; 
+            
+            if (target.HaveStatus(StatusType.Bubble))
+            {
+                Debug.Log("HaveStatus");
+                
+                _currentCount++;
+                
+                if (_currentCount >= 3)
+                {
+                    Reflect(shot);
+                }
+            }
+            else
+            {
+                ApplyEffects(shot);
+            }
+
+            DestroyArmament(shot);
         }
 
         public void Resolve(Shot shot)
@@ -47,7 +79,7 @@ namespace Abilities.Runtime.Impact
                     break;
 
                 case ImpactAction.ReflectToSourceAndDestroy:
-                    Reflect(shot); 
+                    Reflect(shot);
                     DestroyArmament(shot);
                     break;
 
@@ -80,27 +112,30 @@ namespace Abilities.Runtime.Impact
                 return;
 
             _effectsApplier.ApplyEffectsOnTarget(
-                shot.Context.Source,
                 shot.Context.Target,
                 armament.Statuses,
                 armament.Effects);
         }
 
-        private void Reflect(Shot original) //Это уже отражение
+        private void Reflect(Shot original)
         {
-            Unit newSource = original.Context.Target;
-            Unit newTarget = original.Context.Source;
+            ArmamentContext originalContext = original.Context;
+            
+            Unit newSource = originalContext.Target;
+            Unit newTarget = originalContext.Source;
 
-            ArmamentSetup setup = original.Context.Setup;
+            ArmamentSetup setup = originalContext.Setup; //Тут нужно получить армамент с другими параметрами 
 
-            ArmamentContext context = new ArmamentContext(newSource, newTarget, setup, ArmamentFlyingType.Direct,newSource.abilityPos, original.Context); //TODO Сюда нужно точку спавна передать? 
+            ArmamentContext context = new ArmamentContext(newSource, newTarget, setup, ArmamentFlyingType.Direct,
+                newSource.abilityPos, originalContext); 
+            
             IArmamentMover mover = _armamentSpawner.Create(context);
 
             Shot reflected = new Shot(original.Phase, context, mover)
             {
                 RequiresQte = false
             };
-            
+
             _startShot?.Invoke(reflected);
         }
 
