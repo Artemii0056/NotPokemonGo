@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace Abilities.Runtime.Impact
 {
-    public sealed class DefaultShotImpactResolver : IShotImpactResolver
+    public sealed class DefaultShotImpactResolver : IShotImpactResolver //TODO Изменить 
     {
         private readonly IEffectsApplier _effectsApplier;
         private readonly IArmamentSpawner _armamentSpawner;

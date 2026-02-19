@@ -78,10 +78,10 @@ namespace Services.AbilityServices
             if (phase == null || source == null || target == null)
                 return;
 
-            if (!ReferenceEquals(_currentPhase, phase))
+            if (ReferenceEquals(_currentPhase, phase) == false)
                 return;
 
-            var actions = phase.SignalActions;
+            List<PhaseSignalAction> actions = phase.SignalActions;
             
             if (actions == null || actions.Count == 0)
             {

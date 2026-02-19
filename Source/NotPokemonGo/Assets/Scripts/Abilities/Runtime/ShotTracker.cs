@@ -5,15 +5,8 @@ using Armaments.Movers;
 
 namespace Abilities.Runtime
 {
-    public sealed class ShotTracker : IDisposable
+    public sealed class ShotTracker : IDisposable //TODO Убарть 
     {
-        private sealed class Entry
-        {
-            public Shot Shot;
-            public Action<Shot> OnLaunched;
-            public Action<Shot> OnReached;
-        }
-
         private readonly Dictionary<IArmamentMover, Entry> _entries = new();
 
         public int ActiveCount => _entries.Count;
@@ -26,7 +19,7 @@ namespace Abilities.Runtime
             if (shot.Mover == null) 
                 throw new ArgumentException("Shot.Mover is null", nameof(shot));
 
-            var mover = shot.Mover;
+            IArmamentMover mover = shot.Mover;
 
             if (_entries.ContainsKey(mover))
                 throw new InvalidOperationException("ShotTracker: mover already registered.");
@@ -86,5 +79,12 @@ namespace Abilities.Runtime
 
         public void Dispose() => 
             CleanupAll();
+    }
+    
+    sealed class Entry
+    {
+        public Shot Shot;
+        public Action<Shot> OnLaunched;
+        public Action<Shot> OnReached;
     }
 }

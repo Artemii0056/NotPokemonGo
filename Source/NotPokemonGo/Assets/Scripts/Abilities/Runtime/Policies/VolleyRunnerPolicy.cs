@@ -18,13 +18,14 @@ namespace Abilities.Runtime.Policies
 {
     public class VolleyRunnerPolicy : AbilityPolicyBase
     {
-        private readonly IShotImpactResolver _impactResolver;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IStatusFactory _statusFactory;
         private readonly IQteService _qteService;
         private readonly IStaticDataService _staticDataService;
         private readonly IStatusResolver _statusResolver;
-        private readonly ShotTracker _shotTracker = new();
+        private readonly ShotCoordinator _shotCoordinator = new();
+        private readonly BaseArmamentImpactResolver _baseArmamentImpactResolver;
+        private IQteSession _qteSession;
 
         private AbilityContext _context;
 
@@ -35,7 +36,9 @@ namespace Abilities.Runtime.Policies
 
         private int _currentCount;
 
-        private IQteSession _qteSession;
+        private int _shotCount;
+
+        private bool _haveCounterAttack;
 
         public VolleyRunnerPolicy(
             IQteService qteService,
@@ -50,7 +53,8 @@ namespace Abilities.Runtime.Policies
             _statusFactory = statusFactory;
             _statusResolver = statusResolver;
 
-            _impactResolver = new DefaultShotImpactResolver(effectsApplier, armamentSpawner, null, StartShot);
+            _baseArmamentImpactResolver = new BaseArmamentImpactResolver(effectsApplier, armamentSpawner, StartShot);
+            _haveCounterAttack = false;
         }
 
         public override bool CanUseAbility(AbilityContext ctx) =>
@@ -62,6 +66,8 @@ namespace Abilities.Runtime.Policies
                 return;
 
             _context = context;
+            
+            _shotCount = context.Movers.Count;
         }
 
         public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
@@ -82,13 +88,8 @@ namespace Abilities.Runtime.Policies
             {
                 IArmamentMover mover = _context.Movers[0];
 
-                Shot reflected = new Shot(_activePhase, mover.Armament.Context, mover)
-                {
-                    RequiresQte = false
-                };
-
                 _context.Movers.Remove(mover);
-                StartShot(reflected);
+                StartShot(mover);
 
                 yield return new WaitForSeconds(0.3f);
             }
@@ -102,14 +103,15 @@ namespace Abilities.Runtime.Policies
 
         public override void OnAbilityStop(AbilityContext ctx)
         {
-            _shotTracker.CleanupAll();
+            _shotCoordinator.CleanupAll();
 
             _context = null;
             _activePhase = null;
             _finishSeenForActivePhase = false;
         }
 
-        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase) //Попробовать сделать иначе. Кидать экшн в момент возможного окончания аблки. И из этой выпилить часть не нежного
+        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase) //Тут должно произойти окончание.
+                                                                                    //Он сам должен сообщить, когда частично или полностью закончил что нужно
         {
             if (phase == null)
                 return true;
@@ -117,34 +119,37 @@ namespace Abilities.Runtime.Policies
             if (!_finishSeenForActivePhase)
                 return false;
 
-            bool canFinishPhase = _shotTracker.ActiveCount == 0 &&
-                                 _currentCount >= 3;
+            bool canFinishPhase = _shotCoordinator.ActiveCount == 0 &&
+                                  _currentCount >= _shotCount
+                                  && _haveCounterAttack;
 
             if (canFinishPhase) 
                 _qteSession.Dispose();
             
             Debug.Log(canFinishPhase);
-            Debug.Log($"{_shotTracker.ActiveCount} Count {canFinishPhase} ");
+            Debug.Log($"{_shotCoordinator.ActiveCount} Count {canFinishPhase} ");
             
             return canFinishPhase;
         }
 
-        private void StartShot(Shot shot)
+        private void StartShot(IArmamentMover mover)
         {
-            _shotTracker.Register(shot, null, OnShotReached);
-            shot.Mover.Move();
+            _shotCoordinator.Register(mover, OnShotReached);
+            mover.Move();
         }
-
-        private void OnShotReached(Shot shot) //Тут связь. Каждый раз, когда "долетел" можно пытаться закончить фазу 
+        
+        private void OnShotReached(IArmamentMover mover) 
         {
             _currentCount++;
 
-            _impactResolver.Resolve2(shot);
-
-            ArmamentContext armamentContext = shot.Context;
+            _baseArmamentImpactResolver.Resolve(mover);
+            
+            ArmamentContext armamentContext = mover.Armament.Context;
 
             if (armamentContext.Target.PlatoonType == PlatoonType.Enemies)
             {
+                _haveCounterAttack = false;
+                
                 StatusSetup statusSetup = _staticDataService.GetStatusSetup(StatusType.Stun);
 
                 _statusResolver.Resolve(_statusFactory.Create(statusSetup, armamentContext.Target), armamentContext.Target);

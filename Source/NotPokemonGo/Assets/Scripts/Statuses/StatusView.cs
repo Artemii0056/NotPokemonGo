@@ -32,11 +32,9 @@ namespace Statuses
         public void Tick()
         {
             if (_status == null)
-            {
                 return;
-            }
 
-            Debug.Log($"_status.TickCount во вью = {_status.TickCount}");
+            //Debug.Log($"_status.TickCount во вью = {_status.TickCount}");
             
             _text.text = _status.TickCount.ToString(CultureInfo.InvariantCulture);
         }
