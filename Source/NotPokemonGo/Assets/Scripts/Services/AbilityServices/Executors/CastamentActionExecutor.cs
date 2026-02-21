@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Abilities.Configs;
 using Castaments;
 using Units;
@@ -19,18 +20,17 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasCastament;
 
-        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (_targetSelector == null || _castamentApplicator == null)
                 return;
 
-            var targets = _targetSelector.GetTargets(action.TargetMode, target);
+            List<Unit> targets = _targetSelector.GetTargets(action.TargetMode, target);
             
             if (targets == null || targets.Count == 0)
                 return;
 
             _castamentApplicator.Apply(action.CastamentSetup, source, targets.ToArray());
-            return;
         }
     }
 }

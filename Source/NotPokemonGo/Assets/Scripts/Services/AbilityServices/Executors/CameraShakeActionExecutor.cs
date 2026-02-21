@@ -1,8 +1,6 @@
-﻿using System;
-using Abilities.Configs;
+﻿using Abilities.Configs;
 using Services.Cameras;
 using Units;
-using UnityEngine;
 
 namespace Services.AbilityServices.Executors
 {
@@ -16,31 +14,10 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) =>
             action != null && action.HasShake;
 
-        public void Execute(
-            AbilityPhase phase,
-            PhaseSignalAction action,
-            Unit source,
-            Unit target,
-            PhaseGate finishGate,
-            Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (_shakeService == null)
                 return ;
-            
-           // Debug.Log("Camera shake action executed");
-
-            //var token = finishGate.Acquire();
-            //bool done = false;
-
-            // void OnComplete()
-            // {
-            //     if (done) 
-            //         return;
-            //     
-            //     done = true;
-            //     token.Dispose();
-            //     tryCompleteFinish?.Invoke();
-            // }
 
             _shakeService.Shake(action.ShakeAmplitude, action.ShakeFrequency, action.ShakeDuration);
         }

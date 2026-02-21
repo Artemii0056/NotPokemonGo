@@ -16,20 +16,10 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action)
             => action != null && action.HasSound;
 
-        public void Execute(
-            AbilityPhase phase,
-            PhaseSignalAction action,
-            Unit source,
-            Unit target,
-            PhaseGate gate,
-            System.Action onComplete)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate gate) 
         {
-            // Сразу завершаем: звук не должен блокировать фазу.
             if (_audio == null)
-            {
-                onComplete?.Invoke();
-                return ;
-            }
+                return;
 
             if (action.Sfx2D)
             {
@@ -40,9 +30,6 @@ namespace Services.AbilityServices.Executors
                 var owner = action.ParticleOwner == ParticleOwner.Target ? target : source;
                 _audio.Play3D(action.SfxClip, owner.transform.position, action.SfxVolume);
             }
-
-            onComplete?.Invoke();
-            return;
         }
     }
 }

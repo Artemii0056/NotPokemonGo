@@ -10,7 +10,6 @@ using Spawners;
 using TimeServices;
 using Units;
 using Units.Movement;
-using UnityEngine;
 
 namespace Services.AbilityServices
 {
@@ -21,11 +20,7 @@ namespace Services.AbilityServices
 
         private AbilityPhase _currentPhase;
 
-        private Action _requestFinishCheck;
-
-        private int _phaseVersion;
-
-        public event Action<ArmamentRequest> ArmamentRequested;
+        public event Action PhaseCompleted;
 
         public AbilityPhaseService(
             ICastamentApplicator castamentApplicator,
@@ -48,93 +43,62 @@ namespace Services.AbilityServices
                 new CastamentActionExecutor(targetSelector, castamentApplicator),
                 new CameraShakeActionExecutor(cameraShake)
             };
-        }
 
-        public void BindFinishCheck(Action requestFinishCheck)
-        {
-            _requestFinishCheck = requestFinishCheck;
+            _finishGate.Opened += OnGateOpened;
         }
+        
+        public event Action<ArmamentRequest> ArmamentRequested;
 
         public void BeginPhase(AbilityPhase phase)
         {
             _currentPhase = phase;
             _finishGate.Reset();
-
-            _phaseVersion++;
         }
 
-        public IDisposable AcquireFinishToken(string tag = null)
-        {
-            var t = _finishGate.Acquire(tag);
-            Debug.Log($"[Gate] AcquireFinishToken tag={tag} -> {(t == null ? "NULL" : t.GetType().Name)} pending={_finishGate.Pending}");
-            return t;
-        }
-
-        public void RequestFinishCheck() => 
-            TryCompleteFinish();
-
-        public void OnSignal(AbilityPhase phase, Unit source, Unit target, PhaseSignal signal)
+        public void OnSignal(
+            AbilityPhase phase,
+            Unit source,
+            Unit target,
+            PhaseSignal signal)
         {
             if (phase == null || source == null || target == null)
                 return;
 
-            if (ReferenceEquals(_currentPhase, phase) == false)
+            if (!ReferenceEquals(_currentPhase, phase))
                 return;
 
             List<PhaseSignalAction> actions = phase.SignalActions;
-            
+
             if (actions == null || actions.Count == 0)
-            {
-                TryCompleteFinish();
                 return;
-            }
+
+            using var rootToken = _finishGate.Acquire("SignalRoot");
 
             for (int i = 0; i < actions.Count; i++)
             {
-                var action = actions[i];
-                
+                PhaseSignalAction action = actions[i];
+
                 if (action == null || action.Signal != signal)
                     continue;
 
                 for (int j = 0; j < _executors.Count; j++)
                 {
                     var executor = _executors[j];
-                    
+
                     if (!executor.CanExecute(action))
                         continue;
 
-                    int capturedVersion = _phaseVersion;
-
                     executor.Execute(
-                        phase, action, source, target,
-                        _finishGate,
-                        () =>
-                        {
-                            if (capturedVersion != _phaseVersion)
-                                return;
-
-                            TryCompleteFinish();
-                        });
+                        phase,
+                        action,
+                        source,
+                        target,
+                        _finishGate);
                 }
             }
-
-            TryCompleteFinish();
         }
 
-        private void TryCompleteFinish()
-        {
-            if (_currentPhase == null)
-                return;
-
-            if (!_finishGate.IsOpen)
-                return;
-
-            Action cb = _requestFinishCheck;
-            
-            if (cb == null)
-                return;
-
-            cb.Invoke();
-        }
+        private void OnGateOpened() => 
+            PhaseCompleted?.Invoke();
     }
 }

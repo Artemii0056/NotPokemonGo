@@ -13,6 +13,7 @@ using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using QteSystem;
+using ReactionSystems;
 using Services;
 using Services.StaticDataServices;
 using Spawners.Spawner;
@@ -35,6 +36,7 @@ namespace Abilities
         private readonly IStaticDataService _staticDataService;
         private readonly IStatusFactory _statusFactory;
         private readonly IStatusResolver _statusResolver;
+        private readonly IReactionService _reactionService;
 
         private Battlefield _battlefield;
 
@@ -57,7 +59,7 @@ namespace Abilities
             IArmamentSpawner armamentSpawner, 
             IStatusManager statusManager, 
             IStatusFactory statusFactory, 
-            IStaticDataService staticDataService, IStatusResolver statusResolver)
+            IStaticDataService staticDataService, IStatusResolver statusResolver, IReactionService reactionService)
         {
             _coroutineRunner = coroutineRunner;
             _qteService = qteService;
@@ -69,6 +71,7 @@ namespace Abilities
             _statusFactory = statusFactory;
             _staticDataService = staticDataService;
             _statusResolver = statusResolver;
+            _reactionService = reactionService;
             _activeAbilityHandlers = new List<IAbilityHandler>();
         }
 
@@ -90,7 +93,7 @@ namespace Abilities
                         new IAbilityPolicy[]
                         {
                             new VolleyComposerPolicy(_armamentSpawner),
-                            new VolleyRunnerPolicy(_qteService, _coroutineRunner,_effectsApplier,  _armamentSpawner, _staticDataService, _statusFactory, _statusResolver)
+                            new VolleyRunnerPolicy(_qteService, _coroutineRunner,_effectsApplier, _reactionService)
                         });
 
                     _abilityHandler.Finished += Continue;

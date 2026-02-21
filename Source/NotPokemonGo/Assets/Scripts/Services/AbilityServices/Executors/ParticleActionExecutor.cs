@@ -1,4 +1,3 @@
-using System;
 using Abilities.Configs;
 using Spawners;
 using Units;
@@ -15,7 +14,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasParticle;
 
-        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (action.ParticlePrefab == null)
                 return;
@@ -26,7 +25,6 @@ namespace Services.AbilityServices.Executors
                 return;
 
             _particleSpawner.Spawn(owner, action.ParticleSpawnType, action.ParticlePrefab);
-            return;
         }
     }
 }

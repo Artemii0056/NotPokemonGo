@@ -1,111 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Services.AbilityServices
 {
     public sealed class PhaseGate
     {
-        private int _pending;
+        private readonly Dictionary<int, string> _holders;
+        private int _nextId;
+        
         private int _version;
 
-        public bool IsOpen => _pending == 0;
+        private int _pending;
 
-        // Для быстрой диагностики:
-        public int Pending => _pending;
-        public int Version => _version;
+        public PhaseGate() =>
+            _holders = new();
 
-#if UNITY_EDITOR
-        private int _nextId;
-        private readonly Dictionary<int, string> _holders = new(); // id -> stack/tag
-#endif
+        public event Action Opened; 
 
         public IDisposable Acquire(string tag = null)
         {
-            _pending++;
-
-#if UNITY_EDITOR
             int id = ++_nextId;
-            string trace = tag ?? "no-tag";
-            trace += "\n" + StackTraceUtility.ExtractStackTrace();
-            _holders[id] = trace;
-            return new Releaser(this, _version, id);
-#else
-            return new Releaser(this, _version);
-#endif
+
+            _pending++;
+            _holders[id] = tag ?? "no-tag";
+
+            return new Token(this, id);
         }
 
         public void Reset()
         {
-            _pending = 0;
             _version++;
-
-#if UNITY_EDITOR
+            _pending = 0;
             _holders.Clear();
-#endif
         }
 
-        private void Release(int tokenVersion
-#if UNITY_EDITOR
-            , int id
-#endif
-        )
+        public void Release(int id)
         {
-            if (tokenVersion != _version)
+            if (_holders.Remove(id) == false)
+                return; 
+            
+            _pending--;
+
+            if (_pending == 0)
+                Opened?.Invoke();
+        }
+
+        public void Dispose() =>
+            _holders.Clear();
+    }
+
+    sealed class Token : IDisposable
+    {
+        private readonly PhaseGate _gate;
+        private readonly int _id;
+        private bool _released;
+        
+        private readonly int _version;
+
+        public Token(PhaseGate gate, int id)
+        {
+            _gate = gate;
+            _id = id;
+        }
+
+        public void Dispose()
+        {
+            if (_released)
                 return;
 
-            _pending--;
-            if (_pending < 0) _pending = 0;
-
-#if UNITY_EDITOR
-            _holders.Remove(id);
-#endif
-        }
-
-#if UNITY_EDITOR
-        public void DumpIfStuck(string prefix)
-        {
-            if (IsOpen) return;
-
-            Debug.LogError($"{prefix} Gate stuck. Pending={_pending} Version={_version}");
-
-            foreach (var kv in _holders)
-                Debug.LogError($"Gate holder #{kv.Key}:\n{kv.Value}");
-        }
-#endif
-
-        private sealed class Releaser : IDisposable
-        {
-            private PhaseGate _gate;
-            private readonly int _version;
-
-#if UNITY_EDITOR
-            private readonly int _id;
-            public Releaser(PhaseGate gate, int version, int id)
-            {
-                _gate = gate;
-                _version = version;
-                _id = id;
-            }
-#else
-            public Releaser(PhaseGate gate, int version)
-            {
-                _gate = gate;
-                _version = version;
-            }
-#endif
-
-            public void Dispose()
-            {
-                if (_gate == null) return;
-
-#if UNITY_EDITOR
-                _gate.Release(_version, _id);
-#else
-                _gate.Release(_version);
-#endif
-                _gate = null;
-            }
+            _released = true;
+            _gate.Release(_id);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Abilities.Configs;
 using Units;
 
@@ -8,12 +7,6 @@ namespace Services.AbilityServices.Executors
     {
         bool CanExecute(PhaseSignalAction action);
 
-        void Execute(
-            AbilityPhase phase,
-            PhaseSignalAction action,
-            Unit source,
-            Unit target,
-            PhaseGate finishGate,
-            Action tryCompleteFinish = null);
+        void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate);
     }
 }

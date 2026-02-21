@@ -33,7 +33,7 @@ namespace Abilities.Runtime.Policies
 
             if (phase.QteType != QteType.Unknown)
             {
-                _gateToken = ctx.AnimatorTrigger.PhaseService.AcquireFinishToken("QTE");
+                //_gateToken = ctx.AnimatorTrigger.PhaseService.AcquireFinishToken("QTE");
                 Debug.Log("[QTE] Gate token ACQUIRED");
             }
         }
@@ -67,8 +67,6 @@ namespace Abilities.Runtime.Policies
 
             _gateToken.Dispose();
             _gateToken = null;
-
-            _context.AnimatorTrigger.PhaseService.RequestFinishCheck();
         }
 
         public override void OnAbilityStop(AbilityContext ctx)

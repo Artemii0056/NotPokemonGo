@@ -47,7 +47,7 @@ namespace Abilities.Runtime
             _context.Animator = source.AnimatorController;
 
             if (_context.AnimatorTrigger != null)
-                _context.AnimatorTrigger.PhaseService.BindFinishCheck(TryFinishPhase);
+                _context.AnimatorTrigger.PhaseService.PhaseCompleted += TryFinishPhase;
 
             foreach (var policy in _policies)
                 policy.OnAbilityStart(_context);
@@ -114,8 +114,6 @@ namespace Abilities.Runtime
 
             foreach (var policy in _activePolicies)
                 policy.OnSignal(_context, signal);
-
-            _context.AnimatorTrigger?.PhaseService.RequestFinishCheck();
         }
 
         private void TryFinishPhase()
@@ -125,8 +123,6 @@ namespace Abilities.Runtime
 
             bool can = _activePolicies.All(policy => policy.CanFinishPhase(_context, _context.CurrentPhase));
 
-           //Debug.Log($"[TryFinishPhase] phase={_context.CurrentPhase.AnimationClip.name} can={can} Count={_activePolicies.Count}");
-           
             if (can)
                 _waitingPhaseFinish = false;
         }
@@ -141,7 +137,8 @@ namespace Abilities.Runtime
         {
             _context.Animator.Signal -= OnAnimSignal;
 
-            _context.AnimatorTrigger.PhaseService.BindFinishCheck(null);
+            if (_context.AnimatorTrigger != null)
+                _context.AnimatorTrigger.PhaseService.PhaseCompleted -= TryFinishPhase;
 
             foreach (var policy in _activePolicies)
                 policy.OnAbilityStop(_context);

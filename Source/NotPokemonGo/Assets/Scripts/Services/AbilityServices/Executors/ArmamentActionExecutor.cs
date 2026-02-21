@@ -15,13 +15,10 @@ namespace Services.AbilityServices.Executors
             _raise = raise;
         }
 
-        public bool CanExecute(PhaseSignalAction action)
-        {
-            return action != null && action.HasArmament;
-        }
+        public bool CanExecute(PhaseSignalAction action) => 
+            action != null && action.HasArmament;
 
-        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target,
-            PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (_targetSelector == null || _raise == null)
                 return;
@@ -32,7 +29,6 @@ namespace Services.AbilityServices.Executors
                 return;
 
             _raise(new ArmamentRequest(phase, action, source, targets.ToArray()));
-            return;
         }
     }
 }

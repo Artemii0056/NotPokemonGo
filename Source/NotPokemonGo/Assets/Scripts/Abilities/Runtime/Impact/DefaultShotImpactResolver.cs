@@ -41,7 +41,7 @@ namespace Abilities.Runtime.Impact
 
             Unit target = shot.Context.Target; 
             
-            if (target.HaveStatus(StatusType.Bubble))
+            if (target.HasStatus(StatusType.Bubble))
             {
                 Debug.Log("HaveStatus");
                 

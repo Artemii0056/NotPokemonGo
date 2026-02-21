@@ -98,7 +98,7 @@ namespace Units
         public float GetStat(StatType statType) =>
             _stats[statType].CurrentValue;
 
-        public bool HaveStatus(StatusType statusType)
+        public bool HasStatus(StatusType statusType)
         {
             foreach (Status status in _imposedStatuses)
             {

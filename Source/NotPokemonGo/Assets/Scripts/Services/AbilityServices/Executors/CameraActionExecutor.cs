@@ -15,7 +15,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) => 
             action != null && action.HasCamera;
 
-        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate, Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (_camera == null)
                 return;
@@ -32,7 +32,6 @@ namespace Services.AbilityServices.Executors
                 done = true;
 
                 token.Dispose();
-                tryCompleteFinish?.Invoke();
             }
 
             _camera.Play(action.CameraCommand, source, target, action.CameraBlendTimeout, OnComplete);

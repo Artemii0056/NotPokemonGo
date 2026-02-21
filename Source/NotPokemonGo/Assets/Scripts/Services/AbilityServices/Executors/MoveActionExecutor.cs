@@ -1,4 +1,3 @@
-using System;
 using Abilities.Configs;
 using Units;
 using Units.Movement;
@@ -16,13 +15,7 @@ namespace Services.AbilityServices.Executors
         public bool CanExecute(PhaseSignalAction action) =>
             action != null && action.HasMove;
 
-        public void Execute(
-            AbilityPhase phase,
-            PhaseSignalAction action,
-            Unit source,
-            Unit target,
-            PhaseGate finishGate,
-            Action tryCompleteFinish)
+        public void Execute(AbilityPhase phase, PhaseSignalAction action, Unit source, Unit target, PhaseGate finishGate)
         {
             if (_unitMover == null || source == null)
                 return;
@@ -31,7 +24,9 @@ namespace Services.AbilityServices.Executors
 
             float delay = 0f;
 
-            var token = finishGate.Acquire($"MoveActionExecutor phase={phase.AnimationCashName}");
+            var token = finishGate.Acquire(
+                $"MoveAction phase={phase.AnimationCashName}");
+
             bool done = false;
 
             void OnComplete()
@@ -41,19 +36,29 @@ namespace Services.AbilityServices.Executors
 
                 done = true;
 
-                token.Dispose();
-                tryCompleteFinish?.Invoke();
+                token.Dispose(); 
             }
 
             if (action.MoveMode == MoveMode.Move)
             {
-                _unitMover.MoveTo(source.transform, dest, action.MoveDuration, delay, OnComplete);
+                _unitMover.MoveTo(
+                    source.transform,
+                    dest,
+                    action.MoveDuration,
+                    delay,
+                    OnComplete);
             }
             else if (action.MoveMode == MoveMode.Jump)
             {
-                _unitMover.MoveTo(source.transform, dest, action.MoveDuration, delay, OnComplete);
+                _unitMover.MoveTo(
+                    source.transform,
+                    dest,
+                    action.MoveDuration,
+                    delay,
+                    OnComplete);
             }
         }
+
 
         private static Vector3 ResolveMoveDestination(PhaseSignalAction phase, Unit source, Unit target)
         {

@@ -54,7 +54,6 @@ namespace Statuses.Services
                 if (status.IsRealtimeEnded)
                 {
                     UnregisterStatus(status);
-                    Debug.Log("Realtime tick ended");
                 }
             }
         }

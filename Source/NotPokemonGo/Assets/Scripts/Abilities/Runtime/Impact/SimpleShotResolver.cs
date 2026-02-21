@@ -3,6 +3,7 @@ using Abilities.Runtime.Policies;
 using Effects;
 using Services.AbilityServices;
 using Spawners.Spawner;
+using UnityEngine;
 
 namespace Abilities.Runtime.Impact
 {
@@ -95,14 +96,14 @@ namespace Abilities.Runtime.Impact
 
         private void OnShotReached(Shot shot)
         {
+            Debug.Log("Shot reached callback");
+            
             _impactResolver.Resolve(shot);
 
             var context = _context;
             
             if (context == null)
                 return;
-
-            context.AnimatorTrigger?.PhaseService?.RequestFinishCheck();
         }
 
         private static bool PhaseHasArmament(AbilityPhase phase)

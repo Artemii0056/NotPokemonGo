@@ -62,6 +62,7 @@ namespace Units
 
             _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
             _reactionService.Register(new CounterattackReaction(abilityService));
+            _reactionService.Register(new ReflectReaction(spawner));
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
