@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Abilities.Configs;
 using Abilities.Signals;
 using Castaments;
+using Cysharp.Threading.Tasks;
 using Services.AbilityServices.Executors;
 using Services.AudioServices;
 using Services.Cameras;
@@ -20,8 +22,11 @@ namespace Services.AbilityServices
 
         private AbilityPhase _currentPhase;
 
-        public event Action PhaseCompleted;
+        private UniTaskCompletionSource _phaseCompletedTcs;
+        private bool _finishSignalReceived;
 
+        public event Action PhaseCompleted;
+        
         public AbilityPhaseService(
             ICastamentApplicator castamentApplicator,
             ITargetSelector targetSelector,
@@ -46,14 +51,20 @@ namespace Services.AbilityServices
 
             _finishGate.Opened += OnGateOpened;
         }
-        
+
         public event Action<ArmamentRequest> ArmamentRequested;
 
-        public void BeginPhase(AbilityPhase phase)
+        public void BeginPhase(AbilityPhase phase, int ownerId = 0)
         {
             _currentPhase = phase;
-            _finishGate.Reset();
+            _finishGate.Reset(ownerId);
+
+            _finishSignalReceived = false;
+            _phaseCompletedTcs = new UniTaskCompletionSource();
         }
+        
+        public IDisposable Acquire(string tag = null) =>
+            _finishGate.Acquire(tag);
 
         public void OnSignal(
             AbilityPhase phase,
@@ -66,6 +77,12 @@ namespace Services.AbilityServices
 
             if (!ReferenceEquals(_currentPhase, phase))
                 return;
+
+            if (signal == PhaseSignal.Finish)
+            {
+                _finishSignalReceived = true;
+                TryCompletePhase();
+            }
 
             List<PhaseSignalAction> actions = phase.SignalActions;
 
@@ -96,9 +113,49 @@ namespace Services.AbilityServices
                         _finishGate);
                 }
             }
+
+            TryCompletePhase();
+        }
+        
+        public void ForceFinish(string reason = null)
+        {
+            if (_finishSignalReceived)
+                return;
+
+            _finishSignalReceived = true;
+
+            if (!string.IsNullOrEmpty(reason))
+                DumpGateDebug($"[PhaseService] ForceFinish reason={reason}");
+
+            TryCompletePhase();
         }
 
-        private void OnGateOpened() => 
+        public UniTask WaitPhaseCompletionAsync(CancellationToken token)
+        {
+            if (_phaseCompletedTcs == null)
+                return UniTask.CompletedTask;
+
+            return _phaseCompletedTcs.Task.AttachExternalCancellation(token);
+        }
+
+        public void DumpGateDebug(string prefix = null, int maxEntries = 32) =>
+            _finishGate.DumpToLog(prefix, maxEntries);
+
+        private void OnGateOpened()
+        {
             PhaseCompleted?.Invoke();
+            TryCompletePhase();
+        }
+
+        private void TryCompletePhase()
+        {
+            if (!_finishSignalReceived)
+                return;
+
+            if (!_finishGate.IsOpened)
+                return;
+
+            _phaseCompletedTcs?.TrySetResult();
+        }
     }
 }

@@ -47,7 +47,8 @@ namespace Units
             IParticleSpawner particleSpawner,
             ICameraService cameraService,
             IIdService idService,
-            IAudioService audioService, 
+            IAudioService audioService,
+            ITimeService timeService,
             ICameraShakeService cameraShakeService)
         {
             _objectResolver = objectResolver;
@@ -58,6 +59,7 @@ namespace Units
             _cameraService = cameraService;
             _idService = idService;
             _audioService = audioService;
+            _timeService = timeService;
             _cameraShakeService = cameraShakeService;
 
             _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем

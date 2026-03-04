@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,11 +9,11 @@ namespace Units.Movement
         private Tween _tween;
         public bool IsMoving { get; private set; }
 
-        public void MoveTo(Transform transform, Vector3 target, float duration, float delay = 0f, Action onComplete = null)
+        public Tween MoveTo(Transform transform, Vector3 target, float duration, float delay = 0f, Action onComplete = null)
         {
             if (transform == null)
                 throw new NullReferenceException("transform is null");
-            
+
             Stop();
 
             if (duration <= 0f)
@@ -21,7 +21,7 @@ namespace Units.Movement
                 transform.position = target;
                 IsMoving = false;
                 onComplete?.Invoke();
-                return;
+                return null;
             }
 
             IsMoving = true;
@@ -35,13 +35,15 @@ namespace Units.Movement
                     Clear();
                     onComplete?.Invoke();
                 });
+
+            return _tween;
         }
 
-        public void JumpTo(Transform transform, Vector3 target, float duration, float jumpPower = 0f, int numJumps = 1, float delay = 0f, Action onComplete = null)
+        public Tween JumpTo(Transform transform, Vector3 target, float duration, float jumpPower = 0f, int numJumps = 1, float delay = 0f, Action onComplete = null)
         {
             if (transform == null)
                 throw new NullReferenceException("transform is null");
-            
+
             Stop();
 
             if (duration <= 0f)
@@ -49,7 +51,7 @@ namespace Units.Movement
                 transform.position = target;
                 IsMoving = false;
                 onComplete?.Invoke();
-                return;
+                return null;
             }
 
             IsMoving = true;
@@ -64,6 +66,8 @@ namespace Units.Movement
                     Clear();
                     onComplete?.Invoke();
                 });
+
+            return _tween;
         }
 
         private void Stop()
@@ -73,7 +77,7 @@ namespace Units.Movement
                 _tween.Kill();
                 _tween = null;
             }
-            
+
             IsMoving = false;
         }
 

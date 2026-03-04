@@ -1,4 +1,5 @@
 ﻿using Abilities;
+using Abilities.Flow;
 using Armaments.Movers;
 using Battlefields;
 using Castaments;
@@ -58,6 +59,12 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
             
 			builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
+
+			builder.Register<IAbilityHandlerFactory, StepAbilityHandlerFactory>(Lifetime.Singleton);
+			
+			builder.Register<IShieldApplier, ShieldStatusApplier>(Lifetime.Transient);
+			builder.Register<IShieldStatusReader, ShieldStatusReader>(Lifetime.Transient);
+
             
 			builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
             

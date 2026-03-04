@@ -1,239 +1,129 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using Abilities.Bennet;
+using Abilities.Flow;
 using Abilities.MV;
-using Abilities.Runtime;
-using Abilities.Runtime.Impact;
-using Abilities.Runtime.Policies;
 using Battlefields;
-using Effects;
-using Factories.ArmamentViewFactories;
+using Cysharp.Threading.Tasks;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
-using QteSystem;
-using ReactionSystems;
-using Services;
-using Services.StaticDataServices;
-using Spawners.Spawner;
-using Statuses;
 using Statuses.Services;
 using UnityEngine;
 using Unit = Units.Unit;
 
 namespace Abilities
 {
-    public class AbilityService : IAbilityService
+    public sealed class AbilityService : IAbilityService, IDisposable
     {
-        private readonly ICoroutineRunner _coroutineRunner;
+        private const float PostDelaySeconds = 0.5f;
+
         private readonly IBattleStateMachine _battleStateMachine;
-        private readonly IQteService _qteService;
-        private readonly IEffectsApplier _effectsApplier;
-        private readonly IArmamentViewFactory _armamentViewFactory;
-        private readonly IArmamentSpawner _armamentSpawner;
         private readonly IStatusManager _statusManager;
-        private readonly IStaticDataService _staticDataService;
-        private readonly IStatusFactory _statusFactory;
-        private readonly IStatusResolver _statusResolver;
-        private readonly IReactionService _reactionService;
+        private readonly IAbilityHandlerFactory _abilityHandlerFactory;
 
         private Battlefield _battlefield;
-
-        private List<IAbilityHandler> _activeAbilityHandlers;
-
-        private Counterattack _counterattack;
-
-        private IAbilityHandler _abilityHandler;
-
-        public event Action Finished;
+        private readonly HashSet<IAbilityHandler> _activeAbilityHandlers = new();
 
         private Unit _lastUnit;
 
+        private CancellationTokenSource _postFlowCts;
+
+        public event Action Finished;
+
         public AbilityService(
-            ICoroutineRunner coroutineRunner,
-            IQteService qteService,
             IBattleStateMachine battleStateMachine,
-            IEffectsApplier effectsApplier, 
-            IArmamentViewFactory armamentViewFactory, 
-            IArmamentSpawner armamentSpawner, 
-            IStatusManager statusManager, 
-            IStatusFactory statusFactory, 
-            IStaticDataService staticDataService, IStatusResolver statusResolver, IReactionService reactionService)
+            IStatusManager statusManager,
+            IAbilityHandlerFactory abilityHandlerFactory)
         {
-            _coroutineRunner = coroutineRunner;
-            _qteService = qteService;
             _battleStateMachine = battleStateMachine;
-            _effectsApplier = effectsApplier;
-            _armamentViewFactory = armamentViewFactory;
-            _armamentSpawner = armamentSpawner;
             _statusManager = statusManager;
-            _statusFactory = statusFactory;
-            _staticDataService = staticDataService;
-            _statusResolver = statusResolver;
-            _reactionService = reactionService;
-            _activeAbilityHandlers = new List<IAbilityHandler>();
+            _abilityHandlerFactory = abilityHandlerFactory;
         }
 
-        public void SetBattlefield(Battlefield battlefield)
+        public void Dispose()
         {
-            _battlefield = battlefield;
+            _postFlowCts?.Cancel();
+            _postFlowCts?.Dispose();
+            _postFlowCts = null;
         }
+
+        public void SetBattlefield(Battlefield battlefield) => _battlefield = battlefield;
 
         public void Handle(Unit source, Unit target, AbilityModel abilityModel)
         {
-            AbilityType abilityType = abilityModel.AbilityType;
-
-            switch (abilityType)
+            if (abilityModel == null)
             {
-                case AbilityType.FireBall:
-                    _abilityHandler = new ComposedPhasedAbilityHandler(
-                        abilityModel,
-                        _coroutineRunner,
-                        new IAbilityPolicy[]
-                        {
-                            new VolleyComposerPolicy(_armamentSpawner),
-                            new VolleyRunnerPolicy(_qteService, _coroutineRunner,_effectsApplier, _reactionService)
-                        });
-
-                    _abilityHandler.Finished += Continue;
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    break;
-
-                case AbilityType.FrostBall:
-                    // _abilityHandler = new BaseEnemyAttack(_coroutineRunner, abilityModel);
-                    // _abilityHandler.Play(source, target);
-                    // _activeAbilityHandlers.Add(_abilityHandler);
-                    // _abilityHandler.Finished += Continue;
-                    break;
-
-                case AbilityType.PoisonBall:
-                    break;
-                case AbilityType.AlcoholBall:
-                    break;
-                case AbilityType.CastSpell:
-                    break;
-                case AbilityType.DoubleAttack:
-                    break;
-                case AbilityType.BaseAbility:
-                    break;
-                
-                case AbilityType.LumaAttackWithStaff:
-                    _abilityHandler = new ComposedPhasedAbilityHandler(
-                        abilityModel,
-                        _coroutineRunner,
-                        new IAbilityPolicy[]
-                        {
-                            new QteResultPolicy(_qteService),
-                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
-                        });
-                    
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-
-                case AbilityType.EngineeringSeries:
-                    _abilityHandler =
-                        new EngineeringSeriesAbility(abilityModel, _coroutineRunner, _qteService);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-
-                case AbilityType.StrikeFromAbove:
-                    _abilityHandler = new StrikeFromAbove(_coroutineRunner, abilityModel);
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-
-                case AbilityType.BaseAttack:
-                    _abilityHandler = new ComposedPhasedAbilityHandler(
-                        abilityModel,
-                        _coroutineRunner,
-                        new IAbilityPolicy[]
-                        {
-                            //new FinishSignalPolicy(),
-                        });
-                    
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-
-                case AbilityType.Default:
-                    break;
-
-                case AbilityType.CounterAttack:
-                    break;
-
-                case AbilityType.DroneBaseAttack:
-                    _abilityHandler = new ComposedPhasedAbilityHandler(
-                        abilityModel,
-                        _coroutineRunner,
-                        new IAbilityPolicy[]
-                        {
-                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
-                        });
-                    
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-
-                default:
-                    _abilityHandler = new ComposedPhasedAbilityHandler(
-                        abilityModel,
-                        _coroutineRunner,
-                        new IAbilityPolicy[]
-                        {
-                            new SimpleShotsPolicy(_armamentSpawner, _effectsApplier),
-                        });
-                    
-                    _abilityHandler.Play(source, target);
-                    _activeAbilityHandlers.Add(_abilityHandler);
-                    _abilityHandler.Finished += Continue;
-                    break;
-                    //throw new ArgumentOutOfRangeException(nameof(abilityType), abilityType, null);
+                Debug.LogError("[AbilityService] abilityModel is null");
+                return;
             }
+
+            IAbilityHandler handler = _abilityHandlerFactory.Create(source, target, abilityModel);
+            if (handler == null)
+            {
+                Debug.LogError($"[AbilityService] HandlerFactory returned null for {abilityModel.AbilityType}");
+                return;
+            }
+
+            handler.Finished += Continue;
+            handler.Play(source, target);
+            _activeAbilityHandlers.Add(handler);
 
             _lastUnit = source;
 
-            source.RememberAbility(_abilityHandler); //TODO Говно. Сделать отдельный слой
+            // TODO: убрать из Unit, сделать отдельный слой.
+            source.RememberAbility(handler);
         }
 
         public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
         {
-            _abilityHandler.Stop();
-            _abilityHandler.Finished -= Continue;
-
-            _abilityHandler = new Counterattack(_coroutineRunner, abilityModel);
-            _activeAbilityHandlers.Add(_abilityHandler);
-
-            _abilityHandler.Play(source, target);
-            _abilityHandler.Finished += Continue;
-        }
-
-        private void Continue(IAbilityHandler handler)
-        {
-            _coroutineRunner.StartCoroutine(Continue2(handler));
-        }
-
-        private IEnumerator Continue2(IAbilityHandler handler)
-        {
-            _activeAbilityHandlers.Remove(handler);
-            handler.Finished -= Continue;
-
-            yield return new WaitForSeconds(0.5f);
-
-            if (_lastUnit.PlatoonType == PlatoonType.Heroes)
+            if (abilityModel == null)
             {
-                _statusManager.TickUnitTurn();
+                Debug.LogError("[AbilityService] Counter abilityModel is null");
+                return;
             }
-            
+
+            IAbilityHandler handler = _abilityHandlerFactory.Create(source, target, abilityModel);
+            if (handler == null)
+            {
+                Debug.LogError($"[AbilityService] Counter handler is null for {abilityModel?.AbilityType}");
+                return;
+            }
+
+            _activeAbilityHandlers.Add(handler);
+            handler.Play(source, target);
+            handler.Finished += Continue;
+        }
+
+        private void Continue(IAbilityHandler handler) => ContinueAsync(handler).Forget();
+
+        private async UniTaskVoid ContinueAsync(IAbilityHandler handler)
+        {
+            if (handler != null)
+            {
+                _activeAbilityHandlers.Remove(handler);
+                handler.Finished -= Continue;
+            }
+
+            _postFlowCts?.Cancel();
+            _postFlowCts?.Dispose();
+            _postFlowCts = new CancellationTokenSource();
+
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(PostDelaySeconds), cancellationToken: _postFlowCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            if (_lastUnit != null && _lastUnit.PlatoonType == PlatoonType.Heroes)
+                _statusManager.TickUnitTurn();
+
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+            Finished?.Invoke();
         }
     }
 }

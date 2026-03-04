@@ -9,6 +9,12 @@ namespace Units.AnimationControllers
     {
         public AbilityPhaseService PhaseService { get; }
 
+        public event Action<PhaseSignal> SignalRaised;
+
+        public AbilityPhase CurrentPhase => _phase;
+        public Unit CurrentTarget => _target;
+        public Unit Owner => _unit;
+
         private readonly Unit _unit;
         private readonly AnimatorController _animatorController;
 
@@ -39,6 +45,8 @@ namespace Units.AnimationControllers
             
             if (signal == PhaseSignal.None)
                 return;
+
+            SignalRaised?.Invoke(signal);
 
             if (_phase == null || _unit == null || _target == null)
                 return;

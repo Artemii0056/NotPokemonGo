@@ -1,0 +1,10 @@
+В RegisterGlobalServices замени регистрацию фабрики:
+
+БЫЛО:
+    builder.Register<IAbilityHandlerFactory, AbilityPipelineFactory>(Lifetime.Singleton);
+
+СТАЛО:
+    builder.Register<Abilities.Flow.AbilityPipelineFactory>(Lifetime.Singleton);
+    builder.Register<IAbilityHandlerFactory, Abilities.AbilityHandlerRouterFactory>(Lifetime.Singleton);
+
+Это делает AbilityService полностью "pipeline-first".

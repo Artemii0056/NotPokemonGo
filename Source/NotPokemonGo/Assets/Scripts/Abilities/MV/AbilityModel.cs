@@ -7,6 +7,7 @@ namespace Abilities.MV
     {
         public AbilityModel(AbilityConfig config)
         {
+            Config = config;
             AbilityType = config.AbilityType;
             
            Parts = config.Parts;
@@ -19,6 +20,8 @@ namespace Abilities.MV
         }
 
         private Dictionary<AbilityStatType, AbilityStatSetup> _stats;
+
+        public AbilityConfig Config { get; }
 
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }

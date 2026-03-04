@@ -11,7 +11,7 @@ namespace Services.EffectViewServices
         private readonly IEffectResolver _resolver;
         private readonly ICombatTextPool _pool;
         private readonly RectTransform _popupsRoot;
-        private readonly Camera _camera;
+        private readonly ICameraProvider _cameraProvider;
 
         private readonly Vector3 _worldOffset = new(0f, 2f, 0f);
 
@@ -24,7 +24,7 @@ namespace Services.EffectViewServices
             _resolver = resolver;
             _pool = pool;
             _popupsRoot = popupsRoot;
-            _camera = provider.Camera;
+            _cameraProvider = provider;
             
             _resolver.EffectApplied += OnEffectApplied;
            // Debug.Log("[CombatTextPresenter] Started");
@@ -51,9 +51,18 @@ namespace Services.EffectViewServices
 
             var view = _pool.Get(_popupsRoot);
 
+            // Camera can be destroyed on scene change / during teardown.
+            // Do NOT keep a cached reference; reacquire every time and validate.
+            Camera camera = _cameraProvider?.Camera;
+            if (camera == null)
+            {
+                _pool.Return(view);
+                return;
+            }
+
             var worldPos = payload.Target.transform.position + _worldOffset;
             
-            var screenPos = _camera.WorldToScreenPoint(worldPos);
+            var screenPos = camera.WorldToScreenPoint(worldPos);
             
             if (screenPos.z <= 0f)
             {

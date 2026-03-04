@@ -1,51 +1,86 @@
-﻿using System;
+using System;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Armaments.Movers
 {
-    public class ArmamentMover : IArmamentMover
+    public class ArmamentMover : IArmamentMover, IAbilityScopeOwnedMover
     {
         public event Action<IArmamentMover> Launched;
         public event Action<IArmamentMover> Reached;
 
-        public ArmamentMover(Armament armament) =>
-            Armament = armament;
-        
+        private int _scopeId;
+        private Tween _flightTween;
+        private bool _reachedRaised;
+
+        public ArmamentMover(Armament armament) => Armament = armament;
+
         public Armament Armament { get; private set; }
         public float Duration { get; private set; }
 
+        public void SetScopeId(int scopeId) => _scopeId = scopeId;
+
         public void Move()
         {
+            _reachedRaised = false;
+
             switch (Armament.FlyingType)
             {
                 case ArmamentFlyingType.Arc:
                     PlayArcFlight();
                     break;
-
                 case ArmamentFlyingType.Direct:
                     PlayDirectFlight();
                     break;
-
                 case ArmamentFlyingType.Laser:
                     PlayLaserFlight();
                     break;
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        private void BindOwnership(Tween tween)
+        {
+            _flightTween = tween;
+
+            if (tween == null)
+                return;
+
+            if (_scopeId != 0)
+                tween.SetId(_scopeId);
+
+            tween.OnKill(OnTweenKilledOrCompleted);
+            tween.OnComplete(OnTweenKilledOrCompleted);
+        }
+
+        private void OnTweenKilledOrCompleted()
+        {
+            // IMPORTANT: if ability is cancelled and tween is killed, we still want to unblock steps
+            // that wait for Reached (otherwise deadlock / stuck phase).
+            TryRaiseReached();
+        }
+
+        private void TryRaiseReached()
+        {
+            if (_reachedRaised)
+                return;
+
+            _reachedRaised = true;
+            Reached?.Invoke(this);
+        }
+
         private void PlayDirectFlight()
         {
             Duration = .5f;
-
             Launched?.Invoke(this);
 
-            Armament.transform.DOMove(Armament.Target.transform.position, Duration)
-                .SetEase(Ease.Linear)
-                .OnComplete(() => Reached?.Invoke(this));
+            var tween = Armament.transform
+                .DOMove(Armament.Target.transform.position, Duration)
+                .SetEase(Ease.Linear);
+
+            BindOwnership(tween);
         }
 
         private void PlayArcFlight()
@@ -71,22 +106,24 @@ namespace Armaments.Movers
 
             Vector3[] path = { start, control, end };
 
-            Armament.transform.DOPath(path, Duration, PathType.CatmullRom)
-                .OnStart(() => Launched?.Invoke(this))
+            var tween = Armament.transform
+                .DOPath(path, Duration, PathType.CatmullRom)
                 .SetEase(Ease.InExpo)
-                .OnComplete(() => Reached?.Invoke(this));
+                .OnStart(() => Launched?.Invoke(this));
+
+            BindOwnership(tween);
         }
 
         private void PlayLaserFlight()
         {
-            Duration =  .05f;
-
+            Duration = .05f;
             Launched?.Invoke(this);
 
-            DOTween.Sequence()
+            var seq = DOTween.Sequence()
                 .Append(Armament.transform.DOMove(Armament.Target.transform.position, Duration).SetEase(Ease.Linear))
-                .AppendInterval(Armament.Setup.FlyDuration) 
-                .OnComplete(() => Reached?.Invoke(this));
+                .AppendInterval(Armament.Setup.FlyDuration);
+
+            BindOwnership(seq);
         }
     }
 }
