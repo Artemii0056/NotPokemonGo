@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -8,6 +9,40 @@ namespace Units.Movement
     {
         private Tween _tween;
         public bool IsMoving { get; private set; }
+
+        public UniTask MoveTo(Transform transform, Vector3 target, float duration)
+        {
+            if (transform == null)
+                throw new NullReferenceException("transform is null");
+
+            Stop();
+
+            if (duration <= 0f)
+            {
+                transform.position = target;
+                IsMoving = false;
+                return UniTask.CompletedTask;
+            }
+
+            IsMoving = true;
+            
+            var tcs = new UniTaskCompletionSource();
+
+            _tween = transform.DOMove(target, duration)
+                .SetEase(Ease.Linear)
+                .OnKill(() =>
+                {
+                    Clear();
+                    tcs.TrySetResult();
+                })
+            .OnComplete(() =>
+                {
+                    Clear();
+                    tcs.TrySetResult();
+                });
+
+            return tcs.Task;
+        }
 
         public Tween MoveTo(Transform transform, Vector3 target, float duration, float delay = 0f, Action onComplete = null)
         {

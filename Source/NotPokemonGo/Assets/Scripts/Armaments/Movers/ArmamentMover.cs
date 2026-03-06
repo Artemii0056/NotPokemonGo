@@ -14,12 +14,14 @@ namespace Armaments.Movers
         private Tween _flightTween;
         private bool _reachedRaised;
 
-        public ArmamentMover(Armament armament) => Armament = armament;
+        public ArmamentMover(Armament armament) => 
+            Armament = armament;
 
         public Armament Armament { get; private set; }
         public float Duration { get; private set; }
 
-        public void SetScopeId(int scopeId) => _scopeId = scopeId;
+        public void SetScopeId(int scopeId) => 
+            _scopeId = scopeId;
 
         public void Move()
         {
