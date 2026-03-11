@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using Abilities.Configs;
 using Armaments.Movers;
-using QteSystem.TestQTE;
+using QteSystem;
+using QteSystem.TestQte;
 using Units;
 using Units.AnimationControllers;
 using UnityEngine;
@@ -21,7 +22,8 @@ namespace Abilities.Runtime
         public AbilityPhase CurrentPhase { get; internal set; }
         
         public QteResult QteResult { get; internal set; }
-        
+        public IQteSession ActiveQte { get; set; }
+
         public readonly List<IArmamentMover> Movers  = new List<IArmamentMover>();
     }
 }

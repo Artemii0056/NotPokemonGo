@@ -1,6 +1,6 @@
 using Units;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     public interface IShieldApplier
     {

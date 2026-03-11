@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using Abilities.Configs;
-using Abilities.Runtime;
 using Abilities.Runtime.Impact;
-using Abilities.Runtime.Policies;
 using Abilities.Signals;
 using Armaments.Movers;
 using Effects;
@@ -11,133 +9,136 @@ using ReactionSystems;
 using Services;
 using UnityEngine;
 
-public class VolleyRunnerPolicy : AbilityPolicyBase
+namespace Abilities.Runtime.Policies
 {
-    private readonly ICoroutineRunner _coroutineRunner;
-    private readonly IQteService _qteService;
-    private readonly IReactionService _reactionService;
-    private readonly BaseArmamentImpactResolver _impactResolver;
-    private readonly ShotCoordinator _shotCoordinator = new();
-
-    private AbilityContext _context;
-    private AbilityPhase _activePhase;
-
-    private Coroutine _coroutine;
-    private IQteSession _qteSession;
-
-    private bool _finishSignalReceived;
-
-    public VolleyRunnerPolicy(
-        IQteService qteService,
-        ICoroutineRunner coroutineRunner,
-        IEffectsApplier effectsApplier,
-        IReactionService reactionService)
+    public class VolleyRunnerPolicy : AbilityPolicyBase
     {
-        _qteService = qteService;
-        _coroutineRunner = coroutineRunner;
-        _reactionService = reactionService;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IQteService _qteService;
+        private readonly IReactionService _reactionService;
+        private readonly BaseArmamentImpactResolver _impactResolver;
+        private readonly ShotCoordinator _shotCoordinator = new();
 
-        _impactResolver = new BaseArmamentImpactResolver(effectsApplier);
-    }
+        private AbilityContext _context;
+        private AbilityPhase _activePhase;
 
-    public override bool CanUseAbility(AbilityContext ctx) =>
-        ctx.Movers.Count > 0;
+        private Coroutine _coroutine;
+        private IQteSession _qteSession;
 
-    public override void OnAbilityStart(AbilityContext context)
-    {
-        _context = context;
-    }
+        private bool _finishSignalReceived;
 
-    public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
-    {
-        _context = ctx;
-        _activePhase = phase;
-        _finishSignalReceived = false;
-
-        _qteSession = _qteService.StartSession(
-            ctx.CurrentPhase.QteType,
-            ctx.Target,
-            100);
-
-        _coroutine = _coroutineRunner.StartCoroutine(LaunchShots());
-    }
-
-    private IEnumerator LaunchShots()
-    {
-        while (_context.Movers.Count > 0)
+        public VolleyRunnerPolicy(
+            IQteService qteService,
+            ICoroutineRunner coroutineRunner,
+            IEffectsApplier effectsApplier,
+            IReactionService reactionService)
         {
-            var mover = _context.Movers[0];
-            _context.Movers.RemoveAt(0);
+            _qteService = qteService;
+            _coroutineRunner = coroutineRunner;
+            _reactionService = reactionService;
 
-            RegisterShot(mover);
-
-            yield return new WaitForSeconds(0.3f);
+            _impactResolver = new BaseArmamentImpactResolver(effectsApplier);
         }
-    }
 
-    private void RegisterShot(IArmamentMover mover)
-    {
-        _shotCoordinator.Register(mover, OnShotReached);
-        mover.Move();
-    }
+        public override bool CanUseAbility(AbilityContext ctx) =>
+            ctx.Movers.Count > 0;
 
-    private void OnShotReached(IArmamentMover mover)
-    {
-        var reactionContext = new ReactionContext
+        public override void OnAbilityStart(AbilityContext context)
         {
-            Source = mover.Armament.Source,
-            Target = mover.Armament.Target,
-            Armament = mover.Armament,
-            SpawnShot = RegisterShot
-        };
-
-        _reactionService.TryReact(reactionContext);
-
-        if (!reactionContext.WasReflected)
-        {
-            _impactResolver.Resolve(mover);
+            _context = context;
         }
-        else
+
+        public override void OnPhaseStart(AbilityContext ctx, AbilityPhase phase)
         {
-            Object.Destroy(mover.Armament.gameObject);
+            _context = ctx;
+            _activePhase = phase;
+            _finishSignalReceived = false;
+
+            _qteSession = _qteService.StartSession(
+                ctx.CurrentPhase.QteType,
+                ctx.Target,
+                100);
+
+            _coroutine = _coroutineRunner.StartCoroutine(LaunchShots());
         }
-    }
 
-    public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
-    {
-        if (ctx.CurrentPhase != _activePhase)
-            return;
+        private IEnumerator LaunchShots()
+        {
+            while (_context.Movers.Count > 0)
+            {
+                var mover = _context.Movers[0];
+                _context.Movers.RemoveAt(0);
 
-        if (signal == PhaseSignal.Finish)
-            _finishSignalReceived = true;
-    }
+                RegisterShot(mover);
 
-    public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
-    {
-        if (phase != _activePhase)
-            return false;
+                yield return new WaitForSeconds(0.3f);
+            }
+        }
 
-        if (!_finishSignalReceived)
-            return false;
+        private void RegisterShot(IArmamentMover mover)
+        {
+            _shotCoordinator.Register(mover, OnShotReached);
+            mover.Move();
+        }
 
-        if (_shotCoordinator.ActiveCount > 0)
-            return false;
+        private void OnShotReached(IArmamentMover mover)
+        {
+            var reactionContext = new ReactionContext
+            {
+                Source = mover.Armament.Source,
+                Target = mover.Armament.Target,
+                Armament = mover.Armament,
+                SpawnShot = RegisterShot
+            };
 
-        _qteSession?.Dispose();
-        return true;
-    }
+            _reactionService.TryReact(reactionContext);
 
-    public override void OnAbilityStop(AbilityContext ctx)
-    {
-        _shotCoordinator.CleanupAll();
+            if (!reactionContext.WasReflected)
+            {
+                _impactResolver.Resolve(mover);
+            }
+            else
+            {
+                Object.Destroy(mover.Armament.gameObject);
+            }
+        }
 
-        if (_coroutine != null)
-            _coroutineRunner.StopCoroutine(_coroutine);
+        public override void OnSignal(AbilityContext ctx, PhaseSignal signal)
+        {
+            if (ctx.CurrentPhase != _activePhase)
+                return;
 
-        _qteSession?.Dispose();
+            if (signal == PhaseSignal.Finish)
+                _finishSignalReceived = true;
+        }
 
-        _context = null;
-        _activePhase = null;
-        _finishSignalReceived = false;
+        public override bool CanFinishPhase(AbilityContext ctx, AbilityPhase phase)
+        {
+            if (phase != _activePhase)
+                return false;
+
+            if (!_finishSignalReceived)
+                return false;
+
+            if (_shotCoordinator.ActiveCount > 0)
+                return false;
+
+            _qteSession?.Dispose();
+            return true;
+        }
+
+        public override void OnAbilityStop(AbilityContext ctx)
+        {
+            _shotCoordinator.CleanupAll();
+
+            if (_coroutine != null)
+                _coroutineRunner.StopCoroutine(_coroutine);
+
+            _qteSession?.Dispose();
+
+            _context = null;
+            _activePhase = null;
+            _finishSignalReceived = false;
+        }
     }
 }

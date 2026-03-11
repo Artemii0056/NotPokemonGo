@@ -33,7 +33,7 @@ namespace Services.StaticDataServices
         private List<LevelConfig> _levelConfigs;
         private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
 
-        public CombatText CombatTextPrefab { get; private set; }
+        public CombatText.CombatText CombatTextPrefab { get; private set; }
 
         public UnitSkinItemView UnitSkinItemViewPrefab { get; private set; }
         public CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; private set; }
@@ -63,7 +63,7 @@ namespace Services.StaticDataServices
 
         private void LoadCombatText()
         {
-            CombatTextPrefab = _resourceLoader.Load<CombatText>(Constants.AssetPath.CombatTextPath);
+            CombatTextPrefab = _resourceLoader.Load<CombatText.CombatText>(Constants.AssetPath.CombatTextPath);
         }
 
         private void LoadParticleByStatusType()

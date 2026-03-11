@@ -43,6 +43,8 @@ namespace Services.EffectViewServices
 
         private void OnEffectApplied(EffectDataPayload payload)
         {
+            return;
+            
             if (payload.Target == null) 
                 return;
             

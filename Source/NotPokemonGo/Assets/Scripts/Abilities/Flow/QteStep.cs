@@ -1,7 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using QteSystem;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 
 namespace Abilities.Flow
 {

@@ -2,7 +2,7 @@
 using Armaments;
 using Armaments.Movers;
 using Effects;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 using Spawners.Spawner;
 using Statuses;
 using Units;

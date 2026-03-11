@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c641d0a89534d5a46be9937c8d90d921, type: 3}
+  m_Name: MageFireballAttack
+  m_EditorClassIdentifier: 
+  Steps:
+  - rid: 9209732858413056001
+  - rid: 9209732858413056003
+  - rid: 9209732840996995075
+  - rid: 9209732858413056014
+  - rid: 9209732840996995078
+  references:
+    version: 2
+    RefIds:
+    - rid: 9209732840996995075
+      type: {class: RepeatStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps, asm: Assembly-CSharp}
+      data:
+        Count: 3
+        Step:
+          rid: 9209732858413056005
+    - rid: 9209732840996995078
+      type: {class: RepeatStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps, asm: Assembly-CSharp}
+      data:
+        Count: 3
+        Step:
+          rid: 9209732840996995080
+    - rid: 9209732840996995080
+      type: {class: ParallelStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps, asm: Assembly-CSharp}
+      data:
+        Steps:
+        - rid: 9209732858413056006
+        - rid: 9209732858413056000
+        - rid: 9209732858413056007
+    - rid: 9209732858413056000
+      type: {class: StartQteStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        Type: 11
+        Duration: 2
+    - rid: 9209732858413056001
+      type: {class: PlayAnimationStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        Animation: {fileID: 7400000, guid: 877cfa3476e954c4b8f29c76746d793a, type: 2}
+    - rid: 9209732858413056003
+      type: {class: WaitSignalStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        Signal: 10
+    - rid: 9209732858413056005
+      type: {class: SpawnProjectileStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        ArmamentSetup:
+          <Statuses>k__BackingField: []
+          <EffectInfo>k__BackingField:
+          - Type: 0
+            TargetType: 1
+            DamageType: 1
+            Value: 10
+          <ParticleSystem>k__BackingField: {fileID: 0}
+          <ArmamentPrefab>k__BackingField: {fileID: 6159844789599780019, guid: d665408c270000a4d93e46b566834ebc, type: 3}
+          <MoveSpeed>k__BackingField: 0
+          <FlyDuration>k__BackingField: 0
+          <FlyingType>k__BackingField: 0
+        Delay: 0
+    - rid: 9209732858413056006
+      type: {class: ArmamentMoverStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data: 
+    - rid: 9209732858413056007
+      type: {class: WaitingStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        Duration: 0.5
+    - rid: 9209732858413056014
+      type: {class: WaitingStep, ns: AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.SipmleStep, asm: Assembly-CSharp}
+      data:
+        Duration: 0.5

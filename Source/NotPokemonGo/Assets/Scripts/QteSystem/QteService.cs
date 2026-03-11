@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
-using QteSystem.TestQTE;
 using Services;
 using Services.StaticDataServices;
 using Statuses;
-using Statuses.Factory;
 using Statuses.Services;
 using TimeServices;
 using UI.QTE;
@@ -21,8 +19,6 @@ namespace QteSystem
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IObjectResolver _objectResolver;
         private readonly ITimeService _timeService;
-        private readonly IStatusFactory _statusFactory;
-        private readonly IStatusResolver _statusResolver;
 
         public event Action<bool> Completed;
 
@@ -37,8 +33,6 @@ namespace QteSystem
             _coroutineRunner = coroutineRunner;
             _objectResolver = objectResolver;
             _timeService = timeService;
-            _statusFactory = statusFactory;
-            _statusResolver = statusResolver;
         }
 
         public void Start(QteType qteType, Unit target)
@@ -82,9 +76,6 @@ namespace QteSystem
             if (view is IHasQteDuration durationView)
                 durationView.SetDuration(duration);
             
-            if (view is OneTapQte oneTap)
-                oneTap.Initialize(_statusFactory, _statusResolver);
-
             return new QteViewSession(view);
         }
     }

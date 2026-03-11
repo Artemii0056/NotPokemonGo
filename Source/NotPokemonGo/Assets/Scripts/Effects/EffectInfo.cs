@@ -1,7 +1,9 @@
+using System;
 using Stats;
 
 namespace Effects
 {
+    [Serializable]
     public struct EffectInfo
     {
         public EffectType Type;
@@ -15,14 +17,6 @@ namespace Effects
             TargetType = targetType;
             Type = type;
             DamageType = damageType;
-        }
-        
-        public EffectInfo(float value, StatType targetType)
-        {
-            Value = value;
-            TargetType = targetType;
-            DamageType =  DamageType.None;
-            Type = EffectType.None;
         }
     }
 }

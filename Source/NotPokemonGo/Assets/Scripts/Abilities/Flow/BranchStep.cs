@@ -1,10 +1,11 @@
 using System;
 using System.Threading;
+using AbilityNew.Scripts.Configs;
 using Cysharp.Threading.Tasks;
 
 namespace Abilities.Flow
 {
-    public sealed class BranchStep : IAbilityStep
+    public sealed class BranchStep : AbilityStepSO
     {
         private readonly Func<AbilityExecutionContext, bool> _predicate;
         private readonly IAbilityStep _trueStep;

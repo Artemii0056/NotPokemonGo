@@ -1,0 +1,12 @@
+﻿using System;
+using AbilityNew.Scripts.Configs;
+using UnityEngine;
+
+namespace AbilityNew.Scripts.Steps.Presentation
+{
+    [Serializable]
+    public class PlayAnimationStep : AbilityStepSO
+    {
+        public AnimationClip Animation;
+    }
+}

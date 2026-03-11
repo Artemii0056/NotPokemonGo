@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Abilities.Configs;
 using Cysharp.Threading.Tasks;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     public sealed class PlayPhaseStep : IAbilityStep
     {

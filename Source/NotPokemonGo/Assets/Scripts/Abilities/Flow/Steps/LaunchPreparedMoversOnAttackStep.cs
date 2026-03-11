@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     public sealed class LaunchPreparedMoversOnAttackStep : IAbilityStep
     {

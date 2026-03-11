@@ -3,54 +3,57 @@ using System.Collections.Generic;
 using Armaments.Movers;
 using UnityEngine;
 
-public sealed class ShotCoordinator : IDisposable
+namespace Abilities.Runtime
 {
-    private readonly Dictionary<IArmamentMover, Action<IArmamentMover>> _active =
-        new();
-
-    public int ActiveCount => _active.Count;
-
-    public void Register(IArmamentMover mover, Action<IArmamentMover> onReached)
+    public sealed class ShotCoordinator : IDisposable
     {
-        if (mover == null)
-            throw new ArgumentNullException(nameof(mover));
+        private readonly Dictionary<IArmamentMover, Action<IArmamentMover>> _active =
+            new();
 
-        if (_active.ContainsKey(mover))
-            throw new InvalidOperationException("Mover already registered.");
+        public int ActiveCount => _active.Count;
 
-        _active[mover] = onReached;
+        public void Register(IArmamentMover mover, Action<IArmamentMover> onReached)
+        {
+            if (mover == null)
+                throw new ArgumentNullException(nameof(mover));
 
-        mover.Reached += HandleReached;
+            if (_active.ContainsKey(mover))
+                throw new InvalidOperationException("Mover already registered.");
+
+            _active[mover] = onReached;
+
+            mover.Reached += HandleReached;
+        }
+
+        private void HandleReached(IArmamentMover mover)
+        {
+            Debug.Log($"Reached: {_active.Count} before");
+
+            if (!_active.TryGetValue(mover, out var callback))
+                return;
+
+            Release(mover);
+
+            Debug.Log($"Reached: {_active.Count} after");
+
+            callback?.Invoke(mover);
+        }
+
+        private void Release(IArmamentMover mover)
+        {
+            mover.Reached -= HandleReached;
+            _active.Remove(mover);
+        }
+
+        public void CleanupAll()
+        {
+            foreach (var kv in _active)
+                kv.Key.Reached -= HandleReached;
+
+            _active.Clear();
+        }
+
+        public void Dispose() => 
+            CleanupAll();
     }
-
-    private void HandleReached(IArmamentMover mover)
-    {
-        Debug.Log($"Reached: {_active.Count} before");
-
-        if (!_active.TryGetValue(mover, out var callback))
-            return;
-
-        Release(mover);
-
-        Debug.Log($"Reached: {_active.Count} after");
-
-        callback?.Invoke(mover);
-    }
-
-    private void Release(IArmamentMover mover)
-    {
-        mover.Reached -= HandleReached;
-        _active.Remove(mover);
-    }
-
-    public void CleanupAll()
-    {
-        foreach (var kv in _active)
-            kv.Key.Reached -= HandleReached;
-
-        _active.Clear();
-    }
-
-    public void Dispose() => 
-        CleanupAll();
 }

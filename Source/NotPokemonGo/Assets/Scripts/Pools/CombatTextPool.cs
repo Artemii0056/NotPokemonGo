@@ -5,11 +5,11 @@ namespace Pools
 {
     public sealed class CombatTextPool : ICombatTextPool
     {
-        private readonly CombatText _prefab;
-        private readonly Stack<CombatText> _stack = new();
+        private readonly CombatText.CombatText _prefab;
+        private readonly Stack<CombatText.CombatText> _stack = new();
         private readonly Transform _stashRoot;
 
-        public CombatTextPool(CombatText prefab, int prewarm = 10)
+        public CombatTextPool(CombatText.CombatText prefab, int prewarm = 10)
         {
             _prefab = prefab;
 
@@ -26,7 +26,7 @@ namespace Pools
             }
         }
 
-        public CombatText Get(RectTransform parent)
+        public CombatText.CombatText Get(RectTransform parent)
         {
             while (_stack.Count > 0)
             {
@@ -46,7 +46,7 @@ namespace Pools
         }
 
 
-        public void Return(CombatText view)
+        public void Return(CombatText.CombatText view)
         {
             if (view == null) 
                 return;

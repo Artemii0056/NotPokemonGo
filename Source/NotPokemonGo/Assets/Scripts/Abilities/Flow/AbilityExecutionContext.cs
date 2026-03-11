@@ -5,7 +5,7 @@ using Abilities.Runtime.Impact;
 using Armaments.Movers;
 using Effects;
 using QteSystem;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 using ReactionSystems;
 using Services.AbilityServices;
 using Spawners.Spawner;

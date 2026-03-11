@@ -3,11 +3,12 @@ using DG.Tweening;
 using Effects;
 using Services.IdServices;
 using TMPro;
+using Units;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace Units
+namespace CombatText
 {
 	public class UnitDamageView : MonoBehaviour
 	{

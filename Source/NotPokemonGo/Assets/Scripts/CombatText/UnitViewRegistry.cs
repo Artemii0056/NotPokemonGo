@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Units;
 
-namespace Units
+namespace CombatText
 {
 	public class UnitViewRegistry
 	{

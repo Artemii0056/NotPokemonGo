@@ -1,7 +1,7 @@
 ﻿using Abilities.Configs;
 using Armaments;
 using Armaments.Movers;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 
 namespace Abilities.Runtime
 {
@@ -19,7 +19,7 @@ namespace Abilities.Runtime
             Phase = phase;
             Context = context;
             Mover = mover;
-            QteResult = QteSystem.TestQTE.QteResult.Default;
+            QteResult = QteSystem.TestQte.QteResult.Default;
         }
     }
 }

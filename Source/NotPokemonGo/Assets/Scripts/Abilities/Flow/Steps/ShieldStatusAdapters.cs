@@ -3,7 +3,7 @@ using Statuses;
 using Statuses.Services;
 using Units;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     public sealed class ShieldStatusApplier : IShieldApplier
     {

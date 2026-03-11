@@ -7,27 +7,30 @@ using Services.StaticDataServices;
 using UnityEngine;
 using VContainer;
 
-public class GameplaySceneInitializer : MonoBehaviour
+namespace Infrastructure.DI.Initializers.Scenes
 {
-    [SerializeField] private RectTransform _combatTextCanvas;
-    [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
+    public class GameplaySceneInitializer : MonoBehaviour
+    {
+        [SerializeField] private RectTransform _combatTextCanvas;
+        [SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
 
-    private CombatTextPresenter _combatTextPresenter;
-    private ICameraProvider _cameraProvider;
+        private CombatTextPresenter _combatTextPresenter;
+        private ICameraProvider _cameraProvider;
  
     
-    [Inject]
-    public void Construct(ICameraProvider cameraProvider, IEffectResolver effectResolver, IStaticDataService staticDataService)
-    {
-       // Debug.Log("Loading CombatText");
+        [Inject]
+        public void Construct(ICameraProvider cameraProvider, IEffectResolver effectResolver, IStaticDataService staticDataService)
+        {
+            // Debug.Log("Loading CombatText");
         
-        _cameraProvider = cameraProvider;
-        _cameraProvider.Camera = Camera.main;
+            _cameraProvider = cameraProvider;
+            _cameraProvider.Camera = Camera.main;
 
-        _cameraProvider.VirtualCamera = _cinemachineVirtualCamera;
+            _cameraProvider.VirtualCamera = _cinemachineVirtualCamera;
 
-        CombatTextPool pool = new CombatTextPool(staticDataService.CombatTextPrefab);
+            CombatTextPool pool = new CombatTextPool(staticDataService.CombatTextPrefab);
 
-        _combatTextPresenter = new CombatTextPresenter(effectResolver, pool, _combatTextCanvas, cameraProvider);
+            _combatTextPresenter = new CombatTextPresenter(effectResolver, pool, _combatTextCanvas, cameraProvider);
+        }
     }
 }

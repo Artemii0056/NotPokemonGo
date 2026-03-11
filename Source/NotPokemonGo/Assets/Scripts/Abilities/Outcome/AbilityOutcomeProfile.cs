@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Armaments;
 using Castaments;
 using Characters.Configs;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 using UnityEngine;
 
 namespace Abilities.Outcome

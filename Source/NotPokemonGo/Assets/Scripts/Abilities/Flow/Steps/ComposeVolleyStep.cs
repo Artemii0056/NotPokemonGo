@@ -6,7 +6,7 @@ using Services.AbilityServices;
 using Spawners.Spawner;
 using UnityEngine;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     public sealed class ComposeVolleyStep : IAbilityStep
     {

@@ -1,4 +1,4 @@
-﻿using QteSystem.TestQTE;
+﻿using QteSystem.TestQte;
 
 namespace Abilities.Runtime.Impact
 {

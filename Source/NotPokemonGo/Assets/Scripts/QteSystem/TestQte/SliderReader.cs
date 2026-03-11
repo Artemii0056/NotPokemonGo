@@ -3,7 +3,7 @@ using UI.QTE;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace QteSystem.TestQTE
+namespace QteSystem.TestQte
 {
     public class SliderReader : QteButtonView
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Units
+namespace CombatText
 {
     public class CombatTextCanvas : MonoBehaviour
     {

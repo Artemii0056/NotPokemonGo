@@ -2,9 +2,9 @@ using System.Threading;
 using Abilities.Signals;
 using Cysharp.Threading.Tasks;
 using QteSystem;
-using QteSystem.TestQTE;
+using QteSystem.TestQte;
 
-namespace Abilities.Flow
+namespace Abilities.Flow.Steps
 {
     /// <summary>
     /// MVP: IQteSession exposes only Completed/Result, so we apply shield once on Normal/Perfect.
