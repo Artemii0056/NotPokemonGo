@@ -1,7 +1,7 @@
 ﻿using Abilities.Runtime;
 using Cysharp.Threading.Tasks;
 
-namespace AbsolutelyNewPerfectAbilitySystem
+namespace AbsolutelyNewPerfectAbilitySystem.Scripts
 {
     public class AbilityRunner
     {

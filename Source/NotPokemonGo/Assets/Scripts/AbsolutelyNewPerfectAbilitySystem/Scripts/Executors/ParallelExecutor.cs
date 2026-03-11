@@ -1,23 +1,30 @@
 ﻿using System.Collections.Generic;
 using Abilities.Runtime;
-using AbsolutelyNewPerfectAbilitySystem;
-using AbsolutelyNewPerfectAbilitySystem.Configs;
-using AbsolutelyNewPerfectAbilitySystem.Steps;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps;
 using Cysharp.Threading.Tasks;
 
-public class ParallelExecutor : IAbilityStepExecutor
+namespace AbsolutelyNewPerfectAbilitySystem.Scripts.Executors
 {
-    private StepExecutorRegistry _registry;
-
-    public async UniTask Execute(AbilityStepSO step, AbilityContext ctx)
+    public class ParallelExecutor : IAbilityStepExecutor
     {
-        var parallel = (ParallelStep)step;
+        private StepExecutorRegistry _registry;
 
-        var tasks = new List<UniTask>();
+        public ParallelExecutor(StepExecutorRegistry registry)
+        {
+            _registry = registry;
+        }
 
-        foreach (var child in parallel.Steps) 
-            tasks.Add(_registry.Execute(child, ctx));
+        public async UniTask Execute(AbilityStepSO step, AbilityContext ctx)
+        {
+            var parallel = (ParallelStep)step;
 
-        await UniTask.WhenAll(tasks);
+            var tasks = new List<UniTask>();
+
+            foreach (var child in parallel.Steps) 
+                tasks.Add(_registry.Execute(child, ctx));
+
+            await UniTask.WhenAll(tasks);
+        }
     }
 }

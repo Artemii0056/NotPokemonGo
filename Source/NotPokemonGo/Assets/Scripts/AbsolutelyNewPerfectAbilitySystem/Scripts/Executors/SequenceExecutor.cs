@@ -1,9 +1,9 @@
 ﻿using Abilities.Runtime;
-using AbsolutelyNewPerfectAbilitySystem.Configs;
-using AbsolutelyNewPerfectAbilitySystem.Steps;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps;
 using Cysharp.Threading.Tasks;
 
-namespace AbsolutelyNewPerfectAbilitySystem.Executors
+namespace AbsolutelyNewPerfectAbilitySystem.Scripts.Executors
 {
     public class SequenceExecutor
     {

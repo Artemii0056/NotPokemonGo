@@ -52,7 +52,8 @@ namespace Battlefields
                     Unit randomTarget = GetRandomTarget(targets);
                     
                     _abilityService.SetBattlefield(_battlefield);
-                    _abilityService.Handle(_source, randomTarget, abilityModel); 
+                   // _abilityService.Handle(_source, randomTarget, abilityModel); 
+                    _abilityService.RunAbilityAsync(_source, randomTarget, abilityModel); 
                     
                     abilityModel.DiscardCurrentTime();
 

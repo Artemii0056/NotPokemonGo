@@ -63,7 +63,6 @@ namespace Units
             _cameraShakeService = cameraShakeService;
 
             _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
-            _reactionService.Register(new CounterattackReaction(abilityService));
             _reactionService.Register(new ReflectReaction(spawner));
         }
 

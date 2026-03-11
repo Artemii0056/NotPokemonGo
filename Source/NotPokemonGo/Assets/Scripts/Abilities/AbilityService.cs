@@ -4,27 +4,38 @@ using System.Threading;
 using Abilities.Bennet;
 using Abilities.Flow;
 using Abilities.MV;
+using Abilities.Runtime;
+using AbsolutelyNewPerfectAbilitySystem;
+using AbsolutelyNewPerfectAbilitySystem.Scripts;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Executors;
 using Battlefields;
 using Cysharp.Threading.Tasks;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
+using Services.AssetManagement;
+using Spawners.Spawner;
 using Statuses.Services;
-using UnityEngine;
+using Units.Movement;
+using ParallelStep = AbsolutelyNewPerfectAbilitySystem.Scripts.Configs.CompositeSteps.ParallelStep;
 using Unit = Units.Unit;
 
 namespace Abilities
 {
     public sealed class AbilityService : IAbilityService, IDisposable
     {
+        private readonly IResourceLoader _resourceLoader;
+
         private const float PostDelaySeconds = 0.5f;
 
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IStatusManager _statusManager;
         private readonly IAbilityHandlerFactory _abilityHandlerFactory;
+        private readonly IArmamentSpawner _armamentSpawner;
 
         private Battlefield _battlefield;
-        private readonly HashSet<IAbilityHandler> _activeAbilityHandlers = new();
 
         private Unit _lastUnit;
 
@@ -35,8 +46,11 @@ namespace Abilities
         public AbilityService(
             IBattleStateMachine battleStateMachine,
             IStatusManager statusManager,
-            IAbilityHandlerFactory abilityHandlerFactory)
+            IAbilityHandlerFactory abilityHandlerFactory,
+            IResourceLoader resourceLoader, IArmamentSpawner armamentSpawner)
         {
+            _resourceLoader = resourceLoader;
+            _armamentSpawner = armamentSpawner;
             _battleStateMachine = battleStateMachine;
             _statusManager = statusManager;
             _abilityHandlerFactory = abilityHandlerFactory;
@@ -49,60 +63,59 @@ namespace Abilities
             _postFlowCts = null;
         }
 
-        public void SetBattlefield(Battlefield battlefield) => _battlefield = battlefield;
+        public void SetBattlefield(Battlefield battlefield) => 
+            _battlefield = battlefield;
 
-        public void Handle(Unit source, Unit target, AbilityModel abilityModel)
+        public async UniTaskVoid RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel)
         {
-            if (abilityModel == null)
-            {
-                Debug.LogError("[AbilityService] abilityModel is null");
-                return;
-            }
+            AbilitySO so;
+            
+            SignalService signalService = new SignalService();
+            IUnitMover unitMover = new UnitMover();
 
-            IAbilityHandler handler = _abilityHandlerFactory.Create(source, target, abilityModel);
-            if (handler == null)
-            {
-                Debug.LogError($"[AbilityService] HandlerFactory returned null for {abilityModel.AbilityType}");
-                return;
-            }
+            AnimationSignalRelay animationSignalRelay = new AnimationSignalRelay(signalService, source.AnimatorController);
+            
+            var registry = new StepExecutorRegistry(
+                new Dictionary<Type, IAbilityStepExecutor>
+                {
+                    { typeof(DamageStep), new DamageExecutor() },
+                    { typeof(MoveStep), new MoveExecutor(unitMover) },
+                    { typeof(PlayAnimationStep), new PlayAnimationExecutor() },
+                    { typeof(WaitSignalStep), new WaitSignalExecutor(signalService) },
+                    { typeof(MoveBackStep), new MoveBackExecutor(unitMover) },
+                    { typeof(SpawnProjectileStep), new SpawnProjectileExecutor(_armamentSpawner) },
+                    { typeof(ArmamentMoverStep), new ArmamentMoverExecutor() },
+                    { typeof(WaitingStep), new WaitingExecutor() },
+                }
+            );
+            
+            registry.AddExecutor(typeof(RepeatStep), new RepeatExecutor(registry));
+            registry.AddExecutor(typeof(ParallelStep), new ParallelExecutor(registry));
+            
+            AbilityRunner runner = new AbilityRunner(registry);
 
-            handler.Finished += Continue;
-            handler.Play(source, target);
-            _activeAbilityHandlers.Add(handler);
+            AbilityContext abilityContext = new AbilityContext();
+            abilityContext.Target = target;
+            abilityContext.Source = source;
+            abilityContext.StartPosition = source.StartPosition;
 
-            _lastUnit = source;
+            if (source.PlatoonType == PlatoonType.Heroes)
+                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
+            else
+                so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
 
-            // TODO: убрать из Unit, сделать отдельный слой.
-            source.RememberAbility(handler);
+            await runner.RunAbility(so, abilityContext);
+            
+            Continue(null);
         }
 
-        public void HandleCounterAttack(Unit source, Unit target, AbilityModel abilityModel)
-        {
-            if (abilityModel == null)
-            {
-                Debug.LogError("[AbilityService] Counter abilityModel is null");
-                return;
-            }
-
-            IAbilityHandler handler = _abilityHandlerFactory.Create(source, target, abilityModel);
-            if (handler == null)
-            {
-                Debug.LogError($"[AbilityService] Counter handler is null for {abilityModel?.AbilityType}");
-                return;
-            }
-
-            _activeAbilityHandlers.Add(handler);
-            handler.Play(source, target);
-            handler.Finished += Continue;
-        }
-
-        private void Continue(IAbilityHandler handler) => ContinueAsync(handler).Forget();
+        private void Continue(IAbilityHandler handler) =>
+            ContinueAsync(handler).Forget();
 
         private async UniTaskVoid ContinueAsync(IAbilityHandler handler)
         {
             if (handler != null)
             {
-                _activeAbilityHandlers.Remove(handler);
                 handler.Finished -= Continue;
             }
 

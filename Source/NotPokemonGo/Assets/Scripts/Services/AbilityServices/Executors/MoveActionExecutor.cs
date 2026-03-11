@@ -44,11 +44,16 @@ namespace Services.AbilityServices.Executors
             {
                 case MoveCommand.ToTargetStopPoint:
                 {
-                    if (target == null) return source.transform.position;
+                    if (target == null) 
+                        return source.transform.position;
+                    
                     Vector3 from = source.transform.position;
                     Vector3 to = target.transform.position;
                     Vector3 dir = to - from;
-                    if (dir.sqrMagnitude < 0.0001f) return from;
+                    
+                    if (dir.sqrMagnitude < 0.0001f) 
+                        return from;
+                    
                     dir.Normalize();
                     return to - dir * Mathf.Max(0f, phase.StopDistance);
                 }

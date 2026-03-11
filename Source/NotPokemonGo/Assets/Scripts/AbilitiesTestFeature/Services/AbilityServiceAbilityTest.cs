@@ -6,6 +6,7 @@ using Abilities.Bennet;
 using Abilities.MV;
 using AbilitiesTestFeature.BattleStates;
 using Battlefields;
+using Cysharp.Threading.Tasks;
 using Infrastructure.StateMachines.BattleStateMachine;
 using QteSystem;
 using Services;
@@ -39,6 +40,11 @@ namespace AbilitiesTestFeature.Services
 			_qteService = qteService;
 			_battleStateMachine = battleStateMachine;
 			_activeAbilityHandlers = new List<IAbilityHandler>();
+		}
+
+		public UniTaskVoid RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void SetBattlefield(Battlefield battlefield)

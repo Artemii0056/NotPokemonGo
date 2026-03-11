@@ -85,7 +85,7 @@ namespace AbilitiesTestFeature.Services
 
 				case PlatoonType.Enemies: 
 					_abilityService.SetBattlefield(_battlefield);
-					_abilityService.Handle(_source, unit, _abilityProvider.AbilityModel);
+					//_abilityService.Handle(_source, unit, _abilityProvider.AbilityModel);
                     
 					_abilityPanelPresenter.Disable();
 					break;

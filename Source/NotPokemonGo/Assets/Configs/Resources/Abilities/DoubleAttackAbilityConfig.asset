@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AbilityType>k__BackingField: 12
   <Icon>k__BackingField: {fileID: 21300120, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-  <Parts>k__BackingField: []
+  <Parts>k__BackingField:
+  - <AbilityPhases>k__BackingField:
+    - AnimationClip: {fileID: 0}
+      QteType: 0
+      SignalActions: []
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 1

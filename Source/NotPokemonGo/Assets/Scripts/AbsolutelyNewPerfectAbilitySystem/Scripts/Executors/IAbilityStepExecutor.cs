@@ -1,8 +1,8 @@
 ﻿using Abilities.Runtime;
-using AbsolutelyNewPerfectAbilitySystem.Configs;
+using AbsolutelyNewPerfectAbilitySystem.Scripts.Configs;
 using Cysharp.Threading.Tasks;
 
-namespace AbsolutelyNewPerfectAbilitySystem.Steps
+namespace AbsolutelyNewPerfectAbilitySystem.Scripts.Executors
 {
     public interface IAbilityStepExecutor
     {

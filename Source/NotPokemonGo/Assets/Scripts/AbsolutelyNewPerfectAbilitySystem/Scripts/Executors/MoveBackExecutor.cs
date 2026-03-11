@@ -5,24 +5,20 @@ using Units.Movement;
 
 namespace AbsolutelyNewPerfectAbilitySystem.Scripts.Executors
 {
-    public class MoveExecutor : IAbilityStepExecutor
+    public class MoveBackExecutor : IAbilityStepExecutor
     {
         private readonly IUnitMover _unitMover;
-        private DistanceCalculator _calculator;
 
-        public MoveExecutor(IUnitMover unitMover)
-        {
-             _calculator = new DistanceCalculator(); //TODO Вынести в сервис
+        public MoveBackExecutor(IUnitMover unitMover) => 
             _unitMover = unitMover;
-        }
 
         public async UniTask Execute(AbilityStepSO step, AbilityContext ctx)
         {
-            var data = (MoveStep)step;
+            var data = (MoveBackStep)step;
 
             await _unitMover.MoveTo(
                 ctx.Source.transform,
-                _calculator.CalculateDistance(ctx.Source,ctx.Target),
+                ctx.StartPosition,
                 data.Speed
             );
         }

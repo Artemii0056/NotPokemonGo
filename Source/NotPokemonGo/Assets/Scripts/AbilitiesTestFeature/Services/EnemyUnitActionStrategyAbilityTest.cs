@@ -53,7 +53,7 @@ namespace AbilitiesTestFeature.Services
 			Unit randomTarget = GetRandomTarget(targets);
 
 			_abilityService.SetBattlefield(_battlefield);
-			_abilityService.Handle(_source, randomTarget, randomAbility);
+			//_abilityService.Handle(_source, randomTarget, randomAbility);
 		}
 
 		private Unit GetRandomTarget(List<Unit> targets) =>

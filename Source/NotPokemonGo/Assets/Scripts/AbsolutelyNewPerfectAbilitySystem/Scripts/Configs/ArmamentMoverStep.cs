@@ -3,5 +3,8 @@
 namespace AbsolutelyNewPerfectAbilitySystem.Scripts.Configs
 {
     [Serializable]
-    public abstract class AbilityStepSO { }
+    public class ArmamentMoverStep : AbilityStepSO
+    {
+        
+    }
 }

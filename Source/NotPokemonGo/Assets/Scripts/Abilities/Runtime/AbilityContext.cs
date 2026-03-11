@@ -4,6 +4,7 @@ using Armaments.Movers;
 using QteSystem.TestQTE;
 using Units;
 using Units.AnimationControllers;
+using UnityEngine;
 
 namespace Abilities.Runtime
 {
@@ -11,6 +12,8 @@ namespace Abilities.Runtime
     {
         public Unit Source { get; internal set; }
         public Unit Target { get; internal set; }
+        
+        public Vector3 StartPosition { get; internal set; }
 
         public UnitAnimatorTrigger AnimatorTrigger { get; internal set; }
         public AnimatorController Animator { get; internal set; }
