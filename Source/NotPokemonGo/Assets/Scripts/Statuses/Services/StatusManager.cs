@@ -1,15 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RealTimeTickServices;
+using Units;
 using UnityEngine;
 
 namespace Statuses.Services
 {
     public class StatusManager : IStatusManager, IRealTimeTickService
     {
+        private List<Unit> _units;
+        
         private List<Status> _perTurn = new List<Status>();
         private List<Status> _perUnitTurn = new List<Status>();
         private List<Status> _perRealTime = new List<Status>();
+
+        public StatusManager()
+        {
+            _units = new List<Unit>();
+        }
 
         public void RegisterStatus(Status status)
         {
@@ -21,6 +29,11 @@ namespace Statuses.Services
                 _perUnitTurn.Add(status);
 
             status.OnApply();
+        }
+
+        public void UnregisterStatus(Unit target, StatusType type)
+        {
+            
         }
 
         public void UnregisterStatus(Status status)

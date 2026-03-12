@@ -14,7 +14,6 @@ namespace AbilityNew.AbilityDefinition
         public int? LastHealResult { get; set; } //HealResult
 
         public Dictionary<string, object> Blackboard { get; } = new();
-        public List<object> RuntimeHandles { get; } = new();
         
         public List<IArmamentMover> Movers { get; } = new List<IArmamentMover>();
 

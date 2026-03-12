@@ -7,44 +7,76 @@ namespace Platoons
 {
     public class TargetSelector : ITargetSelector
     {
-        private List<Platoon> _platoons = new();
-
+        private Platoon _first;
+        private Platoon _second;
+        
         public void SetPlatoons(Platoon platoon, Platoon platoon2)
         {
-            _platoons.Add(platoon);
-            _platoons.Add(platoon2);
+            _first = platoon;
+            _second = platoon2;
         }
 
-        public List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target) 
+        public IReadOnlyList<Unit> GetTargets(TargetMode targetMode, Unit source, Unit primaryTarget)
         {
-            Platoon targetPlatoon;
-        
-            if (_platoons[0].Type == target.PlatoonType)
-                targetPlatoon = _platoons[0];
-            else
-                targetPlatoon = _platoons[1];
-        
-            List<Unit> targets = new();
-        
-            switch (abilityModelTargetMode)
+            if (_first == null || _second == null)
+                throw new InvalidOperationException("Platoons are not set.");
+
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            var result = new List<Unit>();
+
+            var sourcePlatoon = GetPlatoonByType(source.PlatoonType);
+            var enemyPlatoon = GetEnemyPlatoon(source.PlatoonType);
+
+            switch (targetMode)
             {
-                case TargetMode.Single:
-                    targets.Add(target);
+                case TargetMode.Self:
+                    result.Add(source);
                     break;
-            
-                case TargetMode.Several:
-                    //Какая то логика выбора через индекс 
+
+                case TargetMode.PrimaryTarget:
+                    if (primaryTarget == null)
+                        throw new InvalidOperationException("Primary target is null.");
+
+                    result.Add(primaryTarget);
                     break;
-            
-                case TargetMode.All:
-                    targets.AddRange(targetPlatoon.AliveUnits);
+
+                case TargetMode.AllEnemies:
+                    result.AddRange(enemyPlatoon.AliveUnits);
                     break;
-            
+
+                case TargetMode.AllAllies:
+                    result.AddRange(sourcePlatoon.AliveUnits);
+                    break;
+
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(abilityModelTargetMode), abilityModelTargetMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(targetMode), targetMode, null);
             }
+
+            return result;
+        }
         
-            return targets;
+        private Platoon GetPlatoonByType(PlatoonType platoonType)
+        {
+            if (_first.Type == platoonType)
+                return _first;
+
+            if (_second.Type == platoonType)
+                return _second;
+
+            throw new InvalidOperationException($"Platoon with type '{platoonType}' was not found.");
+        }
+        
+        private Platoon GetEnemyPlatoon(PlatoonType sourceType)
+        {
+            if (_first.Type == sourceType)
+                return _second;
+
+            if (_second.Type == sourceType)
+                return _first;
+
+            throw new InvalidOperationException($"Enemy platoon for source type '{sourceType}' was not found.");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
@@ -7,45 +8,74 @@ using QteSystem.TestQte;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
-    public class ResolveQteExecutor : AbilityStepExecutor<ResolveQteStep>
+    public sealed class ResolveQteExecutor : AbilityStepExecutor<ResolveQteStep>
     {
         private readonly StepExecutorRegistry _registry;
 
-        public ResolveQteExecutor(StepExecutorRegistry registry) => 
-            _registry = registry;
-
-        private UniTask<QteResult> WaitResult(IQteSession session)
+        public ResolveQteExecutor(StepExecutorRegistry registry)
         {
-            var tcs = new UniTaskCompletionSource<QteResult>();
-
-            session.Completed += result =>
-            {
-                tcs.TrySetResult(result);
-            };
-
-            return tcs.Task;
+            _registry = registry;
         }
 
         public override async UniTask Execute(ResolveQteStep step, AbilityExecutionRuntime runtime)
         {
-            AbilityExecutionState state = runtime.State;
-            
+            var state = runtime.State;
+
             if (state.ActiveQte == null)
-                return;
+            {
+                throw new InvalidOperationException(
+                    "ResolveQteStep execution failed: ActiveQte is null.");
+            }
 
-            QteResult result = await WaitResult(state.ActiveQte);
+            var activeQte = state.ActiveQte;
+            QteResult result = await WaitResult(activeQte);
 
-            if (result == QteResult.Fail && step.OnFail != null)
-                await _registry.Execute(step.OnFail, runtime);
+            state.LastQteResult = result;
 
-            if (result == QteResult.Normal && step.OnNormal != null)
-                await _registry.Execute(step.OnNormal, runtime);
+            try
+            {
+                switch (result)
+                {
+                    case QteResult.Fail:
+                        if (step.OnFail != null)
+                            await _registry.Execute(step.OnFail, runtime);
+                        break;
 
-            if (result == QteResult.Perfect && step.OnPerfect != null)
-                await _registry.Execute(step.OnPerfect, runtime);
+                    case QteResult.Normal:
+                        if (step.OnNormal != null)
+                            await _registry.Execute(step.OnNormal, runtime);
+                        break;
 
-            state.ActiveQte.Dispose();
-            state.ActiveQte = null;
+                    case QteResult.Perfect:
+                        if (step.OnPerfect != null)
+                            await _registry.Execute(step.OnPerfect, runtime);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(result), result, null);
+                }
+            }
+            finally
+            {
+                activeQte.Dispose();
+
+                if (ReferenceEquals(state.ActiveQte, activeQte))
+                    state.ActiveQte = null;
+            }
+        }
+
+        private static UniTask<QteResult> WaitResult(IQteSession qteSession)
+        {
+            var tcs = new UniTaskCompletionSource<QteResult>();
+
+            void OnCompleted(QteResult result)
+            {
+                qteSession.Completed -= OnCompleted;
+                tcs.TrySetResult(result);
+            }
+
+            qteSession.Completed += OnCompleted;
+            return tcs.Task;
         }
     }
 }

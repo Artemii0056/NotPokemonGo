@@ -13,6 +13,7 @@ using AbilityNew.Scripts.Executors.Presentation;
 using AbilityNew.Scripts.Steps.Flow;
 using AbilityNew.Scripts.Steps.Gameplay;
 using AbilityNew.Scripts.Steps.Presentation;
+using AbilityNew.Scripts.Validation;
 using Battlefields;
 using Cysharp.Threading.Tasks;
 using Effects;
@@ -25,6 +26,7 @@ using Spawners.Spawner;
 using Statuses.Services;
 using Units;
 using Units.Movement;
+using UnityEngine;
 
 namespace Abilities
 {
@@ -43,13 +45,14 @@ namespace Abilities
         private IQteService _qteService;
         private IArmamentSpawner _armamentSpawner;
         private IEffectResolver _effectResolver;
+        private readonly ITargetSelector _targetSelector;
 
         public event Action Finished;
 
         public AbilityService(
             IResourceLoader resourceLoader,
             IBattleStateMachine battleStateMachine,
-            IStatusManager statusManager, IQteService qteService, IArmamentSpawner armamentSpawner, IEffectResolver effectResolver)
+            IStatusManager statusManager, IQteService qteService, IArmamentSpawner armamentSpawner, IEffectResolver effectResolver, ITargetSelector targetSelector)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
@@ -57,6 +60,7 @@ namespace Abilities
             _qteService = qteService;
             _armamentSpawner = armamentSpawner;
             _effectResolver = effectResolver;
+            _targetSelector = targetSelector;
         }
 
         public void Dispose()
@@ -90,12 +94,11 @@ namespace Abilities
 
             var executors = new Dictionary<Type, IAbilityStepExecutor>
             {
-                { typeof(DamageStep), new DamageStepExecutor(_effectResolver) },
+                { typeof(DamageStep), new DamageStepExecutor(_effectResolver, _targetSelector) },
                 { typeof(PlayAnimationStep), new PlayAnimationExecutor() },
                 { typeof(WaitSignalStep), new WaitSignalExecutor(signalService) },
                 { typeof(WaitingStep), new WaitingExecutor() },
                 { typeof(StartQteStep), new StartQteExecutor(_qteService) },
-                { typeof(SequenceStep), new SequenceExecutor() },
 
                 { typeof(MoveStep), new MoveExecutor(unitMover) },
                 { typeof(MoveBackStep), new MoveBackExecutor(unitMover) },
@@ -107,10 +110,32 @@ namespace Abilities
             
             stepExecutorRegistry.AddExecutor(new RepeatExecutor(stepExecutorRegistry));
             stepExecutorRegistry.AddExecutor(new ParallelExecutor(stepExecutorRegistry));
+            stepExecutorRegistry.AddExecutor(new SequenceExecutor(stepExecutorRegistry));
 
             _abilityRunner = new AbilityRunner(stepExecutorRegistry);
 
+            var validator = new AbilityValidator();
+            
+            var validationResult = validator.Validate(ability, stepExecutorRegistry);
+
+            if (validationResult.IsValid == false)
+            {
+                foreach (var error in validationResult.Errors)
+                    Debug.LogError(error);
+
+                throw new InvalidOperationException(
+                    $"Ability '{ability.name}' validation failed. Check console for details.");
+            }
+            
             AbilityExecutionResult result = await _abilityRunner.RunAbility(ability, context);
+            
+            if (result.Completed)
+            {
+                foreach (var battleEvent in result.Events)
+                {
+                    Debug.Log($"Battle event: {battleEvent.GetType().Name}");
+                }
+            }
 
             await ContinueAsync(result);
         }

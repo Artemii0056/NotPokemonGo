@@ -12,7 +12,7 @@ namespace Abilities.Configs
     {
         public PhaseSignal Signal;
 
-        [Header("Targeting")] public TargetMode TargetMode = TargetMode.Single;
+        [Header("Targeting")] public TargetMode TargetMode = TargetMode.Self;
 
         [Header("Armament / Castament (optional)")]
         public ArmamentSetup ArmamentSetup;

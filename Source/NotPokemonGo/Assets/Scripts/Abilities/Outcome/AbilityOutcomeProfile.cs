@@ -20,7 +20,7 @@ namespace Abilities.Outcome
     public class SetupsByQte
     {
         public QteResult QteResult = QteResult.Default;
-        public TargetMode TargetMode = TargetMode.Single;
+        public TargetMode TargetMode = TargetMode.PrimaryTarget;
         public ArmamentSetup ArmamentSetup;
         public CastamentSetup CastamentSetup;
     }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Abilities.Configs;
 using Units;
 
@@ -23,7 +25,7 @@ namespace Services.AbilityServices.Executors
             if (_targetSelector == null || _raise == null)
                 return;
 
-            var targets = _targetSelector.GetTargets(action.TargetMode, target);
+            IReadOnlyList<Unit> targets = new []{target };
 
             if (targets == null || targets.Count == 0)
                 return;

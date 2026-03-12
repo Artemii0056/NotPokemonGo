@@ -15,8 +15,17 @@ namespace AbilityNew.Scripts.Executors.Gameplay
 
         public override UniTask Execute(StartQteStep step, AbilityExecutionRuntime runtime)
         {
-            runtime.State.ActiveQte = _qteService.StartSession(
-                step.Type,
+            var state = runtime.State;
+
+            if (state.ActiveQte != null)
+            {
+                state.ActiveQte.Dispose();
+                state.ActiveQte = null;
+            }
+
+            state.LastQteResult = null;
+
+            state.ActiveQte = _qteService.StartSession(step.Type,
                 runtime.Context.Target,
                 step.Duration);
 

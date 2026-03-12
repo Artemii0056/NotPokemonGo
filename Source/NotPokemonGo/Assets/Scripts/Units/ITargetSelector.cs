@@ -6,7 +6,7 @@ namespace Units
 {
     public interface ITargetSelector
     {
-        List<Unit> GetTargets(TargetMode abilityModelTargetMode, Unit target);
+        IReadOnlyList<Unit> GetTargets(TargetMode targetMode, Unit source, Unit primaryTarget);
         void SetPlatoons(Platoon platoon, Platoon platoon2);
     }
 }
