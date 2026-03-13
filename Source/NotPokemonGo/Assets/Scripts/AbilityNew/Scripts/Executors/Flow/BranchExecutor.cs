@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Abilities.Flow;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
@@ -8,7 +9,7 @@ namespace AbilityNew.Scripts.Executors.Flow
 {
     public class BranchExecutor : AbilityStepExecutor<BranchStep>
     {
-        public override UniTask Execute(BranchStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(BranchStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             throw new NotImplementedException();
         }

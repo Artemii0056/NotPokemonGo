@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Flow;
 using Cysharp.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace AbilityNew.Scripts.Executors.Flow
         public SequenceExecutor(StepExecutorRegistry registry) =>
             _registry = registry;
 
-        public override async UniTask Execute(SequenceStep step, AbilityExecutionRuntime runtime)
+        public override async UniTask Execute(SequenceStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             if (step == null || step.Steps == null || step.Steps.Count == 0)
                 return;

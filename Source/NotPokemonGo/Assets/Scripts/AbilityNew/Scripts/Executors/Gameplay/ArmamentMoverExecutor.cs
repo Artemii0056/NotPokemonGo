@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
@@ -9,7 +10,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
 {
     public class ArmamentMoverExecutor : AbilityStepExecutor<ArmamentMoverStep>
     {
-        public override UniTask Execute(ArmamentMoverStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(ArmamentMoverStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var state = runtime.State;
             

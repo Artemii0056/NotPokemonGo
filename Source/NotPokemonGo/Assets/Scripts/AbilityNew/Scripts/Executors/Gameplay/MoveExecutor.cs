@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             _unitMover = unitMover;
         }
 
-        public override async UniTask Execute(MoveStep step, AbilityExecutionRuntime runtime)
+        public override async UniTask Execute(MoveStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             AbilityExecutionContext context = runtime.Context;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
@@ -16,7 +17,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
         public SpawnProjectileExecutor(IArmamentSpawner armamentSpawner) =>
             _armamentSpawner = armamentSpawner;
 
-        public override async UniTask Execute(SpawnProjectileStep step, AbilityExecutionRuntime runtime)
+        public override async UniTask Execute(SpawnProjectileStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var context = runtime.Context;
 

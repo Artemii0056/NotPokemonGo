@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
         public StartQteExecutor(IQteService qteService) =>
             _qteService = qteService;
 
-        public override UniTask Execute(StartQteStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(StartQteStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var state = runtime.State;
 

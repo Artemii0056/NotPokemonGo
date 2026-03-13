@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.Configs;
 using Cysharp.Threading.Tasks;
@@ -21,6 +22,6 @@ namespace AbilityNew.Scripts.AbilityExecutor
             await Execute(typedStep, runtime);
         }
 
-        public abstract UniTask Execute(TStep step, AbilityExecutionRuntime runtime);
+        public abstract UniTask Execute(TStep step, AbilityExecutionRuntime runtime,  CancellationToken ct);
     }
 }

@@ -1,13 +1,13 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Abilities
 {
     [Serializable]
     public class AbilityAnchor
     {
-        public ParticleSpawnType spawnType;
-        public List<Transform> Transforms;
+        [FormerlySerializedAs("spawnType")] public ParticleSpawnType SpawnType;
+        [FormerlySerializedAs("Transforms")] public Transform Transform;
     }
 }

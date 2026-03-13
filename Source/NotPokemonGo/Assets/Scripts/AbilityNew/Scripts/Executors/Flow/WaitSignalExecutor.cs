@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Flow;
 using Cysharp.Threading.Tasks;
@@ -13,8 +14,7 @@ namespace AbilityNew.Scripts.Executors.Flow
         public WaitSignalExecutor(SignalService signals) => 
             _signals = signals;
 
-
-        public override UniTask Execute(WaitSignalStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(WaitSignalStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             Debug.Log("WaitSignalExecutor");
             return _signals.Wait(step.Signal);

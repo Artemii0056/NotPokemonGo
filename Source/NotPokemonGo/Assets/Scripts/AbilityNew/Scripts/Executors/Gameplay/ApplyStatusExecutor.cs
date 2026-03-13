@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Results;
 using AbilityNew.Scripts.Steps.Gameplay;
@@ -25,7 +26,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             _statusFactory = statusFactory;
         }
 
-        public override UniTask Execute(ApplyStatusStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(ApplyStatusStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var targets = _targetSelector.GetTargets(
                 step.TargetMode,

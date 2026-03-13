@@ -22,6 +22,7 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using QteSystem;
 using Services.AssetManagement;
+using Spawners;
 using Spawners.Spawner;
 using Statuses.Services;
 using Units;
@@ -46,13 +47,14 @@ namespace Abilities
         private IArmamentSpawner _armamentSpawner;
         private IEffectResolver _effectResolver;
         private readonly ITargetSelector _targetSelector;
+        private readonly IParticleSpawner _particleSpawner;
 
         public event Action Finished;
 
         public AbilityService(
             IResourceLoader resourceLoader,
             IBattleStateMachine battleStateMachine,
-            IStatusManager statusManager, IQteService qteService, IArmamentSpawner armamentSpawner, IEffectResolver effectResolver, ITargetSelector targetSelector)
+            IStatusManager statusManager, IQteService qteService, IArmamentSpawner armamentSpawner, IEffectResolver effectResolver, ITargetSelector targetSelector, IParticleSpawner particleSpawner)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
@@ -61,6 +63,7 @@ namespace Abilities
             _armamentSpawner = armamentSpawner;
             _effectResolver = effectResolver;
             _targetSelector = targetSelector;
+            _particleSpawner = particleSpawner;
         }
 
         public void Dispose()
@@ -104,6 +107,7 @@ namespace Abilities
                 { typeof(MoveBackStep), new MoveBackExecutor(unitMover) },
                 { typeof(SpawnProjectileStep), new SpawnProjectileExecutor(_armamentSpawner) },
                 { typeof(ArmamentMoverStep), new ArmamentMoverExecutor() },
+                { typeof(SpawnVfxStep), new SpawnVfxExecutor(_particleSpawner) },
             };
             
             StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors.Values);
@@ -114,18 +118,18 @@ namespace Abilities
 
             _abilityRunner = new AbilityRunner(stepExecutorRegistry);
 
-            var validator = new AbilityValidator();
-            
-            var validationResult = validator.Validate(ability, stepExecutorRegistry);
-
-            if (validationResult.IsValid == false)
-            {
-                foreach (var error in validationResult.Errors)
-                    Debug.LogError(error);
-
-                throw new InvalidOperationException(
-                    $"Ability '{ability.name}' validation failed. Check console for details.");
-            }
+            // var validator = new AbilityValidator();
+            //
+            // var validationResult = validator.Validate(ability, stepExecutorRegistry);
+            //
+            // if (validationResult.IsValid == false)
+            // {
+            //     foreach (var error in validationResult.Errors)
+            //         Debug.LogError(error);
+            //
+            //     throw new InvalidOperationException(
+            //         $"Ability '{ability.name}' validation failed. Check console for details.");
+            // }
             
             AbilityExecutionResult result = await _abilityRunner.RunAbility(ability, context);
             

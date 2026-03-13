@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Flow;
@@ -8,12 +9,12 @@ namespace AbilityNew.Scripts.Executors.Flow
 {
     public class ParallelExecutor : AbilityStepExecutor<ParallelStep>
     {
-        private StepExecutorRegistry _registry;
+        private readonly StepExecutorRegistry _registry;
 
         public ParallelExecutor(StepExecutorRegistry registry) => 
             _registry = registry;
 
-        public override async UniTask Execute(ParallelStep step, AbilityExecutionRuntime runtime)
+        public override async UniTask Execute(ParallelStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var tasks = new List<UniTask>();
             

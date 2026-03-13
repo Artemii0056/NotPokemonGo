@@ -19,13 +19,13 @@ namespace Spawners
 
             Dictionary<ParticleSpawnType, AbilityAnchor> anchors = GetOrBuildAnchors(owner);
 
-            if (!anchors.TryGetValue(spawnType, out var anchor) || anchor.Transforms == null || anchor.Transforms.Count == 0)
+            if (!anchors.TryGetValue(spawnType, out var anchor) || anchor.Transform == null )
             {
                 Debug.LogWarning($"No anchor for spawnType={spawnType} on unit={owner.name}");
                 return;
             }
 
-            Transform point = anchor.Transforms[0];
+            Transform point = anchor.Transform;
             ParticleSystem ps = Object.Instantiate(prefab, point.position, Quaternion.identity);
             ps.Play();
 
@@ -84,8 +84,8 @@ namespace Spawners
             
             foreach (var anchor in unit.AbilityAnchors)
             {
-                if (!map.TryAdd(anchor.spawnType, anchor))
-                    Debug.LogWarning($"Duplicate Anchor for {anchor.spawnType} on {unit.name}");
+                if (!map.TryAdd(anchor.SpawnType, anchor))
+                    Debug.LogWarning($"Duplicate Anchor for {anchor.SpawnType} on {unit.name}");
             }
 
             _anchorsCache[unit] = map;

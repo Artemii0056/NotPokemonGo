@@ -1,4 +1,5 @@
-﻿using AbilityNew.AbilityDefinition;
+﻿using System.Threading;
+using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Executors;
 using AbilityNew.Scripts.Results;
@@ -23,7 +24,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             _statusManager = statusManager;
         }
 
-        public override UniTask Execute(RemoveStatusStep step, AbilityExecutionRuntime runtime)
+        public override UniTask Execute(RemoveStatusStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var targets = _targetSelector.GetTargets(
                 step.TargetMode,

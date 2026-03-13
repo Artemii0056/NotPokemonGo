@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
@@ -17,7 +18,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             _registry = registry;
         }
 
-        public override async UniTask Execute(ResolveQteStep step, AbilityExecutionRuntime runtime)
+        public override async UniTask Execute(ResolveQteStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             var state = runtime.State;
 

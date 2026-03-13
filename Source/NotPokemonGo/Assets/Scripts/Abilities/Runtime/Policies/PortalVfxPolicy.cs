@@ -62,13 +62,13 @@ namespace Abilities.Runtime.Policies
             {
                 var anchor = owner.AbilityAnchors[i];
                 
-                if (anchor == null || anchor.spawnType != spawnType)
+                if (anchor == null || anchor.SpawnType != spawnType)
                     continue;
 
-                if (anchor.Transforms == null || anchor.Transforms.Count == 0)
+                if (anchor.Transform == null)
                     return null;
 
-                return anchor.Transforms[0];
+                return anchor.Transform;
             }
 
             return null;
