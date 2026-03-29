@@ -11,16 +11,27 @@ namespace AbilityNew.Scripts.Executors.Flow
     {
         private readonly StepExecutorRegistry _registry;
 
-        public ParallelExecutor(StepExecutorRegistry registry) => 
+        public ParallelExecutor(StepExecutorRegistry registry) =>
             _registry = registry;
 
         public override async UniTask Execute(ParallelStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
-            var tasks = new List<UniTask>();
-            
-            foreach (var child in step.Steps) 
+            if (step == null || step.Steps == null || step.Steps.Count == 0)
+                return;
+
+            var tasks = new List<UniTask>(step.Steps.Count);
+
+            foreach (var child in step.Steps)
+            {
+                if (child == null)
+                    continue;
+
                 tasks.Add(_registry.Execute(child, runtime));
-            
+            }
+
+            if (tasks.Count == 0)
+                return;
+
             await UniTask.WhenAll(tasks);
         }
     }

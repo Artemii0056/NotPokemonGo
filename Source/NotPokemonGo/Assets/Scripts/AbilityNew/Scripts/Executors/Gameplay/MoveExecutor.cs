@@ -4,13 +4,14 @@ using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using Units.Movement;
+using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
     public class MoveExecutor : AbilityStepExecutor<MoveStep>
     {
         private readonly IUnitMover _unitMover;
-        private DistanceCalculator _calculator;
+        private readonly DistanceCalculator _calculator;
 
         public MoveExecutor(IUnitMover unitMover)
         {
@@ -22,11 +23,13 @@ namespace AbilityNew.Scripts.Executors.Gameplay
         {
             AbilityExecutionContext context = runtime.Context;
 
+            Vector3 targetPosition = _calculator.CalculateDistance(context.Source, context.Target);
+            
             await _unitMover.MoveTo(
                 context.Source.transform,
-                _calculator.CalculateDistance(context.Source, context.Target),
-                step.Speed
-            );
+                targetPosition,
+                step.Speed,
+                ct);
         }
     }
 }

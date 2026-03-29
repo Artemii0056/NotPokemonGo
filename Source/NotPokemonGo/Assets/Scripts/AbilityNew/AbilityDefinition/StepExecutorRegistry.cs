@@ -13,6 +13,9 @@ namespace AbilityNew.AbilityDefinition
 
         public StepExecutorRegistry(IEnumerable<IAbilityStepExecutor> executors)
         {
+            if (executors == null)
+                throw new ArgumentNullException(nameof(executors));
+            
             _executors = executors.ToDictionary(x => x.StepType, x => x);
         }
 
@@ -21,9 +24,12 @@ namespace AbilityNew.AbilityDefinition
             if (step == null)
                 throw new ArgumentNullException(nameof(step));
 
-            var stepType = step.GetType();
+            if (runtime == null)
+                throw new ArgumentNullException(nameof(runtime));
 
-            if (!_executors.TryGetValue(stepType, out var executor))
+            Type stepType = step.GetType();
+
+            if (_executors.TryGetValue(stepType, out IAbilityStepExecutor executor) == false)
             {
                 throw new InvalidOperationException(
                     $"Executor for step type '{stepType.Name}' is not registered.");
@@ -37,6 +43,7 @@ namespace AbilityNew.AbilityDefinition
             _executors[executor.StepType] = executor;
         }
 
-        public bool HasExecutor(Type stepType) => _executors.ContainsKey(stepType);
+        public bool HasExecutor(Type stepType) => 
+            _executors.ContainsKey(stepType);
     }
 }

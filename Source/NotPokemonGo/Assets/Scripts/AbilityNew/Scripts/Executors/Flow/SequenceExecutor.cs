@@ -20,6 +20,8 @@ namespace AbilityNew.Scripts.Executors.Flow
 
             foreach (var child in step.Steps)
             {
+                ct.ThrowIfCancellationRequested();
+                
                 if (child == null)
                     continue;
 

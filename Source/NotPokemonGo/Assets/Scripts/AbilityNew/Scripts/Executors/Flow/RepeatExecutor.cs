@@ -15,8 +15,18 @@ namespace AbilityNew.Scripts.Executors.Flow
         
         public override async UniTask Execute(RepeatStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
-            for (int i = 0; i < step.Count; i++) 
+            if (step == null || step.Step == null || step.Count <= 0)
+                return;
+
+            for (int i = 0; i < step.Count; i++)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                if (runtime.State.IsInterrupted || runtime.State.IsCancelled)
+                    return;
+
                 await _registry.Execute(step.Step, runtime);
+            }
         }
     }
 }

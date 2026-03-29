@@ -13,56 +13,40 @@ MonoBehaviour:
   m_Name: BennetBaseAttack
   m_EditorClassIdentifier: 
   Steps:
-  - rid: 9209732864908984320
+  - rid: 9209733245058154496
   - rid: 9209732864908984321
   - rid: 9209732864908984322
-  - rid: 9209732864908984323
-  - rid: 9209732903106248705
+  - rid: 9209733245058154497
+  - rid: 9209733245058154498
   - rid: 9209732864908984325
-  - rid: 9209732864908984324
   references:
     version: 2
     RefIds:
-    - rid: 9209732864908984320
-      type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
-      data:
-        Animation: {fileID: -1953017291097611811, guid: 9b4eb48d0d5a1ef459acce3fb2494439, type: 3}
     - rid: 9209732864908984321
       type: {class: MoveStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:
         Animation: {fileID: 3822591109426768289, guid: 7282e18170c836147a63e8c94de4f6ec, type: 3}
-        Speed: 1
+        Speed: 5
         Duration: 0
     - rid: 9209732864908984322
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Animation: {fileID: 3822591109426768289, guid: 7282e18170c836147a63e8c94de4f6ec, type: 3}
-    - rid: 9209732864908984323
-      type: {class: WaitSignalStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
-      data:
-        Signal: 10
-    - rid: 9209732864908984324
-      type: {class: DamageStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
-      data:
-        Effect:
-          Type: 0
-          TargetType: 1
-          DamageType: 1
-          Value: 10
-        TargetMode: 1
     - rid: 9209732864908984325
       type: {class: MoveBackStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:
         Animation: {fileID: -1953017291097611811, guid: 9b4eb48d0d5a1ef459acce3fb2494439, type: 3}
-        Speed: 1
+        Speed: 5
         Duration: 0
-    - rid: 9209732903106248705
-      type: {class: ParallelStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
+    - rid: 9209733245058154496
+      type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
-        Steps:
-        - rid: 9209732903106248707
-        - rid: 9209732903106248708
-    - rid: 9209732903106248707
+        Animation: {fileID: -1953017291097611811, guid: 9b4eb48d0d5a1ef459acce3fb2494439, type: 3}
+    - rid: 9209733245058154497
+      type: {class: WaitSignalStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
+      data:
+        Signal: 10
+    - rid: 9209733245058154498
       type: {class: DamageStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:
         Effect:
@@ -71,8 +55,3 @@ MonoBehaviour:
           DamageType: 1
           Value: 10
         TargetMode: 1
-    - rid: 9209732903106248708
-      type: {class: SpawnVfxStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
-      data:
-        ParticleSpawnType: 2
-        ParticleSystem: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}

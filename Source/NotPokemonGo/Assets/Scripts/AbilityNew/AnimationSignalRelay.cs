@@ -1,36 +1,33 @@
-﻿using Abilities.Signals;
-using AbilityNew.Scripts;
+﻿using System;
+using Abilities.Signals;
 using Units.AnimationControllers;
-using UnityEngine;
 
-namespace AbilityNew
+namespace AbilityNew.Scripts
 {
-    public class AnimationSignalRelay
+    public sealed class AnimationSignalRelay : IDisposable
     {
-        private SignalService _signalService;
-        private AnimatorController _animatorController;
+        private readonly ISignalService _signalService;
+        private readonly AnimatorController _animatorController;
 
-        public AnimationSignalRelay(SignalService signalService, AnimatorController animatorController)
+        public AnimationSignalRelay(
+            ISignalService signalService,
+            AnimatorController animatorController)
         {
-            _signalService = signalService;
-            _animatorController = animatorController;
+            _signalService = signalService ?? throw new ArgumentNullException(nameof(signalService));
+            _animatorController = animatorController ?? throw new ArgumentNullException(nameof(animatorController));
 
             _animatorController.Signal += OnSignal;
         }
 
-        public void EmitSignal(int signal)
+        public void Dispose()
         {
-            Debug.Log(signal);
-        
-            if (_signalService == null)
-                return;
-
-            _signalService.Emit(PhaseSignalUtil.FromInt(signal));
+            _animatorController.Signal -= OnSignal;
         }
 
-        private void OnSignal(int signal)
+        private void OnSignal(int signalId)
         {
-            EmitSignal(signal);
+            PhaseSignal signal = PhaseSignalUtil.FromInt(signalId);
+            _signalService.Emit(signal);
         }
     }
 }

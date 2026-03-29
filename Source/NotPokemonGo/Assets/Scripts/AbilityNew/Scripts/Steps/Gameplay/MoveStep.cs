@@ -9,6 +9,5 @@ namespace AbilityNew.Scripts.Steps.Gameplay
     {
         public AnimationClip Animation;
         public float Speed;
-        public float Duration;
     }
 }

@@ -13,13 +13,19 @@ namespace AbilityNew.Scripts.AbilityExecutor
 
         public async UniTask Execute(AbilityStepSO step, AbilityExecutionRuntime runtime)
         {
+            if (step == null)
+                throw new ArgumentNullException(nameof(step));
+
+            if (runtime == null)
+                throw new ArgumentNullException(nameof(runtime));
+            
             if (step is not TStep typedStep)
             {
                 throw new InvalidOperationException(
                     $"Invalid step type. Expected {typeof(TStep).Name}, got {step.GetType().Name}");
             }
 
-            await Execute(typedStep, runtime);
+            await Execute(typedStep, runtime, runtime.CancellationToken);
         }
 
         public abstract UniTask Execute(TStep step, AbilityExecutionRuntime runtime,  CancellationToken ct);

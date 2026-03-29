@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+using AbilityNew.Scripts.Conditions;
 using AbilityNew.Scripts.Configs;
 using UnityEngine;
 
 namespace AbilityNew.Scripts.Steps.Flow
 {
     [Serializable]
-    public class BranchStep : AbilityStepSO
+    public class BranchCase
     {
         [SerializeReference]
-        public List<BranchCase> Cases = new();
+        [SubclassSelector]
+        public AbilityCondition Condition;
 
         [SerializeReference]
         [SubclassSelector]
-        public AbilityStepSO ElseStep;
+        public AbilityStepSO Step;
     }
 }

@@ -8,7 +8,7 @@ namespace Abilities
 {
     public interface IAbilityService
     {
-        UniTaskVoid RunAbilityAsync (Unit source, Unit target, AbilityModel abilityModel);
+        UniTask RunAbilityAsync (Unit source, Unit target, AbilityModel abilityModel);
         void SetBattlefield(Battlefield battlefield);
         event Action Finished;
     }

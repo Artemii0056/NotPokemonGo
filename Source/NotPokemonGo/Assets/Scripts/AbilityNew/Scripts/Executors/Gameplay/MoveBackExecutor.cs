@@ -18,12 +18,12 @@ namespace AbilityNew.Scripts.Executors.Gameplay
         public  override async UniTask Execute(MoveBackStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
             Debug.Log("MoveBackExecutor");
-            
+
             await _unitMover.MoveTo(
                 runtime.Context.Source.transform,
                 runtime.Context.Source.StartPosition,
-                step.Speed
-            );
+                step.Speed,
+                ct);
         }
     }
 }

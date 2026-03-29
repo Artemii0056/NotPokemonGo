@@ -52,6 +52,8 @@ namespace Battlefields
 
         public override void Enable()
         {
+            
+            Debug.Log(Application.persistentDataPath);
             base.Enable();
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
@@ -87,6 +89,8 @@ namespace Battlefields
                     break;
 
                 case PlatoonType.Enemies: 
+                    
+                    
                     _abilityService.SetBattlefield(_battlefield);
                     _abilityService.RunAbilityAsync(_source, unit, _abilityProvider.AbilityModel);
                     

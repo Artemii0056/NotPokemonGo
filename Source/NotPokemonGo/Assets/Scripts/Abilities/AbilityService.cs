@@ -2,18 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Abilities.MV;
-using AbilityNew;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.AbilityExecutor;
-using AbilityNew.Scripts.Executors;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
 using AbilityNew.Scripts.Executors.Presentation;
-using AbilityNew.Scripts.Steps.Flow;
-using AbilityNew.Scripts.Steps.Gameplay;
-using AbilityNew.Scripts.Steps.Presentation;
-using AbilityNew.Scripts.Validation;
 using Battlefields;
 using Cysharp.Threading.Tasks;
 using Effects;
@@ -35,17 +29,18 @@ namespace Abilities
     {
         private const float PostDelaySeconds = 0.5f;
 
-        private  AbilityRunner _abilityRunner;
+        private AbilityRunner _abilityRunner;
+        private Battlefield _battlefield;
+        private Unit _lastUnit;
+        private CancellationTokenSource _postFlowCts;
+
         private readonly IResourceLoader _resourceLoader;
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IStatusManager _statusManager;
 
-        private Battlefield _battlefield;
-        private Unit _lastUnit;
-        private CancellationTokenSource _postFlowCts;
-        private IQteService _qteService;
-        private IArmamentSpawner _armamentSpawner;
-        private IEffectResolver _effectResolver;
+        private readonly IQteService _qteService;
+        private readonly IArmamentSpawner _armamentSpawner;
+        private readonly IEffectResolver _effectResolver;
         private readonly ITargetSelector _targetSelector;
         private readonly IParticleSpawner _particleSpawner;
 
@@ -54,7 +49,12 @@ namespace Abilities
         public AbilityService(
             IResourceLoader resourceLoader,
             IBattleStateMachine battleStateMachine,
-            IStatusManager statusManager, IQteService qteService, IArmamentSpawner armamentSpawner, IEffectResolver effectResolver, ITargetSelector targetSelector, IParticleSpawner particleSpawner)
+            IStatusManager statusManager,
+            IQteService qteService,
+            IArmamentSpawner armamentSpawner,
+            IEffectResolver effectResolver,
+            ITargetSelector targetSelector,
+            IParticleSpawner particleSpawner)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
@@ -76,10 +76,10 @@ namespace Abilities
         public void SetBattlefield(Battlefield battlefield) =>
             _battlefield = battlefield;
 
-        public async UniTaskVoid RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel) =>
-            RunAbilityInternalAsync(source, target, abilityModel).Forget();
+        public UniTask RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel) =>
+            RunAbilityInternalAsync(source, target, abilityModel);
 
-        public async UniTaskVoid RunAbilityInternalAsync(Unit source, Unit target, AbilityModel abilityModel)
+        private async UniTask RunAbilityInternalAsync(Unit source, Unit target, AbilityModel abilityModel)
         {
             _lastUnit = source;
 
@@ -88,69 +88,69 @@ namespace Abilities
             var context = new AbilityExecutionContext(
                 source,
                 target,
-                new  List<Unit>());
+                new List<Unit>());
 
-            var signalService = new SignalService();
+            using var abilityCts = new CancellationTokenSource();
+
+            SignalService signalService = new SignalService();
             IUnitMover unitMover = new UnitMover();
-            
-            AnimationSignalRelay animationSignalRelay = new AnimationSignalRelay(signalService, source.AnimatorController);
+            using var animationSignalRelay = new AnimationSignalRelay(signalService, source.AnimatorController);
 
-            var executors = new Dictionary<Type, IAbilityStepExecutor>
-            {
-                { typeof(DamageStep), new DamageStepExecutor(_effectResolver, _targetSelector) },
-                { typeof(PlayAnimationStep), new PlayAnimationExecutor() },
-                { typeof(WaitSignalStep), new WaitSignalExecutor(signalService) },
-                { typeof(WaitingStep), new WaitingExecutor() },
-                { typeof(StartQteStep), new StartQteExecutor(_qteService) },
+            var executors = CreateExecutors(signalService, unitMover);
 
-                { typeof(MoveStep), new MoveExecutor(unitMover) },
-                { typeof(MoveBackStep), new MoveBackExecutor(unitMover) },
-                { typeof(SpawnProjectileStep), new SpawnProjectileExecutor(_armamentSpawner) },
-                { typeof(ArmamentMoverStep), new ArmamentMoverExecutor() },
-                { typeof(SpawnVfxStep), new SpawnVfxExecutor(_particleSpawner) },
-            };
-            
-            StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors.Values);
-            
-            stepExecutorRegistry.AddExecutor(new RepeatExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new ParallelExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new SequenceExecutor(stepExecutorRegistry));
+            StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors);
 
             _abilityRunner = new AbilityRunner(stepExecutorRegistry);
 
-            // var validator = new AbilityValidator();
-            //
-            // var validationResult = validator.Validate(ability, stepExecutorRegistry);
-            //
-            // if (validationResult.IsValid == false)
-            // {
-            //     foreach (var error in validationResult.Errors)
-            //         Debug.LogError(error);
-            //
-            //     throw new InvalidOperationException(
-            //         $"Ability '{ability.name}' validation failed. Check console for details.");
-            // }
-            
-            AbilityExecutionResult result = await _abilityRunner.RunAbility(ability, context);
-            
-            if (result.Completed)
+            try
             {
-                foreach (var battleEvent in result.Events)
+                AbilityExecutionResult result = await _abilityRunner.RunAbility(
+                    ability,
+                    context,
+                    abilityCts.Token);
+
+                if (result.Completed)
                 {
-                    Debug.Log($"Battle event: {battleEvent.GetType().Name}");
+                    await ContinueAsync(result);
                 }
             }
+            catch (OperationCanceledException)
+            {
+                Debug.LogWarning($"Ability '{ability.name}' was cancelled.");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(
+                    $"Ability '{ability?.name}' crashed. Source={source?.name}, Target={target?.name}\n{ex}");
+                throw;
+            }
+        }
 
-            await ContinueAsync(result);
+        private IEnumerable<IAbilityStepExecutor> CreateExecutors(
+            SignalService signalService,
+            IUnitMover unitMover)
+        {
+            return new IAbilityStepExecutor[]
+            {
+                new PlayAnimationExecutor(),
+                new WaitSignalExecutor(signalService),
+                new WaitingExecutor(),
+                new StartQteExecutor(_qteService),
+                new MoveExecutor(unitMover),
+                new MoveBackExecutor(unitMover),
+                new SpawnProjectileExecutor(_armamentSpawner),
+                new ArmamentMoverExecutor(),
+                new DamageStepExecutor(_effectResolver, _targetSelector),
+            };
         }
 
         private AbilitySO ResolveAbility(Unit source)
         {
             AbilitySO so;
-            
-            if (source.PlatoonType == PlatoonType.Heroes) 
-                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack"); 
-            else 
+
+            if (source.PlatoonType == PlatoonType.Heroes)
+                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
+            else
                 so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
 
             return so;

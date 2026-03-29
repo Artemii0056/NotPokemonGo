@@ -42,7 +42,7 @@ namespace AbilitiesTestFeature.Services
 			_activeAbilityHandlers = new List<IAbilityHandler>();
 		}
 
-		public UniTaskVoid RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel)
+		public UniTask RunAbilityAsync(Unit source, Unit target, AbilityModel abilityModel)
 		{
 			throw new NotImplementedException();
 		}

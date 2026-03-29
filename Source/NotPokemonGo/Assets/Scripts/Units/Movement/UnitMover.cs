@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -44,34 +45,13 @@ namespace Units.Movement
             return tcs.Task;
         }
 
-        public Tween MoveTo(Transform transform, Vector3 target, float duration, float delay = 0f, Action onComplete = null)
+        public async UniTask  MoveTo(Transform transform, Vector3 target, float speed, CancellationToken token)
         {
-            if (transform == null)
-                throw new NullReferenceException("transform is null");
+            float duration = Vector3.Distance(transform.position, target) / speed;
 
-            Stop();
+            Tween tween = transform.DOMove(target, duration).SetEase(Ease.Linear);
 
-            if (duration <= 0f)
-            {
-                transform.position = target;
-                IsMoving = false;
-                onComplete?.Invoke();
-                return null;
-            }
-
-            IsMoving = true;
-
-            _tween = transform.DOMove(target, duration)
-                .SetDelay(Mathf.Max(0f, delay))
-                .SetEase(Ease.Linear)
-                .OnKill(Clear)
-                .OnComplete(() =>
-                {
-                    Clear();
-                    onComplete?.Invoke();
-                });
-
-            return _tween;
+            await tween.AsyncWaitForCompletion().AsUniTask().AttachExternalCancellation(token);
         }
 
         public Tween JumpTo(Transform transform, Vector3 target, float duration, float jumpPower = 0f, int numJumps = 1, float delay = 0f, Action onComplete = null)

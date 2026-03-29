@@ -1,0 +1,10 @@
+﻿namespace AbilityNew.Scripts
+{
+    public enum BlackboardKey
+    {
+        None = 0,
+        QteSuccess = 1,
+        CounterTriggered = 2,
+        NeedHeal = 3
+    }
+}
