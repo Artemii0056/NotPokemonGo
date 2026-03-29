@@ -8,7 +8,6 @@ namespace AbilityNew.Scripts.Steps.Flow
     [Serializable]
     public class BranchStep : AbilityStepSO
     {
-        [SerializeReference]
         public List<BranchCase> Cases = new();
 
         [SerializeReference]

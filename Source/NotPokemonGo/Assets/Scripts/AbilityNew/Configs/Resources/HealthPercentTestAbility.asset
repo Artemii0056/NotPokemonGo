@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c641d0a89534d5a46be9937c8d90d921, type: 3}
+  m_Name: HealthPercentTestAbility
+  m_EditorClassIdentifier: 
+  Steps:
+  - rid: 9209733260757172225
+  references:
+    version: 2
+    RefIds:
+    - rid: 9209733260757172225
+      type: {class: BranchStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
+      data:
+        Cases:
+        - Condition:
+            rid: 9209733260757172228
+          Step:
+            rid: 9209733260757172229
+        ElseStep:
+          rid: 9209733260757172230
+    - rid: 9209733260757172228
+      type: {class: TargetHealthPercentBelowCondition, ns: AbilityNew.Scripts.Conditions, asm: Assembly-CSharp}
+      data:
+        Threshold: 2
+    - rid: 9209733260757172229
+      type: {class: DamageStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data:
+        Effect:
+          Type: 0
+          TargetType: 1
+          DamageType: 1
+          Value: 100
+        TargetMode: 1
+    - rid: 9209733260757172230
+      type: {class: DamageStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data:
+        Effect:
+          Type: 0
+          TargetType: 1
+          DamageType: 1
+          Value: 10
+        TargetMode: 1

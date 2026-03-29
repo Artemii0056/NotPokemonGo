@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using AbilityNew.AbilityDefinition;
-using AbilityNew.Scripts.AbilityExecutor;
 using UnityEngine;
 
 namespace AbilityNew.Scripts.Conditions

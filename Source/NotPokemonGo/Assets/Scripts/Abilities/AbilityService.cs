@@ -100,6 +100,9 @@ namespace Abilities
 
             StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors);
 
+            BranchExecutor branchExecutor = new BranchExecutor(stepExecutorRegistry);
+            stepExecutorRegistry.AddExecutor(branchExecutor);
+
             _abilityRunner = new AbilityRunner(stepExecutorRegistry);
 
             try
@@ -149,7 +152,7 @@ namespace Abilities
             AbilitySO so;
 
             if (source.PlatoonType == PlatoonType.Heroes)
-                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
+                so = _resourceLoader.Load<AbilitySO>("HealthPercentTestAbility");
             else
                 so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
 
