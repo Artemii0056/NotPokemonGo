@@ -9,8 +9,7 @@ using Spawners.Spawner;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
-    public class
-        SpawnProjectileExecutor : AbilityStepExecutor<SpawnProjectileStep> //сервис, отвечающий за количество? Выбирающий скорее
+    public class SpawnProjectileExecutor : AbilityStepExecutor<SpawnProjectileStep> 
     {
         private readonly IArmamentSpawner _armamentSpawner;
 
@@ -27,7 +26,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                     context.Target,
                     step.ArmamentSetup,
                     step.ArmamentSetup.FlyingType,
-                    context.Source.transform)
+                    runtime.State.FreeArmamentSpawnPoints.Dequeue())
             );
 
             runtime.State.Movers.Add(mover);

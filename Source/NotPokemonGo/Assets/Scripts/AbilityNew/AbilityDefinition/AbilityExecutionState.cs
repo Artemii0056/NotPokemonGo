@@ -3,6 +3,7 @@ using AbilityNew.Scripts;
 using Armaments.Movers;
 using QteSystem;
 using QteSystem.TestQte;
+using UnityEngine;
 
 namespace AbilityNew.AbilityDefinition
 {
@@ -17,6 +18,8 @@ namespace AbilityNew.AbilityDefinition
         public AbilityBlackboard AbilityBlackboard { get; set; } = new();
 
         public List<IArmamentMover> Movers { get; } = new List<IArmamentMover>();
+        
+        public Queue<Transform> FreeArmamentSpawnPoints { get; } = new();
 
         public bool IsInterrupted { get; set; }
         public bool IsCancelled { get; set; }

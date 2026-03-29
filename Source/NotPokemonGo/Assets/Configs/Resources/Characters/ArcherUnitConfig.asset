@@ -16,7 +16,7 @@ MonoBehaviour:
   <Prefab>k__BackingField: {fileID: 4125321173221040046, guid: a2043a8d66c7f034aafabaf1f8327a91, type: 3}
   _stats:
   - <StatsType>k__BackingField: 1
-    Value: 10
+    Value: 1000
   - <StatsType>k__BackingField: 2
     Value: 100
   - <StatsType>k__BackingField: 3

@@ -8,6 +8,7 @@ using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
 using AbilityNew.Scripts.Executors.Presentation;
+using AbilityNew.Scripts.Steps.Gameplay;
 using Battlefields;
 using Cysharp.Threading.Tasks;
 using Effects;
@@ -100,8 +101,11 @@ namespace Abilities
 
             StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors);
 
-            BranchExecutor branchExecutor = new BranchExecutor(stepExecutorRegistry);
-            stepExecutorRegistry.AddExecutor(branchExecutor);
+            stepExecutorRegistry.AddExecutor(new BranchExecutor(stepExecutorRegistry));
+            stepExecutorRegistry.AddExecutor(new ParallelExecutor(stepExecutorRegistry));
+            stepExecutorRegistry.AddExecutor(new RepeatExecutor(stepExecutorRegistry));
+            stepExecutorRegistry.AddExecutor(new SequenceExecutor(stepExecutorRegistry));
+            stepExecutorRegistry.AddExecutor(new ResolveQteExecutor(stepExecutorRegistry));
 
             _abilityRunner = new AbilityRunner(stepExecutorRegistry);
 
@@ -144,6 +148,8 @@ namespace Abilities
                 new SpawnProjectileExecutor(_armamentSpawner),
                 new ArmamentMoverExecutor(),
                 new DamageStepExecutor(_effectResolver, _targetSelector),
+                new SetBlackboardBoolExecutor(),
+                new PrepareArmamentSpawnPointsExecutor(),
             };
         }
 
@@ -152,7 +158,7 @@ namespace Abilities
             AbilitySO so;
 
             if (source.PlatoonType == PlatoonType.Heroes)
-                so = _resourceLoader.Load<AbilitySO>("HealthPercentTestAbility");
+                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
             else
                 so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
 

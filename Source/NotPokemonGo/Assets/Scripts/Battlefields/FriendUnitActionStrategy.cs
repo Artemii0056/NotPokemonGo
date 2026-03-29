@@ -52,8 +52,6 @@ namespace Battlefields
 
         public override void Enable()
         {
-            
-            Debug.Log(Application.persistentDataPath);
             base.Enable();
             ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);

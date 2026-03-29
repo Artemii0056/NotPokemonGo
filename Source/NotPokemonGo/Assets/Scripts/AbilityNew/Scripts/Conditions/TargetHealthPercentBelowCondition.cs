@@ -5,7 +5,7 @@ using Stats;
 namespace AbilityNew.Scripts.Conditions
 {
     [Serializable]
-    public class TargetHealthPercentBelowCondition : AbilityCondition
+    public class TargetHealthPercentBelowCondition : AbilityCondition //TODO Тестовая 
     {
         public float Threshold = 0.3f;
 

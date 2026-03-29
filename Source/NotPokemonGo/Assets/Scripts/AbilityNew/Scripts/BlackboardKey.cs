@@ -5,6 +5,7 @@
         None = 0,
         QteSuccess = 1,
         CounterTriggered = 2,
-        NeedHeal = 3
+        NeedHeal = 3,
+        ParryFailed = 4
     }
 }
