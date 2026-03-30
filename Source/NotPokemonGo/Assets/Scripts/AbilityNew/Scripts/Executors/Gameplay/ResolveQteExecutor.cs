@@ -6,6 +6,7 @@ using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using QteSystem;
 using QteSystem.TestQte;
+using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
@@ -13,10 +14,8 @@ namespace AbilityNew.Scripts.Executors.Gameplay
     {
         private readonly StepExecutorRegistry _registry;
 
-        public ResolveQteExecutor(StepExecutorRegistry registry)
-        {
+        public ResolveQteExecutor(StepExecutorRegistry registry) => 
             _registry = registry;
-        }
 
         public override async UniTask Execute(ResolveQteStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
@@ -27,14 +26,27 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                 throw new InvalidOperationException(
                     "ResolveQteStep execution failed: ActiveQte is null.");
             }
-
+            
             var activeQte = state.ActiveQte;
-            QteResult result = await WaitResult(activeQte);
-
-            state.LastQteResult = result;
+            
+            UniTask<QteResult> resultTask = WaitResult(activeQte);
+            
+            Debug.Log(step.TimeoutSeconds);
+            
+            UniTask timeoutTask = UniTask.Delay(
+                TimeSpan.FromSeconds(step.TimeoutSeconds),
+                cancellationToken: ct);
 
             try
             {
+                var (hasQteResult, qteResult) = await UniTask.WhenAny(resultTask, timeoutTask);
+
+                QteResult result = hasQteResult
+                    ? qteResult
+                    : QteResult.Fail;
+                
+                state.LastQteResult = result;
+                
                 switch (result)
                 {
                     case QteResult.Fail:
@@ -63,6 +75,8 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                 if (ReferenceEquals(state.ActiveQte, activeQte))
                     state.ActiveQte = null;
             }
+            
+            runtime.State.ActiveQte = null;
         }
 
         private static UniTask<QteResult> WaitResult(IQteSession qteSession)

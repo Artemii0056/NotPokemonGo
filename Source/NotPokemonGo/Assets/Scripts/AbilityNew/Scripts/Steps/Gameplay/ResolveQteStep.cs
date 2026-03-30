@@ -8,7 +8,9 @@ namespace AbilityNew.Scripts.Steps.Gameplay
     public class ResolveQteStep : AbilityStepSO
     {
         [SerializeReference, SubclassSelector] public AbilityStepSO OnFail;
-        [SerializeReference, SubclassSelector]  public AbilityStepSO OnNormal;
-        [SerializeReference, SubclassSelector]  public AbilityStepSO OnPerfect;
+        [SerializeReference, SubclassSelector] public AbilityStepSO OnNormal;
+        [SerializeReference, SubclassSelector] public AbilityStepSO OnPerfect;
+
+        public float TimeoutSeconds;
     }
 }

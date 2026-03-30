@@ -61,7 +61,7 @@ MonoBehaviour:
       type: {class: StartQteStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:
         Type: 11
-        Duration: 0.6
+        Duration: 1
     - rid: 9209733270690332681
       type: {class: ResolveQteStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:
@@ -71,6 +71,7 @@ MonoBehaviour:
           rid: -2
         OnPerfect:
           rid: -2
+        TimeoutSeconds: 1.2
     - rid: 9209733270690332682
       type: {class: SequenceStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
