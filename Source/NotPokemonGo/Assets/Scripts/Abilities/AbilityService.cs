@@ -5,6 +5,7 @@ using Abilities.MV;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.AbilityExecutor;
+using AbilityNew.Scripts.Executors.Debugger;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
 using AbilityNew.Scripts.Executors.Presentation;
@@ -150,6 +151,7 @@ namespace Abilities
                 new DamageStepExecutor(_effectResolver, _targetSelector),
                 new SetBlackboardBoolExecutor(),
                 new PrepareArmamentSpawnPointsExecutor(),
+                new DebugExecutor()
             };
         }
 

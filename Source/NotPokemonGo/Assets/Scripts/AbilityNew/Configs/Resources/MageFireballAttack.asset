@@ -99,9 +99,13 @@ MonoBehaviour:
     - rid: 9209733270690332686
       type: {class: BranchStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
-        Cases: []
+        Cases:
+        - Condition:
+            rid: 9209733290872537088
+          Step:
+            rid: 9209733290872537089
         ElseStep:
-          rid: -2
+          rid: 9209733290872537090
     - rid: 9209733270690332687
       type: {class: RepeatStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
@@ -124,3 +128,16 @@ MonoBehaviour:
       type: {class: PrepareArmamentSpawnPointsStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
         ClearBeforeInit: 1
+    - rid: 9209733290872537088
+      type: {class: BlackboardBoolCondition, ns: AbilityNew.Scripts.Conditions, asm: Assembly-CSharp}
+      data:
+        Key: 4
+        ExpectedValue: 1
+    - rid: 9209733290872537089
+      type: {class: DebugStep, ns: AbilityNew.Scripts.Steps.Debugger, asm: Assembly-CSharp}
+      data:
+        Text: COUNTER BRANCH
+    - rid: 9209733290872537090
+      type: {class: DebugStep, ns: AbilityNew.Scripts.Steps.Debugger, asm: Assembly-CSharp}
+      data:
+        Text: FAIL BRANCH
