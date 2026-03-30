@@ -31,11 +31,16 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             
             UniTask<QteResult> resultTask = WaitResult(activeQte);
             
-            Debug.Log(step.TimeoutSeconds);
+            float timeoutSeconds = step.TimeoutSeconds;
+
+            if (state.AbilityBlackboard.TryGet<float>(BlackboardKey.ProjectileFlightTime, out var flightTime))
+                timeoutSeconds = flightTime;
             
             UniTask timeoutTask = UniTask.Delay(
-                TimeSpan.FromSeconds(step.TimeoutSeconds),
+                TimeSpan.FromSeconds(timeoutSeconds),
                 cancellationToken: ct);
+            
+            Debug.Log($"[ResolveQte] TimeoutSeconds = {timeoutSeconds}");
 
             try
             {
@@ -76,7 +81,7 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                     state.ActiveQte = null;
             }
             
-            runtime.State.ActiveQte = null;
+            //runtime.State.ActiveQte = null;
         }
 
         private static UniTask<QteResult> WaitResult(IQteSession qteSession)

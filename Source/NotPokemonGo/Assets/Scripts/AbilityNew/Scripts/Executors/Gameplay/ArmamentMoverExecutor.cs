@@ -5,6 +5,7 @@ using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Armaments.Movers;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
@@ -17,12 +18,14 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             if (state.Movers.Count == 0)
                 throw new NullReferenceException();
             
-            IArmamentMover armamentMover = state.Movers[0];
-            state.Movers.Remove(armamentMover);
+            IArmamentMover mover = state.Movers[0];
+            state.Movers.Remove(mover);
             
-            armamentMover.Move();
+            mover.Move();
+            runtime.State.AbilityBlackboard.Set(BlackboardKey.ProjectileFlightTime, mover.Duration);
+            Debug.Log($"[ArmamentMover] Flight started. Duration = {mover.Duration}");
             
-            return UniTask.CompletedTask; //Тут ретернить в момент долета? 
+            return UniTask.CompletedTask;
         }
     }
 }
