@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AbilityNew.Scripts;
+using AbilityNew.Scripts.Results;
 using Armaments.Movers;
 using QteSystem;
 using QteSystem.TestQte;
@@ -16,6 +17,7 @@ namespace AbilityNew.AbilityDefinition
         public int? LastHealResult { get; set; } //HealResult
 
         public AbilityBlackboard AbilityBlackboard { get; set; } = new();
+        public CounterAttackRequest CounterAttackRequest { get; }
 
         public List<IArmamentMover> Movers { get; } = new List<IArmamentMover>();
         

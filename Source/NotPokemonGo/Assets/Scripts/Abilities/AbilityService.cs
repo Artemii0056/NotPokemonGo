@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Abilities.MV;
 using AbilityNew.AbilityDefinition;
@@ -9,6 +10,7 @@ using AbilityNew.Scripts.Executors.Debugger;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
 using AbilityNew.Scripts.Executors.Presentation;
+using AbilityNew.Scripts.Results;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Battlefields;
 using Cysharp.Threading.Tasks;
@@ -18,6 +20,7 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using QteSystem;
 using Services.AssetManagement;
+using Services.StaticDataServices;
 using Spawners;
 using Spawners.Spawner;
 using Statuses.Services;
@@ -31,20 +34,19 @@ namespace Abilities
     {
         private const float PostDelaySeconds = 0.5f;
 
-        private AbilityRunner _abilityRunner;
-        private Battlefield _battlefield;
-        private Unit _lastUnit;
-        private CancellationTokenSource _postFlowCts;
-
         private readonly IResourceLoader _resourceLoader;
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IStatusManager _statusManager;
-
         private readonly IQteService _qteService;
         private readonly IArmamentSpawner _armamentSpawner;
         private readonly IEffectResolver _effectResolver;
         private readonly ITargetSelector _targetSelector;
         private readonly IParticleSpawner _particleSpawner;
+        private readonly IStaticDataService _staticDataService;
+
+        private Battlefield _battlefield;
+        private Unit _lastUnit;
+        private CancellationTokenSource _postFlowCts;
 
         public event Action Finished;
 
@@ -56,7 +58,8 @@ namespace Abilities
             IArmamentSpawner armamentSpawner,
             IEffectResolver effectResolver,
             ITargetSelector targetSelector,
-            IParticleSpawner particleSpawner)
+            IParticleSpawner particleSpawner,
+            IStaticDataService staticDataService)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
@@ -66,6 +69,7 @@ namespace Abilities
             _effectResolver = effectResolver;
             _targetSelector = targetSelector;
             _particleSpawner = particleSpawner;
+            _staticDataService = staticDataService;
         }
 
         public void Dispose()
@@ -85,52 +89,92 @@ namespace Abilities
         {
             _lastUnit = source;
 
-            AbilitySO ability = ResolveAbility(source);
-
-            var context = new AbilityExecutionContext(
-                source,
-                target,
-                new List<Unit>());
-
-            using var abilityCts = new CancellationTokenSource();
-
-            SignalService signalService = new SignalService();
-            IUnitMover unitMover = new UnitMover();
-            using var animationSignalRelay = new AnimationSignalRelay(signalService, source.AnimatorController);
-
-            var executors = CreateExecutors(signalService, unitMover);
-
-            StepExecutorRegistry stepExecutorRegistry = new StepExecutorRegistry(executors);
-
-            stepExecutorRegistry.AddExecutor(new BranchExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new ParallelExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new RepeatExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new SequenceExecutor(stepExecutorRegistry));
-            stepExecutorRegistry.AddExecutor(new ResolveQteExecutor(stepExecutorRegistry));
-
-            _abilityRunner = new AbilityRunner(stepExecutorRegistry);
+            AbilitySO ability = ResolveAbility(source, abilityModel);
 
             try
             {
-                AbilityExecutionResult result = await _abilityRunner.RunAbility(
-                    ability,
-                    context,
-                    abilityCts.Token);
+                AbilityExecutionResult result = await ExecuteAbilityOnlyAsync(
+                    source,
+                    target,
+                    ability);
 
-                if (result.Completed)
-                {
-                    await ContinueAsync(result);
-                }
+                if (!result.Completed)
+                    return;
+
+                await HandleCounterAttacksAsync(result.CounterAttackRequests);
+                await ContinueAsync(result);
             }
             catch (OperationCanceledException)
             {
-                Debug.LogWarning($"Ability '{ability.name}' was cancelled.");
+                Debug.LogWarning($"Ability '{ability?.name}' was cancelled.");
             }
             catch (Exception ex)
             {
                 Debug.LogError(
                     $"Ability '{ability?.name}' crashed. Source={source?.name}, Target={target?.name}\n{ex}");
                 throw;
+            }
+        }
+
+        private async UniTask<AbilityExecutionResult> ExecuteAbilityOnlyAsync(
+            Unit source,
+            Unit target,
+            AbilitySO ability)
+        {
+            AbilityExecutionContext context = new(
+                source,
+                target,
+                new List<Unit>());
+
+            using CancellationTokenSource abilityCts = new();
+
+            SignalService signalService = new();
+            IUnitMover unitMover = new UnitMover();
+
+            using AnimationSignalRelay animationSignalRelay =
+                new(signalService, source.AnimatorController);
+
+            List<IAbilityStepExecutor> executors = CreateExecutors(signalService, unitMover).ToList();
+            StepExecutorRegistry registry = new(executors);
+
+            registry.AddExecutor(new BranchExecutor(registry));
+            registry.AddExecutor(new ParallelExecutor(registry));
+            registry.AddExecutor(new RepeatExecutor(registry));
+            registry.AddExecutor(new SequenceExecutor(registry));
+            registry.AddExecutor(new ResolveQteExecutor(registry));
+
+            AbilityRunner abilityRunner = new(registry);
+
+            return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
+        }
+
+        private async UniTask HandleCounterAttacksAsync(IReadOnlyList<CounterAttackRequest> requests)
+        {
+            if (requests == null || requests.Count == 0)
+                return;
+
+            foreach (CounterAttackRequest request in requests)
+            {
+                if (request == null)
+                    continue;
+
+                if (request.Reactor == null || request.Target == null)
+                    continue;
+
+                if (!request.Reactor.IsAlive || !request.Target.IsAlive)
+                    continue;
+
+                AbilitySO counterAbility = _staticDataService.GetCounterattackAbility(request.Reactor.UnitType);
+                if (counterAbility == null)
+                    continue;
+
+                AbilityExecutionResult counterResult = await ExecuteAbilityOnlyAsync(
+                    request.Reactor,
+                    request.Target,
+                    counterAbility);
+
+                if (!counterResult.Completed)
+                    break;
             }
         }
 
@@ -151,11 +195,12 @@ namespace Abilities
                 new DamageStepExecutor(_effectResolver, _targetSelector),
                 new SetBlackboardBoolExecutor(),
                 new PrepareArmamentSpawnPointsExecutor(),
-                new DebugExecutor()
+                new DebugExecutor(),
+                new RequestCounterAttackExecutor()
             };
         }
 
-        private AbilitySO ResolveAbility(Unit source)
+        private AbilitySO ResolveAbility(Unit source, AbilityModel abilityModel)
         {
             AbilitySO so;
 
@@ -175,7 +220,9 @@ namespace Abilities
 
             try
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(PostDelaySeconds), cancellationToken: _postFlowCts.Token);
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(PostDelaySeconds),
+                    cancellationToken: _postFlowCts.Token);
             }
             catch (OperationCanceledException)
             {

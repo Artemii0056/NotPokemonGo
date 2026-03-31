@@ -27,7 +27,6 @@ MonoBehaviour:
       data:
         Animation: {fileID: 3822591109426768289, guid: 7282e18170c836147a63e8c94de4f6ec, type: 3}
         Speed: 5
-        Duration: 0
     - rid: 9209732864908984322
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:

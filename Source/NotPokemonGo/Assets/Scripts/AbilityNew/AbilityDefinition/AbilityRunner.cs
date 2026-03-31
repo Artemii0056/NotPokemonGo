@@ -65,35 +65,5 @@ namespace AbilityNew.AbilityDefinition
             var path = Path.Combine(Application.persistentDataPath, "ability_trace.log");
             File.AppendAllText(path, $"{DateTime.Now:HH:mm:ss.fff} | {message}\n");
         }
-        
-        // public async UniTask<AbilityExecutionResult> RunAbility(
-        //     AbilitySO ability,
-        //     AbilityExecutionContext context)
-        // {
-        //     if (ability == null)
-        //         throw new ArgumentNullException(nameof(ability));
-        //
-        //     var runtime = new AbilityExecutionRuntime(context);
-        //
-        //     foreach (var step in ability.Steps)
-        //     {
-        //         if (runtime.State.IsInterrupted)
-        //         {
-        //             runtime.Result.MarkInterrupted();
-        //             return runtime.Result;
-        //         }
-        //
-        //         if (runtime.State.IsCancelled)
-        //         {
-        //             runtime.Result.MarkCancelled();
-        //             return runtime.Result;
-        //         }
-        //
-        //         await _registry.Execute(step, runtime);
-        //     }
-        //
-        //     runtime.Result.MarkCompleted();
-        //     return runtime.Result;
-        // }
     }
 }

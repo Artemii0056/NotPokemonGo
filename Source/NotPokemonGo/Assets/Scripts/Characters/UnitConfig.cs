@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Abilities.Configs;
+using AbilityNew.Scripts;
 using Characters.Configs;
 using Stats;
 using Units;
@@ -12,6 +13,7 @@ namespace Characters
     {
         [field: SerializeField] public UnitType Type { get; private set; }
         [field: SerializeField] public Unit Prefab { get; private set; }
+        [field: SerializeField] public AbilitySO CounterattackConfig { get; private set; }
 
         [SerializeField] private List<StatConfig> _stats = new List<StatConfig>();
         [SerializeField] private List<AbilityConfig> _abilityConfigs;

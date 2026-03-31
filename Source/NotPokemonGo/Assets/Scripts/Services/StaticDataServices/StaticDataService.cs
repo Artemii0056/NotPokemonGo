@@ -2,6 +2,7 @@
 using System.Linq;
 using Abilities;
 using Abilities.Configs;
+using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
 using DodgeSystem.Configs;
@@ -23,6 +24,7 @@ namespace Services.StaticDataServices
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
+        private Dictionary<UnitType, AbilitySO> _counterAttackingAbilities;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
         private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
@@ -53,6 +55,16 @@ namespace Services.StaticDataServices
             LoadCombatText();
             LoadStatusSetups();
             LoadParticleByStatusType();
+            LoadCounterattackAbilities();
+        }
+
+        private void LoadCounterattackAbilities()
+        {
+            _counterAttackingAbilities = _unitConfigs.Values
+                .ToDictionary(
+                    x => x.Type,
+                    x => x.CounterattackConfig
+                );
         }
 
         private void LoadStatusSetups()
@@ -80,6 +92,14 @@ namespace Services.StaticDataServices
                 return statusSetup;
 
             throw new KeyNotFoundException($"No ability config found for mode {statusType}");
+        }
+        
+        public AbilitySO GetCounterattackAbility(UnitType unitType)
+        {
+            if (_counterAttackingAbilities.TryGetValue(unitType, out AbilitySO abilitySo))
+                return abilitySo;
+
+            throw new KeyNotFoundException($"No counterattack ability found for unit type {unitType}");
         }
 
         public ParticleSystem GetParticleByType(StatusType setupType)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Abilities;
 using Abilities.Configs;
+using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
 using DodgeSystem.Configs;
@@ -29,5 +30,6 @@ namespace Services.StaticDataServices
         DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
         StatusSetup GetStatusSetup(StatusType statusType);
         ParticleSystem GetParticleByType(StatusType setupType);
+        AbilitySO GetCounterattackAbility(UnitType reactorUnitType);
     }
 }

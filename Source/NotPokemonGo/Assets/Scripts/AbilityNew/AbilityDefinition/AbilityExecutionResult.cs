@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AbilityNew.Scripts.Results;
 
 namespace AbilityNew.AbilityDefinition
@@ -6,6 +7,9 @@ namespace AbilityNew.AbilityDefinition
     public sealed class AbilityExecutionResult
     {
         private readonly List<BattleEvent> _events = new();
+        private readonly List<CounterAttackRequest> _counterAttackRequests = new();
+        
+        public List<CounterAttackRequest> CounterAttackRequests => _counterAttackRequests.ToList();
 
         public IReadOnlyList<BattleEvent> Events => _events;
 
@@ -24,5 +28,13 @@ namespace AbilityNew.AbilityDefinition
         public void MarkCompleted() => Completed = true;
         public void MarkInterrupted() => Interrupted = true;
         public void MarkCancelled() => Cancelled = true;
+        
+        public void AddCounterAttackRequest(CounterAttackRequest request)
+        {
+            if (request == null)
+                return;
+
+            _counterAttackRequests.Add(request);
+        }
     }
 }
