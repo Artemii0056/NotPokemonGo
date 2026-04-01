@@ -26,7 +26,7 @@ namespace AbilityNew.AbilityDefinition
             if (ability == null)
                 throw new ArgumentNullException(nameof(ability));
 
-            var runtime = new AbilityExecutionRuntime(context, cancellationToken);
+            var runtime = new AbilityExecutionRuntime(ability,context, cancellationToken);
             Trace("AbilityExecutionRuntime created");
 
             for (int i = 0; i < ability.Steps.Count; i++)

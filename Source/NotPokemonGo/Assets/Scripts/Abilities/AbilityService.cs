@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Abilities.MV;
 using AbilityNew.AbilityDefinition;
+using AbilityNew.Presentation;
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Executors.Debugger;
@@ -20,6 +21,8 @@ using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
 using QteSystem;
 using Services.AssetManagement;
+using Services.AudioServices;
+using Services.Cameras;
 using Services.StaticDataServices;
 using Spawners;
 using Spawners.Spawner;
@@ -43,6 +46,8 @@ namespace Abilities
         private readonly ITargetSelector _targetSelector;
         private readonly IParticleSpawner _particleSpawner;
         private readonly IStaticDataService _staticDataService;
+        private readonly IAudioService _audioService;
+        private readonly ICameraShakeService _cameraShakeService;
 
         private Battlefield _battlefield;
         private Unit _lastUnit;
@@ -59,7 +64,7 @@ namespace Abilities
             IEffectResolver effectResolver,
             ITargetSelector targetSelector,
             IParticleSpawner particleSpawner,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService, IAudioService audioService, ICameraShakeService cameraShakeService)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
@@ -70,6 +75,8 @@ namespace Abilities
             _targetSelector = targetSelector;
             _particleSpawner = particleSpawner;
             _staticDataService = staticDataService;
+            _audioService = audioService;
+            _cameraShakeService = cameraShakeService;
         }
 
         public void Dispose()
@@ -143,6 +150,12 @@ namespace Abilities
             registry.AddExecutor(new SequenceExecutor(registry));
             registry.AddExecutor(new ResolveQteExecutor(registry));
 
+            AbilityPresentationService abilityPresentationService = new AbilityPresentationService(_particleSpawner, _audioService, _cameraShakeService); 
+            
+            registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
+            //abilityPresentationService.Register(ability);
+
+            
             AbilityRunner abilityRunner = new(registry);
 
             return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
@@ -183,6 +196,8 @@ namespace Abilities
             SignalService signalService,
             IUnitMover unitMover)
         {
+            
+            
             return new IAbilityStepExecutor[]
             {
                 new PlayAnimationExecutor(),
@@ -197,7 +212,7 @@ namespace Abilities
                 new SetBlackboardBoolExecutor(),
                 new PrepareArmamentSpawnPointsExecutor(),
                 new DebugExecutor(),
-                new RequestCounterAttackExecutor()
+                new RequestCounterAttackExecutor(),
             };
         }
 
