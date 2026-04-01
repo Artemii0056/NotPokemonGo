@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 4125321173221040046, guid: a2043a8d66c7f034aafabaf1f8327a91, type: 3}
+  <CounterattackConfig>k__BackingField: {fileID: 0}
   _stats:
   - <StatsType>k__BackingField: 1
     Value: 1000
@@ -43,3 +44,5 @@ MonoBehaviour:
     Value: 0
   _abilityConfigs:
   - {fileID: 11400000, guid: 3dd5803adaf55e244929fd91a4c25a67, type: 2}
+  _abilitySO:
+  - {fileID: 11400000, guid: 7c04789e977215744b3c71254ab8f762, type: 2}

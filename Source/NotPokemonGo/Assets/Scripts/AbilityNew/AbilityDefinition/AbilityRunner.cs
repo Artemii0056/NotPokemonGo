@@ -10,10 +10,12 @@ namespace AbilityNew.AbilityDefinition
     public sealed class AbilityRunner
     {
         private readonly StepExecutorRegistry _registry;
+        private ISignalService _signalService;
 
-        public AbilityRunner(StepExecutorRegistry registry)
+        public AbilityRunner(StepExecutorRegistry registry, ISignalService signalService)
         {
             _registry = registry;
+            _signalService = signalService;
         }
 
         public async UniTask<AbilityExecutionResult> RunAbility(
@@ -21,6 +23,8 @@ namespace AbilityNew.AbilityDefinition
             AbilityExecutionContext context,
             CancellationToken cancellationToken = default)
         {
+            _signalService.Reset();
+            
             Trace("AbilityRunner.RunAbility START");
 
             if (ability == null)

@@ -30,9 +30,12 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Enter(Battlefield battlefield)
         {
+            Debug.Log("CheckBattleEndState ENTER");
+            
             bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
             bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
             
+            Debug.Log($"CheckBattleEndState heroesDead={heroesDead}, enemiesDead={enemiesDead}");
 
             if (heroesDead && enemiesDead)
             {

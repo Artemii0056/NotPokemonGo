@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Abilities.MV;
 using AbilityNew.AbilityDefinition;
@@ -96,6 +97,7 @@ namespace Abilities
         private async UniTask RunAbilityInternalAsync(Unit source, Unit target, AbilityModel abilityModel)
         {
             _lastUnit = source;
+            Debug.Log(source.PlatoonType + " сурт тайп");
 
             AbilitySO ability = ResolveAbility(source, abilityModel);
 
@@ -158,13 +160,10 @@ namespace Abilities
 
             registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
 
-            if (source.PlatoonType == PlatoonType.Heroes)
-            {
                 var so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
                 abilityPresentationService.Register(so);
-            }
 
-            AbilityRunner abilityRunner = new(registry);
+            AbilityRunner abilityRunner = new(registry, signalService);
 
             return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
         }
@@ -229,7 +228,11 @@ namespace Abilities
             if (source.PlatoonType == PlatoonType.Heroes)
                 so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
             else
-                so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
+            {
+                Debug.Log("12321");
+            so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
+            }
+
 
             return so;
         }
@@ -240,21 +243,33 @@ namespace Abilities
             _postFlowCts?.Dispose();
             _postFlowCts = new CancellationTokenSource();
 
+            Debug.Log("ContinueAsync START");
+
+            Debug.Log("ContinueAsync before delay");
+            
             try
             {
                 await UniTask.Delay(
                     TimeSpan.FromSeconds(PostDelaySeconds),
                     cancellationToken: _postFlowCts.Token);
+                
+                Debug.Log("ContinueAsync after delay");
             }
             catch (OperationCanceledException)
             {
                 return;
             }
+            
+            Debug.Log($"ContinueAsync battlefield null = {_battlefield == null}");
+            Debug.Log($"ContinueAsync heroes alive = {_battlefield.HeroesPlatoon.HaveUnits}");
+            Debug.Log($"ContinueAsync enemies alive = {_battlefield.EnemyPlatoon.HaveUnits}");
 
             if (_lastUnit != null && _lastUnit.PlatoonType == PlatoonType.Heroes)
                 _statusManager.TickUnitTurn();
 
+            Debug.Log("ContinueAsync before Enter<CheckBattleEndState>");
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
+            Debug.Log("ContinueAsync after Enter<CheckBattleEndState>");
             Finished?.Invoke();
         }
     }

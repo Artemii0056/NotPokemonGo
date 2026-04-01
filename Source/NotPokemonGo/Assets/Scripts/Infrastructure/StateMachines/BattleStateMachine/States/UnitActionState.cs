@@ -4,6 +4,7 @@ using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.InputServices;
+using UnityEngine;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -53,6 +54,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Exit()
         {
+            Debug.Log("Exit");
             _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
         }

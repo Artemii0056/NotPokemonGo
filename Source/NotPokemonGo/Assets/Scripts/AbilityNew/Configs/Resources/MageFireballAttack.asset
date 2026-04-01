@@ -22,6 +22,16 @@ MonoBehaviour:
   - rid: 9209733270690332674
   - rid: 9209733270690332675
   - rid: 9209733270690332686
+  <Type>k__BackingField: 0
+  <AbilityStatSetup>k__BackingField:
+  - <StatsType>k__BackingField: 1
+    Value: 0
+  - <StatsType>k__BackingField: 0
+    Value: 0
+  - <StatsType>k__BackingField: 2
+    Value: 0
+  - <StatsType>k__BackingField: 3
+    Value: 0
   references:
     version: 2
     RefIds:
