@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using AbilityNew.AbilityDefinition;
-using AbilityNew.Presentation;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Presentation;
 using AbilityNew.Scripts.Steps.Presentation;
@@ -12,10 +11,8 @@ namespace AbilityNew.Scripts.Executors.Presentation
     {
         private readonly IAbilityPresentationService _presentationService;
 
-        public EmitPresentationSignalExecutor(IAbilityPresentationService presentationService)
-        {
+        public EmitPresentationSignalExecutor(IAbilityPresentationService presentationService) => 
             _presentationService = presentationService;
-        }
 
         public override UniTask Execute(
             EmitPresentationSignalStep step,

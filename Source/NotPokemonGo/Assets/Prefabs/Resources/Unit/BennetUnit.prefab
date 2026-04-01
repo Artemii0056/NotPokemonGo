@@ -565,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <AnimatorController>k__BackingField
@@ -595,6 +595,14 @@ PrefabInstance:
       propertyPath: abilityAnchors.Array.data[1].spawnType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[2].SpawnType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[2].Transform
+      value: 
+      objectReference: {fileID: 6407703972773874728}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitAnimatorController>k__BackingField
       value: 
@@ -965,5 +973,10 @@ MonoBehaviour:
 --- !u!4 &5231268924037943250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a1e848794dcba7740a7ce412d1979f01, type: 3}
+  m_PrefabInstance: {fileID: 5698049839895357497}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6407703972773874728 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7494210835059514351, guid: a1e848794dcba7740a7ce412d1979f01, type: 3}
   m_PrefabInstance: {fileID: 5698049839895357497}
   m_PrefabAsset: {fileID: 0}

@@ -14,14 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Steps:
   - rid: 9209733245058154496
+  - rid: 7940118857810706432
   - rid: 9209732864908984321
   - rid: 9209732864908984322
   - rid: 9209733245058154497
   - rid: 9209733245058154498
+  - rid: 7940118857810706433
   - rid: 9209732864908984325
+  <Type>k__BackingField: 0
+  <AbilityStatSetup>k__BackingField: []
   references:
     version: 2
     RefIds:
+    - rid: 7940118857810706432
+      type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
+      data:
+        Signal: 0
+        SpawnType: 3
+    - rid: 7940118857810706433
+      type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
+      data:
+        Signal: 1
+        SpawnType: 1
     - rid: 9209732864908984321
       type: {class: MoveStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data:

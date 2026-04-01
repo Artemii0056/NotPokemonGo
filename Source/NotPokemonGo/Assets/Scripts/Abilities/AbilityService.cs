@@ -7,6 +7,7 @@ using AbilityNew.AbilityDefinition;
 using AbilityNew.Presentation;
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.AbilityExecutor;
+using AbilityNew.Scripts.Executors;
 using AbilityNew.Scripts.Executors.Debugger;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
@@ -128,6 +129,8 @@ namespace Abilities
             Unit target,
             AbilitySO ability)
         {
+            Debug.LogWarning("In");
+            
             AbilityExecutionContext context = new(
                 source,
                 target,
@@ -150,12 +153,17 @@ namespace Abilities
             registry.AddExecutor(new SequenceExecutor(registry));
             registry.AddExecutor(new ResolveQteExecutor(registry));
 
-            AbilityPresentationService abilityPresentationService = new AbilityPresentationService(_particleSpawner, _audioService, _cameraShakeService); 
-            
-            registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
-            //abilityPresentationService.Register(ability);
+            AbilityPresentationService abilityPresentationService =
+                new AbilityPresentationService(_particleSpawner, _audioService, _cameraShakeService);
 
-            
+            registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
+
+            if (source.PlatoonType == PlatoonType.Heroes)
+            {
+                var so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
+                abilityPresentationService.Register(so);
+            }
+
             AbilityRunner abilityRunner = new(registry);
 
             return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
@@ -178,7 +186,7 @@ namespace Abilities
                     continue;
 
                 AbilitySO counterAbility = _staticDataService.GetCounterattackAbility(request.Reactor.UnitType);
-                
+
                 if (counterAbility == null)
                     continue;
 
@@ -196,8 +204,6 @@ namespace Abilities
             SignalService signalService,
             IUnitMover unitMover)
         {
-            
-            
             return new IAbilityStepExecutor[]
             {
                 new PlayAnimationExecutor(),

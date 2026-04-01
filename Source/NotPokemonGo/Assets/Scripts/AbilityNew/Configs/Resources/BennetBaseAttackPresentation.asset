@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f8709030534254b8a1ec3d0f9a9b2b, type: 3}
+  m_Name: BennetBaseAttackPresentation
+  m_EditorClassIdentifier: 
+  Ability: {fileID: 11400000, guid: ee421e1f2283a2445bd3669d4b07ac9f, type: 2}
+  Entries:
+  - Signal: 0
+    Actions:
+    - Type: 0
+      ParticlePrefab: {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
+      AudioClip: {fileID: 8300000, guid: b7a210df23bd255428bdf4def67109f2, type: 3}
+      SpawnType: 3
+      Volume: 0
+      ShakeAmplitude: 0
+      ShakeFrequency: 0
+      ShakeDuration: 0
+  - Signal: 1
+    Actions:
+    - Type: 0
+      ParticlePrefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
+      AudioClip: {fileID: 8300000, guid: b7a210df23bd255428bdf4def67109f2, type: 3}
+      SpawnType: 1
+      Volume: 0
+      ShakeAmplitude: 0
+      ShakeFrequency: 0
+      ShakeDuration: 0
