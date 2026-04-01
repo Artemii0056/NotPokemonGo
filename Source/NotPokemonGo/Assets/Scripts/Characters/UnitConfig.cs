@@ -17,8 +17,10 @@ namespace Characters
 
         [SerializeField] private List<StatConfig> _stats = new List<StatConfig>();
         [SerializeField] private List<AbilityConfig> _abilityConfigs;
+        [SerializeField] private List<AbilitySO> _abilitySO;
 
         public List<StatConfig> Stats => new List<StatConfig>(_stats);
         public List<AbilityConfig> AbilityConfigs => new List<AbilityConfig>(_abilityConfigs);
+        public List<AbilitySO> AbilitySO => new List<AbilitySO>(_abilitySO);
     }
 }

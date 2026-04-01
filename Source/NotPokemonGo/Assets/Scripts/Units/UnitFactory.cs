@@ -109,7 +109,7 @@ namespace Units
 
             for (int i = 0; i < config.AbilityConfigs.Count; i++)
             {
-                unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
+                unit.AddAbility(new AbilityModel(config.AbilitySO[i]));
             }
 
             InitializeView(unit);

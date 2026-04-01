@@ -48,7 +48,7 @@ namespace AbilitiesTestFeature.Services
 			//3 - работает с абилити сервисом. Нужно эту логику разбить. Враг просто ходит - выбирает способность, которую применит и все, дальше уже логика способности
 			//4 -  
 		{
-			AbilityModel randomAbility = _source.AbilityModels[Random.Range(0, _source.AbilityModels.Count)];
+			//AbilityModel randomAbility = _source.AbilityModels[Random.Range(0, _source.AbilityModels.Count)];
 
 			Unit randomTarget = GetRandomTarget(targets);
 

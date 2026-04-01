@@ -165,6 +165,7 @@ namespace Abilities
                     continue;
 
                 AbilitySO counterAbility = _staticDataService.GetCounterattackAbility(request.Reactor.UnitType);
+                
                 if (counterAbility == null)
                     continue;
 

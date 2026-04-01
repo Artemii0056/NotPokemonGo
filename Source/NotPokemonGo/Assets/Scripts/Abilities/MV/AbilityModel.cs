@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Abilities.Configs;
+using AbilityNew.Scripts;
 
 namespace Abilities.MV
 {
@@ -18,10 +19,25 @@ namespace Abilities.MV
             foreach (AbilityStatSetup abilityStatSetup in config.AbilityStatSetup) 
                 _stats[abilityStatSetup.StatsType] = abilityStatSetup;
         }
+        
+        public AbilityModel(AbilitySO config)
+        {
+            ConfigSO = config;
+            AbilityType = config.Type;
+            
+           // Parts = config.Parts;
+           // Interruptibility = config.Interruptibility;
+
+            _stats = new Dictionary<AbilityStatType, AbilityStatSetup>();
+
+            foreach (AbilityStatSetup abilityStatSetup in config.AbilityStatSetup) 
+                _stats[abilityStatSetup.StatsType] = abilityStatSetup;
+        }
 
         private Dictionary<AbilityStatType, AbilityStatSetup> _stats;
 
         public AbilityConfig Config { get; }
+        public AbilitySO ConfigSO { get; }
 
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }

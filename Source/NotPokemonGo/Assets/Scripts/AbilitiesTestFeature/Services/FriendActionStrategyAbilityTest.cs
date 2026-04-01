@@ -52,7 +52,7 @@ namespace AbilitiesTestFeature.Services
 
 		public void Enable()
 		{
-			ShowAbilityInfos(_source.AbilityModels);
+			//ShowAbilityInfos(_source.AbilityModels);
 			_sourceProvider.Remember(_source);
 
 			_inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
