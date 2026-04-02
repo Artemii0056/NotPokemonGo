@@ -91,5 +91,14 @@ namespace Spawners
             _anchorsCache[unit] = map;
             return map;
         }
+        
+        public void Spawn(Transform point, ParticleSystem prefab)
+        {
+            if (point == null || prefab == null)
+                throw new NullReferenceException();
+
+            ParticleSystem ps = Object.Instantiate(prefab, point.position, Quaternion.identity);
+            ps.Play();
+        }
     }
 }

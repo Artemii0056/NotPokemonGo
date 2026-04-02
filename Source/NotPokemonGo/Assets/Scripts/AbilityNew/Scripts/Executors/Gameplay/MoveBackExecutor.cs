@@ -4,7 +4,6 @@ using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using Units.Movement;
-using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
@@ -17,8 +16,6 @@ namespace AbilityNew.Scripts.Executors.Gameplay
 
         public  override async UniTask Execute(MoveBackStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
-            Debug.Log("MoveBackExecutor");
-
             await _unitMover.MoveTo(
                 runtime.Context.Source.transform,
                 runtime.Context.Source.StartPosition,

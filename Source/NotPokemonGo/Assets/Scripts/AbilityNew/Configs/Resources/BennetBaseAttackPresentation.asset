@@ -15,22 +15,37 @@ MonoBehaviour:
   Ability: {fileID: 11400000, guid: ee421e1f2283a2445bd3669d4b07ac9f, type: 2}
   Entries:
   - Signal: 0
-    Actions:
-    - Type: 0
-      ParticlePrefab: {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
-      AudioClip: {fileID: 8300000, guid: b7a210df23bd255428bdf4def67109f2, type: 3}
-      SpawnType: 3
-      Volume: 0
-      ShakeAmplitude: 0
-      ShakeFrequency: 0
-      ShakeDuration: 0
+    Cases:
+    - Condition:
+        rid: 7940118881610235910
+      Steps:
+      - rid: 7940118881610235911
   - Signal: 1
-    Actions:
-    - Type: 0
-      ParticlePrefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
-      AudioClip: {fileID: 8300000, guid: b7a210df23bd255428bdf4def67109f2, type: 3}
-      SpawnType: 1
-      Volume: 0
-      ShakeAmplitude: 0
-      ShakeFrequency: 0
-      ShakeDuration: 0
+    Cases:
+    - Condition:
+        rid: 7940118881610235910
+      Steps:
+      - rid: 7940118881610235912
+      - rid: 7940118881610235914
+  references:
+    version: 2
+    RefIds:
+    - rid: 7940118881610235910
+      type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118881610235911
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 0
+        Prefab: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
+        SpawnType: 3
+    - rid: 7940118881610235912
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 0
+        Prefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
+        SpawnType: 1
+    - rid: 7940118881610235914
+      type: {class: CameraShakeStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Preset: 1

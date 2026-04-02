@@ -23,8 +23,8 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         
         public void Enter(Battlefield battlefield) 
         {
-            Debug.Log("SelectReadyUnitState ENTER");
-            Debug.Log($"SelectReadyUnitState HasUnits = {_unitReadyService.HasUnits}");
+            //Debug.Log("SelectReadyUnitState ENTER");
+            //Debug.Log($"SelectReadyUnitState HasUnits = {_unitReadyService.HasUnits}");
             
             if (_unitReadyService.HasUnits)
             {

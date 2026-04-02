@@ -1,4 +1,5 @@
 ﻿using Spawners;
+using UnityEngine;
 
 namespace AbilityNew.Scripts.Presentation.Executors
 {
@@ -31,6 +32,16 @@ namespace AbilityNew.Scripts.Presentation.Executors
                 case PresentationAnchor.ExplicitTransform:
                     // if (context.ExplicitTransform != null)
                     //     _particleSpawner.Spawn(context.ExplicitTransform.position, step.Prefab);
+
+                    Debug.LogWarning("PresentationAnchor.ExplicitTransform");
+                    Debug.LogWarning(context.ExplicitTransform == null);
+                    
+                    if (context.ExplicitTransform != null)
+                    {
+                        _particleSpawner.Spawn(context.ExplicitTransform.transform, step.Prefab);
+                        Debug.LogWarning("Spawn");
+                    }
+
                     break;
             }
         }

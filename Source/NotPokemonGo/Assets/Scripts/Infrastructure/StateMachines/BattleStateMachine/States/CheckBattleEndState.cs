@@ -30,16 +30,16 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Enter(Battlefield battlefield)
         {
-            Debug.Log("CheckBattleEndState ENTER");
+            //Debug.Log("CheckBattleEndState ENTER");
             
             bool heroesDead = !battlefield.HeroesPlatoon.HaveUnits;
             bool enemiesDead = !battlefield.EnemyPlatoon.HaveUnits;
             
-            Debug.Log($"CheckBattleEndState heroesDead={heroesDead}, enemiesDead={enemiesDead}");
+           // Debug.Log($"CheckBattleEndState heroesDead={heroesDead}, enemiesDead={enemiesDead}");
 
             if (heroesDead && enemiesDead)
             {
-                Debug.Log("Сделать авто проигрыш");
+               //Debug.Log("Сделать авто проигрыш");
             }
 
             if (enemiesDead) 
@@ -57,7 +57,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             {
                 LoosePanel loosePanel = _uiFactory.CreateLoosePanel();
                 _battleStateMachine.Enter<LoosePanelState, LoosePanel>(loosePanel); //Чет тут херня
-                Debug.Log("Heroes.HaveUnitsDead");
+               // Debug.Log("Heroes.HaveUnitsDead");
                 return;
             }
 

@@ -3,7 +3,9 @@ using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Presentation;
 using AbilityNew.Scripts.Steps.Presentation;
+using Armaments;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Presentation
 {
@@ -25,8 +27,20 @@ namespace AbilityNew.Scripts.Executors.Presentation
                 Target = runtime.Context.Target,
                 Ability = runtime.Ability,
                 Signal = step.Signal,
-                SpawnType = step.SpawnType
             };
+
+            Debug.LogWarning("EmitPresentationSignalExecutor");
+            
+            if (step.Signal == AbilityPresentationSignal.ProjectileLaunched ||
+            step.Signal == AbilityPresentationSignal.ProjectileSpawned ||
+                step.Signal == AbilityPresentationSignal.ProjectileHighlighted)
+            {
+                if (runtime.State.AbilityBlackboard.TryGet(BlackboardKey.CurrentArmament, out Armament armament) &&
+                    armament != null)
+                {
+                    context.ExplicitTransform = armament.transform;
+                }
+            }
 
             _presentationService.Play(context);
             return UniTask.CompletedTask;

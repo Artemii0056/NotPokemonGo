@@ -21,7 +21,10 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             IArmamentMover mover = state.Movers[0];
             state.Movers.Remove(mover);
             
+            runtime.State.AbilityBlackboard.Set(BlackboardKey.CurrentArmament, mover.Armament);
+            
             mover.Move();
+            
             runtime.State.AbilityBlackboard.Set(BlackboardKey.ProjectileFlightTime, mover.Duration);
             Debug.Log($"[ArmamentMover] Flight started. Duration = {mover.Duration}");
             

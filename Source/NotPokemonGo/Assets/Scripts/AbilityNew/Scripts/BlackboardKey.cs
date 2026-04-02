@@ -8,6 +8,7 @@
         NeedHeal = 3,
         ParryFailed = 4,
         ProjectileFlightTime = 5,
-        AllProjectilesReflected = 6
+        AllProjectilesReflected = 6,
+        CurrentArmament
     }
 }

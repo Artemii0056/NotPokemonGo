@@ -116,9 +116,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b70d68b511f1439d90908b95e0abb162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2299160184032738615 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2462365903037481191, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+  m_PrefabInstance: {fileID: 4450777712762256848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2366498208526872634 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2095065713323331050, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+  m_PrefabInstance: {fileID: 4450777712762256848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2482735433217130866 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2283364625427053730, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
+  m_PrefabInstance: {fileID: 4450777712762256848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5723394843779963105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8262350455999685937, guid: d1fc7f160b0e65d4bb9da06122b91cd5, type: 3}
   m_PrefabInstance: {fileID: 4450777712762256848}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6686149135419505583
@@ -267,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: AbilityAnimationControllerBase
@@ -278,9 +293,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1257303622648830399}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[0].SpawnType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[0].Transform
+      value: 
+      objectReference: {fileID: 2366498208526872634}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: abilityAnchors.Array.data[0].spawnType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[1].SpawnType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[1].Transform
+      value: 
+      objectReference: {fileID: 5723394843779963105}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[2].SpawnType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
+      propertyPath: abilityAnchors.Array.data[2].Transform
+      value: 
+      objectReference: {fileID: 2299160184032738615}
     - target: {fileID: 7316639614331659265, guid: 029465657e3f55e4b8627e6431c90181, type: 3}
       propertyPath: <UnitAnimatorController>k__BackingField
       value: 

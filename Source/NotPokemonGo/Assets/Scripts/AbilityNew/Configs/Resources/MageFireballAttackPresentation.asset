@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f8709030534254b8a1ec3d0f9a9b2b, type: 3}
+  m_Name: MageFireballAttackPresentation
+  m_EditorClassIdentifier: 
+  Ability: {fileID: 11400000, guid: 7c04789e977215744b3c71254ab8f762, type: 2}
+  Entries:
+  - Signal: 0
+    Cases:
+    - Condition:
+        rid: 7940118881610235915
+      Steps:
+      - rid: 7940118881610235916
+  - Signal: 3
+    Cases:
+    - Condition:
+        rid: 7940118881610235918
+      Steps:
+      - rid: 7940118881610235919
+  - Signal: 4
+    Cases:
+    - Condition:
+        rid: 7940118881610235920
+      Steps:
+      - rid: 7940118881610235921
+  references:
+    version: 2
+    RefIds:
+    - rid: 7940118881610235915
+      type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118881610235916
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 0
+        Prefab: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
+        SpawnType: 1
+    - rid: 7940118881610235918
+      type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118881610235919
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 2
+        Prefab: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
+        SpawnType: 0
+    - rid: 7940118881610235920
+      type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118881610235921
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 2
+        Prefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
+        SpawnType: 0

@@ -8,6 +8,5 @@ namespace AbilityNew.Scripts.Steps.Presentation
     public sealed class EmitPresentationSignalStep : AbilityStepSO
     {
         public AbilityPresentationSignal Signal;
-        public ParticleSpawnType SpawnType = ParticleSpawnType.Default;
     }
 }

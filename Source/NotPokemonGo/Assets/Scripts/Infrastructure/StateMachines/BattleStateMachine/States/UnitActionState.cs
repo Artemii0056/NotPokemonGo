@@ -54,7 +54,6 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
 
         public void Exit()
         {
-            Debug.Log("Exit");
             _inputReader.SpacePressed -= SetFinishBattleState;
             _unitActionStrategy.Disable();
         }

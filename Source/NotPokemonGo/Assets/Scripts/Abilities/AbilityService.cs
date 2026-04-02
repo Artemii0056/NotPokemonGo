@@ -135,8 +135,6 @@ namespace Abilities
             Unit target,
             AbilitySO ability)
         {
-            Debug.LogWarning("In");
-            
             AbilityExecutionContext context = new(
                 source,
                 target,
@@ -172,8 +170,15 @@ namespace Abilities
 
             registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
 
-                var so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
-                abilityPresentationService.Register(so);
+            AbilityPresentationConfig so;
+
+            if (source.PlatoonType == PlatoonType.Heroes)
+                so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
+            else
+                so = _resourceLoader.Load<AbilityPresentationConfig>("MageFireballAttackPresentation");
+
+
+            abilityPresentationService.Register(so);
 
             AbilityRunner abilityRunner = new(registry, signalService);
 
@@ -255,9 +260,9 @@ namespace Abilities
             _postFlowCts?.Dispose();
             _postFlowCts = new CancellationTokenSource();
 
-            Debug.Log("ContinueAsync START");
+           // Debug.Log("ContinueAsync START");
 
-            Debug.Log("ContinueAsync before delay");
+          //  Debug.Log("ContinueAsync before delay");
             
             try
             {
@@ -265,23 +270,23 @@ namespace Abilities
                     TimeSpan.FromSeconds(PostDelaySeconds),
                     cancellationToken: _postFlowCts.Token);
                 
-                Debug.Log("ContinueAsync after delay");
+              //  Debug.Log("ContinueAsync after delay");
             }
             catch (OperationCanceledException)
             {
                 return;
             }
             
-            Debug.Log($"ContinueAsync battlefield null = {_battlefield == null}");
-            Debug.Log($"ContinueAsync heroes alive = {_battlefield.HeroesPlatoon.HaveUnits}");
-            Debug.Log($"ContinueAsync enemies alive = {_battlefield.EnemyPlatoon.HaveUnits}");
+           // Debug.Log($"ContinueAsync battlefield null = {_battlefield == null}");
+          //  Debug.Log($"ContinueAsync heroes alive = {_battlefield.HeroesPlatoon.HaveUnits}");
+          //  Debug.Log($"ContinueAsync enemies alive = {_battlefield.EnemyPlatoon.HaveUnits}");
 
             if (_lastUnit != null && _lastUnit.PlatoonType == PlatoonType.Heroes)
                 _statusManager.TickUnitTurn();
 
-            Debug.Log("ContinueAsync before Enter<CheckBattleEndState>");
+           // Debug.Log("ContinueAsync before Enter<CheckBattleEndState>");
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-            Debug.Log("ContinueAsync after Enter<CheckBattleEndState>");
+           // Debug.Log("ContinueAsync after Enter<CheckBattleEndState>");
             Finished?.Invoke();
         }
     }
