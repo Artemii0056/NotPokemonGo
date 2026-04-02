@@ -12,5 +12,7 @@ namespace AbilityNew.Scripts.Presentation
 
         public ParticleSpawnType SpawnType = ParticleSpawnType.Default;
         public Transform ExplicitTransform;
+        public bool IsCriticalHit { get; set; }
+        public bool ProjectileReflected { get; set; }
     }
 }
