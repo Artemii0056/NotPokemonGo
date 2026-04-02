@@ -1,29 +1,18 @@
 ﻿using System.Collections.Generic;
-using AbilityNew.Presentation;
 using AbilityNew.Scripts.Executors;
 using AbilityNew.Scripts.Presentation;
-using Services.AudioServices;
-using Services.Cameras;
-using Spawners;
+using AbilityNew.Scripts.Presentation.AbilityNew.Scripts.Presentation;
 
 namespace AbilityNew.Scripts
 {
     public sealed class AbilityPresentationService : IAbilityPresentationService
     {
-        private readonly IParticleSpawner _particleSpawner;
-        private readonly IAudioService _audioService;
-        private readonly ICameraShakeService _cameraShakeService;
-
         private readonly Dictionary<AbilitySO, AbilityPresentationConfig> _configs = new();
+        private readonly PresentationStepExecutorRegistry _executorRegistry;
 
-        public AbilityPresentationService(
-            IParticleSpawner particleSpawner,
-            IAudioService audioService,
-            ICameraShakeService cameraShakeService)
+        public AbilityPresentationService(PresentationStepExecutorRegistry executorRegistry)
         {
-            _particleSpawner = particleSpawner;
-            _audioService = audioService;
-            _cameraShakeService = cameraShakeService;
+            _executorRegistry = executorRegistry;
         }
 
         public void Register(AbilityPresentationConfig config)
@@ -45,55 +34,42 @@ namespace AbilityNew.Scripts
             for (int i = 0; i < config.Entries.Count; i++)
             {
                 var entry = config.Entries[i];
+
                 if (entry.Signal != context.Signal)
                     continue;
 
-                ExecuteActions(entry.Actions, context);
+                ExecuteEntry(entry, context);
             }
         }
 
-        private void ExecuteActions(List<PresentationAction> actions, AbilityPresentationContext context)
+        private void ExecuteEntry(PresentationEntry entry, AbilityPresentationContext context)
         {
-            if (actions == null)
+            if (entry.Cases == null || entry.Cases.Count == 0)
                 return;
 
-            for (int i = 0; i < actions.Count; i++)
+            for (int i = 0; i < entry.Cases.Count; i++)
             {
-                ExecuteAction(actions[i], context);
+                var presentationCase = entry.Cases[i];
+
+                if (presentationCase == null)
+                    continue;
+
+                if (presentationCase.Condition != null &&
+                    presentationCase.Condition.Evaluate(context) == false)
+                    continue;
+
+                ExecuteSteps(presentationCase.Steps, context);
+                break;
             }
         }
 
-        private void ExecuteAction(PresentationAction action, AbilityPresentationContext context)
+        private void ExecuteSteps(List<PresentationStep> steps, AbilityPresentationContext context)
         {
-            switch (action.Type)
-            {
-                case PresentationActionType.SpawnParticleOnCaster:
-                    if (context.Caster != null)
-                        _particleSpawner.Spawn(context.Caster, action.SpawnType, action.ParticlePrefab);
-                    break;
+            if (steps == null)
+                return;
 
-                case PresentationActionType.SpawnParticleOnTarget:
-                    if (context.Target != null)
-                        _particleSpawner.Spawn(context.Target, action.ParticlePrefab);
-                    break;
-
-                case PresentationActionType.PlaySoundOnCaster:
-                    if (context.Caster != null)
-                        _audioService.Play3D(action.AudioClip, context.Caster.transform.position);
-                    break;
-
-                case PresentationActionType.PlaySoundOnTarget:
-                    if (context.Target != null)
-                        _audioService.Play3D(action.AudioClip, context.Target.transform.position);
-                    break;
-
-                case PresentationActionType.CameraShake:
-                    _cameraShakeService.Shake(
-                        action.ShakeAmplitude,
-                        action.ShakeFrequency,
-                        action.ShakeDuration);
-                    break;
-            }
+            for (int i = 0; i < steps.Count; i++)
+                _executorRegistry.Execute(steps[i], context);
         }
     }
 }

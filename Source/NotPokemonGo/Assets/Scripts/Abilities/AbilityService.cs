@@ -13,6 +13,10 @@ using AbilityNew.Scripts.Executors.Debugger;
 using AbilityNew.Scripts.Executors.Flow;
 using AbilityNew.Scripts.Executors.Gameplay;
 using AbilityNew.Scripts.Executors.Presentation;
+using AbilityNew.Scripts.Presentation;
+using AbilityNew.Scripts.Presentation.AbilityNew.Scripts.Presentation;
+using AbilityNew.Scripts.Presentation.Executors;
+using AbilityNew.Scripts.Presentation.Presets;
 using AbilityNew.Scripts.Results;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Battlefields;
@@ -154,9 +158,17 @@ namespace Abilities
             registry.AddExecutor(new RepeatExecutor(registry));
             registry.AddExecutor(new SequenceExecutor(registry));
             registry.AddExecutor(new ResolveQteExecutor(registry));
+            
+            List<IPresentationStepExecutor> presentationStepExecutors = new();
+            presentationStepExecutors.Add(new CameraShakeStepExecutor(_cameraShakeService, new CameraShakePresetResolver()));
+            presentationStepExecutors.Add(new PlayAudioStepExecutor(_audioService));
+            presentationStepExecutors.Add(new SpawnParticleStepExecutor(_particleSpawner));
+            
+            PresentationStepExecutorRegistry presentationStepExecutorRegistry = 
+                new PresentationStepExecutorRegistry(presentationStepExecutors);
 
             AbilityPresentationService abilityPresentationService =
-                new AbilityPresentationService(_particleSpawner, _audioService, _cameraShakeService);
+                new AbilityPresentationService(presentationStepExecutorRegistry);
 
             registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
 

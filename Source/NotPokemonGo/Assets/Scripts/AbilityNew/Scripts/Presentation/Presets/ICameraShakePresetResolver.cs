@@ -1,4 +1,4 @@
-﻿namespace AbilityNew.Scripts.Presentation
+﻿namespace AbilityNew.Scripts.Presentation.Presets
 {
     public interface ICameraShakePresetResolver
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AbilityNew.Presentation;
+﻿using System.Collections.Generic;
 using AbilityNew.Scripts.Presentation;
 using UnityEngine;
 
@@ -11,12 +9,5 @@ namespace AbilityNew.Scripts.Executors
     {
         public AbilitySO Ability;
         public List<PresentationEntry> Entries = new();
-    }
-
-    [Serializable]
-    public sealed class PresentationEntry
-    {
-        public AbilityPresentationSignal Signal;
-        public List<PresentationAction> Actions = new();
     }
 }
