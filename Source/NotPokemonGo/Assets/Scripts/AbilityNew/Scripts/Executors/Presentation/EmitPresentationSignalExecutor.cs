@@ -27,6 +27,7 @@ namespace AbilityNew.Scripts.Executors.Presentation
                 Target = runtime.Context.Target,
                 Ability = runtime.Ability,
                 Signal = step.Signal,
+                QteResult = runtime.State.LastQteResult
             };
 
             Debug.LogWarning("EmitPresentationSignalExecutor");

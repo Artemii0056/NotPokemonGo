@@ -4,9 +4,9 @@ using QteSystem.TestQte;
 namespace AbilityNew.Scripts.Presentation.Conditions
 {
     [Serializable]
-    public sealed class QteSuccessCondition : PresentationCondition
+    public sealed class QteFailCondition : PresentationCondition
     {
         public override bool Evaluate(AbilityPresentationContext context) =>
-            context.QteResult is QteResult.Normal or QteResult.Perfect;
+            context.QteResult == QteResult.Fail;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Units;
+﻿using QteSystem.TestQte;
+using Units;
 using UnityEngine;
 
 namespace AbilityNew.Scripts.Presentation
@@ -11,6 +12,8 @@ namespace AbilityNew.Scripts.Presentation
         public AbilityPresentationSignal Signal;
 
         public Transform ExplicitTransform;
+        
+        public QteResult? QteResult;
         public bool IsCriticalHit { get; set; }
         public bool ProjectileReflected { get; set; }
     }
