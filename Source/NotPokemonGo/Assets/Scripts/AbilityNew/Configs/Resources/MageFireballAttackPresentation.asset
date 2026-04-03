@@ -20,18 +20,22 @@ MonoBehaviour:
         rid: 7940118881610235915
       Steps:
       - rid: 7940118881610235916
-  - Signal: 3
-    Cases:
-    - Condition:
-        rid: 7940118881610235918
-      Steps:
-      - rid: 7940118881610235919
   - Signal: 4
     Cases:
     - Condition:
         rid: 7940118881610235920
       Steps:
       - rid: 7940118881610235921
+  - Signal: 1
+    Cases:
+    - Condition:
+        rid: 7940118903661264905
+      Steps:
+      - rid: 7940118903661264908
+    - Condition:
+        rid: 7940118903661264906
+      Steps:
+      - rid: 7940118903661264909
   references:
     version: 2
     RefIds:
@@ -44,15 +48,6 @@ MonoBehaviour:
         Anchor: 0
         Prefab: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
         SpawnType: 1
-    - rid: 7940118881610235918
-      type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
-      data: 
-    - rid: 7940118881610235919
-      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
-      data:
-        Anchor: 2
-        Prefab: {fileID: 19827894, guid: 61e39c1e568f5e1498e846dfbc252199, type: 3}
-        SpawnType: 0
     - rid: 7940118881610235920
       type: {class: AlwaysPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
       data: 
@@ -61,4 +56,22 @@ MonoBehaviour:
       data:
         Anchor: 2
         Prefab: {fileID: 19827778, guid: e394a16f232dbd649a36717707bcfeae, type: 3}
+        SpawnType: 0
+    - rid: 7940118903661264905
+      type: {class: QteFailCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118903661264906
+      type: {class: QteSuccessCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118903661264908
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 1
+        Prefab: {fileID: 19818808, guid: dcca8ed47ebc33e41814a86018dfbd04, type: 3}
+        SpawnType: 0
+    - rid: 7940118903661264909
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 2
+        Prefab: {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
         SpawnType: 0

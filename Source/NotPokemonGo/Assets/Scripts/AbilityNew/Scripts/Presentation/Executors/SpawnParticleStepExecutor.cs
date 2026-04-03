@@ -30,18 +30,8 @@ namespace AbilityNew.Scripts.Presentation.Executors
                     break;
 
                 case PresentationAnchor.ExplicitTransform:
-                    // if (context.ExplicitTransform != null)
-                    //     _particleSpawner.Spawn(context.ExplicitTransform.position, step.Prefab);
-
-                    Debug.LogWarning("PresentationAnchor.ExplicitTransform");
-                    Debug.LogWarning(context.ExplicitTransform == null);
-                    
-                    if (context.ExplicitTransform != null)
-                    {
+                    if (context.ExplicitTransform != null) 
                         _particleSpawner.Spawn(context.ExplicitTransform.transform, step.Prefab);
-                        Debug.LogWarning("Spawn");
-                    }
-
                     break;
             }
         }

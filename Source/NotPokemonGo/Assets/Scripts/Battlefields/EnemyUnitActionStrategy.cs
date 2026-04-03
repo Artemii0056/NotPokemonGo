@@ -33,8 +33,6 @@ namespace Battlefields
 
         public override void Enable()
         {
-            Debug.Log($"EnemyUnitActionStrategy.Enable source={_source.name}");
-            
             base.Enable();
             Attack(_battlefield.HeroesPlatoon.AliveUnits);
         }
@@ -49,7 +47,6 @@ namespace Battlefields
         {
             foreach (AbilityModel abilityModel in _source.AbilitySO)
             {
-                Debug.Log("Attack in Enemy");
                 
                 // if (abilityModel.IsReady())
                 // {
@@ -59,11 +56,11 @@ namespace Battlefields
                    // _abilityService.Handle(_source, randomTarget, abilityModel); 
                     //_abilityService.RunAbilityAsync(_source, randomTarget, abilityModel); 
                     
-                    Debug.Log($"Enemy Attack START source={_source.name}");
-                    Debug.Log($"Enemy target={randomTarget.name}");
-                    Debug.Log("Enemy before RunAbilityAsync");
+                    //Debug.Log($"Enemy Attack START source={_source.name}");
+                   // Debug.Log($"Enemy target={randomTarget.name}");
+                   // Debug.Log("Enemy before RunAbilityAsync");
                     _abilityService.RunAbilityAsync(_source, randomTarget, abilityModel);
-                    Debug.Log("EnemyUnitActionStrategy: after RunAbilityAsync");
+                   // Debug.Log("EnemyUnitActionStrategy: after RunAbilityAsync");
                     
                     abilityModel.DiscardCurrentTime();
 

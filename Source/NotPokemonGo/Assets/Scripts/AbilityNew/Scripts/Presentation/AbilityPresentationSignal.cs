@@ -5,6 +5,7 @@
         MoveStart,
         AttackContact,
         MoveBackStart,
+        SeriesFinished,
 
         ProjectileSpawned,
         ProjectileHighlighted,

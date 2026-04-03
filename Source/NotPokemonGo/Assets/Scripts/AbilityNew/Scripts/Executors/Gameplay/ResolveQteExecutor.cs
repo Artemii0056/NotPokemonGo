@@ -40,8 +40,6 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                 TimeSpan.FromSeconds(timeoutSeconds),
                 cancellationToken: ct);
             
-            Debug.Log($"[ResolveQte] TimeoutSeconds = {timeoutSeconds}");
-
             try
             {
                 var (hasQteResult, qteResult) = await UniTask.WhenAny(resultTask, timeoutTask);
@@ -80,8 +78,6 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                 if (ReferenceEquals(state.ActiveQte, activeQte))
                     state.ActiveQte = null;
             }
-            
-            //runtime.State.ActiveQte = null;
         }
 
         private static UniTask<QteResult> WaitResult(IQteSession qteSession)

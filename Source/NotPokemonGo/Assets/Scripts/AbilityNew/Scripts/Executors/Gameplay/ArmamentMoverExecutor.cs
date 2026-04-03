@@ -26,7 +26,6 @@ namespace AbilityNew.Scripts.Executors.Gameplay
             mover.Move();
             
             runtime.State.AbilityBlackboard.Set(BlackboardKey.ProjectileFlightTime, mover.Duration);
-            Debug.Log($"[ArmamentMover] Flight started. Duration = {mover.Duration}");
             
             return UniTask.CompletedTask;
         }

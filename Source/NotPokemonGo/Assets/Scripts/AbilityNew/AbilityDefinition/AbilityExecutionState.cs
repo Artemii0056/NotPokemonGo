@@ -13,9 +13,6 @@ namespace AbilityNew.AbilityDefinition
         public IQteSession ActiveQte { get; set; }
         public QteResult? LastQteResult { get; set; }
 
-        public int? LastDamageResult { get; set; } //DamageResult
-        public int? LastHealResult { get; set; } //HealResult
-
         public AbilityBlackboard AbilityBlackboard { get; set; } = new();
         public CounterAttackRequest CounterAttackRequest { get; }
 

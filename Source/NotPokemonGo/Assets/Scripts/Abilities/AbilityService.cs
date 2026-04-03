@@ -101,7 +101,6 @@ namespace Abilities
         private async UniTask RunAbilityInternalAsync(Unit source, Unit target, AbilityModel abilityModel)
         {
             _lastUnit = source;
-            Debug.Log(source.PlatoonType + " сурт тайп");
 
             AbilitySO ability = ResolveAbility(source, abilityModel);
 
@@ -235,6 +234,8 @@ namespace Abilities
                 new PrepareArmamentSpawnPointsExecutor(),
                 new DebugExecutor(),
                 new RequestCounterAttackExecutor(),
+                new InitQteSeriesResultExecutor(),
+                new AppendLastQteResultExecutor(),
             };
         }
 
@@ -245,10 +246,7 @@ namespace Abilities
             if (source.PlatoonType == PlatoonType.Heroes)
                 so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
             else
-            {
-                Debug.Log("12321");
-            so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
-            }
+                so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
 
 
             return so;

@@ -30,7 +30,7 @@ namespace AbilityNew.Scripts.Executors.Presentation
                 QteResult = runtime.State.LastQteResult
             };
 
-            Debug.LogWarning("EmitPresentationSignalExecutor");
+           // Debug.LogWarning("EmitPresentationSignalExecutor");
             
             if (step.Signal == AbilityPresentationSignal.ProjectileLaunched ||
             step.Signal == AbilityPresentationSignal.ProjectileSpawned ||
