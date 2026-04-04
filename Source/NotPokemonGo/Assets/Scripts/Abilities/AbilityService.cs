@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Abilities.MV;
+using AbilityNew;
 using AbilityNew.AbilityDefinition;
+using AbilityNew.Diagnostics;
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Executors;
@@ -139,6 +141,8 @@ namespace Abilities
 
             using CancellationTokenSource abilityCts = new();
 
+            IAbilityTraceWriter writer = new FileAbilityTraceWriter();
+            
             SignalService signalService = new();
             IUnitMover unitMover = new UnitMover();
 
@@ -177,7 +181,7 @@ namespace Abilities
 
             abilityPresentationService.Register(so);
 
-            AbilityRunner abilityRunner = new(registry, signalService);
+            AbilityRunner abilityRunner = new(registry, signalService, writer);
 
             return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
         }

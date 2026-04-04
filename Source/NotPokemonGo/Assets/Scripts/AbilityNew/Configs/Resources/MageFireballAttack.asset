@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Steps:
   - rid: 9209732878980087808
-  - rid: 7940118903661264910
+  - rid: 7940118918967066673
   - rid: 7940118881610235922
   - rid: 9209733270690332689
   - rid: 9209733270690332674
@@ -49,34 +49,22 @@ MonoBehaviour:
       type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Signal: 1
-    - rid: 7940118903661264910
-      type: {class: InitQteSeriesResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
-      data: 
     - rid: 7940118903661264911
       type: {class: SequenceStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
         Steps:
-        - rid: 7940118903661264913
+        - rid: 7940118918967066671
         - rid: 7940118903661264914
     - rid: 7940118903661264912
       type: {class: SequenceStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
         Steps:
-        - rid: 7940118903661264916
+        - rid: 7940118918967066672
         - rid: 7940118903661264917
-    - rid: 7940118903661264913
-      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps, asm: Assembly-CSharp}
-      data: 
     - rid: 7940118903661264914
       type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Signal: 1
-    - rid: 7940118903661264915
-      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps, asm: Assembly-CSharp}
-      data: 
-    - rid: 7940118903661264916
-      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps, asm: Assembly-CSharp}
-      data: 
     - rid: 7940118903661264917
       type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
@@ -92,6 +80,18 @@ MonoBehaviour:
       type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Signal: 3
+    - rid: 7940118918967066670
+      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118918967066671
+      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118918967066672
+      type: {class: AppendLastQteResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118918967066673
+      type: {class: InitQteSeriesResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
+      data: 
     - rid: 9209732878980087808
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
@@ -137,7 +137,7 @@ MonoBehaviour:
       type: {class: SequenceStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
         Steps:
-        - rid: 7940118903661264915
+        - rid: 7940118918967066670
         - rid: 7940118903661264901
         - rid: 9209733270690332683
     - rid: 9209733270690332683

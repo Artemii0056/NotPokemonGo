@@ -1,21 +1,25 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
+using AbilityNew.Diagnostics;
 using AbilityNew.Scripts;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace AbilityNew.AbilityDefinition
 {
     public sealed class AbilityRunner
     {
         private readonly StepExecutorRegistry _registry;
-        private ISignalService _signalService;
+        private readonly ISignalService _signalService;
+        private readonly IAbilityTraceWriter _traceWriter;
 
-        public AbilityRunner(StepExecutorRegistry registry, ISignalService signalService)
+        public AbilityRunner(
+            StepExecutorRegistry registry,
+            ISignalService signalService,
+            IAbilityTraceWriter traceWriter)
         {
             _registry = registry;
             _signalService = signalService;
+            _traceWriter = traceWriter;
         }
 
         public async UniTask<AbilityExecutionResult> RunAbility(
@@ -24,50 +28,99 @@ namespace AbilityNew.AbilityDefinition
             CancellationToken cancellationToken = default)
         {
             _signalService.Reset();
-            
-            Trace("AbilityRunner.RunAbility START");
 
             if (ability == null)
                 throw new ArgumentNullException(nameof(ability));
 
-            var runtime = new AbilityExecutionRuntime(ability,context, cancellationToken);
-            Trace("AbilityExecutionRuntime created");
+            var runtime = new AbilityExecutionRuntime(
+                ability,
+                context,
+                cancellationToken,
+                _traceWriter);
 
-            for (int i = 0; i < ability.Steps.Count; i++)
+            runtime.TraceInfo(
+                AbilityTraceSource.Runtime,
+                "Ability",
+                nameof(AbilityRunner),
+                "Execution started");
+
+            try
             {
-                cancellationToken.ThrowIfCancellationRequested();
-                
-                var step = ability.Steps[i];
-                Trace($"Step #{i} START: {step?.GetType().Name}");
-
-                if (runtime.State.IsInterrupted)
+                for (int i = 0; i < ability.Steps.Count; i++)
                 {
-                    Trace("Interrupted");
-                    runtime.Result.MarkInterrupted();
-                    return runtime.Result;
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    var step = ability.Steps[i];
+                    string stepName = step?.GetType().Name ?? "NullStep";
+
+                    runtime.TraceInfo(
+                        AbilityTraceSource.Runtime,
+                        "Ability",
+                        nameof(AbilityRunner),
+                        $"StepIndex={i}, Step={stepName}, Phase=Start");
+
+                    if (runtime.State.IsInterrupted)
+                    {
+                        runtime.Result.MarkInterrupted();
+
+                        runtime.TraceInfo(
+                            AbilityTraceSource.Runtime,
+                            "Ability",
+                            nameof(AbilityRunner),
+                            "Execution interrupted");
+
+                        return runtime.Result;
+                    }
+
+                    if (runtime.State.IsCancelled)
+                    {
+                        runtime.Result.MarkCancelled();
+
+                        runtime.TraceInfo(
+                            AbilityTraceSource.Runtime,
+                            "Ability",
+                            nameof(AbilityRunner),
+                            "Execution cancelled");
+
+                        return runtime.Result;
+                    }
+
+                    await _registry.Execute(step, runtime);
+
+                    runtime.TraceInfo(
+                        AbilityTraceSource.Runtime,
+                        "Ability",
+                        nameof(AbilityRunner),
+                        $"StepIndex={i}, Step={stepName}, Phase=End");
                 }
 
-                if (runtime.State.IsCancelled)
-                {
-                    Trace("Cancelled");
-                    runtime.Result.MarkCancelled();
-                    return runtime.Result;
-                }
+                runtime.Result.MarkCompleted();
 
-                await _registry.Execute(step, runtime);
+                runtime.TraceInfo(
+                    AbilityTraceSource.Runtime,
+                    "Ability",
+                    nameof(AbilityRunner),
+                    "Execution finished successfully");
 
-                Trace($"Step #{i} END: {step?.GetType().Name}");
+                return runtime.Result;
             }
+            catch (OperationCanceledException)
+            {
+                runtime.Result.MarkCancelled();
 
-            runtime.Result.MarkCompleted();
-            Trace("AbilityRunner.RunAbility END");
-            return runtime.Result;
-        }
-        
-        private void Trace(string message)
-        {
-            var path = Path.Combine(Application.persistentDataPath, "ability_trace.log");
-            File.AppendAllText(path, $"{DateTime.Now:HH:mm:ss.fff} | {message}\n");
+                runtime.TraceInfo(
+                    AbilityTraceSource.Runtime,
+                    "Ability",
+                    nameof(AbilityRunner),
+                    "Execution cancelled by token");
+
+                throw;
+            }
+            catch (Exception ex)
+            {
+                runtime.TraceError("Ability", nameof(AbilityRunner), ex);
+                throw;
+            }
         }
     }
 }

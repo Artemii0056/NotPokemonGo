@@ -1,8 +1,9 @@
 ﻿using System;
 using Abilities.Signals;
+using AbilityNew.Scripts;
 using Units.AnimationControllers;
 
-namespace AbilityNew.Scripts
+namespace AbilityNew
 {
     public sealed class AnimationSignalRelay : IDisposable
     {

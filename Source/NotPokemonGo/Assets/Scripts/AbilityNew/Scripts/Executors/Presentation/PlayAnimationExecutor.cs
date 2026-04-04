@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
 using AbilityNew.AbilityDefinition;
+using AbilityNew.Diagnostics;
 using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Presentation;
 using Cysharp.Threading.Tasks;
@@ -11,41 +11,33 @@ namespace AbilityNew.Scripts.Executors.Presentation
 {
     public class PlayAnimationExecutor : AbilityStepExecutor<PlayAnimationStep>
     {
-        public override UniTask Execute(
-            PlayAnimationStep step,
-            AbilityExecutionRuntime runtime,
-            CancellationToken ct)
+        public override UniTask Execute(PlayAnimationStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
         {
-            Trace("PlayAnimationExecutor START");
+            const string ExecutorName = nameof(PlayAnimationExecutor);
+            const string StepName = nameof(PlayAnimationStep);
 
-            var source = runtime.Context.Source;
-            Trace($"source: {source}");
+            runtime.TraceStepEnter(StepName, ExecutorName);
 
-            var animatorController = source.AnimatorController;
-            Trace($"animatorController: {animatorController}");
+            try
+            {
+                var source = runtime.Context.Source;
+                var animatorController = source.AnimatorController;
+                var animationName = step.Animation.name;
+                int hash = Animator.StringToHash(animationName);
 
-            var animation = step.Animation;
-            Trace($"animation ref: {animation}");
+                runtime.TraceInfo(AbilityTraceSource.Executor, StepName, ExecutorName,
+                    $"Animation={animationName}, Hash={hash}");
 
-            string animationName = animation.name;
-            Trace($"animation name: {animationName}");
+                animatorController.Play(hash);
 
-            int hash = Animator.StringToHash(animationName);
-            Trace($"animation hash: {hash}");
-
-            Trace("Before AnimatorController.Play");
-            animatorController.Play(hash);
-            Trace("After AnimatorController.Play");
-
-            Trace("PlayAnimationExecutor END");
-
-            return UniTask.CompletedTask;
-        }
-        
-        private void Trace(string message)
-        {
-            var path = Path.Combine(Application.persistentDataPath, "ability_trace.log");
-            File.AppendAllText(path, $"{DateTime.Now:HH:mm:ss.fff} | {message}\n");
+                runtime.TraceStepExit(StepName, ExecutorName, $"Played animation {animationName}");
+                return UniTask.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                runtime.TraceError(StepName, ExecutorName, ex);
+                throw;
+            }
         }
     }
 }

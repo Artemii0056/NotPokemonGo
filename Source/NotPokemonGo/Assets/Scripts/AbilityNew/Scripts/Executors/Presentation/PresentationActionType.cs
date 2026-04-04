@@ -1,8 +1,7 @@
 ﻿using System;
-using Services.Cameras;
 using UnityEngine;
 
-namespace AbilityNew.Presentation
+namespace AbilityNew.Scripts.Executors.Presentation
 {
     public enum PresentationActionType
     {
