@@ -9,7 +9,7 @@ namespace AbilityNew.Scripts.Validation
 {
     public sealed class AbilityValidator : IAbilityValidator
     {
-        public AbilityValidationResult Validate(AbilitySO ability, StepExecutorRegistry registry)
+        public AbilityValidationResult Validate(AbilitySo ability, StepExecutorRegistry registry)
         {
             var result = new AbilityValidationResult();
 

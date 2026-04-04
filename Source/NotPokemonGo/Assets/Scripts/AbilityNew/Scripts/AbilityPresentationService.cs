@@ -7,7 +7,7 @@ namespace AbilityNew.Scripts
 {
     public sealed class AbilityPresentationService : IAbilityPresentationService
     {
-        private readonly Dictionary<AbilitySO, AbilityPresentationConfig> _configs = new();
+        private readonly Dictionary<AbilitySo, AbilityPresentationConfig> _configs = new();
         private readonly PresentationStepExecutorRegistry _executorRegistry;
 
         public AbilityPresentationService(PresentationStepExecutorRegistry executorRegistry)

@@ -7,7 +7,7 @@ namespace AbilityNew.AbilityDefinition
 {
     public sealed class AbilityExecutionRuntime
     {
-        public AbilitySO Ability { get; }
+        public AbilitySo Ability { get; }
         public AbilityExecutionContext Context { get; }
         public AbilityExecutionState State { get; }
         public AbilityExecutionResult Result { get; }
@@ -17,7 +17,7 @@ namespace AbilityNew.AbilityDefinition
         public IAbilityTraceWriter TraceWriter { get; }
 
         public AbilityExecutionRuntime(
-            AbilitySO ability,
+            AbilitySo ability,
             AbilityExecutionContext context,
             CancellationToken cancellationToken,
             IAbilityTraceWriter traceWriter)

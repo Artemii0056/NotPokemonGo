@@ -24,7 +24,7 @@ namespace Services.StaticDataServices
         private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
-        private Dictionary<UnitType, AbilitySO> _counterAttackingAbilities;
+        private Dictionary<UnitType, AbilitySo> _counterAttackingAbilities;
         private Dictionary<int, PlatoonSpawnContainer> _spawnPositionContainer;
         private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
@@ -94,9 +94,9 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {statusType}");
         }
         
-        public AbilitySO GetCounterattackAbility(UnitType unitType)
+        public AbilitySo GetCounterattackAbility(UnitType unitType)
         {
-            if (_counterAttackingAbilities.TryGetValue(unitType, out AbilitySO abilitySo))
+            if (_counterAttackingAbilities.TryGetValue(unitType, out AbilitySo abilitySo))
                 return abilitySo;
 
             throw new KeyNotFoundException($"No counterattack ability found for unit type {unitType}");

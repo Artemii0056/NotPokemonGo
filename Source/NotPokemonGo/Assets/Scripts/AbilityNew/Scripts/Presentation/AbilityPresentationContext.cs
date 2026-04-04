@@ -8,7 +8,7 @@ namespace AbilityNew.Scripts.Presentation
     {
         public Unit Caster;
         public Unit Target;
-        public AbilitySO Ability;
+        public AbilitySo Ability;
         public AbilityPresentationSignal Signal;
         
         public QteSeriesResult QteSeriesResult;

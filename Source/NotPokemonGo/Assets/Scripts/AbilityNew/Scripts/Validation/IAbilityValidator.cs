@@ -4,6 +4,6 @@ namespace AbilityNew.Scripts.Validation
 {
     public interface IAbilityValidator
     {
-        AbilityValidationResult Validate(AbilitySO ability, StepExecutorRegistry registry);
+        AbilityValidationResult Validate(AbilitySo ability, StepExecutorRegistry registry);
     }
 }

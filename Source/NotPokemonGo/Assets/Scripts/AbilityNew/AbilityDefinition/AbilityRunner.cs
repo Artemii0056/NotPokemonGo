@@ -23,7 +23,7 @@ namespace AbilityNew.AbilityDefinition
         }
 
         public async UniTask<AbilityExecutionResult> RunAbility(
-            AbilitySO ability,
+            AbilitySo ability,
             AbilityExecutionContext context,
             CancellationToken cancellationToken = default)
         {

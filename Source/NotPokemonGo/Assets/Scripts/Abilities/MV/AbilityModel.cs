@@ -22,7 +22,7 @@ namespace Abilities.MV
                 _stats[abilityStatSetup.StatsType] = abilityStatSetup;
         }
         
-        public AbilityModel(AbilitySO config)
+        public AbilityModel(AbilitySo config)
         {
             ConfigSO = config;
             AbilityType = config.Type;
@@ -39,7 +39,7 @@ namespace Abilities.MV
         private Dictionary<AbilityStatType, AbilityStatSetup> _stats;
 
         public AbilityConfig Config { get; }
-        public AbilitySO ConfigSO { get; }
+        public AbilitySo ConfigSO { get; }
 
         public AbilityType AbilityType { get; private set; }
         public TargetMode TargetMode { get; private set; }

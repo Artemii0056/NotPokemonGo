@@ -30,6 +30,6 @@ namespace Services.StaticDataServices
         DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
         StatusSetup GetStatusSetup(StatusType statusType);
         ParticleSystem GetParticleByType(StatusType setupType);
-        AbilitySO GetCounterattackAbility(UnitType reactorUnitType);
+        AbilitySo GetCounterattackAbility(UnitType reactorUnitType);
     }
 }

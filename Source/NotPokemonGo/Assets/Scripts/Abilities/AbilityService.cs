@@ -102,7 +102,7 @@ namespace Abilities
         {
             _lastUnit = source;
 
-            AbilitySO ability = ResolveAbility(source, abilityModel);
+            AbilitySo ability = ResolveAbility(source, abilityModel);
 
             try
             {
@@ -132,7 +132,7 @@ namespace Abilities
         private async UniTask<AbilityExecutionResult> ExecuteAbilityOnlyAsync(
             Unit source,
             Unit target,
-            AbilitySO ability)
+            AbilitySo ability)
         {
             AbilityExecutionContext context = new(
                 source,
@@ -202,7 +202,7 @@ namespace Abilities
                 if (!request.Reactor.IsAlive || !request.Target.IsAlive)
                     continue;
 
-                AbilitySO counterAbility = _staticDataService.GetCounterattackAbility(request.Reactor.UnitType);
+                AbilitySo counterAbility = _staticDataService.GetCounterattackAbility(request.Reactor.UnitType);
 
                 if (counterAbility == null)
                     continue;
@@ -241,14 +241,14 @@ namespace Abilities
             };
         }
 
-        private AbilitySO ResolveAbility(Unit source, AbilityModel abilityModel)
+        private AbilitySo ResolveAbility(Unit source, AbilityModel abilityModel)
         {
-            AbilitySO so;
+            AbilitySo so;
 
             if (source.PlatoonType == PlatoonType.Heroes)
-                so = _resourceLoader.Load<AbilitySO>("BennetBaseAttack");
+                so = _resourceLoader.Load<AbilitySo>("BennetBaseAttack");
             else
-                so = _resourceLoader.Load<AbilitySO>("MageFireballAttack");
+                so = _resourceLoader.Load<AbilitySo>("MageFireballAttack");
 
 
             return so;

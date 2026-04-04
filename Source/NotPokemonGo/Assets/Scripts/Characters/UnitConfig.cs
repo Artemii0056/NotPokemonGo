@@ -13,14 +13,14 @@ namespace Characters
     {
         [field: SerializeField] public UnitType Type { get; private set; }
         [field: SerializeField] public Unit Prefab { get; private set; }
-        [field: SerializeField] public AbilitySO CounterattackConfig { get; private set; }
+        [field: SerializeField] public AbilitySo CounterattackConfig { get; private set; }
 
         [SerializeField] private List<StatConfig> _stats = new List<StatConfig>();
         [SerializeField] private List<AbilityConfig> _abilityConfigs;
-        [SerializeField] private List<AbilitySO> _abilitySO;
+        [SerializeField] private List<AbilitySo> _abilitySO;
 
         public List<StatConfig> Stats => new List<StatConfig>(_stats);
         public List<AbilityConfig> AbilityConfigs => new List<AbilityConfig>(_abilityConfigs);
-        public List<AbilitySO> AbilitySO => new List<AbilitySO>(_abilitySO);
+        public List<AbilitySo> AbilitySO => new List<AbilitySo>(_abilitySO);
     }
 }
