@@ -22,6 +22,7 @@ MonoBehaviour:
   - rid: 9209732878980087808
   - rid: 9209733270690332674
   - rid: 9209733270690332675
+  - rid: 7940118918967066629
   - rid: 9209733270690332686
   <Type>k__BackingField: 0
   <AbilityStatSetup>k__BackingField:
@@ -87,6 +88,10 @@ MonoBehaviour:
       type: {class: DebugStep, ns: AbilityNew.Scripts.Steps.Debugger, asm: Assembly-CSharp}
       data:
         Text: '"Fail"'
+    - rid: 7940118918967066629
+      type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
+      data:
+        Signal: 3
     - rid: 9209732878980087808
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:

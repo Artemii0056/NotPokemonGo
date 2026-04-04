@@ -36,6 +36,16 @@ MonoBehaviour:
         rid: 7940118903661264906
       Steps:
       - rid: 7940118903661264909
+  - Signal: 3
+    Cases:
+    - Condition:
+        rid: 7940118918967066632
+      Steps:
+      - rid: 7940118918967066636
+    - Condition:
+        rid: 7940118918967066633
+      Steps:
+      - rid: 7940118918967066637
   references:
     version: 2
     RefIds:
@@ -75,3 +85,21 @@ MonoBehaviour:
         Anchor: 2
         Prefab: {fileID: 19888532, guid: c961cdb83ebd58e46a73e9d7b2468ed3, type: 3}
         SpawnType: 0
+    - rid: 7940118918967066632
+      type: {class: QteSeriesAllSuccessPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118918967066633
+      type: {class: QteSeriesHasFailPresentationCondition, ns: AbilityNew.Scripts.Presentation.Conditions, asm: Assembly-CSharp}
+      data: 
+    - rid: 7940118918967066636
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 0
+        Prefab: {fileID: 19820956, guid: 052794fafed91dd4aa4cbbb40d21c0e2, type: 3}
+        SpawnType: 1
+    - rid: 7940118918967066637
+      type: {class: SpawnParticleStep, ns: AbilityNew.Scripts.Presentation, asm: Assembly-CSharp}
+      data:
+        Anchor: 0
+        Prefab: {fileID: 19893452, guid: b26d46bd817d6f245a72cda7c0e4c625, type: 3}
+        SpawnType: 2
