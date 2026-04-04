@@ -80,9 +80,13 @@ MonoBehaviour:
       type: {class: EmitPresentationSignalStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Signal: 1
-    - rid: 7940118903661264918
-      type: {class: QteSeriesHasFailCondition, ns: AbilityNew.Scripts.Conditions, asm: Assembly-CSharp}
+    - rid: 7940118918967066627
+      type: {class: QteSeriesAllSuccessCondition, ns: AbilityNew.Scripts.Conditions, asm: Assembly-CSharp}
       data: 
+    - rid: 7940118918967066628
+      type: {class: DebugStep, ns: AbilityNew.Scripts.Steps.Debugger, asm: Assembly-CSharp}
+      data:
+        Text: '"Fail"'
     - rid: 9209732878980087808
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
@@ -149,11 +153,11 @@ MonoBehaviour:
       data:
         Cases:
         - Condition:
-            rid: 7940118903661264918
+            rid: 7940118918967066627
           Step:
             rid: 9209733304561172481
         ElseStep:
-          rid: 9209733290872537090
+          rid: 7940118918967066628
     - rid: 9209733270690332687
       type: {class: RepeatStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
@@ -176,10 +180,6 @@ MonoBehaviour:
       type: {class: PrepareArmamentSpawnPointsStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
         ClearBeforeInit: 1
-    - rid: 9209733290872537090
-      type: {class: DebugStep, ns: AbilityNew.Scripts.Steps.Debugger, asm: Assembly-CSharp}
-      data:
-        Text: '"SUCCESS BRANCH"'
     - rid: 9209733304561172481
       type: {class: RequestCounterAttackStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data: 

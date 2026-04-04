@@ -21,13 +21,18 @@ namespace AbilityNew.Scripts.Executors.Presentation
             AbilityExecutionRuntime runtime,
             CancellationToken ct)
         {
+            runtime.State.AbilityBlackboard.TryGet(
+                BlackboardKey.QteSeriesResult,
+                out QteSeriesResult qteSeriesResult);
+            
             var context = new AbilityPresentationContext
             {
                 Caster = runtime.Context.Source,
                 Target = runtime.Context.Target,
                 Ability = runtime.Ability,
                 Signal = step.Signal,
-                QteResult = runtime.State.LastQteResult
+                QteResult = runtime.State.LastQteResult,
+                QteSeriesResult = qteSeriesResult
             };
 
            // Debug.LogWarning("EmitPresentationSignalExecutor");

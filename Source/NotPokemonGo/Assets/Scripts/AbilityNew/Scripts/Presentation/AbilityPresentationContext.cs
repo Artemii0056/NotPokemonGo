@@ -10,6 +10,8 @@ namespace AbilityNew.Scripts.Presentation
         public Unit Target;
         public AbilitySO Ability;
         public AbilityPresentationSignal Signal;
+        
+        public QteSeriesResult QteSeriesResult;
 
         public Transform ExplicitTransform;
         
