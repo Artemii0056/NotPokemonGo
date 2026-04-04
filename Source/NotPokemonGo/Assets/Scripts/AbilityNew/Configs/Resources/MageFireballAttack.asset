@@ -19,7 +19,7 @@ MonoBehaviour:
   - rid: 9209733270690332689
   - rid: 9209733270690332674
   - rid: 9209733270690332687
-  - rid: 9209732878980087808
+  - rid: 7940118918967066674
   - rid: 9209733270690332674
   - rid: 9209733270690332675
   - rid: 7940118918967066629
@@ -92,10 +92,14 @@ MonoBehaviour:
     - rid: 7940118918967066673
       type: {class: InitQteSeriesResultStep, ns: AbilityNew.Scripts.Steps.Gameplay, asm: Assembly-CSharp}
       data: 
-    - rid: 9209732878980087808
+    - rid: 7940118918967066674
       type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
       data:
         Animation: {fileID: 7400000, guid: 7d4d28c73ada7054f831e02f8f5a524e, type: 2}
+    - rid: 9209732878980087808
+      type: {class: PlayAnimationStep, ns: AbilityNew.Scripts.Steps.Presentation, asm: Assembly-CSharp}
+      data:
+        Animation: {fileID: 7400000, guid: 877cfa3476e954c4b8f29c76746d793a, type: 2}
     - rid: 9209733270690332674
       type: {class: WaitSignalStep, ns: AbilityNew.Scripts.Steps.Flow, asm: Assembly-CSharp}
       data:
