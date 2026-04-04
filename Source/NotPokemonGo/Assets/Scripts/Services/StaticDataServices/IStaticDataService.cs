@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Abilities;
-using Abilities.Configs;
 using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
@@ -16,10 +15,8 @@ namespace Services.StaticDataServices
 {
     public interface IStaticDataService
     {
-        AbilityConfig GetAbilityConfig(AbilityType abilityType);
         Sprite GetStatusIcon(StatusType statusType);
         UnitConfig GetUnitConfig(UnitType unitType);
-        List<AbilityConfig> GetAllAbilityConfigs();
         QteConfig GetQteConfig(QteType qteType);
         CharactersCatalogStaticData LoadCharacterCatalogStaticDatas();
         List< LevelConfig> GetLevelConfigs();
@@ -31,5 +28,6 @@ namespace Services.StaticDataServices
         StatusSetup GetStatusSetup(StatusType statusType);
         ParticleSystem GetParticleByType(StatusType setupType);
         AbilitySo GetCounterattackAbility(UnitType reactorUnitType);
+        AbilitySo GetAbilityConfig(AbilityType abilityType);
     }
 }

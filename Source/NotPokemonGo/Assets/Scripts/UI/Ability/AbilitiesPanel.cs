@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Abilities;
-using Abilities.Configs;
 using Abilities.MV;
+using AbilityNew.Scripts;
 using Services.StaticDataServices;
 using UnityEngine;
 using VContainer;
@@ -32,16 +31,16 @@ namespace UI.Ability
         
         public void SetAbilities(List<AbilityModel> abilityModels)
         {
-            for (int i = 0; i < abilityModels.Capacity; i++)
+            for (int i = 0; i < abilityModels.Count; i++)
             {
                 _abilitiesView[i].Construct(abilityModels[i]);
 
-                AbilityConfig config = _staticDataLoadService.GetAbilityConfig(abilityModels[i].AbilityType);
+                AbilitySo config = _staticDataLoadService.GetAbilityConfig(abilityModels[i].AbilityType);
 
                 _abilitiesView[i].SetImage(config.Icon);
             }
 
-            for (int i = abilityModels.Capacity; i < _abilitiesView.Capacity; i++) 
+            for (int i = abilityModels.Count; i < _abilitiesView.Count; i++) 
                 _abilitiesView[i].SetDefaultImage();
 
             foreach (AbilityView view in _abilitiesView) 

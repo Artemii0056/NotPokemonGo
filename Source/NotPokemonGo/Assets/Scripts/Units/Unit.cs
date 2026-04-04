@@ -4,7 +4,6 @@ using System.Linq;
 using Abilities;
 using Abilities.Bennet;
 using Abilities.MV;
-using AbilityNew.Scripts;
 using Characters.Configs;
 using Cinemachine;
 using Platoons;
@@ -31,7 +30,6 @@ namespace Units
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
 
         public Vector3 StartPosition { get; private set; }
-        public UnitAnimatorTrigger AnimatorTrigger { get; private set; }
         public PlatoonType PlatoonType { get; private set; }
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
         public List<AbilityModel> AbilitySO => _abilitySO.ToList();
@@ -142,9 +140,6 @@ namespace Units
 
             Ticked?.Invoke();
         }
-
-        public void SetAnimationTrigger(UnitAnimatorTrigger unitAnimatorTrigger) =>
-            AnimatorTrigger = unitAnimatorTrigger;
 
         private void TickAbilities()
         {

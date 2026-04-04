@@ -42,8 +42,5 @@ MonoBehaviour:
     Value: 0
   - <StatsType>k__BackingField: 10
     Value: 0
-  _abilityConfigs:
-  - {fileID: 11400000, guid: f9ffa36a53989494bb21cc91fbb91bbd, type: 2}
-  - {fileID: 11400000, guid: e5538683ffd67a54bb4c4b11a87f6ca2, type: 2}
-  - {fileID: 11400000, guid: 70445db715b0eb74bac7264865e3a2cc, type: 2}
-  - {fileID: 11400000, guid: e6dbc73a15d7cae4a9af4668af9cd154, type: 2}
+  _abilitySO:
+  - {fileID: 11400000, guid: ee421e1f2283a2445bd3669d4b07ac9f, type: 2}

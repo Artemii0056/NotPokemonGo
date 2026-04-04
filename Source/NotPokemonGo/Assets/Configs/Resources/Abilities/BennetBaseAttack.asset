@@ -26,11 +26,11 @@ MonoBehaviour:
   <AbilityStatSetup>k__BackingField:
   - <StatsType>k__BackingField: 0
     Value: 0
-  - <StatsType>k__BackingField: 1
+  - <StatsType>k__BackingField: 0
     Value: 0
-  - <StatsType>k__BackingField: 2
+  - <StatsType>k__BackingField: 0
     Value: 0
-  - <StatsType>k__BackingField: 3
+  - <StatsType>k__BackingField: 0
     Value: 0
   references:
     version: 2

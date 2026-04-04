@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Abilities;
-using Abilities.Configs;
+using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
 using Services.StaticDataServices;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace UI.BattleUpgrages
 {
     public class BattleUpgradePanelPresenter : IStartable //TODO Дропнуть
     {
-        private BattleUpgradePanel _battleUpgradePanel;
-        private IStaticDataService _staticDataService;
+        private readonly BattleUpgradePanel _battleUpgradePanel;
+        private readonly IStaticDataService _staticDataService;
 
         public event Action UpgradeSelected;
 
@@ -35,7 +33,7 @@ namespace UI.BattleUpgrages
 
         public void Enable(UnitType unitType)
         {
-            List<AbilityConfig> result = GetUniqueAbilities(unitType);
+            List<AbilitySo> result = GetUniqueAbilities(unitType);
             
             _battleUpgradePanel.Initialize(result);
 
@@ -43,28 +41,28 @@ namespace UI.BattleUpgrages
             _battleUpgradePanel.UpgradeSelected += OnUpgradeSelected;
         }
 
-        private List<AbilityConfig> GetUniqueAbilities(UnitType unitType)
+        private List<AbilitySo> GetUniqueAbilities(UnitType unitType)
         {
-            List<AbilityConfig> result = new List<AbilityConfig>();
+            List<AbilitySo> result = new List<AbilitySo>();
             
             UnitConfig unitConfig = _staticDataService.GetUnitConfig(unitType);
             
-            List<AbilityConfig> unitConfigAbility = unitConfig.AbilityConfigs;
+            List<AbilitySo> unitConfigAbility = unitConfig.AbilitySO;
             
-            List<AbilityConfig> abilityConfigs = _staticDataService.GetAllAbilityConfigs();
+            //List<AbilitySo> abilityConfigs = _staticDataService.GetAllAbilityConfigs();
 
-            foreach (AbilityConfig abilityConfig in abilityConfigs)
-            {
-                foreach (AbilityConfig abilityConfig2 in unitConfigAbility)
-                {
-                    if (abilityConfig2.AbilityType == abilityConfig.AbilityType)
-                        continue;
-                    
-                    result.Add(abilityConfig2);
-                }
-            }
+            // foreach (AbilitySo abilityConfig in abilityConfigs)
+            // {
+            //     foreach (AbilitySo abilityConfig2 in unitConfigAbility)
+            //     {
+            //         if (abilityConfig2.Type == abilityConfig.Type)
+            //             continue;
+            //         
+            //         result.Add(abilityConfig2);
+            //     }
+            // }
 
-            return result;
+            return null;
         }
 
         private void OnUpgradeSelected() => 

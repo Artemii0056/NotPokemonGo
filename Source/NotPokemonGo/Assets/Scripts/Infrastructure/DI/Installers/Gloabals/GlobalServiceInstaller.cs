@@ -1,6 +1,4 @@
 ﻿using System;
-using AbilitiesTestFeature.DIExtensions;
-using AbilitiesTestFeature.Initializers;
 using Infrastructure.DI.DIExtensions;
 using Infrastructure.DI.Initializers.Globals;
 using Infrastructure.DI.Scopes;
@@ -17,7 +15,6 @@ namespace Infrastructure.DI.Installers.Gloabals
 	public class GlobalServiceInstaller : MonoInstaller
 	{
 		[SerializeField] private GameScopeInitializer _gameScopeInitializer;
-		[SerializeField] private TestAbilitiesInitializer _testAbilitiesInitializer;
 		
 		[SerializeField] private InputReader _inputReader;
 		[SerializeField] private AbilitiesPanel _abilitiesPanel;
@@ -45,18 +42,6 @@ namespace Infrastructure.DI.Installers.Gloabals
 						.RegisterGlobalBattleStateMachine()
 						;
 
-					_testAbilitiesInitializer.enabled = false;
-					break;
-
-				case GameTypeScopeInitializer.TestAbilitiesInitializer:
-					builder.RegisterComponent(_testAbilitiesInitializer).AsImplementedInterfaces();
-					
-					builder
-						.RegisterAbilityTestServices()
-						.RegisterAbilityTestBattleStates()
-						;
-					
-					_gameScopeInitializer.enabled = false;
 					break;
 				
 				default:
@@ -68,6 +53,5 @@ namespace Infrastructure.DI.Installers.Gloabals
 	public enum GameTypeScopeInitializer
 	{
 		GameScopeInitializer = 1,
-		TestAbilitiesInitializer = 2,
 	}
 }

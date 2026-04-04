@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Armaments.Movers
 {
-    public class ArmamentMover : IArmamentMover, IAbilityScopeOwnedMover
+    public class ArmamentMover : IArmamentMover
     {
         public event Action<IArmamentMover> Launched;
         public event Action<IArmamentMover> Reached;

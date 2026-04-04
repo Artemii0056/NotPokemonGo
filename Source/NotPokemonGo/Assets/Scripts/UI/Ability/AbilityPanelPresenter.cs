@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Abilities.MV;
-using UI.BaseUI.Interfaces;
 
 namespace UI.Ability
 {

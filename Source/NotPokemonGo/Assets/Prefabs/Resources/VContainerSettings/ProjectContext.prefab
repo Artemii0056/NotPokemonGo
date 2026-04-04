@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 7293549184348589901}
   - component: {fileID: 599879259054730057}
   - component: {fileID: 8491245413026243748}
-  - component: {fileID: 2682761524327235820}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -115,7 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameScopeInitializer: {fileID: 599879259054730057}
-  _testAbilitiesInitializer: {fileID: 2682761524327235820}
   _inputReader: {fileID: 8491245413026243748}
   _abilitiesPanel: {fileID: 5021681746254418454}
   _battleUpgradePanel: {fileID: 8601748616846814497}
@@ -142,18 +140,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c955847b8f474b2b8235ef309153905c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2682761524327235820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6571797088235675313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 800db88be7ceab14da49c2acdefb7ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7164416659412631337

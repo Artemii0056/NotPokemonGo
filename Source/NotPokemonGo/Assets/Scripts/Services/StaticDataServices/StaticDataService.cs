@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Abilities;
-using Abilities.Configs;
 using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
@@ -21,7 +20,6 @@ namespace Services.StaticDataServices
     {
         private readonly IResourceLoader _resourceLoader;
 
-        private Dictionary<AbilityType, AbilityConfig> _abilityConfigs;
         private Dictionary<StatusType, StatusTypeIcon> _statusTypeIcons;
         private Dictionary<UnitType, UnitConfig> _unitConfigs;
         private Dictionary<UnitType, AbilitySo> _counterAttackingAbilities;
@@ -34,6 +32,7 @@ namespace Services.StaticDataServices
 
         private List<LevelConfig> _levelConfigs;
         private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
+        private Dictionary<AbilityType, AbilitySo> _abilityConfigs;
 
         public CombatText.CombatText CombatTextPrefab { get; private set; }
 
@@ -102,6 +101,14 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No counterattack ability found for unit type {unitType}");
         }
 
+        public AbilitySo GetAbilityConfig(AbilityType abilityType)
+        {
+            if (_abilityConfigs.TryGetValue(abilityType, out AbilitySo abilitySo))
+                return abilitySo;
+
+            throw new KeyNotFoundException($"No counterattack ability found for unit type {abilityType}");
+        }
+
         public ParticleSystem GetParticleByType(StatusType setupType)
         {
             foreach (SystemByStatusType type in _particleSystemByStatusType.PrticleSystemByStatusType)
@@ -111,14 +118,6 @@ namespace Services.StaticDataServices
             }
 
             throw new KeyNotFoundException($"No particle found for mode {setupType}");
-        }
-
-        public AbilityConfig GetAbilityConfig(AbilityType abilityType)
-        {
-            if (_abilityConfigs.TryGetValue(abilityType, out AbilityConfig abilityConfig))
-                return abilityConfig;
-
-            throw new KeyNotFoundException($"No ability config found for mode {abilityType}");
         }
 
         public Sprite GetStatusIcon(StatusType statusType)
@@ -152,9 +151,6 @@ namespace Services.StaticDataServices
 
             throw new KeyNotFoundException($"No character config found for mode {unitType}");
         }
-
-        public List<AbilityConfig> GetAllAbilityConfigs() =>
-            _abilityConfigs.Values.ToList();
 
         public QteConfig GetQteConfig(QteType abilityType)
         {
@@ -190,10 +186,16 @@ namespace Services.StaticDataServices
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
 
-        private void LoadAbilityConfigs()
+        private void LoadAbilityConfigs() //TODO Путь не тот
         {
-            _abilityConfigs = Resources.LoadAll<AbilityConfig>(Constants.AssetPath.AbilityConfigPath)
-                .ToDictionary(x => x.AbilityType, x => x);
+            _abilityConfigs = Resources.LoadAll<AbilitySo>(Constants.AssetPath.AbilityConfigPath)
+                .ToDictionary(x => x.Type, x => x);
+
+            foreach (var VARIABLE in _abilityConfigs.Keys)
+            {
+                
+            Debug.Log(VARIABLE);
+            }
         }
 
         private void LoadDodgeConfigs()

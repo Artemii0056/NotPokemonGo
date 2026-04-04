@@ -1,21 +1,16 @@
 ﻿using Abilities;
-using Abilities.Flow;
-using Abilities.Flow.Steps;
 using Armaments.Movers;
 using Battlefields;
 using Castaments;
 using CombatText;
 using Effects;
 using Platoons;
-using Pools;
 using QteSystem;
-using ReactionSystems;
 using Services.AssetManagement;
 using Services.AudioServices;
 using Services.BattleSessionService;
 using Services.BattleUnitContainers;
 using Services.Cameras;
-using Services.EffectViewServices;
 using Services.IdServices;
 using Services.LevelProgress;
 using Services.RaycastServices;
@@ -61,17 +56,9 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IUnitReadyService, UnitReadyService>(Lifetime.Singleton);
             
 			builder.Register<IAbilityService, AbilityService>(Lifetime.Singleton);
-
-			builder.Register<IAbilityHandlerFactory, StepAbilityHandlerFactory>(Lifetime.Singleton);
-			
-			builder.Register<IShieldApplier, ShieldStatusApplier>(Lifetime.Transient);
-			builder.Register<IShieldStatusReader, ShieldStatusReader>(Lifetime.Transient);
-
             
 			builder.Register<ITimeService, TimeService>(Lifetime.Singleton);
             
-			builder.Register<IReactionService, ReactionService>(Lifetime.Singleton);
-			
 			builder.Register<UIService>(Lifetime.Singleton).AsImplementedInterfaces();
 			
 			builder.Register<ICameraService, CinemachineCameraService>(Lifetime.Singleton);

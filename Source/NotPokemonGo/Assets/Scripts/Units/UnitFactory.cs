@@ -4,8 +4,6 @@ using Abilities.MV;
 using Castaments;
 using Characters;
 using Platoons;
-using ReactionSystems;
-using Services.AbilityServices;
 using Services.AudioServices;
 using Services.Cameras;
 using Services.IdServices;
@@ -28,7 +26,6 @@ namespace Units
         private readonly IObjectResolver _objectResolver;
         private readonly ICastamentApplicator _castamentApplicator;
         private readonly ITargetSelector _targetSelector;
-        private readonly IReactionService _reactionService;
         private readonly IParticleSpawner _particleSpawner;
         private readonly ICameraService _cameraService;
         private readonly IIdService _idService;
@@ -42,7 +39,6 @@ namespace Units
             ICastamentApplicator castamentApplicator,
             ITargetSelector targetSelector,
             IAbilityService abilityService,
-            IReactionService reactionService,
             IArmamentSpawner spawner,
             IParticleSpawner particleSpawner,
             ICameraService cameraService,
@@ -54,16 +50,12 @@ namespace Units
             _objectResolver = objectResolver;
             _castamentApplicator = castamentApplicator;
             _targetSelector = targetSelector;
-            _reactionService = reactionService;
             _particleSpawner = particleSpawner;
             _cameraService = cameraService;
             _idService = idService;
             _audioService = audioService;
             _timeService = timeService;
             _cameraShakeService = cameraShakeService;
-
-            _reactionService.Register(new ReflectFireballReaction(spawner)); // потом вынесем
-            _reactionService.Register(new ReflectReaction(spawner));
         }
 
         public Unit Create(Vector3 spawnPosition, Transform parentPosition, UnitConfig config, PlatoonType platoonType)
@@ -74,21 +66,11 @@ namespace Units
 
             unit.transform.SetParent(parentPosition, false);
 
-            AnimatorController controller = unit.AnimatorController;
-
-            UnitAnimatorTrigger unitAnimatorTrigger = new UnitAnimatorTrigger(
-                unit,
-                controller,
-                new AbilityPhaseService(_castamentApplicator, _targetSelector, _particleSpawner, new UnitMover(),
-                    _cameraService, _audioService, _timeService, _cameraShakeService));
-
-            unit.SetAnimationTrigger(unitAnimatorTrigger);
-
             unit.Construct(config.Stats, platoonType, _idService.GetNextId());
 
-            for (int i = 0; i < config.AbilityConfigs.Count; i++)
+            for (int i = 0; i < config.AbilitySO.Count; i++)
             {
-                unit.AddAbility(new AbilityModel(config.AbilityConfigs[i]));
+                unit.AddAbility(new AbilityModel(config.AbilitySO[i]));
             }
 
             InitializeView(unit);
@@ -107,7 +89,7 @@ namespace Units
 
             unit.Construct(stats, platoonType, _idService.GetNextId());
 
-            for (int i = 0; i < config.AbilityConfigs.Count; i++)
+            for (int i = 0; i < config.AbilitySO.Count; i++)
             {
                 unit.AddAbility(new AbilityModel(config.AbilitySO[i]));
             }
