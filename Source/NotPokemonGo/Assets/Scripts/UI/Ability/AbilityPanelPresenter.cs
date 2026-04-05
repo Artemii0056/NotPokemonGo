@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Abilities.MV;
+using UnityEngine;
 
 namespace UI.Ability
 {
@@ -22,10 +23,8 @@ namespace UI.Ability
             _abilitiesPanel.gameObject.SetActive(false);
         }
 
-        public void FillAbilityView(List<AbilityModel> abilityModels)
-        {
+        public void FillAbilityView(List<AbilityModel> abilityModels) => 
             _abilitiesPanel.SetAbilities(abilityModels);
-        }
 
         public void Activate()
         {

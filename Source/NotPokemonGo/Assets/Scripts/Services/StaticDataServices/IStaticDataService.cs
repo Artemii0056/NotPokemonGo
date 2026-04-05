@@ -3,7 +3,6 @@ using Abilities;
 using AbilityNew.Scripts;
 using Characters;
 using Characters.Configs;
-using DodgeSystem.Configs;
 using LevelSetting;
 using QteSystem;
 using Statuses;
@@ -24,10 +23,10 @@ namespace Services.StaticDataServices
         CharacterSelectionScreenContainer CharacterSelectionScreenContainer { get; }
         CombatText.CombatText CombatTextPrefab { get; }
         PlatoonSpawnContainer GetSpawnPositionContainer(int count);
-        DodgeConfig GetDodgeConfigByUnitType(UnitType sourceUnitType);
         StatusSetup GetStatusSetup(StatusType statusType);
         ParticleSystem GetParticleByType(StatusType setupType);
         AbilitySo GetCounterattackAbility(UnitType reactorUnitType);
         AbilitySo GetAbilityConfig(AbilityType abilityType);
+        AbilitySo GetAbility(UnitType unitType, AbilityType abilityType);
     }
 }

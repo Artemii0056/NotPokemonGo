@@ -32,6 +32,7 @@ public static class Constants
         public const string CombatTextPath = "Canvases/Status/CombatText";
         public const string DodgeView = "Canvases/Dodges/DodgePanel";
         public const string DodgeConfigPath = "Dodges";
+        public const string ParticlesByStatusTypesPath = "Statuses/ParticleSystemByStatusTypes";
     }
 
     public class Positions

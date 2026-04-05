@@ -45,7 +45,7 @@ namespace Battlefields
 
         private void Attack(List<Unit> targets) 
         {
-            foreach (AbilityModel abilityModel in _source.AbilitySO)
+            foreach (AbilityModel abilityModel in _source.AbilityModels)
             {
                 
                 // if (abilityModel.IsReady())

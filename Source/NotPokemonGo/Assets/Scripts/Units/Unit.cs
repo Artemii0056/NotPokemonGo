@@ -26,13 +26,13 @@ namespace Units
         public CinemachineVirtualCamera virtualCamera;
 
         private List<Status> _imposedStatuses = new List<Status>(); // отдельный сервис
-        private List<AbilityModel> _abilitySO = new List<AbilityModel>();
+        private List<AbilityModel> _abilityModels = new List<AbilityModel>();
         private Dictionary<StatType, StatSetup> _stats = new Dictionary<StatType, StatSetup>();
 
         public Vector3 StartPosition { get; private set; }
         public PlatoonType PlatoonType { get; private set; }
         public List<Status> ImposedStatuses => _imposedStatuses.ToList();
-        public List<AbilityModel> AbilitySO => _abilitySO.ToList();
+        public List<AbilityModel> AbilityModels => _abilityModels.ToList();
         public List<AbilityAnchor> AbilityAnchors => abilityAnchors.ToList();
         public Dictionary<StatType, StatSetup> Stats => new(_stats);
 
@@ -127,7 +127,7 @@ namespace Units
         }
 
         public void AddAbility(AbilityModel ability) =>
-            _abilitySO.Add(ability);
+            _abilityModels.Add(ability);
 
         public void ResetAgility() =>
             _stats[StatType.CurrentAgility].SetValue(0);
@@ -143,7 +143,7 @@ namespace Units
 
         private void TickAbilities()
         {
-            if (_abilitySO.Count > 0)
+            if (_abilityModels.Count > 0)
             {
                 // foreach (AbilityModel abilityModel in _abilityModels)
                 //     abilityModel.Tick();

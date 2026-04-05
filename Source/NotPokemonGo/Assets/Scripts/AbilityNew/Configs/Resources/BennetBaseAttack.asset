@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BennetBaseAttack
   m_EditorClassIdentifier: 
   <Icon>k__BackingField: {fileID: 21300000, guid: b69e58fd991396b4c8b9cc9ed31604ea, type: 3}
-  <Type>k__BackingField: 0
+  <Type>k__BackingField: 9
   Steps:
   - rid: 9209733245058154496
   - rid: 7940118857810706432

@@ -1,40 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Abilities.MV;
 using AbilityNew;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Diagnostics;
 using AbilityNew.Scripts;
-using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Executors;
-using AbilityNew.Scripts.Executors.Debugger;
-using AbilityNew.Scripts.Executors.Flow;
-using AbilityNew.Scripts.Executors.Gameplay;
-using AbilityNew.Scripts.Executors.Presentation;
-using AbilityNew.Scripts.Presentation;
-using AbilityNew.Scripts.Presentation.AbilityNew.Scripts.Presentation;
-using AbilityNew.Scripts.Presentation.Executors;
-using AbilityNew.Scripts.Presentation.Presets;
 using AbilityNew.Scripts.Results;
-using AbilityNew.Scripts.Steps.Gameplay;
 using Battlefields;
 using Cysharp.Threading.Tasks;
-using Effects;
 using Infrastructure.StateMachines.BattleStateMachine;
 using Infrastructure.StateMachines.BattleStateMachine.States;
 using Platoons;
-using QteSystem;
 using Services.AssetManagement;
-using Services.AudioServices;
-using Services.Cameras;
 using Services.StaticDataServices;
-using Spawners;
-using Spawners.Spawner;
 using Statuses.Services;
 using Units;
-using Units.Movement;
 using UnityEngine;
 
 namespace Abilities
@@ -46,14 +28,9 @@ namespace Abilities
         private readonly IResourceLoader _resourceLoader;
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IStatusManager _statusManager;
-        private readonly IQteService _qteService;
-        private readonly IArmamentSpawner _armamentSpawner;
-        private readonly IEffectResolver _effectResolver;
-        private readonly ITargetSelector _targetSelector;
-        private readonly IParticleSpawner _particleSpawner;
         private readonly IStaticDataService _staticDataService;
-        private readonly IAudioService _audioService;
-        private readonly ICameraShakeService _cameraShakeService;
+        
+        private readonly IAbilityStepExecutorRegistryFactory _abilityStepExecutorRegistryFactory;
 
         private Battlefield _battlefield;
         private Unit _lastUnit;
@@ -65,24 +42,14 @@ namespace Abilities
             IResourceLoader resourceLoader,
             IBattleStateMachine battleStateMachine,
             IStatusManager statusManager,
-            IQteService qteService,
-            IArmamentSpawner armamentSpawner,
-            IEffectResolver effectResolver,
-            ITargetSelector targetSelector,
-            IParticleSpawner particleSpawner,
-            IStaticDataService staticDataService, IAudioService audioService, ICameraShakeService cameraShakeService)
+            IStaticDataService staticDataService, 
+            IAbilityStepExecutorRegistryFactory abilityStepExecutorRegistryFactory)
         {
             _resourceLoader = resourceLoader;
             _battleStateMachine = battleStateMachine;
             _statusManager = statusManager;
-            _qteService = qteService;
-            _armamentSpawner = armamentSpawner;
-            _effectResolver = effectResolver;
-            _targetSelector = targetSelector;
-            _particleSpawner = particleSpawner;
             _staticDataService = staticDataService;
-            _audioService = audioService;
-            _cameraShakeService = cameraShakeService;
+            _abilityStepExecutorRegistryFactory = abilityStepExecutorRegistryFactory;
         }
 
         public void Dispose()
@@ -111,7 +78,7 @@ namespace Abilities
                     target,
                     ability);
 
-                if (!result.Completed)
+                if (result.Completed == false)
                     return;
 
                 await HandleCounterAttacksAsync(result.CounterAttackRequests);
@@ -144,32 +111,9 @@ namespace Abilities
             IAbilityTraceWriter writer = new FileAbilityTraceWriter();
             
             SignalService signalService = new();
-            IUnitMover unitMover = new UnitMover();
-
+            
             using AnimationSignalRelay animationSignalRelay =
                 new(signalService, source.AnimatorController);
-
-            List<IAbilityStepExecutor> executors = CreateExecutors(signalService, unitMover).ToList();
-            StepExecutorRegistry registry = new(executors);
-
-            registry.AddExecutor(new BranchExecutor(registry));
-            registry.AddExecutor(new ParallelExecutor(registry));
-            registry.AddExecutor(new RepeatExecutor(registry));
-            registry.AddExecutor(new SequenceExecutor(registry));
-            registry.AddExecutor(new ResolveQteExecutor(registry));
-            
-            List<IPresentationStepExecutor> presentationStepExecutors = new();
-            presentationStepExecutors.Add(new CameraShakeStepExecutor(_cameraShakeService, new CameraShakePresetResolver()));
-            presentationStepExecutors.Add(new PlayAudioStepExecutor(_audioService));
-            presentationStepExecutors.Add(new SpawnParticleStepExecutor(_particleSpawner));
-            
-            PresentationStepExecutorRegistry presentationStepExecutorRegistry = 
-                new PresentationStepExecutorRegistry(presentationStepExecutors);
-
-            AbilityPresentationService abilityPresentationService =
-                new AbilityPresentationService(presentationStepExecutorRegistry);
-
-            registry.AddExecutor(new EmitPresentationSignalExecutor(abilityPresentationService));
 
             AbilityPresentationConfig so;
 
@@ -178,10 +122,10 @@ namespace Abilities
             else
                 so = _resourceLoader.Load<AbilityPresentationConfig>("MageFireballAttackPresentation");
 
-
-            abilityPresentationService.Register(so);
-
-            AbilityRunner abilityRunner = new(registry, signalService, writer);
+            StepExecutorRegistry stepExecutorRegistry = _abilityStepExecutorRegistryFactory.Create(signalService);
+            _abilityStepExecutorRegistryFactory.PresentationService.Register(so);
+            
+            AbilityRunner abilityRunner = new(stepExecutorRegistry, signalService, writer);
 
             return await abilityRunner.RunAbility(ability, context, abilityCts.Token);
         }
@@ -217,41 +161,9 @@ namespace Abilities
             }
         }
 
-        private IEnumerable<IAbilityStepExecutor> CreateExecutors(
-            SignalService signalService,
-            IUnitMover unitMover)
-        {
-            return new IAbilityStepExecutor[]
-            {
-                new PlayAnimationExecutor(),
-                new WaitSignalExecutor(signalService),
-                new WaitingExecutor(),
-                new StartQteExecutor(_qteService),
-                new MoveExecutor(unitMover),
-                new MoveBackExecutor(unitMover),
-                new SpawnProjectileExecutor(_armamentSpawner),
-                new ArmamentMoverExecutor(),
-                new DamageStepExecutor(_effectResolver, _targetSelector),
-                new SetBlackboardBoolExecutor(),
-                new PrepareArmamentSpawnPointsExecutor(),
-                new DebugExecutor(),
-                new RequestCounterAttackExecutor(),
-                new InitQteSeriesResultExecutor(),
-                new AppendLastQteResultExecutor(),
-            };
-        }
-
         private AbilitySo ResolveAbility(Unit source, AbilityModel abilityModel)
         {
-            AbilitySo so;
-
-            if (source.PlatoonType == PlatoonType.Heroes)
-                so = _resourceLoader.Load<AbilitySo>("BennetBaseAttack");
-            else
-                so = _resourceLoader.Load<AbilitySo>("MageFireballAttack");
-
-
-            return so;
+            return _staticDataService.GetAbility(source.UnitType, abilityModel.AbilityType);
         }
 
         private async UniTask ContinueAsync(AbilityExecutionResult result)
@@ -259,34 +171,22 @@ namespace Abilities
             _postFlowCts?.Cancel();
             _postFlowCts?.Dispose();
             _postFlowCts = new CancellationTokenSource();
-
-           // Debug.Log("ContinueAsync START");
-
-          //  Debug.Log("ContinueAsync before delay");
             
             try
             {
                 await UniTask.Delay(
                     TimeSpan.FromSeconds(PostDelaySeconds),
                     cancellationToken: _postFlowCts.Token);
-                
-              //  Debug.Log("ContinueAsync after delay");
             }
             catch (OperationCanceledException)
             {
                 return;
             }
             
-           // Debug.Log($"ContinueAsync battlefield null = {_battlefield == null}");
-          //  Debug.Log($"ContinueAsync heroes alive = {_battlefield.HeroesPlatoon.HaveUnits}");
-          //  Debug.Log($"ContinueAsync enemies alive = {_battlefield.EnemyPlatoon.HaveUnits}");
-
             if (_lastUnit != null && _lastUnit.PlatoonType == PlatoonType.Heroes)
                 _statusManager.TickUnitTurn();
 
-           // Debug.Log("ContinueAsync before Enter<CheckBattleEndState>");
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
-           // Debug.Log("ContinueAsync after Enter<CheckBattleEndState>");
             Finished?.Invoke();
         }
     }

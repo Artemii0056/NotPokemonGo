@@ -53,7 +53,7 @@ namespace Battlefields
         public override void Enable()
         {
             base.Enable();
-            ShowAbilityInfos(_source.AbilitySO);
+            ShowAbilityInfos(_source.AbilityModels);
             _sourceProvider.Remember(_source);
 
             _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 

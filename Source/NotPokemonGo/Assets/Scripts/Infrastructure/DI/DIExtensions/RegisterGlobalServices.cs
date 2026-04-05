@@ -67,6 +67,7 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IIdService, IdService>(Lifetime.Singleton);
 			
 			builder.Register<ICameraShakeService, CameraShakeService>(Lifetime.Singleton);
+			builder.Register<IAbilityStepExecutorRegistryFactory, AbilityStepExecutorRegistryFactory>(Lifetime.Singleton);
 			
 			builder.Register<UnitViewRegistry>(Lifetime.Singleton); //
 			

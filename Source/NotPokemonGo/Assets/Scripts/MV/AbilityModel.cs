@@ -21,7 +21,6 @@ namespace Abilities.MV
         public AbilitySo ConfigSO { get; }
 
         public AbilityType AbilityType { get; private set; }
-        public TargetMode TargetMode { get; private set; }
         
         public float Cost => _stats[AbilityStatType.Cost].Value; 
 

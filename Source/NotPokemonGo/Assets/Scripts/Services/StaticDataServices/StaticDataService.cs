@@ -27,11 +27,11 @@ namespace Services.StaticDataServices
         private Dictionary<QteType, QteConfig> _qteConfigs;
         private Dictionary<AbilityType, TargetMode> _targetModes;
         private Dictionary<StatusType, StatusSetup> _statusSetups;
+        private Dictionary<UnitType, List<AbilitySo>> _abilitiesByUnitType;
 
         private ParticleSystemByStatusTypes _particleSystemByStatusType;
 
         private List<LevelConfig> _levelConfigs;
-        private Dictionary<UnitType, DodgeConfig> _dodgeConfigs;
         private Dictionary<AbilityType, AbilitySo> _abilityConfigs;
 
         public CombatText.CombatText CombatTextPrefab { get; private set; }
@@ -50,11 +50,28 @@ namespace Services.StaticDataServices
             LoadPlatoonPositionContainer();
             LoadQteConfigs();
             LoadLevelConfigs();
-            LoadDodgeConfigs();
             LoadCombatText();
             LoadStatusSetups();
             LoadParticleByStatusType();
             LoadCounterattackAbilities();
+        }
+
+        public AbilitySo GetAbility(UnitType unitType, AbilityType abilityType)
+        {
+            if (_unitConfigs.TryGetValue(unitType, out UnitConfig unitConfig) == false)
+                return null;
+
+            List<AbilitySo> abilities = unitConfig.AbilitySO;
+
+            for (int i = 0; i < abilities.Count; i++)
+            {
+                AbilitySo ability = abilities[i];
+
+                if (ability.Type == abilityType)
+                    return ability;
+            }
+
+            return null;
         }
 
         private void LoadCounterattackAbilities()
@@ -72,15 +89,11 @@ namespace Services.StaticDataServices
                 .ToDictionary(x => x.Type, x => x);
         }
 
-        private void LoadCombatText()
-        {
+        private void LoadCombatText() => 
             CombatTextPrefab = _resourceLoader.Load<CombatText.CombatText>(Constants.AssetPath.CombatTextPath);
-        }
 
-        private void LoadParticleByStatusType()
-        {
-            _particleSystemByStatusType = _resourceLoader.LoadScriptableObject<ParticleSystemByStatusTypes>("Statuses/ParticleSystemByStatusTypes");
-        }
+        private void LoadParticleByStatusType() => 
+            _particleSystemByStatusType = _resourceLoader.LoadScriptableObject<ParticleSystemByStatusTypes>(Constants.AssetPath.ParticlesByStatusTypesPath);
 
         public List<LevelConfig> GetLevelConfigs() =>
             _levelConfigs.ToList();
@@ -136,14 +149,6 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No ability config found for mode {count}");
         }
 
-        public DodgeConfig GetDodgeConfigByUnitType(UnitType unitType)
-        {
-            if (_dodgeConfigs.TryGetValue(unitType, out DodgeConfig dodgeConfig))
-                return dodgeConfig;
-
-            throw new KeyNotFoundException($"No DodgeConfig found for unit type - {unitType}");
-        }
-
         public UnitConfig GetUnitConfig(UnitType unitType)
         {
             if (_unitConfigs.TryGetValue(unitType, out UnitConfig characterConfig))
@@ -160,10 +165,8 @@ namespace Services.StaticDataServices
             throw new KeyNotFoundException($"No qte config found for mode {abilityType}");
         }
 
-        private void LoadLevelConfigs()
-        {
+        private void LoadLevelConfigs() => 
             _levelConfigs = Resources.LoadAll<LevelConfig>(Constants.AssetPath.LevelConfigsPath).ToList();
-        }
 
         private void LoadQteConfigs()
         {
@@ -190,17 +193,6 @@ namespace Services.StaticDataServices
         {
             _abilityConfigs = Resources.LoadAll<AbilitySo>(Constants.AssetPath.AbilityConfigPath)
                 .ToDictionary(x => x.Type, x => x);
-
-            foreach (var VARIABLE in _abilityConfigs.Keys)
-            {
-            Debug.Log(VARIABLE);
-            }
-        }
-
-        private void LoadDodgeConfigs()
-        {
-            _dodgeConfigs = Resources.LoadAll<DodgeConfig>(Constants.AssetPath.DodgeConfigPath)
-                .ToDictionary(x => x.UnitType, x => x);
         }
 
         private void LoadStatusTypeIcons()
