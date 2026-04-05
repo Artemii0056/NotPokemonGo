@@ -186,14 +186,13 @@ namespace Services.StaticDataServices
             _unitConfigs = Resources.LoadAll<UnitConfig>(Constants.AssetPath.CharacterConfigsPath)
                 .ToDictionary(x => x.Type, x => x);
 
-        private void LoadAbilityConfigs() //TODO Путь не тот
+        private void LoadAbilityConfigs() 
         {
             _abilityConfigs = Resources.LoadAll<AbilitySo>(Constants.AssetPath.AbilityConfigPath)
                 .ToDictionary(x => x.Type, x => x);
 
             foreach (var VARIABLE in _abilityConfigs.Keys)
             {
-                
             Debug.Log(VARIABLE);
             }
         }
