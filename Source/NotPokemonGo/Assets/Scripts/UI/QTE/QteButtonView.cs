@@ -7,15 +7,15 @@ namespace UI.QTE
 {
     public abstract class QteButtonView : MonoBehaviour
     {
+        protected Unit Target;
+        protected ITimeService TimeService;
+
         public abstract event Action<QteButtonView> Successed;
         public abstract event Action<QteButtonView> Invalided;
 
-        protected Unit Unit;
-        protected ITimeService TimeService;
-
-        public virtual void Construct(Unit unit, ITimeService timeService)
+        public virtual void Construct(Unit target, ITimeService timeService)
         {
-            Unit = unit;
+            Target = target;
             TimeService = timeService;
         }
     }

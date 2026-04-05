@@ -1,5 +1,6 @@
 ﻿using System;
 using UI.QTE;
+using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ namespace QteSystem.TestQte
         {
             _slider.value = _currentSliderValue;
         
-            _targetTime = Unit.AnimatorController.GetAnimationLength();  
+            //_targetTime = .GetAnimationLength();  
         }
 
         private void Update()

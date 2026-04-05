@@ -1,51 +1,56 @@
-﻿using System;
-using UI.QTE;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace QteSystem.TestQte
 {
-    public class TimingBarQte : QteButtonView, IHasQteDuration, IProvidesQteResult
+    public sealed class TimingBarQte : QteInteractiveView, IHasQteDuration, IHasQteOutcomeMode
     {
-        [SerializeField] private PartTimingBar _partTimingBar;  
         [SerializeField] private TimingBar _timingBar;
+        [SerializeField] private KeyCode _inputKey = KeyCode.Space;
 
-        [SerializeField] private KeyCode _inputKey = KeyCode.Space; //TODO Сервис
-
-        private bool _isRun;
+        private bool _isRunning;
         private float _duration;
+        private QteOutcomeMode _outcomeMode;
 
-        public override event Action<QteButtonView> Successed;
-        public override event Action<QteButtonView> Invalided;
-        
-        public event Action<QteResult> OnReached;
-
-        public void Start()
+        public void SetDuration(float duration)
         {
-            _isRun = true;
+            _duration = duration;
+        }
 
-            _timingBar.Play(_duration);
+        public void SetOutcomeMode(QteOutcomeMode mode)
+        {
+            _outcomeMode = mode;
+        }
+
+        private void Start()
+        {
             _timingBar.Result += OnResult;
+            _timingBar.Play(_duration);
+            _isRunning = true;
         }
 
         private void Update()
         {
-            if (_isRun == false)
+            if (!_isRunning)
                 return;
 
             if (Input.GetKeyDown(_inputKey))
             {
+                _isRunning = false;
                 _timingBar.Evaluate();
-                _isRun = false;
             }
         }
 
-        private void OnDisable() => 
+        private void OnDisable()
+        {
             _timingBar.Result -= OnResult;
+        }
 
-        private void OnResult(QteResult result) => 
-            OnReached?.Invoke(result);
+        private void OnResult(QteResult result)
+        {
+            if (_outcomeMode == QteOutcomeMode.Binary && result == QteResult.Perfect)
+                result = QteResult.Normal;
 
-        public void SetDuration(float duration) => 
-            _duration = duration;
+            Complete(result);
+        }
     }
 }

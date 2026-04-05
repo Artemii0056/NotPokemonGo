@@ -28,8 +28,8 @@ namespace QteSystem.TestQte
         private void OnEnable() =>
             _tapToButton.Click += OnClick;
 
-        private void Start() => 
-            _targetTime = Unit.AnimatorController.GetAnimationLength();
+        // private void Start() => 
+        //     _targetTime = Unit.AnimatorController.GetAnimationLength();
 
         private void OnDisable()
         {

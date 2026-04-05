@@ -7,14 +7,19 @@ using QteSystem;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
-    public class StartQteExecutor : AbilityStepExecutor<StartQteStep>
+    public sealed class StartQteExecutor : AbilityStepExecutor<StartQteStep>
     {
         private readonly IQteService _qteService;
 
-        public StartQteExecutor(IQteService qteService) =>
+        public StartQteExecutor(IQteService qteService)
+        {
             _qteService = qteService;
+        }
 
-        public override UniTask Execute(StartQteStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
+        public override UniTask Execute(
+            StartQteStep step,
+            AbilityExecutionRuntime runtime,
+            CancellationToken ct)
         {
             var state = runtime.State;
 
@@ -26,9 +31,13 @@ namespace AbilityNew.Scripts.Executors.Gameplay
 
             state.LastQteResult = null;
 
-            state.ActiveQte = _qteService.StartSession(step.Type,
+            var request = new QteRequest(
+                step.Type,
                 runtime.Context.Target,
-                step.Duration);
+                step.Duration,
+                step.OutcomeMode);
+
+            state.ActiveQte = _qteService.StartSession(request);
 
             return UniTask.CompletedTask;
         }

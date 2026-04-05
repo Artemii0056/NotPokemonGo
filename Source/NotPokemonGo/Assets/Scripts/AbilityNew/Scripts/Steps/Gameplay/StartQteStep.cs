@@ -10,5 +10,7 @@ namespace AbilityNew.Scripts.Steps.Gameplay
         public QteType Type;
 
         public float Duration = 2f;
+        
+        public QteOutcomeMode OutcomeMode = QteOutcomeMode.Ternary;
     }
 }

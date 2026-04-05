@@ -6,7 +6,6 @@ using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using QteSystem;
 using QteSystem.TestQte;
-using UnityEngine;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {
@@ -14,42 +13,34 @@ namespace AbilityNew.Scripts.Executors.Gameplay
     {
         private readonly StepExecutorRegistry _registry;
 
-        public ResolveQteExecutor(StepExecutorRegistry registry) => 
+        public ResolveQteExecutor(StepExecutorRegistry registry)
+        {
             _registry = registry;
+        }
 
-        public override async UniTask Execute(ResolveQteStep step, AbilityExecutionRuntime runtime, CancellationToken ct)
+        public override async UniTask Execute(
+            ResolveQteStep step,
+            AbilityExecutionRuntime runtime,
+            CancellationToken ct)
         {
             var state = runtime.State;
 
             if (state.ActiveQte == null)
-            {
                 throw new InvalidOperationException(
                     "ResolveQteStep execution failed: ActiveQte is null.");
-            }
-            
-            var activeQte = state.ActiveQte;
-            
-            UniTask<QteResult> resultTask = WaitResult(activeQte);
-            
-            float timeoutSeconds = step.TimeoutSeconds;
 
+            var activeQte = state.ActiveQte;
+
+            float timeoutSeconds = step.TimeoutSeconds;
+            
             if (state.AbilityBlackboard.TryGet<float>(BlackboardKey.ProjectileFlightTime, out var flightTime))
                 timeoutSeconds = flightTime;
-            
-            UniTask timeoutTask = UniTask.Delay(
-                TimeSpan.FromSeconds(timeoutSeconds),
-                cancellationToken: ct);
-            
+
             try
             {
-                var (hasQteResult, qteResult) = await UniTask.WhenAny(resultTask, timeoutTask);
-
-                QteResult result = hasQteResult
-                    ? qteResult
-                    : QteResult.Fail;
-                
+                QteResult result = await activeQte.WaitResultAsync(timeoutSeconds, ct);
                 state.LastQteResult = result;
-                
+
                 switch (result)
                 {
                     case QteResult.Fail:
@@ -78,20 +69,6 @@ namespace AbilityNew.Scripts.Executors.Gameplay
                 if (ReferenceEquals(state.ActiveQte, activeQte))
                     state.ActiveQte = null;
             }
-        }
-
-        private static UniTask<QteResult> WaitResult(IQteSession qteSession)
-        {
-            var tcs = new UniTaskCompletionSource<QteResult>();
-
-            void OnCompleted(QteResult result)
-            {
-                qteSession.Completed -= OnCompleted;
-                tcs.TrySetResult(result);
-            }
-
-            qteSession.Completed += OnCompleted;
-            return tcs.Task;
         }
     }
 }

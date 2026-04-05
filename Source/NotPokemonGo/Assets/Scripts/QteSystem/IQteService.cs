@@ -4,6 +4,6 @@ namespace QteSystem
 {
     public interface IQteService
     {
-        IQteSession StartSession(QteType qteType, Unit target, float duration);
+        IQteSession StartSession(QteRequest request);
     }
 }

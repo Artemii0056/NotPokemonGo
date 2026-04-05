@@ -9,9 +9,10 @@ namespace QteSystem
     {
         private readonly QteButtonView _view;
         private readonly IProvidesQteResult _resultProvider;
+        private readonly bool _useExplicitResultProvider;
 
         private bool _disposed;
-    
+
         public event Action<QteResult> Completed;
 
         public bool IsCompleted { get; private set; }
@@ -19,15 +20,20 @@ namespace QteSystem
 
         public QteViewSession(QteButtonView view)
         {
-            _view = view;
-
-            _view.Successed += OnSuccessed;
-            _view.Invalided += OnInvalided;
+            _view = view ?? throw new ArgumentNullException(nameof(view));
 
             _resultProvider = view as IProvidesQteResult;
-            
-            if (_resultProvider != null)
+            _useExplicitResultProvider = _resultProvider != null;
+
+            if (_useExplicitResultProvider)
+            {
                 _resultProvider.OnReached += OnResulted;
+            }
+            else
+            {
+                _view.Successed += OnSuccessed;
+                _view.Invalided += OnInvalided;
+            }
         }
 
         private void OnResulted(QteResult result)
@@ -47,31 +53,34 @@ namespace QteSystem
 
         private void Complete(QteResult result)
         {
-            if (IsCompleted) 
+            if (IsCompleted)
                 return;
 
             IsCompleted = true;
             Result = result;
+
             Completed?.Invoke(result);
         }
 
         public void Dispose()
         {
-            if (_disposed) 
+            if (_disposed)
                 return;
-            
+
             _disposed = true;
 
-            if (_resultProvider != null)
+            if (_useExplicitResultProvider)
+            {
                 _resultProvider.OnReached -= OnResulted;
-
-            if (_view != null)
+            }
+            else
             {
                 _view.Successed -= OnSuccessed;
                 _view.Invalided -= OnInvalided;
-
-                Object.Destroy(_view.gameObject);
             }
+
+            if (_view != null)
+                Object.Destroy(_view.gameObject);
         }
     }
 }
