@@ -4,6 +4,7 @@ using AbilityNew.Scripts.AbilityExecutor;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using QteSystem;
+using QteSystem.Core;
 
 namespace AbilityNew.Scripts.Executors.Gameplay
 {

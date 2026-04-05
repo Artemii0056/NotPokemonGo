@@ -3,7 +3,8 @@ using AbilityNew.Scripts;
 using AbilityNew.Scripts.Results;
 using Armaments.Movers;
 using QteSystem;
-using QteSystem.TestQte;
+using QteSystem.Core;
+using QteSystem.Gameplay;
 using UnityEngine;
 
 namespace AbilityNew.AbilityDefinition

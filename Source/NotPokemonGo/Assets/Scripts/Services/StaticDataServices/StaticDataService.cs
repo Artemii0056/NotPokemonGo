@@ -8,6 +8,8 @@ using DodgeSystem.Configs;
 using LevelSetting;
 using ParticleSystems;
 using QteSystem;
+using QteSystem.Configs;
+using QteSystem.Core;
 using Services.AssetManagement;
 using Statuses;
 using UI;

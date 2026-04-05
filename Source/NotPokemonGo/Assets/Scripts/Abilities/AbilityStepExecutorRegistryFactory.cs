@@ -14,6 +14,7 @@ using AbilityNew.Scripts.Presentation.Presets;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Effects;
 using QteSystem;
+using QteSystem.Core;
 using Services.AudioServices;
 using Services.Cameras;
 using Spawners;

@@ -1,4 +1,5 @@
-﻿using QteSystem.TestQte;
+﻿using QteSystem.Core;
+using QteSystem.Gameplay;
 using Units;
 
 namespace AbilityNew.Scripts.Results

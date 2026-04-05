@@ -5,6 +5,8 @@ using Characters;
 using Characters.Configs;
 using LevelSetting;
 using QteSystem;
+using QteSystem.Configs;
+using QteSystem.Core;
 using Statuses;
 using UI;
 using UI.SpawnPositions;

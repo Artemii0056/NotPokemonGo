@@ -1,6 +1,7 @@
 ﻿using System;
 using AbilityNew.Scripts.Configs;
 using QteSystem;
+using QteSystem.Core;
 
 namespace AbilityNew.Scripts.Steps.Gameplay
 {
