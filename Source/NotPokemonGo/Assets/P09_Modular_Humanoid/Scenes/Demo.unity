@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 10
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,12 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
+  m_IndirectSpecularColor: {r: 0.18010826, g: 0.22550303, b: 0.30681458, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 13
-  m_BakeOnSceneLoad: 0
+  serializedVersion: 12
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,6 +67,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -247,7 +251,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 281842175686302520, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -13.443019
+      value: -13.443022
       objectReference: {fileID: 0}
     - target: {fileID: 281842175686302520, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -758,51 +762,51 @@ PrefabInstance:
       value: 0.00000078554433
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -1106,51 +1110,51 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 97
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]
       value: 105
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]
       value: 106
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]
       value: 107
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]
       value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]
       value: 109
       objectReference: {fileID: 0}
     - target: {fileID: 531476391039154020, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -1647,7 +1651,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682262546789724684, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: 13.443008
+      value: 13.443011
       objectReference: {fileID: 0}
     - target: {fileID: 682262546789724684, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -2198,107 +2202,107 @@ PrefabInstance:
       value: 0.00000078554433
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[19]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[19]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[20]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[20]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[21]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[21]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[22]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[22]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[23]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[23]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[24]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[24]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[25]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[25]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -2938,107 +2942,107 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]
       value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]
       value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]
       value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]
       value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]
       value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]
       value: 83
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]
       value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]
       value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]
       value: 86
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]
       value: 87
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[19]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[19]
       value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[20]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[20]
       value: 97
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[21]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[21]
       value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[22]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[22]
       value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[23]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[23]
       value: 105
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[24]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[24]
       value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[25]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[25]
       value: 109
       objectReference: {fileID: 0}
     - target: {fileID: 1276494707361856609, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -4167,11 +4171,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972092
+      value: 0.16972095
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939391
+      value: -0.16939394
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -4594,31 +4598,31 @@ PrefabInstance:
       value: -2.1965418
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -4806,27 +4810,27 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1774063992657606505, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -5814,79 +5818,79 @@ PrefabInstance:
       value: 0.00000078554433
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -6358,79 +6362,79 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 86
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 91
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]
       value: 94
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]
       value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]
       value: 97
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]
       value: 98
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]
       value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]
       value: 103
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]
       value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]
       value: 105
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]
       value: 106
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]
       value: 107
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]
       value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]
       value: 109
       objectReference: {fileID: 0}
     - target: {fileID: 3674988961963503720, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -10031,7 +10035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682126552012496769, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 36.638603
+      value: 36.63861
       objectReference: {fileID: 0}
     - target: {fileID: 5682126552012496769, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
@@ -10558,155 +10562,155 @@ PrefabInstance:
       value: -2.1965418
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[13]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[14]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[15]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[16]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[17]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[18]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[19]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[19]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[20]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[20]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[21]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[21]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[22]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[22]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[23]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[23]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[24]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[24]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[25]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[25]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[26]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[26]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[27]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[27]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[28]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[28]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[29]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[29]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[30]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[30]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[31]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[31]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[32]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[32]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[33]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[33]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[34]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[34]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[35]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[35]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[36]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[36]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[37]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[37]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -11642,151 +11646,151 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[13]
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[14]
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[15]
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[16]
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[17]
       value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[18]
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[19]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[19]
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[20]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[20]
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[21]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[21]
       value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[22]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[22]
       value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[23]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[23]
       value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[24]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[24]
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[25]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[25]
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[26]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[26]
       value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[27]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[27]
       value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[28]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[28]
       value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[29]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[29]
       value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[30]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[30]
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[31]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[31]
       value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[32]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[32]
       value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[33]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[33]
       value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[34]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[34]
       value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[35]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[35]
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[36]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[36]
       value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[37]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[37]
       value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 6514947451564525916, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -13535,11 +13539,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972649
+      value: 0.16972652
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939947
+      value: -0.1693995
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -13547,7 +13551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.z
-      value: -51.784103
+      value: -51.78411
       objectReference: {fileID: 0}
     - target: {fileID: 8443011973136461267, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_IsActive
@@ -14054,55 +14058,55 @@ PrefabInstance:
       value: 0.00000078554433
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[4]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[5]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[6]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[8]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[9]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[10]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[11]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].transformArray.Array.data[12]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -14430,55 +14434,55 @@ PrefabInstance:
       value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[1]
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[2]
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[3]
       value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[4]
       value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[5]
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[6]
       value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[7]
       value: 71
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[8]
       value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[9]
       value: 73
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[10]
       value: 74
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[11]
       value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
-      propertyPath: 'serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]'
+      propertyPath: serializeData2.initData.clothSetupDataList.Array.data[0].useTransformIndexArray.Array.data[12]
       value: 76
       objectReference: {fileID: 0}
     - target: {fileID: 8691261110254769352, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
@@ -15244,7 +15248,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &618957204
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -15258,7 +15262,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -15306,14 +15309,15 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize2D: {x: 10, y: 10}
+  m_CookieSize: 10
   m_Shadows:
     m_Type: 2
     m_Resolution: 2
@@ -15357,12 +15361,8 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
-  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
-  m_LightUnit: 1
-  m_LuxAtDistance: 1
-  m_EnableSpotReflector: 1
 --- !u!4 &705507995
 Transform:
   m_ObjectHideFlags: 0
@@ -15390,23 +15390,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_Version: 4
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &812395943
 GameObject:
   m_ObjectHideFlags: 0
@@ -15521,7 +15515,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1061023922
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -15535,7 +15529,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -15661,6 +15654,7 @@ GameObject:
   - component: {fileID: 1180508221}
   - component: {fileID: 1180508220}
   - component: {fileID: 1180508222}
+  - component: {fileID: 1180508223}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -15710,25 +15704,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+--- !u!114 &1180508223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180508218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &1226987119
 GameObject:
   m_ObjectHideFlags: 0
@@ -15832,7 +15827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40, y: 95}
+  m_AnchoredPosition: {x: -39.99994, y: 95}
   m_SizeDelta: {x: 62, y: 83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1818360608 &1303015249
@@ -16460,7 +16455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: 15}
+  m_AnchoredPosition: {x: 40.00006, y: 14.999939}
   m_SizeDelta: {x: 66, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1818360608 &1876173412
@@ -16540,7 +16535,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1908465034
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16554,7 +16549,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -16742,7 +16736,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!95 &1950071855
 Animator:
-  serializedVersion: 7
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16756,7 +16750,6 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -17248,7 +17241,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 281842175686302520, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -13.443019
+      value: -13.443022
       objectReference: {fileID: 0}
     - target: {fileID: 281842175686302520, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -17260,7 +17253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 682262546789724684, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: 13.443008
+      value: 13.443011
       objectReference: {fileID: 0}
     - target: {fileID: 682262546789724684, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -17300,11 +17293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972092
+      value: 0.16972095
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939391
+      value: -0.16939394
       objectReference: {fileID: 0}
     - target: {fileID: 1751656088147418702, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -17440,7 +17433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5682126552012496769, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 36.638603
+      value: 36.63861
       objectReference: {fileID: 0}
     - target: {fileID: 5682126552012496769, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
@@ -17536,11 +17529,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972649
+      value: 0.16972652
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939947
+      value: -0.1693995
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.y
@@ -17548,7 +17541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272302766134741495, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_RotationOffset.z
-      value: -51.784103
+      value: -51.78411
       objectReference: {fileID: 0}
     - target: {fileID: 8958324791229420265, guid: aa7e195a1faef46ac912fd7df16e3a91, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17710,11 +17703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 25620996925859449, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972649
+      value: 0.16972652
       objectReference: {fileID: 0}
     - target: {fileID: 25620996925859449, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939947
+      value: -0.1693995
       objectReference: {fileID: 0}
     - target: {fileID: 25620996925859449, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.y
@@ -17722,7 +17715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 25620996925859449, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.z
-      value: -51.784103
+      value: -51.78411
       objectReference: {fileID: 0}
     - target: {fileID: 974908939631504126, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17946,7 +17939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4345109831506128911, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 36.638603
+      value: 36.63861
       objectReference: {fileID: 0}
     - target: {fileID: 4345109831506128911, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.y
@@ -18014,11 +18007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7699246949044761024, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationAtRest.x
-      value: 0.16972092
+      value: 0.16972095
       objectReference: {fileID: 0}
     - target: {fileID: 7699246949044761024, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -0.16939391
+      value: -0.16939394
       objectReference: {fileID: 0}
     - target: {fileID: 7699246949044761024, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.y
@@ -18054,7 +18047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8178348183416386742, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.x
-      value: -13.443019
+      value: -13.443022
       objectReference: {fileID: 0}
     - target: {fileID: 8178348183416386742, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.y
@@ -18094,7 +18087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8926692512279272834, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.x
-      value: 13.443008
+      value: 13.443011
       objectReference: {fileID: 0}
     - target: {fileID: 8926692512279272834, guid: f1dc1799bee114b94bffa9386aa1d4f9, type: 3}
       propertyPath: m_RotationOffset.z
