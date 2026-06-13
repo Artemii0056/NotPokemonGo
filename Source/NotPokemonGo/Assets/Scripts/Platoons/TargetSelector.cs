@@ -56,7 +56,14 @@ namespace Platoons
 
             return result;
         }
-        
+
+        public Unit GetRandomEnemyTarget()
+        {
+            var aliveUnits = GetEnemyPlatoon(PlatoonType.Heroes).AliveUnits; //TODO По какой то причине союзники  во вражеском платуне 
+            
+            return aliveUnits[UnityEngine.Random.Range(0, aliveUnits.Count)];
+        }
+
         private Platoon GetPlatoonByType(PlatoonType platoonType)
         {
             if (_first.Type == platoonType)

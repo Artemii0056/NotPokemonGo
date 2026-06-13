@@ -141,3 +141,4 @@ Material:
     - _OutlineColor: {r: 0.04808, g: 0.0396, b: 0.0396, a: 1}
     - _UnityShadowColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

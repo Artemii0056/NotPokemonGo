@@ -20,6 +20,7 @@ namespace Units
 
         [field: SerializeField] public AnimatorController AnimatorController { get; private set; }
         [field: SerializeField] public UnitType UnitType { get; private set; }
+        [field: SerializeField] public HighlightContainer HighlightContainer { get; private set; }
 
         public Transform abilityPos;
         public List<Transform> AbilitiesPositions;

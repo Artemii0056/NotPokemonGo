@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
@@ -16,6 +17,8 @@ namespace Abilities.MV
         private AbilityModel _abilityModel;
 
         private Image _defaultImage;
+        
+        public event Action<AbilityModel> OnAbility;
 
         [Inject]
         public void Initialize(IAbilityProvider abilityProvider)
@@ -44,7 +47,8 @@ namespace Abilities.MV
 
         private void OnClick()
         {
-            _abilityProvider.Remember(_abilityModel);
+            OnAbility?.Invoke(_abilityModel);
+            _abilityProvider.Remember(_abilityModel); //TODO Полная хуйня 
         }
 
         public void SetImage(Sprite sprite) =>

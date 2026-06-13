@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Abilities.MV;
 using UnityEngine;
 using VContainer;
@@ -10,6 +11,8 @@ namespace UI.Ability
         [SerializeField] private List<AbilityView> _abilitiesView;
 
         private IObjectResolver _objectResolver;
+        
+        public event Action<AbilityModel> AbilityModelSelected;
 
         [Inject]
         public void Initialize(IObjectResolver objectResolver)
@@ -36,9 +39,25 @@ namespace UI.Ability
 
             for (int i = abilityModels.Count; i < _abilitiesView.Count; i++) 
                 _abilitiesView[i].SetDefaultImage();
-
+            
             foreach (AbilityView view in _abilitiesView) 
+                view.OnAbility += OnAbilitySelected;
+
+            foreach (AbilityView view in _abilitiesView) //TODO Тоже херня
                 _objectResolver.Inject(view);
+        }
+
+        private void OnAbilitySelected(AbilityModel model)
+        {
+            AbilityModelSelected?.Invoke(model);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+
+            foreach (var view in _abilitiesView) 
+                view.OnAbility -= OnAbilitySelected;
         }
     }
 }

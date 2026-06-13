@@ -5,7 +5,6 @@ using Castaments;
 using CombatText;
 using Effects;
 using Platoons;
-using QteSystem;
 using QteSystem.Core;
 using QteSystem.Runtime;
 using Services.AssetManagement;
@@ -43,7 +42,6 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);
 			builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
-			builder.Register<ISourceProvider, SourceProvider>(Lifetime.Singleton);
 			builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
 			builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
             
@@ -72,6 +70,8 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IAbilityStepExecutorRegistryFactory, AbilityStepExecutorRegistryFactory>(Lifetime.Singleton);
 			
 			builder.Register<UnitViewRegistry>(Lifetime.Singleton); //
+			
+			builder.Register<TargetHighlighter>(Lifetime.Singleton); 
 			
 			return builder;
 		}

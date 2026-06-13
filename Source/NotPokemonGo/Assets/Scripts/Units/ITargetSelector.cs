@@ -8,5 +8,6 @@ namespace Units
     {
         IReadOnlyList<Unit> GetTargets(TargetMode targetMode, Unit source, Unit primaryTarget);
         void SetPlatoons(Platoon platoon, Platoon platoon2);
+        Unit GetRandomEnemyTarget();
     }
 }

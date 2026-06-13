@@ -12,57 +12,71 @@ using VContainer;
 
 namespace Battlefields
 {
-    public class FriendUnitActionStrategy : UnitActionStrategy
+    public class FriendUnitActionStrategy : UnitActionStrategy //TODO Этот класс нужно регать
     {
         private readonly Battlefield _battlefield;
         private readonly Unit _source;
+        private Unit _currentTarget;
 
-        private ISourceProvider _sourceProvider;
-        private IAbilityProvider _abilityProvider;
+        private AbilitiesPanel _abilitiesPanels;
+
         private AbilityPanelPresenter _abilityPanelPresenter;
         private IInputReader _inputReader;
         private IRaycastService _raycastService;
-        
+
         private IAbilityService _abilityService;
 
-        public FriendUnitActionStrategy(Battlefield battlefield, Unit source)
+        private ITargetSelector _targetSelector;
+        
+        private readonly TargetHighlighter _targetHighlighter;
+
+        public FriendUnitActionStrategy(Battlefield battlefield, Unit source, TargetHighlighter targetHighlighter)
         {
             _source = source;
+            _targetHighlighter = targetHighlighter;
             _battlefield = battlefield;
         }
 
         [Inject]
         public void Initialize(
             IRaycastService raycastService,
-            ISourceProvider sourceProvider,
-            IAbilityProvider abilityProvider,
             ITargetSelector targetSelector,
             AbilityPanelPresenter abilityPanelPresenter,
             IInputReader inputReader,
-            IAbilityService abilityService
-            )
+            IAbilityService abilityService,
+            AbilitiesPanel abilitiesPanels
+        )
         {
             _raycastService = raycastService;
             _inputReader = inputReader;
-            _abilityProvider = abilityProvider;
-            _sourceProvider = sourceProvider;
             _abilityPanelPresenter = abilityPanelPresenter;
             _abilityService = abilityService;
+            _abilitiesPanels = abilitiesPanels;
+            _targetSelector = targetSelector;
+
+            _abilitiesPanels.AbilityModelSelected += OnAbilitySelected;
         }
 
         public override void Enable()
         {
             base.Enable();
-            ShowAbilityInfos(_source.AbilityModels);
-            _sourceProvider.Remember(_source);
+            
+            if (_targetHighlighter.Target != null)
+                _currentTarget = _targetHighlighter.Target;
+            else
+                _currentTarget = _targetSelector.GetRandomEnemyTarget();
 
-            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed; 
+            RememberTarget(_currentTarget);
+            
+            ShowAbilityInfos(_source.AbilityModels);
+
+            _inputReader.LeftMouseButtonPressed += OnLeftMouseButtonPressed;
         }
 
         private void OnLeftMouseButtonPressed()
         {
-            if (_raycastService.Raycast(out Unit unit)) 
-                OnUnitSearched(unit);
+            if (_raycastService.Raycast(out Unit unit))
+                RememberTarget(unit);
         }
 
         public override void Disable()
@@ -70,39 +84,45 @@ namespace Battlefields
             base.Disable();
 
             _inputReader.LeftMouseButtonPressed -= OnLeftMouseButtonPressed;
+            _abilitiesPanels.AbilityModelSelected -= OnAbilitySelected;
         }
 
-        private void OnUnitSearched(Unit unit)
+        private void OnAbilitySelected(AbilityModel abilityModel) 
         {
-            if (_abilityProvider.AbilityModel == null)
+            if (abilityModel.IsReady() == false)
                 return;
 
-            if (_source == unit)
-                return;
+            _abilityService.SetBattlefield(_battlefield);
+            _abilityService.RunAbilityAsync(_source, _currentTarget, abilityModel); 
 
-            switch (unit.PlatoonType)
+            _abilityPanelPresenter.Disable();
+
+            abilityModel.DiscardCurrentTime(); //TODO Выглядит странным тут
+
+            if (abilityModel.Cost > 0)//
+                _source.ResetAgility();//
+
+            //TODO И вот тут должна быть проверка на хилку или атаку?
+        }
+
+        private void RememberTarget(Unit target)
+        {
+            _currentTarget = target;
+
+            switch (target.PlatoonType)
             {
                 case PlatoonType.Heroes:
                     Debug.Log("Выбрали союзника");
                     break;
 
-                case PlatoonType.Enemies: 
-                    
-                    
-                    _abilityService.SetBattlefield(_battlefield);
-                    _abilityService.RunAbilityAsync(_source, unit, _abilityProvider.AbilityModel);
-                    
-                    _abilityPanelPresenter.Disable();
+                case PlatoonType.Enemies:
+                    Debug.Log("Выбрали врага");
+                    _targetHighlighter.Highlight(target);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            _abilityProvider.AbilityModel.DiscardCurrentTime();
-
-            if (_abilityProvider.AbilityModel.Cost > 0)
-                _source.ResetAgility();
         }
 
         private void ShowAbilityInfos(List<AbilityModel> abilityModels)

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using Abilities.MV;
-using UnityEngine;
 
 namespace UI.Ability
 {
-    public class AbilityPanelPresenter 
+    public class AbilityPanelPresenter //TODO А нахера
     {
         private AbilitiesPanel _abilitiesPanel;
 
@@ -20,18 +19,11 @@ namespace UI.Ability
 
         public void Disable()
         {
-            _abilitiesPanel.gameObject.SetActive(false);
+            _abilitiesPanel.Hide();
+            //_abilitiesPanel.gameObject.SetActive(false);
         }
 
         public void FillAbilityView(List<AbilityModel> abilityModels) => 
             _abilitiesPanel.SetAbilities(abilityModels);
-
-        public void Activate()
-        {
-        }
-
-        public void Deactivate()
-        {
-        }
     }
 }

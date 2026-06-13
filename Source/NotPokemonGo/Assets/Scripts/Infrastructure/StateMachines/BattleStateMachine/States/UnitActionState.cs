@@ -4,7 +4,6 @@ using Infrastructure.StateMachines.BattleStateMachine.Payloads;
 using Infrastructure.StateMachines.States.Interfaces;
 using Platoons;
 using Services.InputServices;
-using UnityEngine;
 using VContainer;
 
 namespace Infrastructure.StateMachines.BattleStateMachine.States
@@ -14,6 +13,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         private readonly IObjectResolver _objectResolver;
         private readonly IBattleStateMachine _battleStateMachine;
         private readonly IInputReader _inputReader;
+        private readonly TargetHighlighter _targetHighlighter;
 
         private UnitActionStrategy _unitActionStrategy;
         private UnitActionPayload _payload;
@@ -21,9 +21,10 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
         public UnitActionState(
             IObjectResolver objectResolver, 
             IInputReader inputReader,
-            IBattleStateMachine battleStateMachine)
+            IBattleStateMachine battleStateMachine, TargetHighlighter targetHighlighter)
         {
             _battleStateMachine = battleStateMachine;
+            _targetHighlighter = targetHighlighter;
             _inputReader = inputReader;
             _objectResolver = objectResolver;
         }
@@ -36,7 +37,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
             switch (battlefield.UnitSorce.PlatoonType)
             {
                 case PlatoonType.Heroes:
-                    _unitActionStrategy = new FriendUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce);
+                    _unitActionStrategy = new FriendUnitActionStrategy(battlefield.Battlefield, battlefield.UnitSorce, _targetHighlighter);
                     break;
 
                 case PlatoonType.Enemies:
@@ -47,7 +48,7 @@ namespace Infrastructure.StateMachines.BattleStateMachine.States
                     throw new ArgumentOutOfRangeException();
             }
 
-            _objectResolver.Inject(_unitActionStrategy);
+            _objectResolver.Inject(_unitActionStrategy); //Зачем?
 
             _unitActionStrategy.Enable();
         }
