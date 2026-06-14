@@ -1,6 +1,5 @@
 ﻿using System;
 using QteSystem.Core;
-using QteSystem.Gameplay;
 
 namespace AbilityNew.Scripts.Presentation.Conditions
 {

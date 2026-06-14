@@ -1,12 +1,10 @@
 ﻿using System.Threading;
 using AbilityNew.AbilityDefinition;
 using AbilityNew.Scripts.AbilityExecutor;
-using AbilityNew.Scripts.Executors;
 using AbilityNew.Scripts.Results;
 using AbilityNew.Scripts.Steps.Gameplay;
 using Cysharp.Threading.Tasks;
 using Effects;
-using Platoons;
 using Units;
 
 namespace AbilityNew.Scripts.Executors.Gameplay

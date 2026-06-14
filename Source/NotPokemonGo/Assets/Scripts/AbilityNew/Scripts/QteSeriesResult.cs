@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using QteSystem.Core;
-using QteSystem.Gameplay;
 
 namespace AbilityNew.Scripts
 {

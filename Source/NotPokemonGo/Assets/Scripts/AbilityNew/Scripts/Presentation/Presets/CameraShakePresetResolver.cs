@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace AbilityNew.Scripts.Presentation.Presets
+﻿namespace AbilityNew.Scripts.Presentation.Presets
 {
     public sealed class CameraShakePresetResolver : ICameraShakePresetResolver
     {

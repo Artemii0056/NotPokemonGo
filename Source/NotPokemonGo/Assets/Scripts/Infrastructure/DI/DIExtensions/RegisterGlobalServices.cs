@@ -42,7 +42,6 @@ namespace Infrastructure.DI.DIExtensions
 			builder.Register<IArmamentMover, ArmamentMover>(Lifetime.Singleton);
 			builder.Register<IParticleSystemFactory, ParticleSystemFactory>(Lifetime.Singleton);
             
-			builder.Register<IAbilityProvider, AbilityProvider>(Lifetime.Singleton);
 			builder.Register<ITargetSelector, TargetSelector>(Lifetime.Singleton);
             
 			builder.Register<ICameraProvider, CameraProvider>(Lifetime.Singleton);

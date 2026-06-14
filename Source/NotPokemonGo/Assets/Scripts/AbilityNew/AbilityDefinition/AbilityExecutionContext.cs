@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Armaments.Movers;
 using Units;
 
 namespace AbilityNew.AbilityDefinition

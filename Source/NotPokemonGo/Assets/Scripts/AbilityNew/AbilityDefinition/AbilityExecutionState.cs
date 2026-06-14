@@ -2,9 +2,7 @@
 using AbilityNew.Scripts;
 using AbilityNew.Scripts.Results;
 using Armaments.Movers;
-using QteSystem;
 using QteSystem.Core;
-using QteSystem.Gameplay;
 using UnityEngine;
 
 namespace AbilityNew.AbilityDefinition
@@ -15,7 +13,6 @@ namespace AbilityNew.AbilityDefinition
         public QteResult? LastQteResult { get; set; }
 
         public AbilityBlackboard AbilityBlackboard { get; set; } = new();
-        public CounterAttackRequest CounterAttackRequest { get; }
 
         public List<IArmamentMover> Movers { get; } = new List<IArmamentMover>();
         

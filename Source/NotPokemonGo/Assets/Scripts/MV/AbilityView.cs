@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace Abilities.MV
 {
@@ -12,19 +11,11 @@ namespace Abilities.MV
         [SerializeField] private Button _button;
         [SerializeField] private Image _icon;
         
-        private IAbilityProvider _abilityProvider;
-
         private AbilityModel _abilityModel;
 
         private Image _defaultImage;
         
         public event Action<AbilityModel> OnAbility;
-
-        [Inject]
-        public void Initialize(IAbilityProvider abilityProvider)
-        {
-            _abilityProvider = abilityProvider;
-        }
 
         public void Construct(AbilityModel abilityModel)
         {
@@ -48,7 +39,6 @@ namespace Abilities.MV
         private void OnClick()
         {
             OnAbility?.Invoke(_abilityModel);
-            _abilityProvider.Remember(_abilityModel); //TODO Полная хуйня 
         }
 
         public void SetImage(Sprite sprite) =>
