@@ -5,7 +5,7 @@ public static class Constants
     public class AssetPath
     {
         public const string InitialSceneName = "Initial";
-        public const string GameplaySceneName = "MainMenu";
+        public const string GameplaySceneName = "scene3";
         public const string CharacterSelectionSceneName = "CharacterSelection";
 
         public const string CharacterSkinItemName = "Canvases/UnitSkinItemForChoose";
