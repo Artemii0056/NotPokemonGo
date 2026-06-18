@@ -9,8 +9,11 @@ namespace Services.Cameras
         private readonly CinemachineBasicMultiChannelPerlin _noise;
         private Tween _tween;
 
-        public CameraShakeService(ICameraProvider cameraProvider) =>
-            _noise = cameraProvider.VirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        public CameraShakeService(ICameraProvider cameraProvider)
+        {
+        //_noise = cameraProvider.VirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+
 
         public void Shake(float amplitude, float frequency, float duration, Action onComplete = null)
         {

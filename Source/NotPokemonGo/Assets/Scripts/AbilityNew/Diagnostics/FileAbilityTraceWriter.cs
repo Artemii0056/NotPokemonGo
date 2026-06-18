@@ -13,6 +13,7 @@ namespace AbilityNew.Diagnostics
         public FileAbilityTraceWriter(string fileName = "ability_trace.log")
         {
             _filePath = Path.Combine(Application.persistentDataPath, fileName);
+            Debug.Log($"Ability trace file path: {_filePath}");
         }
 
         public void Write(in AbilityTraceRecord record)

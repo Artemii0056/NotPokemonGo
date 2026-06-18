@@ -115,15 +115,15 @@ namespace Abilities
             using AnimationSignalRelay animationSignalRelay =
                 new(signalService, source.AnimatorController);
 
-            AbilityPresentationConfig so;
-
-            if (source.PlatoonType == PlatoonType.Heroes)
-                so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
-            else
-                so = _resourceLoader.Load<AbilityPresentationConfig>("MageFireballAttackPresentation");
+            // AbilityPresentationConfig so;
+            //
+            // if (source.PlatoonType == PlatoonType.Heroes)
+            //     so = _resourceLoader.Load<AbilityPresentationConfig>("BennetBaseAttackPresentation");
+            // else
+            //     so = _resourceLoader.Load<AbilityPresentationConfig>("MageFireballAttackPresentation");
 
             StepExecutorRegistry stepExecutorRegistry = _abilityStepExecutorRegistryFactory.Create(signalService);
-            _abilityStepExecutorRegistryFactory.PresentationService.Register(so);
+           // _abilityStepExecutorRegistryFactory.PresentationService.Register(so);
             
             AbilityRunner abilityRunner = new(stepExecutorRegistry, signalService, writer);
 
@@ -180,12 +180,15 @@ namespace Abilities
             }
             catch (OperationCanceledException)
             {
+                Debug.Log("Execution timed out");
                 return;
             }
             
             if (_lastUnit != null && _lastUnit.PlatoonType == PlatoonType.Heroes)
                 _statusManager.TickUnitTurn();
 
+            Debug.Log("Finish");
+            
             _battleStateMachine.Enter<CheckBattleEndState, Battlefield>(_battlefield);
             Finished?.Invoke();
         }

@@ -19,6 +19,8 @@ namespace Abilities.Signals
 
         Launch = 30,
         Impact = 31,
+        
+        Move = 40,
 
         Finish = 99,
     }
